@@ -187,7 +187,9 @@ mask = 按分数取 top-k_max  →  验证器确认 / 修复兜底
 | 平均缺口 | 0.558 T（中位 0，最差 60 T） |
 | 回归 y = a·x + b（R² / 对 y=x 线 R²） | a = 0.930，b = 1.836（0.932 / 0.925） |
 
-产物：图 `reports/figures/fig4_oracle_vs_greedy.{png,pdf}`、逐电路数据 `reports/figure_data/oracle_vs_greedy.json`。
+产物：散点图 `reports/figures/fig4_oracle_vs_greedy.{png,pdf}`、捕获率分布直方图 `reports/figures/fig4b_capture_histogram.{png,pdf}`、逐电路数据 `reports/figure_data/oracle_vs_greedy.json`。
+
+图 `fig4b` 展示**逐电路捕获率**的分布形状：482/500 条死死钉在 **100 %**，其余 18 条散落在 37.5 %–90.9 % 的长尾上（平均 99.0 %，中位 100 %）——即"绝大多数完美、极少数塌陷"，这正是聚合 98.4 % 与逐点 96.4 % 两个数字同时成立的原因。
 
 **结论修正**：贪心**不是**逐点最优，而是**聚合意义上 98.4%、逐点 96.4% 地逼近上限**。约 4% 的实例会少降级，最差一条只拿到 oracle 的 37.5%（60 T）。
 
@@ -331,6 +333,7 @@ done
 
 # §5.2 oracle vs greedy 散点（500 条 5–12 块混合电路，逐条 2^k 穷举，约 4 分钟）
 .venv/bin/python oracle_vs_greedy.py --instances 500
+.venv/bin/python plot_capture_histogram.py          # fig4b 捕获率直方图
 ```
 
 ---
