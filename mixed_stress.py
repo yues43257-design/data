@@ -257,6 +257,43 @@ class MixedVerifier:
             self._cache[mask] = cached
         return cached
 
+    def deviation_table(self) -> "List[float]":
+        """Deviation for *every* mask, sharing the partial products.
+
+        ``W(mask) = Omega(mask) U`` and ``Omega(mask) = C_h Omega(mask \ {h})`` for
+        ``h`` the highest set bit, so a split-half sweep gives the whole table with
+        one matrix product per mask and only ``2 * 2**(k/2)`` partials in memory.
+        """
+        size = 1 << self.k
+        table = [0.0] * size
+        reference = self.reference
+        half = self.k // 2
+        low_count = 1 << half
+        high_count = 1 << (self.k - half)
+
+        low: "List[Optional[np.ndarray]]" = [None] * low_count
+        low[0] = self.unitary
+        for lo in range(1, low_count):
+            high_bit = lo.bit_length() - 1
+            low[lo] = self.corrections[high_bit] @ low[lo ^ (1 << high_bit)]
+
+        high: "List[Optional[np.ndarray]]" = [None] * high_count
+        high[0] = np.eye(self.d, dtype=complex)
+        for hi in range(1, high_count):
+            high_bit = hi.bit_length() - 1
+            high[hi] = self.corrections[half + high_bit] @ high[hi ^ (1 << high_bit)]
+
+        for hi in range(high_count):
+            base = hi << half
+            operator = high[hi]
+            for lo in range(low_count):
+                product = operator @ low[lo] if hi else low[lo]
+                magnitudes = np.abs(product) ** 2
+                table[base | lo] = float(
+                    np.max(0.5 * np.sum(np.abs(magnitudes - reference), axis=0))
+                )
+        return table
+
     # -- decoding / cost ----------------------------------------------------
 
     def mask_from_probs(self, probs: Sequence[float], threshold: float = 0.5) -> int:

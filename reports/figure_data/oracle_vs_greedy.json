@@ -1,0 +1,9737 @@
+[
+  {
+    "blocks": 10,
+    "controls": [
+      5,
+      4,
+      4,
+      2,
+      2,
+      6,
+      6,
+      5,
+      4,
+      3
+    ],
+    "all_exact": 364,
+    "oracle_saved": 33,
+    "greedy_saved": 33,
+    "oracle_mask": 521,
+    "greedy_mask": 521,
+    "seed": 3192984007
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      4,
+      4,
+      2,
+      5,
+      4,
+      4,
+      4,
+      3
+    ],
+    "all_exact": 252,
+    "oracle_saved": 42,
+    "greedy_saved": 42,
+    "oracle_mask": 135,
+    "greedy_mask": 135,
+    "seed": 1410543604
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      4,
+      6,
+      6,
+      3,
+      3,
+      4
+    ],
+    "all_exact": 238,
+    "oracle_saved": 39,
+    "greedy_saved": 39,
+    "oracle_mask": 49,
+    "greedy_mask": 49,
+    "seed": 736031291
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      4,
+      4,
+      2,
+      5,
+      4,
+      5,
+      2,
+      3,
+      4,
+      6,
+      6
+    ],
+    "all_exact": 399,
+    "oracle_saved": 42,
+    "greedy_saved": 42,
+    "oracle_mask": 1025,
+    "greedy_mask": 1025,
+    "seed": 410315638
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      6,
+      6,
+      3,
+      6,
+      6,
+      5,
+      3,
+      3,
+      3,
+      6
+    ],
+    "all_exact": 448,
+    "oracle_saved": 54,
+    "greedy_saved": 54,
+    "oracle_mask": 513,
+    "greedy_mask": 513,
+    "seed": 2781496364
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      5,
+      5,
+      5,
+      6,
+      2,
+      6,
+      6,
+      6
+    ],
+    "all_exact": 406,
+    "oracle_saved": 48,
+    "greedy_saved": 48,
+    "oracle_mask": 129,
+    "greedy_mask": 129,
+    "seed": 42183588
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      4,
+      6,
+      6,
+      4,
+      2,
+      6,
+      6,
+      6,
+      5,
+      5,
+      5
+    ],
+    "all_exact": 539,
+    "oracle_saved": 78,
+    "greedy_saved": 36,
+    "oracle_mask": 1793,
+    "greedy_mask": 1025,
+    "seed": 1128636608
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      3,
+      5,
+      6,
+      3,
+      4,
+      2,
+      4,
+      6,
+      5
+    ],
+    "all_exact": 343,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 4047859895
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      3,
+      5,
+      5,
+      5,
+      2,
+      2
+    ],
+    "all_exact": 182,
+    "oracle_saved": 15,
+    "greedy_saved": 15,
+    "oracle_mask": 49,
+    "greedy_mask": 49,
+    "seed": 3913156040
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      2,
+      2,
+      4,
+      4,
+      3,
+      2,
+      3,
+      2,
+      3,
+      5
+    ],
+    "all_exact": 210,
+    "oracle_saved": 27,
+    "greedy_saved": 27,
+    "oracle_mask": 515,
+    "greedy_mask": 515,
+    "seed": 2723258934
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      6,
+      5,
+      3,
+      6,
+      3,
+      4,
+      5,
+      6
+    ],
+    "all_exact": 364,
+    "oracle_saved": 54,
+    "greedy_saved": 54,
+    "oracle_mask": 129,
+    "greedy_mask": 129,
+    "seed": 2083863056
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      4,
+      6,
+      2,
+      3,
+      3,
+      3,
+      2,
+      3,
+      3,
+      4
+    ],
+    "all_exact": 252,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 513,
+    "greedy_mask": 513,
+    "seed": 2261880627
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      5,
+      5,
+      5,
+      3,
+      5,
+      4,
+      4,
+      3,
+      6
+    ],
+    "all_exact": 371,
+    "oracle_saved": 48,
+    "greedy_saved": 48,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 2941086603
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      6,
+      3,
+      5,
+      6,
+      5,
+      2,
+      3,
+      4
+    ],
+    "all_exact": 308,
+    "oracle_saved": 42,
+    "greedy_saved": 42,
+    "oracle_mask": 129,
+    "greedy_mask": 129,
+    "seed": 549524838
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      5,
+      5,
+      4,
+      5,
+      3,
+      4,
+      6,
+      6,
+      5,
+      3
+    ],
+    "all_exact": 434,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 513,
+    "greedy_mask": 513,
+    "seed": 1253370993
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      2,
+      4,
+      4,
+      3,
+      3,
+      4,
+      5,
+      3,
+      2,
+      3
+    ],
+    "all_exact": 252,
+    "oracle_saved": 12,
+    "greedy_saved": 12,
+    "oracle_mask": 513,
+    "greedy_mask": 513,
+    "seed": 1565124507
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      4,
+      5,
+      2,
+      5,
+      6,
+      6
+    ],
+    "all_exact": 266,
+    "oracle_saved": 42,
+    "greedy_saved": 42,
+    "oracle_mask": 33,
+    "greedy_mask": 33,
+    "seed": 3240254708
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      6,
+      3,
+      2,
+      2,
+      4,
+      5,
+      6,
+      2,
+      4,
+      4,
+      5,
+      2
+    ],
+    "all_exact": 378,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 381239902
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      5,
+      5,
+      6,
+      2,
+      6,
+      3,
+      6
+    ],
+    "all_exact": 315,
+    "oracle_saved": 48,
+    "greedy_saved": 48,
+    "oracle_mask": 65,
+    "greedy_mask": 65,
+    "seed": 4060240999
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      3,
+      3,
+      3,
+      6,
+      3,
+      4,
+      2,
+      5,
+      6
+    ],
+    "all_exact": 301,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 1029336216
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      5,
+      3,
+      5,
+      3,
+      4,
+      3,
+      4,
+      2,
+      4
+    ],
+    "all_exact": 273,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 2631597308
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      5,
+      3,
+      6,
+      4,
+      4,
+      6,
+      2,
+      2,
+      4,
+      2
+    ],
+    "all_exact": 322,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 513,
+    "greedy_mask": 513,
+    "seed": 1706784668
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      6,
+      2,
+      5,
+      3,
+      5,
+      2,
+      3,
+      4
+    ],
+    "all_exact": 252,
+    "oracle_saved": 42,
+    "greedy_saved": 42,
+    "oracle_mask": 129,
+    "greedy_mask": 129,
+    "seed": 2289771390
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      2,
+      3,
+      2,
+      5,
+      5
+    ],
+    "all_exact": 133,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 3346854862
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      5,
+      3,
+      3,
+      3,
+      4,
+      5,
+      2,
+      4,
+      2,
+      3,
+      2
+    ],
+    "all_exact": 273,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 1025,
+    "greedy_mask": 1025,
+    "seed": 4070313386
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      6,
+      3,
+      3,
+      5,
+      5
+    ],
+    "all_exact": 203,
+    "oracle_saved": 48,
+    "greedy_saved": 48,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 1920056086
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      6,
+      6,
+      4,
+      5,
+      5,
+      5
+    ],
+    "all_exact": 308,
+    "oracle_saved": 48,
+    "greedy_saved": 48,
+    "oracle_mask": 33,
+    "greedy_mask": 33,
+    "seed": 1946303911
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      2,
+      3,
+      5,
+      2,
+      5,
+      5,
+      3,
+      2
+    ],
+    "all_exact": 210,
+    "oracle_saved": 15,
+    "greedy_saved": 15,
+    "oracle_mask": 131,
+    "greedy_mask": 131,
+    "seed": 3528950517
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      6,
+      3,
+      3,
+      2,
+      2,
+      3,
+      4,
+      4,
+      3,
+      5
+    ],
+    "all_exact": 280,
+    "oracle_saved": 57,
+    "greedy_saved": 57,
+    "oracle_mask": 515,
+    "greedy_mask": 515,
+    "seed": 3370784748
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      3,
+      5,
+      6,
+      2,
+      5
+    ],
+    "all_exact": 189,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 914274521
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      3,
+      5,
+      4,
+      2,
+      6,
+      2,
+      6
+    ],
+    "all_exact": 245,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 65,
+    "greedy_mask": 65,
+    "seed": 4275106197
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      2,
+      6,
+      3,
+      5,
+      2,
+      6
+    ],
+    "all_exact": 210,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 33,
+    "greedy_mask": 33,
+    "seed": 4037604666
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      3,
+      4,
+      4,
+      5,
+      2,
+      5,
+      5,
+      4,
+      2
+    ],
+    "all_exact": 287,
+    "oracle_saved": 12,
+    "greedy_saved": 12,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 1061634897
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      6,
+      2,
+      3,
+      3,
+      5,
+      4,
+      5,
+      2,
+      5
+    ],
+    "all_exact": 301,
+    "oracle_saved": 48,
+    "greedy_saved": 48,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 1707468834
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      3,
+      2,
+      5,
+      5,
+      2
+    ],
+    "all_exact": 133,
+    "oracle_saved": 12,
+    "greedy_saved": 12,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 3799463826
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      6,
+      6,
+      6,
+      2,
+      6,
+      6,
+      3
+    ],
+    "all_exact": 343,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 65,
+    "greedy_mask": 65,
+    "seed": 3858990465
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      3,
+      6,
+      4,
+      4,
+      3,
+      5,
+      4,
+      2
+    ],
+    "all_exact": 266,
+    "oracle_saved": 27,
+    "greedy_saved": 27,
+    "oracle_mask": 193,
+    "greedy_mask": 193,
+    "seed": 1351504616
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      2,
+      2,
+      3,
+      2,
+      5,
+      4,
+      6,
+      2,
+      6,
+      3
+    ],
+    "all_exact": 280,
+    "oracle_saved": 12,
+    "greedy_saved": 12,
+    "oracle_mask": 513,
+    "greedy_mask": 513,
+    "seed": 1693601749
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      5,
+      6,
+      2,
+      6,
+      4,
+      2
+    ],
+    "all_exact": 224,
+    "oracle_saved": 27,
+    "greedy_saved": 27,
+    "oracle_mask": 37,
+    "greedy_mask": 37,
+    "seed": 2701804175
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      2,
+      2,
+      6,
+      2,
+      5,
+      5,
+      3,
+      5,
+      2,
+      5
+    ],
+    "all_exact": 308,
+    "oracle_saved": 27,
+    "greedy_saved": 27,
+    "oracle_mask": 769,
+    "greedy_mask": 769,
+    "seed": 1094499150
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      4,
+      6,
+      4,
+      6,
+      6,
+      5,
+      2
+    ],
+    "all_exact": 315,
+    "oracle_saved": 18,
+    "greedy_saved": 18,
+    "oracle_mask": 65,
+    "greedy_mask": 65,
+    "seed": 3346121223
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      5,
+      6,
+      5,
+      3,
+      4
+    ],
+    "all_exact": 217,
+    "oracle_saved": 45,
+    "greedy_saved": 45,
+    "oracle_mask": 25,
+    "greedy_mask": 25,
+    "seed": 2711344124
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      5,
+      5,
+      5,
+      2,
+      2,
+      5,
+      2,
+      6,
+      3,
+      3,
+      5,
+      4
+    ],
+    "all_exact": 406,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 3476200727
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      6,
+      3,
+      4,
+      6,
+      3,
+      6,
+      2
+    ],
+    "all_exact": 273,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 65,
+    "greedy_mask": 65,
+    "seed": 2581545917
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      3,
+      4,
+      6,
+      4,
+      2,
+      3,
+      3,
+      3,
+      4,
+      5,
+      5
+    ],
+    "all_exact": 357,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 1025,
+    "greedy_mask": 1025,
+    "seed": 3018516140
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      4,
+      3,
+      4,
+      2,
+      6,
+      6
+    ],
+    "all_exact": 224,
+    "oracle_saved": 57,
+    "greedy_saved": 57,
+    "oracle_mask": 37,
+    "greedy_mask": 37,
+    "seed": 926097556
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      4,
+      4,
+      2,
+      4,
+      2,
+      5,
+      5
+    ],
+    "all_exact": 217,
+    "oracle_saved": 42,
+    "greedy_saved": 36,
+    "oracle_mask": 85,
+    "greedy_mask": 65,
+    "seed": 1555626621
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      2,
+      2,
+      3,
+      4,
+      2
+    ],
+    "all_exact": 77,
+    "oracle_saved": 6,
+    "greedy_saved": 6,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 3627531109
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      6,
+      5,
+      2,
+      4,
+      4,
+      6,
+      2
+    ],
+    "all_exact": 259,
+    "oracle_saved": 57,
+    "greedy_saved": 57,
+    "oracle_mask": 97,
+    "greedy_mask": 97,
+    "seed": 2047171667
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      5,
+      5,
+      5,
+      5,
+      2
+    ],
+    "all_exact": 203,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 3458263239
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      4,
+      6,
+      2,
+      3,
+      5,
+      5
+    ],
+    "all_exact": 224,
+    "oracle_saved": 39,
+    "greedy_saved": 39,
+    "oracle_mask": 37,
+    "greedy_mask": 37,
+    "seed": 2565027462
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      3,
+      6,
+      4,
+      5,
+      4,
+      2,
+      2,
+      5,
+      4,
+      6,
+      6,
+      3
+    ],
+    "all_exact": 448,
+    "oracle_saved": 18,
+    "greedy_saved": 18,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 2147452861
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      6,
+      4,
+      4,
+      4,
+      3
+    ],
+    "all_exact": 189,
+    "oracle_saved": 51,
+    "greedy_saved": 51,
+    "oracle_mask": 19,
+    "greedy_mask": 19,
+    "seed": 1230634495
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      5,
+      6,
+      3,
+      5,
+      2,
+      3,
+      2,
+      3,
+      3,
+      2,
+      2
+    ],
+    "all_exact": 273,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 1601,
+    "greedy_mask": 1601,
+    "seed": 4039091352
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      2,
+      3,
+      5,
+      5,
+      6,
+      3,
+      2,
+      2
+    ],
+    "all_exact": 224,
+    "oracle_saved": 6,
+    "greedy_saved": 6,
+    "oracle_mask": 129,
+    "greedy_mask": 129,
+    "seed": 2871348256
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      2,
+      2,
+      3,
+      3,
+      3,
+      5,
+      5,
+      5,
+      5
+    ],
+    "all_exact": 273,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 516951522
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      6,
+      4,
+      5,
+      3,
+      3,
+      3,
+      6,
+      6,
+      5,
+      5,
+      4,
+      4
+    ],
+    "all_exact": 504,
+    "oracle_saved": 42,
+    "greedy_saved": 42,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 2319712754
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      4,
+      6,
+      5,
+      5,
+      6,
+      5,
+      6,
+      5,
+      3
+    ],
+    "all_exact": 441,
+    "oracle_saved": 45,
+    "greedy_saved": 45,
+    "oracle_mask": 265,
+    "greedy_mask": 265,
+    "seed": 1117927877
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      3,
+      6,
+      4,
+      4,
+      3,
+      6
+    ],
+    "all_exact": 238,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 33,
+    "greedy_mask": 33,
+    "seed": 3150049892
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      5,
+      2,
+      5,
+      3,
+      6,
+      6
+    ],
+    "all_exact": 252,
+    "oracle_saved": 48,
+    "greedy_saved": 48,
+    "oracle_mask": 33,
+    "greedy_mask": 33,
+    "seed": 3759015724
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      6,
+      3,
+      5,
+      6,
+      3
+    ],
+    "all_exact": 217,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 3822423123
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      6,
+      6,
+      2,
+      4,
+      6,
+      6,
+      5,
+      6,
+      6
+    ],
+    "all_exact": 469,
+    "oracle_saved": 54,
+    "greedy_saved": 54,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 3602221586
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      2,
+      5,
+      4,
+      4,
+      5
+    ],
+    "all_exact": 175,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 3503004558
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      4,
+      3,
+      3,
+      3,
+      4,
+      6,
+      4,
+      3
+    ],
+    "all_exact": 252,
+    "oracle_saved": 33,
+    "greedy_saved": 33,
+    "oracle_mask": 131,
+    "greedy_mask": 131,
+    "seed": 1791938268
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      3,
+      2,
+      5,
+      2,
+      5,
+      2,
+      5,
+      3,
+      5
+    ],
+    "all_exact": 259,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 2372381169
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      5,
+      4,
+      5,
+      4,
+      6,
+      2,
+      2,
+      4,
+      4,
+      2
+    ],
+    "all_exact": 322,
+    "oracle_saved": 39,
+    "greedy_saved": 39,
+    "oracle_mask": 769,
+    "greedy_mask": 769,
+    "seed": 3207504073
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      2,
+      5,
+      4,
+      4,
+      3,
+      6,
+      5,
+      4,
+      2,
+      3,
+      6
+    ],
+    "all_exact": 385,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 1025,
+    "greedy_mask": 1025,
+    "seed": 1615933876
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      3,
+      5,
+      4,
+      5,
+      4
+    ],
+    "all_exact": 189,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 3856535516
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      6,
+      6,
+      4,
+      3,
+      5,
+      4,
+      5,
+      6,
+      3
+    ],
+    "all_exact": 399,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 2451755204
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      5,
+      5,
+      6,
+      3,
+      3,
+      5,
+      5,
+      6,
+      3,
+      6
+    ],
+    "all_exact": 448,
+    "oracle_saved": 48,
+    "greedy_saved": 48,
+    "oracle_mask": 513,
+    "greedy_mask": 513,
+    "seed": 263935644
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      6,
+      3,
+      3,
+      3,
+      5,
+      3,
+      6,
+      6,
+      4
+    ],
+    "all_exact": 357,
+    "oracle_saved": 60,
+    "greedy_saved": 42,
+    "oracle_mask": 263,
+    "greedy_mask": 257,
+    "seed": 1681226672
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      3,
+      5,
+      5,
+      5,
+      4,
+      5,
+      5,
+      2,
+      5,
+      2,
+      4
+    ],
+    "all_exact": 399,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 1025,
+    "greedy_mask": 1025,
+    "seed": 359177626
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      5,
+      6,
+      3,
+      5,
+      5,
+      3,
+      4
+    ],
+    "all_exact": 287,
+    "oracle_saved": 45,
+    "greedy_saved": 45,
+    "oracle_mask": 97,
+    "greedy_mask": 97,
+    "seed": 3659601879
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      5,
+      5,
+      4,
+      3,
+      6,
+      4,
+      3
+    ],
+    "all_exact": 273,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 65,
+    "greedy_mask": 65,
+    "seed": 2494460105
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      2,
+      6,
+      5,
+      5,
+      2,
+      4,
+      6,
+      6,
+      3,
+      3
+    ],
+    "all_exact": 378,
+    "oracle_saved": 12,
+    "greedy_saved": 12,
+    "oracle_mask": 513,
+    "greedy_mask": 513,
+    "seed": 63229409
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      4,
+      5,
+      4,
+      2,
+      3
+    ],
+    "all_exact": 147,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 508599986
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      5,
+      3,
+      3,
+      6,
+      6,
+      4,
+      6,
+      4
+    ],
+    "all_exact": 350,
+    "oracle_saved": 63,
+    "greedy_saved": 63,
+    "oracle_mask": 193,
+    "greedy_mask": 193,
+    "seed": 3662373773
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      3,
+      3,
+      5,
+      5,
+      4,
+      4,
+      2,
+      2,
+      4,
+      2,
+      6,
+      4
+    ],
+    "all_exact": 364,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 999202345
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      6,
+      4,
+      4,
+      4,
+      3,
+      5,
+      6,
+      5,
+      6
+    ],
+    "all_exact": 413,
+    "oracle_saved": 54,
+    "greedy_saved": 54,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 3871245435
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      4,
+      3,
+      4,
+      4,
+      4,
+      5,
+      2,
+      3,
+      2,
+      5,
+      5,
+      2
+    ],
+    "all_exact": 350,
+    "oracle_saved": 18,
+    "greedy_saved": 18,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 1259997896
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      5,
+      2,
+      2,
+      6,
+      3,
+      6,
+      2,
+      6,
+      4,
+      2,
+      3
+    ],
+    "all_exact": 343,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 1025,
+    "greedy_mask": 1025,
+    "seed": 3536392223
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      4,
+      2,
+      4,
+      4,
+      2,
+      4,
+      4,
+      2,
+      2,
+      5
+    ],
+    "all_exact": 252,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 513,
+    "greedy_mask": 513,
+    "seed": 952057944
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      2,
+      3,
+      5,
+      6,
+      3,
+      5,
+      3,
+      5,
+      4,
+      4,
+      3
+    ],
+    "all_exact": 371,
+    "oracle_saved": 27,
+    "greedy_saved": 27,
+    "oracle_mask": 1281,
+    "greedy_mask": 1281,
+    "seed": 3865365505
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      6,
+      5,
+      6,
+      6,
+      4,
+      5,
+      2,
+      4,
+      2,
+      5,
+      2,
+      5
+    ],
+    "all_exact": 476,
+    "oracle_saved": 51,
+    "greedy_saved": 51,
+    "oracle_mask": 3073,
+    "greedy_mask": 3073,
+    "seed": 3915604385
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      4,
+      5,
+      4,
+      4,
+      3,
+      4,
+      4,
+      3
+    ],
+    "all_exact": 266,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 129,
+    "greedy_mask": 129,
+    "seed": 3681668695
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      3,
+      2,
+      2,
+      2,
+      2,
+      6,
+      4,
+      4,
+      3,
+      2,
+      3,
+      3
+    ],
+    "all_exact": 252,
+    "oracle_saved": 18,
+    "greedy_saved": 18,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 615343754
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      2,
+      2,
+      3,
+      4,
+      5,
+      4,
+      4,
+      2,
+      2
+    ],
+    "all_exact": 203,
+    "oracle_saved": 6,
+    "greedy_saved": 6,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 248048077
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      3,
+      4,
+      5,
+      5,
+      5
+    ],
+    "all_exact": 203,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 1809453160
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      6,
+      5,
+      4,
+      4,
+      6,
+      6,
+      6,
+      4,
+      4,
+      6
+    ],
+    "all_exact": 504,
+    "oracle_saved": 54,
+    "greedy_saved": 54,
+    "oracle_mask": 513,
+    "greedy_mask": 513,
+    "seed": 1048853170
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      4,
+      6,
+      4,
+      3,
+      4,
+      3,
+      6,
+      2
+    ],
+    "all_exact": 280,
+    "oracle_saved": 18,
+    "greedy_saved": 18,
+    "oracle_mask": 129,
+    "greedy_mask": 129,
+    "seed": 2806975016
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      3,
+      6,
+      4,
+      5,
+      2
+    ],
+    "all_exact": 175,
+    "oracle_saved": 12,
+    "greedy_saved": 12,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 167136339
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      2,
+      5,
+      2,
+      6,
+      6,
+      6,
+      5,
+      6,
+      2,
+      2,
+      3,
+      2
+    ],
+    "all_exact": 406,
+    "oracle_saved": 6,
+    "greedy_saved": 6,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 628761304
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      5,
+      2,
+      3,
+      6,
+      4,
+      3
+    ],
+    "all_exact": 196,
+    "oracle_saved": 42,
+    "greedy_saved": 42,
+    "oracle_mask": 39,
+    "greedy_mask": 39,
+    "seed": 4095841319
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      6,
+      5,
+      6,
+      3,
+      4,
+      5,
+      4,
+      4,
+      4,
+      2
+    ],
+    "all_exact": 392,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 513,
+    "greedy_mask": 513,
+    "seed": 3976139352
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      2,
+      5,
+      5,
+      5,
+      6,
+      3,
+      5,
+      6
+    ],
+    "all_exact": 350,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 129,
+    "greedy_mask": 129,
+    "seed": 317134242
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      4,
+      3,
+      6,
+      6,
+      5,
+      2,
+      5,
+      2,
+      2,
+      4,
+      5
+    ],
+    "all_exact": 385,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 1025,
+    "greedy_mask": 1025,
+    "seed": 3251875137
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      4,
+      4,
+      4,
+      3,
+      6,
+      5,
+      5,
+      3
+    ],
+    "all_exact": 308,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 129,
+    "greedy_mask": 129,
+    "seed": 4222117566
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      4,
+      4,
+      2,
+      5,
+      6,
+      6,
+      3
+    ],
+    "all_exact": 273,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 65,
+    "greedy_mask": 65,
+    "seed": 4251705484
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      4,
+      2,
+      5,
+      4,
+      6,
+      5,
+      2,
+      6,
+      6,
+      2,
+      5,
+      4
+    ],
+    "all_exact": 462,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 1905860732
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      5,
+      6,
+      3,
+      4,
+      5,
+      2
+    ],
+    "all_exact": 224,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 33,
+    "greedy_mask": 33,
+    "seed": 1632721875
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      5,
+      4,
+      2,
+      6,
+      2,
+      3
+    ],
+    "all_exact": 182,
+    "oracle_saved": 45,
+    "greedy_saved": 45,
+    "oracle_mask": 35,
+    "greedy_mask": 35,
+    "seed": 1935770631
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      6,
+      2,
+      3,
+      4,
+      3,
+      2,
+      3,
+      2,
+      3
+    ],
+    "all_exact": 203,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 1425936345
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      4,
+      3,
+      4,
+      3,
+      4,
+      4,
+      2,
+      3,
+      6
+    ],
+    "all_exact": 273,
+    "oracle_saved": 45,
+    "greedy_saved": 45,
+    "oracle_mask": 321,
+    "greedy_mask": 321,
+    "seed": 1099995669
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      6,
+      5,
+      2,
+      2,
+      3,
+      5
+    ],
+    "all_exact": 196,
+    "oracle_saved": 51,
+    "greedy_saved": 51,
+    "oracle_mask": 37,
+    "greedy_mask": 37,
+    "seed": 32342175
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      2,
+      2,
+      3,
+      4,
+      5
+    ],
+    "all_exact": 119,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 115237032
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      6,
+      5,
+      4,
+      6,
+      5,
+      3,
+      3,
+      2,
+      4
+    ],
+    "all_exact": 343,
+    "oracle_saved": 42,
+    "greedy_saved": 42,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 4154701252
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      6,
+      6,
+      4,
+      3,
+      6
+    ],
+    "all_exact": 245,
+    "oracle_saved": 54,
+    "greedy_saved": 54,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 1513525267
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      3,
+      2,
+      4,
+      2,
+      4,
+      4,
+      5,
+      2,
+      5,
+      2,
+      2,
+      2
+    ],
+    "all_exact": 266,
+    "oracle_saved": 12,
+    "greedy_saved": 12,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 4042793370
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      5,
+      3,
+      3,
+      6,
+      6,
+      5
+    ],
+    "all_exact": 266,
+    "oracle_saved": 69,
+    "greedy_saved": 69,
+    "oracle_mask": 49,
+    "greedy_mask": 49,
+    "seed": 1521742069
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      6,
+      2,
+      2,
+      3,
+      5,
+      3,
+      6,
+      4,
+      4,
+      5,
+      6,
+      4
+    ],
+    "all_exact": 448,
+    "oracle_saved": 42,
+    "greedy_saved": 42,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 1541758018
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      2,
+      2,
+      5,
+      3,
+      3,
+      5,
+      5,
+      4,
+      3,
+      4,
+      2,
+      5
+    ],
+    "all_exact": 350,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 1617231521
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      4,
+      2,
+      6,
+      3,
+      4,
+      3
+    ],
+    "all_exact": 182,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 33,
+    "greedy_mask": 33,
+    "seed": 50948443
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      5,
+      6,
+      6,
+      3,
+      5
+    ],
+    "all_exact": 245,
+    "oracle_saved": 42,
+    "greedy_saved": 42,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 831978176
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      4,
+      5,
+      5,
+      3,
+      3,
+      2,
+      6
+    ],
+    "all_exact": 245,
+    "oracle_saved": 42,
+    "greedy_saved": 42,
+    "oracle_mask": 65,
+    "greedy_mask": 65,
+    "seed": 2216800966
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      4,
+      5,
+      4,
+      3,
+      6,
+      4,
+      6,
+      5
+    ],
+    "all_exact": 350,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 129,
+    "greedy_mask": 129,
+    "seed": 2791866381
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      6,
+      5,
+      5,
+      5,
+      3,
+      6,
+      3,
+      4
+    ],
+    "all_exact": 350,
+    "oracle_saved": 42,
+    "greedy_saved": 42,
+    "oracle_mask": 129,
+    "greedy_mask": 129,
+    "seed": 3919070938
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      3,
+      4,
+      2,
+      6,
+      3,
+      3,
+      4,
+      5,
+      3,
+      3,
+      6
+    ],
+    "all_exact": 357,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 1025,
+    "greedy_mask": 1025,
+    "seed": 3454736461
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      5,
+      4,
+      3,
+      3,
+      6
+    ],
+    "all_exact": 189,
+    "oracle_saved": 48,
+    "greedy_saved": 48,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 1112688245
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      3,
+      5,
+      4,
+      3,
+      3,
+      2,
+      5,
+      6
+    ],
+    "all_exact": 266,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 129,
+    "greedy_mask": 129,
+    "seed": 182004188
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      6,
+      6,
+      3,
+      6,
+      6,
+      5,
+      4,
+      6,
+      6,
+      6,
+      5,
+      4
+    ],
+    "all_exact": 630,
+    "oracle_saved": 90,
+    "greedy_saved": 90,
+    "oracle_mask": 3585,
+    "greedy_mask": 3585,
+    "seed": 2895214243
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      2,
+      6,
+      2,
+      6,
+      3,
+      4
+    ],
+    "all_exact": 196,
+    "oracle_saved": 18,
+    "greedy_saved": 18,
+    "oracle_mask": 33,
+    "greedy_mask": 33,
+    "seed": 3892009805
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      3,
+      6,
+      6,
+      4,
+      4,
+      4,
+      5,
+      6,
+      4
+    ],
+    "all_exact": 399,
+    "oracle_saved": 51,
+    "greedy_saved": 51,
+    "oracle_mask": 259,
+    "greedy_mask": 259,
+    "seed": 4293375104
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      5,
+      4,
+      2,
+      4,
+      2,
+      3,
+      3,
+      6
+    ],
+    "all_exact": 238,
+    "oracle_saved": 57,
+    "greedy_saved": 57,
+    "oracle_mask": 193,
+    "greedy_mask": 193,
+    "seed": 827777267
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      5,
+      2,
+      4,
+      2,
+      5,
+      6,
+      5,
+      6,
+      3,
+      3,
+      6,
+      6
+    ],
+    "all_exact": 490,
+    "oracle_saved": 48,
+    "greedy_saved": 48,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 1681492507
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      3,
+      5,
+      3,
+      5,
+      6,
+      6,
+      3,
+      4
+    ],
+    "all_exact": 322,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 129,
+    "greedy_mask": 129,
+    "seed": 2974127555
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      2,
+      2,
+      2,
+      5,
+      2,
+      4
+    ],
+    "all_exact": 112,
+    "oracle_saved": 18,
+    "greedy_saved": 18,
+    "oracle_mask": 33,
+    "greedy_mask": 33,
+    "seed": 3600807480
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      4,
+      3,
+      2,
+      3,
+      6
+    ],
+    "all_exact": 147,
+    "oracle_saved": 42,
+    "greedy_saved": 42,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 3235104662
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      2,
+      2,
+      2,
+      5,
+      3,
+      4,
+      3,
+      4,
+      6
+    ],
+    "all_exact": 245,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 263,
+    "greedy_mask": 263,
+    "seed": 1270980819
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      3,
+      5,
+      3,
+      3,
+      3,
+      5,
+      2,
+      2,
+      4,
+      5,
+      5,
+      2
+    ],
+    "all_exact": 336,
+    "oracle_saved": 12,
+    "greedy_saved": 12,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 4154602036
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      2,
+      4,
+      2,
+      4,
+      3,
+      4,
+      2,
+      5,
+      6,
+      5,
+      4,
+      3
+    ],
+    "all_exact": 364,
+    "oracle_saved": 12,
+    "greedy_saved": 12,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 832806468
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      5,
+      3,
+      6,
+      4,
+      5,
+      5,
+      5
+    ],
+    "all_exact": 315,
+    "oracle_saved": 42,
+    "greedy_saved": 42,
+    "oracle_mask": 65,
+    "greedy_mask": 65,
+    "seed": 1090690279
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      6,
+      5,
+      5,
+      4,
+      2,
+      2,
+      3,
+      2,
+      4
+    ],
+    "all_exact": 273,
+    "oracle_saved": 48,
+    "greedy_saved": 48,
+    "oracle_mask": 401,
+    "greedy_mask": 401,
+    "seed": 3638073818
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      4,
+      6,
+      3,
+      6,
+      6,
+      4
+    ],
+    "all_exact": 280,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 33,
+    "greedy_mask": 33,
+    "seed": 1943118903
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      3,
+      4,
+      6,
+      2,
+      6,
+      2,
+      2,
+      3
+    ],
+    "all_exact": 224,
+    "oracle_saved": 33,
+    "greedy_saved": 33,
+    "oracle_mask": 131,
+    "greedy_mask": 131,
+    "seed": 634091756
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      5,
+      6,
+      2,
+      2,
+      6,
+      3
+    ],
+    "all_exact": 210,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 33,
+    "greedy_mask": 33,
+    "seed": 1942840392
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      5,
+      2,
+      2,
+      4,
+      3,
+      2,
+      5,
+      5
+    ],
+    "all_exact": 224,
+    "oracle_saved": 42,
+    "greedy_saved": 42,
+    "oracle_mask": 129,
+    "greedy_mask": 129,
+    "seed": 1450764682
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      6,
+      5,
+      6,
+      2,
+      5,
+      2,
+      6,
+      4
+    ],
+    "all_exact": 336,
+    "oracle_saved": 42,
+    "greedy_saved": 42,
+    "oracle_mask": 129,
+    "greedy_mask": 129,
+    "seed": 3064108116
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      5,
+      6,
+      6,
+      6,
+      2,
+      6
+    ],
+    "all_exact": 308,
+    "oracle_saved": 48,
+    "greedy_saved": 48,
+    "oracle_mask": 33,
+    "greedy_mask": 33,
+    "seed": 3460725281
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      5,
+      2,
+      2,
+      6,
+      5
+    ],
+    "all_exact": 175,
+    "oracle_saved": 75,
+    "greedy_saved": 75,
+    "oracle_mask": 31,
+    "greedy_mask": 31,
+    "seed": 3302428402
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      6,
+      2,
+      2,
+      4,
+      3
+    ],
+    "all_exact": 133,
+    "oracle_saved": 54,
+    "greedy_saved": 54,
+    "oracle_mask": 27,
+    "greedy_mask": 27,
+    "seed": 3367919452
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      4,
+      4,
+      2,
+      6,
+      5,
+      4,
+      3
+    ],
+    "all_exact": 245,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 65,
+    "greedy_mask": 65,
+    "seed": 1075100370
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      4,
+      5,
+      3,
+      5,
+      5,
+      4,
+      4,
+      2,
+      5,
+      2,
+      5,
+      3
+    ],
+    "all_exact": 406,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 1259971262
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      2,
+      3,
+      3,
+      5,
+      3,
+      2,
+      3,
+      5,
+      6,
+      6,
+      2,
+      4
+    ],
+    "all_exact": 364,
+    "oracle_saved": 18,
+    "greedy_saved": 18,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 2862465112
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      5,
+      2,
+      3,
+      5,
+      6,
+      5
+    ],
+    "all_exact": 238,
+    "oracle_saved": 42,
+    "greedy_saved": 42,
+    "oracle_mask": 33,
+    "greedy_mask": 33,
+    "seed": 611798181
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      5,
+      5,
+      5,
+      5,
+      2,
+      3,
+      2,
+      4,
+      2
+    ],
+    "all_exact": 273,
+    "oracle_saved": 33,
+    "greedy_saved": 33,
+    "oracle_mask": 289,
+    "greedy_mask": 289,
+    "seed": 1261983982
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      4,
+      2,
+      5,
+      2,
+      6
+    ],
+    "all_exact": 161,
+    "oracle_saved": 45,
+    "greedy_saved": 45,
+    "oracle_mask": 19,
+    "greedy_mask": 19,
+    "seed": 2405042109
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      4,
+      3,
+      4,
+      2,
+      2,
+      4,
+      5,
+      6
+    ],
+    "all_exact": 252,
+    "oracle_saved": 42,
+    "greedy_saved": 42,
+    "oracle_mask": 129,
+    "greedy_mask": 129,
+    "seed": 1953289737
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      4,
+      4,
+      6,
+      5,
+      3,
+      6,
+      2,
+      6,
+      3,
+      3,
+      4,
+      4
+    ],
+    "all_exact": 448,
+    "oracle_saved": 45,
+    "greedy_saved": 45,
+    "oracle_mask": 2051,
+    "greedy_mask": 2051,
+    "seed": 2932388106
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      4,
+      5,
+      3,
+      6,
+      3
+    ],
+    "all_exact": 189,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 2449418201
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      5,
+      3,
+      4,
+      2,
+      6
+    ],
+    "all_exact": 175,
+    "oracle_saved": 48,
+    "greedy_saved": 48,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 1081738845
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      4,
+      2,
+      6,
+      4,
+      3,
+      5,
+      4,
+      5,
+      6
+    ],
+    "all_exact": 357,
+    "oracle_saved": 63,
+    "greedy_saved": 63,
+    "oracle_mask": 289,
+    "greedy_mask": 289,
+    "seed": 2399752204
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      3,
+      5,
+      4,
+      3,
+      5,
+      2,
+      6,
+      3,
+      6,
+      2,
+      6,
+      6
+    ],
+    "all_exact": 462,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 107095248
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      2,
+      6,
+      4,
+      2,
+      2,
+      2,
+      4,
+      2,
+      3
+    ],
+    "all_exact": 189,
+    "oracle_saved": 12,
+    "greedy_saved": 12,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 4076554189
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      6,
+      4,
+      2,
+      5,
+      2,
+      3,
+      3,
+      4,
+      4,
+      3,
+      3,
+      6
+    ],
+    "all_exact": 378,
+    "oracle_saved": 75,
+    "greedy_saved": 75,
+    "oracle_mask": 2057,
+    "greedy_mask": 2057,
+    "seed": 745099534
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      2,
+      5,
+      3,
+      4,
+      2,
+      3,
+      2,
+      6
+    ],
+    "all_exact": 210,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 129,
+    "greedy_mask": 129,
+    "seed": 616032530
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      5,
+      4,
+      5,
+      2,
+      6,
+      4
+    ],
+    "all_exact": 238,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 33,
+    "greedy_mask": 33,
+    "seed": 2738879901
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      5,
+      6,
+      3,
+      2,
+      3
+    ],
+    "all_exact": 161,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 4082402898
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      4,
+      5,
+      6,
+      2,
+      3,
+      3,
+      4,
+      2,
+      4,
+      2,
+      5
+    ],
+    "all_exact": 329,
+    "oracle_saved": 39,
+    "greedy_saved": 39,
+    "oracle_mask": 1537,
+    "greedy_mask": 1537,
+    "seed": 2825513678
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      2,
+      2,
+      4,
+      2,
+      6,
+      2,
+      2,
+      3
+    ],
+    "all_exact": 154,
+    "oracle_saved": 12,
+    "greedy_saved": 12,
+    "oracle_mask": 129,
+    "greedy_mask": 129,
+    "seed": 3070649411
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      5,
+      4,
+      3,
+      5,
+      3,
+      6,
+      4,
+      4,
+      2,
+      6
+    ],
+    "all_exact": 378,
+    "oracle_saved": 48,
+    "greedy_saved": 48,
+    "oracle_mask": 513,
+    "greedy_mask": 513,
+    "seed": 2855573926
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      5,
+      3,
+      5,
+      3,
+      2
+    ],
+    "all_exact": 147,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 735295941
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      2,
+      2,
+      6,
+      3,
+      4,
+      2,
+      5,
+      3,
+      4
+    ],
+    "all_exact": 245,
+    "oracle_saved": 18,
+    "greedy_saved": 18,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 3783794799
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      2,
+      5,
+      4,
+      4,
+      6,
+      3,
+      2,
+      3,
+      3,
+      5,
+      2,
+      6
+    ],
+    "all_exact": 378,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 3720021086
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      3,
+      6,
+      2,
+      5,
+      6,
+      6,
+      2,
+      5,
+      6
+    ],
+    "all_exact": 385,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 1978254443
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      2,
+      2,
+      3,
+      2,
+      3,
+      2
+    ],
+    "all_exact": 70,
+    "oracle_saved": 9,
+    "greedy_saved": 9,
+    "oracle_mask": 35,
+    "greedy_mask": 35,
+    "seed": 2585805382
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      6,
+      5,
+      4,
+      5,
+      3,
+      5,
+      2,
+      3,
+      2,
+      5
+    ],
+    "all_exact": 350,
+    "oracle_saved": 51,
+    "greedy_saved": 51,
+    "oracle_mask": 769,
+    "greedy_mask": 769,
+    "seed": 1286411146
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      6,
+      2,
+      2,
+      6,
+      3
+    ],
+    "all_exact": 161,
+    "oracle_saved": 42,
+    "greedy_saved": 42,
+    "oracle_mask": 23,
+    "greedy_mask": 23,
+    "seed": 521275543
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      5,
+      2,
+      6,
+      5,
+      3,
+      5,
+      6,
+      6,
+      5,
+      2,
+      6
+    ],
+    "all_exact": 483,
+    "oracle_saved": 48,
+    "greedy_saved": 48,
+    "oracle_mask": 1025,
+    "greedy_mask": 1025,
+    "seed": 2932328117
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      6,
+      6,
+      3,
+      2,
+      5,
+      5,
+      6,
+      2,
+      5,
+      4
+    ],
+    "all_exact": 406,
+    "oracle_saved": 69,
+    "greedy_saved": 69,
+    "oracle_mask": 515,
+    "greedy_mask": 515,
+    "seed": 3776457326
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      4,
+      6,
+      3,
+      6,
+      3,
+      3,
+      2,
+      2,
+      3,
+      3
+    ],
+    "all_exact": 280,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 513,
+    "greedy_mask": 513,
+    "seed": 421478264
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      4,
+      5,
+      4,
+      4,
+      2,
+      4,
+      4,
+      5,
+      5
+    ],
+    "all_exact": 329,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 1610586586
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      2,
+      6,
+      3,
+      2,
+      6,
+      6,
+      5
+    ],
+    "all_exact": 273,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 65,
+    "greedy_mask": 65,
+    "seed": 3151025074
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      2,
+      3,
+      3,
+      6,
+      4,
+      5,
+      6,
+      5,
+      6,
+      3,
+      6
+    ],
+    "all_exact": 455,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 1025,
+    "greedy_mask": 1025,
+    "seed": 3895792499
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      6,
+      4,
+      5,
+      3,
+      5,
+      4,
+      6,
+      2,
+      5
+    ],
+    "all_exact": 371,
+    "oracle_saved": 48,
+    "greedy_saved": 48,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 1467587806
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      5,
+      2,
+      2,
+      2,
+      3
+    ],
+    "all_exact": 91,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 4104756844
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      6,
+      4,
+      2,
+      6,
+      6,
+      3,
+      2,
+      6
+    ],
+    "all_exact": 322,
+    "oracle_saved": 54,
+    "greedy_saved": 54,
+    "oracle_mask": 129,
+    "greedy_mask": 129,
+    "seed": 1522027498
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      4,
+      3,
+      5,
+      2,
+      5,
+      4,
+      3,
+      3,
+      3
+    ],
+    "all_exact": 259,
+    "oracle_saved": 45,
+    "greedy_saved": 27,
+    "oracle_mask": 457,
+    "greedy_mask": 265,
+    "seed": 4212746063
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      2,
+      4,
+      3,
+      4,
+      2,
+      6,
+      2,
+      4,
+      6,
+      4,
+      5
+    ],
+    "all_exact": 357,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 1025,
+    "greedy_mask": 1025,
+    "seed": 1805660487
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      3,
+      2,
+      5,
+      5,
+      6,
+      6,
+      3,
+      2
+    ],
+    "all_exact": 280,
+    "oracle_saved": 12,
+    "greedy_saved": 12,
+    "oracle_mask": 129,
+    "greedy_mask": 129,
+    "seed": 2548774286
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      4,
+      6,
+      3,
+      4,
+      6,
+      3
+    ],
+    "all_exact": 238,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 33,
+    "greedy_mask": 33,
+    "seed": 1555864318
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      5,
+      6,
+      2,
+      4,
+      3,
+      3,
+      3,
+      4,
+      4,
+      3,
+      2
+    ],
+    "all_exact": 315,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 1025,
+    "greedy_mask": 1025,
+    "seed": 4271436862
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      3,
+      3,
+      2,
+      2,
+      4,
+      3
+    ],
+    "all_exact": 112,
+    "oracle_saved": 24,
+    "greedy_saved": 18,
+    "oracle_mask": 45,
+    "greedy_mask": 33,
+    "seed": 3133059737
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      5,
+      4,
+      5,
+      6,
+      5,
+      4,
+      6
+    ],
+    "all_exact": 343,
+    "oracle_saved": 48,
+    "greedy_saved": 48,
+    "oracle_mask": 65,
+    "greedy_mask": 65,
+    "seed": 283458528
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      6,
+      2,
+      4,
+      4,
+      6,
+      3,
+      5,
+      5,
+      4,
+      4
+    ],
+    "all_exact": 392,
+    "oracle_saved": 42,
+    "greedy_saved": 42,
+    "oracle_mask": 513,
+    "greedy_mask": 513,
+    "seed": 2467664423
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      3,
+      5,
+      6,
+      5,
+      3,
+      3,
+      2,
+      2,
+      4,
+      3,
+      3
+    ],
+    "all_exact": 315,
+    "oracle_saved": 18,
+    "greedy_saved": 18,
+    "oracle_mask": 1025,
+    "greedy_mask": 1025,
+    "seed": 1311584155
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      3,
+      2,
+      2,
+      5,
+      6,
+      3,
+      4,
+      5,
+      5
+    ],
+    "all_exact": 301,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 2712178383
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      4,
+      2,
+      6,
+      5,
+      5,
+      2,
+      6,
+      6,
+      6,
+      5,
+      3
+    ],
+    "all_exact": 469,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 1025,
+    "greedy_mask": 1025,
+    "seed": 3739095931
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      5,
+      2,
+      5,
+      5,
+      3,
+      2,
+      3,
+      4,
+      2,
+      6
+    ],
+    "all_exact": 308,
+    "oracle_saved": 48,
+    "greedy_saved": 48,
+    "oracle_mask": 513,
+    "greedy_mask": 513,
+    "seed": 1547794787
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      5,
+      3,
+      3,
+      5,
+      4,
+      5,
+      3,
+      5,
+      2,
+      4,
+      2
+    ],
+    "all_exact": 343,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 1025,
+    "greedy_mask": 1025,
+    "seed": 1148412405
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      6,
+      6,
+      5,
+      2,
+      2,
+      2,
+      2
+    ],
+    "all_exact": 203,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 65,
+    "greedy_mask": 65,
+    "seed": 3556520795
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      2,
+      3,
+      2,
+      6,
+      4,
+      6,
+      2,
+      5,
+      3,
+      4,
+      6
+    ],
+    "all_exact": 371,
+    "oracle_saved": 39,
+    "greedy_saved": 39,
+    "oracle_mask": 1027,
+    "greedy_mask": 1027,
+    "seed": 4016103461
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      3,
+      4,
+      3,
+      2,
+      2,
+      2,
+      6,
+      2,
+      5,
+      6,
+      3
+    ],
+    "all_exact": 301,
+    "oracle_saved": 24,
+    "greedy_saved": 18,
+    "oracle_mask": 1073,
+    "greedy_mask": 1025,
+    "seed": 1374442494
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      4,
+      3,
+      6,
+      6,
+      3,
+      5,
+      5
+    ],
+    "all_exact": 301,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 65,
+    "greedy_mask": 65,
+    "seed": 697991948
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      4,
+      6,
+      6,
+      4,
+      4,
+      6,
+      2,
+      6
+    ],
+    "all_exact": 364,
+    "oracle_saved": 69,
+    "greedy_saved": 69,
+    "oracle_mask": 131,
+    "greedy_mask": 131,
+    "seed": 1356464957
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      2,
+      5,
+      3,
+      4,
+      6,
+      3
+    ],
+    "all_exact": 196,
+    "oracle_saved": 12,
+    "greedy_saved": 12,
+    "oracle_mask": 33,
+    "greedy_mask": 33,
+    "seed": 3992303632
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      3,
+      4,
+      5,
+      6,
+      3,
+      6,
+      6,
+      4
+    ],
+    "all_exact": 350,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 129,
+    "greedy_mask": 129,
+    "seed": 685326555
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      3,
+      3,
+      3,
+      2,
+      2,
+      4,
+      6,
+      3
+    ],
+    "all_exact": 196,
+    "oracle_saved": 18,
+    "greedy_saved": 18,
+    "oracle_mask": 129,
+    "greedy_mask": 129,
+    "seed": 3220932381
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      6,
+      2,
+      4,
+      2,
+      4,
+      5,
+      6,
+      4,
+      3,
+      6
+    ],
+    "all_exact": 378,
+    "oracle_saved": 54,
+    "greedy_saved": 54,
+    "oracle_mask": 513,
+    "greedy_mask": 513,
+    "seed": 3995624207
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      2,
+      6,
+      5,
+      2,
+      2
+    ],
+    "all_exact": 133,
+    "oracle_saved": 6,
+    "greedy_saved": 6,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 3883959301
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      5,
+      5,
+      2,
+      6,
+      3,
+      2,
+      5,
+      3,
+      4,
+      6,
+      5
+    ],
+    "all_exact": 413,
+    "oracle_saved": 42,
+    "greedy_saved": 42,
+    "oracle_mask": 1025,
+    "greedy_mask": 1025,
+    "seed": 486947828
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      6,
+      5,
+      3,
+      5,
+      4,
+      3,
+      6,
+      2
+    ],
+    "all_exact": 308,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 129,
+    "greedy_mask": 129,
+    "seed": 2087608216
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      5,
+      5,
+      2,
+      3,
+      3,
+      6,
+      3,
+      3
+    ],
+    "all_exact": 252,
+    "oracle_saved": 39,
+    "greedy_saved": 39,
+    "oracle_mask": 193,
+    "greedy_mask": 193,
+    "seed": 2259427019
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      6,
+      6,
+      2,
+      4,
+      6
+    ],
+    "all_exact": 231,
+    "oracle_saved": 54,
+    "greedy_saved": 54,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 2418459139
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      4,
+      6,
+      6,
+      4,
+      5,
+      5,
+      5,
+      6,
+      3,
+      6
+    ],
+    "all_exact": 490,
+    "oracle_saved": 42,
+    "greedy_saved": 42,
+    "oracle_mask": 513,
+    "greedy_mask": 513,
+    "seed": 2656080050
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      6,
+      3,
+      6,
+      6,
+      2,
+      4,
+      6,
+      3,
+      4,
+      3,
+      3
+    ],
+    "all_exact": 413,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 1025,
+    "greedy_mask": 1025,
+    "seed": 2513656341
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      6,
+      5,
+      4,
+      4,
+      3,
+      3,
+      5,
+      5,
+      6,
+      5,
+      6,
+      2
+    ],
+    "all_exact": 504,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 502416469
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      3,
+      5,
+      5,
+      2,
+      4,
+      6,
+      5,
+      3,
+      2,
+      4,
+      5
+    ],
+    "all_exact": 385,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 1025,
+    "greedy_mask": 1025,
+    "seed": 2234491882
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      4,
+      5,
+      4,
+      3,
+      3,
+      5,
+      5,
+      2,
+      4,
+      5
+    ],
+    "all_exact": 350,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 513,
+    "greedy_mask": 513,
+    "seed": 1422244631
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      6,
+      2,
+      2,
+      5,
+      5,
+      6,
+      2,
+      4,
+      5,
+      2,
+      6
+    ],
+    "all_exact": 399,
+    "oracle_saved": 60,
+    "greedy_saved": 54,
+    "oracle_mask": 1031,
+    "greedy_mask": 1025,
+    "seed": 2627912820
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      5,
+      2,
+      3,
+      4,
+      4
+    ],
+    "all_exact": 147,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 619218959
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      2,
+      5,
+      4,
+      2,
+      3,
+      2,
+      3,
+      3,
+      3,
+      5,
+      3,
+      4
+    ],
+    "all_exact": 294,
+    "oracle_saved": 18,
+    "greedy_saved": 18,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 2335614291
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      6,
+      4,
+      5,
+      5,
+      6,
+      3,
+      6,
+      6,
+      4,
+      2,
+      6
+    ],
+    "all_exact": 511,
+    "oracle_saved": 54,
+    "greedy_saved": 54,
+    "oracle_mask": 1025,
+    "greedy_mask": 1025,
+    "seed": 2402277869
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      2,
+      2,
+      4,
+      4,
+      5,
+      5,
+      4
+    ],
+    "all_exact": 217,
+    "oracle_saved": 18,
+    "greedy_saved": 18,
+    "oracle_mask": 65,
+    "greedy_mask": 65,
+    "seed": 1933441051
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      6,
+      5,
+      4,
+      3,
+      2,
+      6,
+      2,
+      6,
+      3
+    ],
+    "all_exact": 329,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 510646344
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      2,
+      3,
+      3,
+      2,
+      6,
+      5,
+      3,
+      5,
+      6,
+      4,
+      3,
+      3
+    ],
+    "all_exact": 378,
+    "oracle_saved": 12,
+    "greedy_saved": 12,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 2844820117
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      5,
+      6,
+      6,
+      6,
+      4,
+      2,
+      5,
+      3,
+      2,
+      2,
+      4,
+      5
+    ],
+    "all_exact": 448,
+    "oracle_saved": 42,
+    "greedy_saved": 42,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 2884776512
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      2,
+      3,
+      4,
+      4,
+      5,
+      2,
+      4,
+      2,
+      5,
+      3,
+      3,
+      5
+    ],
+    "all_exact": 336,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 500942829
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      6,
+      5,
+      5,
+      4,
+      4,
+      6,
+      6,
+      6
+    ],
+    "all_exact": 420,
+    "oracle_saved": 54,
+    "greedy_saved": 54,
+    "oracle_mask": 129,
+    "greedy_mask": 129,
+    "seed": 2219828520
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      3,
+      5,
+      5,
+      5,
+      6
+    ],
+    "all_exact": 231,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 1735634646
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      4,
+      6,
+      5,
+      2,
+      2,
+      3,
+      3,
+      5
+    ],
+    "all_exact": 252,
+    "oracle_saved": 63,
+    "greedy_saved": 63,
+    "oracle_mask": 131,
+    "greedy_mask": 131,
+    "seed": 546059566
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      5,
+      4,
+      4,
+      5,
+      3,
+      5,
+      3,
+      3,
+      2,
+      2,
+      4
+    ],
+    "all_exact": 329,
+    "oracle_saved": 39,
+    "greedy_saved": 39,
+    "oracle_mask": 1281,
+    "greedy_mask": 1281,
+    "seed": 446012563
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      2,
+      6,
+      3,
+      4,
+      5,
+      2,
+      4,
+      4,
+      5,
+      3,
+      4
+    ],
+    "all_exact": 357,
+    "oracle_saved": 18,
+    "greedy_saved": 18,
+    "oracle_mask": 1025,
+    "greedy_mask": 1025,
+    "seed": 3198073913
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      2,
+      6,
+      2,
+      2,
+      6,
+      4,
+      4,
+      2,
+      2
+    ],
+    "all_exact": 231,
+    "oracle_saved": 6,
+    "greedy_saved": 6,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 3678081150
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      6,
+      3,
+      4,
+      3,
+      4,
+      5,
+      3,
+      2,
+      3,
+      5,
+      3
+    ],
+    "all_exact": 343,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 1025,
+    "greedy_mask": 1025,
+    "seed": 2686270095
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      5,
+      2,
+      3,
+      6,
+      2,
+      6,
+      6
+    ],
+    "all_exact": 273,
+    "oracle_saved": 51,
+    "greedy_saved": 51,
+    "oracle_mask": 67,
+    "greedy_mask": 67,
+    "seed": 1199821973
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      6,
+      6,
+      5,
+      6,
+      4,
+      5,
+      3,
+      4,
+      3,
+      3,
+      5,
+      5
+    ],
+    "all_exact": 518,
+    "oracle_saved": 48,
+    "greedy_saved": 48,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 3861493710
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      4,
+      4,
+      5,
+      2,
+      3
+    ],
+    "all_exact": 147,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 1571096640
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      2,
+      5,
+      5,
+      2,
+      2,
+      5,
+      5,
+      4,
+      4,
+      4,
+      3,
+      5
+    ],
+    "all_exact": 392,
+    "oracle_saved": 30,
+    "greedy_saved": 24,
+    "oracle_mask": 2073,
+    "greedy_mask": 2049,
+    "seed": 1641408855
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      6,
+      5,
+      2,
+      6,
+      3,
+      6,
+      6,
+      3,
+      2,
+      4
+    ],
+    "all_exact": 392,
+    "oracle_saved": 42,
+    "greedy_saved": 42,
+    "oracle_mask": 513,
+    "greedy_mask": 513,
+    "seed": 3008454199
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      5,
+      2,
+      3,
+      5,
+      5,
+      4,
+      4,
+      3
+    ],
+    "all_exact": 266,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 129,
+    "greedy_mask": 129,
+    "seed": 3773788104
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      2,
+      6,
+      6,
+      5,
+      5,
+      2,
+      5
+    ],
+    "all_exact": 287,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 65,
+    "greedy_mask": 65,
+    "seed": 770519656
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      2,
+      4,
+      2,
+      2,
+      6,
+      5,
+      3
+    ],
+    "all_exact": 189,
+    "oracle_saved": 12,
+    "greedy_saved": 12,
+    "oracle_mask": 65,
+    "greedy_mask": 65,
+    "seed": 611699463
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      6,
+      6,
+      3,
+      5,
+      6
+    ],
+    "all_exact": 259,
+    "oracle_saved": 54,
+    "greedy_saved": 54,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 2915766717
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      6,
+      2,
+      4,
+      6,
+      4,
+      5,
+      3,
+      3,
+      6,
+      2,
+      3,
+      2
+    ],
+    "all_exact": 392,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 691855195
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      5,
+      6,
+      4,
+      5,
+      3,
+      2
+    ],
+    "all_exact": 224,
+    "oracle_saved": 39,
+    "greedy_saved": 39,
+    "oracle_mask": 37,
+    "greedy_mask": 37,
+    "seed": 534335996
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      2,
+      3,
+      6,
+      2,
+      5,
+      5,
+      3,
+      4,
+      3,
+      2
+    ],
+    "all_exact": 280,
+    "oracle_saved": 6,
+    "greedy_saved": 6,
+    "oracle_mask": 513,
+    "greedy_mask": 513,
+    "seed": 204743510
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      4,
+      6,
+      4,
+      6,
+      5,
+      2,
+      5,
+      5
+    ],
+    "all_exact": 350,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 129,
+    "greedy_mask": 129,
+    "seed": 3569824897
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      4,
+      2,
+      4,
+      4,
+      4
+    ],
+    "all_exact": 147,
+    "oracle_saved": 33,
+    "greedy_saved": 33,
+    "oracle_mask": 19,
+    "greedy_mask": 19,
+    "seed": 2856423910
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      3,
+      4,
+      2,
+      6,
+      2,
+      4,
+      4,
+      3,
+      2,
+      3
+    ],
+    "all_exact": 252,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 519,
+    "greedy_mask": 519,
+    "seed": 1410676432
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      4,
+      4,
+      2,
+      2,
+      3,
+      4,
+      6,
+      6,
+      3
+    ],
+    "all_exact": 287,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 1342720090
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      3,
+      2,
+      2,
+      6,
+      4,
+      6,
+      5,
+      5,
+      2
+    ],
+    "all_exact": 301,
+    "oracle_saved": 15,
+    "greedy_saved": 15,
+    "oracle_mask": 259,
+    "greedy_mask": 259,
+    "seed": 199387828
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      5,
+      4,
+      3,
+      5,
+      2,
+      2
+    ],
+    "all_exact": 168,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 33,
+    "greedy_mask": 33,
+    "seed": 49309719
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      2,
+      3,
+      2,
+      2,
+      4,
+      4,
+      2,
+      5,
+      5
+    ],
+    "all_exact": 217,
+    "oracle_saved": 60,
+    "greedy_saved": 39,
+    "oracle_mask": 317,
+    "greedy_mask": 289,
+    "seed": 1583741
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      5,
+      4,
+      6,
+      4,
+      6,
+      4,
+      2
+    ],
+    "all_exact": 287,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 65,
+    "greedy_mask": 65,
+    "seed": 1404251889
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      5,
+      2,
+      4,
+      5,
+      2
+    ],
+    "all_exact": 147,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 887889738
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      5,
+      3,
+      6,
+      6,
+      2,
+      3
+    ],
+    "all_exact": 224,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 33,
+    "greedy_mask": 33,
+    "seed": 803907533
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      6,
+      2,
+      5,
+      2,
+      2,
+      6,
+      5,
+      4,
+      6
+    ],
+    "all_exact": 343,
+    "oracle_saved": 54,
+    "greedy_saved": 54,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 1129260106
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      4,
+      4,
+      3,
+      4,
+      3,
+      3
+    ],
+    "all_exact": 168,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 33,
+    "greedy_mask": 33,
+    "seed": 802482150
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      3,
+      4,
+      3,
+      5,
+      5,
+      5,
+      4,
+      5,
+      3,
+      3,
+      2,
+      3
+    ],
+    "all_exact": 378,
+    "oracle_saved": 18,
+    "greedy_saved": 18,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 1537526034
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      4,
+      2,
+      2,
+      6,
+      6,
+      4,
+      6,
+      6,
+      6
+    ],
+    "all_exact": 399,
+    "oracle_saved": 42,
+    "greedy_saved": 42,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 2994228511
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      3,
+      3,
+      2,
+      4,
+      6,
+      6,
+      2
+    ],
+    "all_exact": 217,
+    "oracle_saved": 12,
+    "greedy_saved": 12,
+    "oracle_mask": 65,
+    "greedy_mask": 65,
+    "seed": 4062885775
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      2,
+      2,
+      6,
+      2,
+      2,
+      5,
+      4,
+      6,
+      3,
+      5,
+      5
+    ],
+    "all_exact": 357,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 1025,
+    "greedy_mask": 1025,
+    "seed": 3009040248
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      4,
+      5,
+      3,
+      6,
+      3,
+      5,
+      5
+    ],
+    "all_exact": 287,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 65,
+    "greedy_mask": 65,
+    "seed": 3178956797
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      5,
+      3,
+      6,
+      6,
+      2,
+      6,
+      6,
+      5,
+      3,
+      2,
+      4,
+      3
+    ],
+    "all_exact": 462,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 60041011
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      2,
+      3,
+      5,
+      3,
+      4,
+      3
+    ],
+    "all_exact": 154,
+    "oracle_saved": 12,
+    "greedy_saved": 12,
+    "oracle_mask": 33,
+    "greedy_mask": 33,
+    "seed": 3706656682
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      4,
+      4,
+      3,
+      4,
+      6,
+      4,
+      4,
+      5,
+      5
+    ],
+    "all_exact": 357,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 3905421786
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      4,
+      6,
+      3,
+      2,
+      3,
+      4,
+      4,
+      3,
+      4,
+      4,
+      6
+    ],
+    "all_exact": 371,
+    "oracle_saved": 42,
+    "greedy_saved": 42,
+    "oracle_mask": 1025,
+    "greedy_mask": 1025,
+    "seed": 2774408904
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      2,
+      3,
+      2,
+      2,
+      6,
+      2,
+      4
+    ],
+    "all_exact": 147,
+    "oracle_saved": 21,
+    "greedy_saved": 21,
+    "oracle_mask": 97,
+    "greedy_mask": 97,
+    "seed": 1075094515
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      2,
+      4,
+      2,
+      6,
+      6,
+      6,
+      3,
+      6,
+      4
+    ],
+    "all_exact": 357,
+    "oracle_saved": 33,
+    "greedy_saved": 33,
+    "oracle_mask": 259,
+    "greedy_mask": 259,
+    "seed": 1349681559
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      3,
+      2,
+      2,
+      2,
+      5,
+      2,
+      2,
+      5,
+      2,
+      4,
+      6
+    ],
+    "all_exact": 259,
+    "oracle_saved": 45,
+    "greedy_saved": 39,
+    "oracle_mask": 1039,
+    "greedy_mask": 1027,
+    "seed": 28729012
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      6,
+      3,
+      6,
+      6,
+      6,
+      5
+    ],
+    "all_exact": 322,
+    "oracle_saved": 48,
+    "greedy_saved": 48,
+    "oracle_mask": 33,
+    "greedy_mask": 33,
+    "seed": 572362747
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      6,
+      5,
+      5,
+      3,
+      6,
+      6,
+      5
+    ],
+    "all_exact": 357,
+    "oracle_saved": 69,
+    "greedy_saved": 69,
+    "oracle_mask": 67,
+    "greedy_mask": 67,
+    "seed": 1482082673
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      6,
+      3,
+      5,
+      6,
+      5,
+      5,
+      2,
+      5,
+      4,
+      5
+    ],
+    "all_exact": 434,
+    "oracle_saved": 48,
+    "greedy_saved": 48,
+    "oracle_mask": 513,
+    "greedy_mask": 513,
+    "seed": 825911999
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      3,
+      4,
+      5,
+      3,
+      4,
+      6,
+      5,
+      4,
+      6
+    ],
+    "all_exact": 371,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 1881955806
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      3,
+      5,
+      2,
+      4,
+      3,
+      3,
+      2,
+      2,
+      4,
+      5
+    ],
+    "all_exact": 252,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 513,
+    "greedy_mask": 513,
+    "seed": 3900309644
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      2,
+      5,
+      5,
+      5,
+      5,
+      3,
+      2,
+      4,
+      5,
+      2,
+      3,
+      5
+    ],
+    "all_exact": 392,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 3680154429
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      6,
+      5,
+      2,
+      6,
+      5,
+      2,
+      6,
+      3,
+      2,
+      5,
+      3,
+      2
+    ],
+    "all_exact": 406,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 2936135972
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      4,
+      2,
+      6,
+      4,
+      2,
+      5,
+      4,
+      4,
+      5,
+      3,
+      2
+    ],
+    "all_exact": 343,
+    "oracle_saved": 48,
+    "greedy_saved": 18,
+    "oracle_mask": 1217,
+    "greedy_mask": 1025,
+    "seed": 710676414
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      4,
+      4,
+      4,
+      2,
+      4,
+      5,
+      4,
+      5,
+      4,
+      5,
+      5
+    ],
+    "all_exact": 413,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 1025,
+    "greedy_mask": 1025,
+    "seed": 3228786869
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      6,
+      6,
+      6,
+      3,
+      5,
+      2,
+      4,
+      3,
+      3,
+      6
+    ],
+    "all_exact": 406,
+    "oracle_saved": 63,
+    "greedy_saved": 63,
+    "oracle_mask": 641,
+    "greedy_mask": 641,
+    "seed": 3500592385
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      6,
+      2,
+      4,
+      4,
+      2,
+      3,
+      3,
+      6,
+      5,
+      6,
+      4,
+      3
+    ],
+    "all_exact": 420,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 2771368938
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      2,
+      5,
+      6,
+      5,
+      3,
+      3,
+      2,
+      4,
+      5,
+      6,
+      3
+    ],
+    "all_exact": 385,
+    "oracle_saved": 12,
+    "greedy_saved": 12,
+    "oracle_mask": 1025,
+    "greedy_mask": 1025,
+    "seed": 2665580595
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      2,
+      5,
+      2,
+      2,
+      5,
+      3,
+      2,
+      5,
+      5
+    ],
+    "all_exact": 245,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 4026685908
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      3,
+      5,
+      3,
+      6,
+      6,
+      4,
+      5,
+      2,
+      3
+    ],
+    "all_exact": 329,
+    "oracle_saved": 18,
+    "greedy_saved": 18,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 2978483567
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      4,
+      5,
+      2,
+      2,
+      6,
+      3,
+      2,
+      3,
+      6,
+      6,
+      4
+    ],
+    "all_exact": 371,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 1025,
+    "greedy_mask": 1025,
+    "seed": 1153229529
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      3,
+      4,
+      3,
+      5,
+      5,
+      2,
+      3
+    ],
+    "all_exact": 203,
+    "oracle_saved": 18,
+    "greedy_saved": 18,
+    "oracle_mask": 65,
+    "greedy_mask": 65,
+    "seed": 2511435891
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      4,
+      5,
+      2,
+      3,
+      2
+    ],
+    "all_exact": 119,
+    "oracle_saved": 18,
+    "greedy_saved": 18,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 3734454961
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      2,
+      5,
+      2,
+      6,
+      3,
+      2,
+      6
+    ],
+    "all_exact": 217,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 65,
+    "greedy_mask": 65,
+    "seed": 2544885128
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      2,
+      4,
+      4,
+      3,
+      2,
+      5,
+      6,
+      3,
+      2,
+      3
+    ],
+    "all_exact": 266,
+    "oracle_saved": 27,
+    "greedy_saved": 27,
+    "oracle_mask": 515,
+    "greedy_mask": 515,
+    "seed": 2425467796
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      3,
+      6,
+      5,
+      2,
+      5,
+      4,
+      3
+    ],
+    "all_exact": 245,
+    "oracle_saved": 18,
+    "greedy_saved": 18,
+    "oracle_mask": 65,
+    "greedy_mask": 65,
+    "seed": 3264422433
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      6,
+      2,
+      3,
+      2,
+      3
+    ],
+    "all_exact": 119,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 4273276291
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      6,
+      5,
+      5,
+      4,
+      2,
+      2
+    ],
+    "all_exact": 210,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 33,
+    "greedy_mask": 33,
+    "seed": 151599214
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      3,
+      5,
+      5,
+      4,
+      6,
+      3,
+      3,
+      4,
+      4,
+      2,
+      5,
+      6
+    ],
+    "all_exact": 448,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 3222639024
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      6,
+      4,
+      2,
+      6,
+      5,
+      3,
+      2,
+      3,
+      6
+    ],
+    "all_exact": 329,
+    "oracle_saved": 54,
+    "greedy_saved": 54,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 3827533953
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      6,
+      6,
+      4,
+      3,
+      6,
+      3,
+      3,
+      4,
+      4,
+      6
+    ],
+    "all_exact": 420,
+    "oracle_saved": 54,
+    "greedy_saved": 54,
+    "oracle_mask": 513,
+    "greedy_mask": 513,
+    "seed": 2321391963
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      3,
+      6,
+      5,
+      3,
+      3,
+      3,
+      6,
+      4
+    ],
+    "all_exact": 294,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 129,
+    "greedy_mask": 129,
+    "seed": 2812174649
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      3,
+      3,
+      3,
+      5,
+      3,
+      3,
+      4,
+      3,
+      2,
+      6
+    ],
+    "all_exact": 280,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 513,
+    "greedy_mask": 513,
+    "seed": 2015428453
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      3,
+      5,
+      6,
+      3,
+      6,
+      5,
+      4,
+      4,
+      2,
+      6,
+      3,
+      2
+    ],
+    "all_exact": 434,
+    "oracle_saved": 12,
+    "greedy_saved": 12,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 2650602606
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      6,
+      2,
+      3,
+      5,
+      6,
+      4,
+      2,
+      3,
+      2,
+      5
+    ],
+    "all_exact": 322,
+    "oracle_saved": 48,
+    "greedy_saved": 48,
+    "oracle_mask": 513,
+    "greedy_mask": 513,
+    "seed": 3749365612
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      5,
+      2,
+      4,
+      4,
+      2,
+      6,
+      6,
+      3,
+      4,
+      4,
+      6
+    ],
+    "all_exact": 413,
+    "oracle_saved": 48,
+    "greedy_saved": 48,
+    "oracle_mask": 1025,
+    "greedy_mask": 1025,
+    "seed": 667865641
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      2,
+      3,
+      3,
+      4,
+      2
+    ],
+    "all_exact": 91,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 27,
+    "greedy_mask": 27,
+    "seed": 2510768194
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      3,
+      2,
+      5,
+      5,
+      6,
+      2,
+      2,
+      4,
+      5
+    ],
+    "all_exact": 287,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 1073725565
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      5,
+      4,
+      5,
+      6,
+      2,
+      6,
+      6,
+      3,
+      2,
+      4,
+      6
+    ],
+    "all_exact": 455,
+    "oracle_saved": 63,
+    "greedy_saved": 63,
+    "oracle_mask": 1027,
+    "greedy_mask": 1027,
+    "seed": 1106415508
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      6,
+      5,
+      4,
+      5,
+      2,
+      4
+    ],
+    "all_exact": 238,
+    "oracle_saved": 45,
+    "greedy_saved": 45,
+    "oracle_mask": 49,
+    "greedy_mask": 49,
+    "seed": 845947211
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      5,
+      3,
+      3,
+      6,
+      5,
+      5,
+      4
+    ],
+    "all_exact": 287,
+    "oracle_saved": 96,
+    "greedy_saved": 36,
+    "oracle_mask": 119,
+    "greedy_mask": 65,
+    "seed": 1281693664
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      2,
+      3,
+      2,
+      4,
+      5,
+      6,
+      6,
+      6,
+      5,
+      5,
+      4,
+      2
+    ],
+    "all_exact": 448,
+    "oracle_saved": 6,
+    "greedy_saved": 6,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 227400703
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      3,
+      6,
+      5,
+      6,
+      6
+    ],
+    "all_exact": 259,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 3485060815
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      4,
+      2,
+      5,
+      4,
+      2
+    ],
+    "all_exact": 133,
+    "oracle_saved": 18,
+    "greedy_saved": 18,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 2629846695
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      5,
+      4,
+      5,
+      5,
+      5
+    ],
+    "all_exact": 231,
+    "oracle_saved": 63,
+    "greedy_saved": 63,
+    "oracle_mask": 21,
+    "greedy_mask": 21,
+    "seed": 3356066348
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      5,
+      4,
+      4,
+      3,
+      6,
+      4,
+      4,
+      5,
+      2,
+      6,
+      6,
+      4
+    ],
+    "all_exact": 490,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 3951087074
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      4,
+      2,
+      4,
+      3,
+      3,
+      3,
+      5,
+      3,
+      6,
+      6
+    ],
+    "all_exact": 336,
+    "oracle_saved": 54,
+    "greedy_saved": 42,
+    "oracle_mask": 547,
+    "greedy_mask": 513,
+    "seed": 2410913525
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      4,
+      6,
+      4,
+      6,
+      3
+    ],
+    "all_exact": 217,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 2475256878
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      3,
+      3,
+      5,
+      6,
+      6,
+      5,
+      5,
+      3
+    ],
+    "all_exact": 336,
+    "oracle_saved": 72,
+    "greedy_saved": 72,
+    "oracle_mask": 153,
+    "greedy_mask": 153,
+    "seed": 1299927998
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      4,
+      4,
+      2,
+      6,
+      5,
+      5,
+      3,
+      2,
+      5
+    ],
+    "all_exact": 315,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 3179283154
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      6,
+      3,
+      6,
+      5,
+      2,
+      3,
+      6,
+      3,
+      4,
+      2,
+      4
+    ],
+    "all_exact": 385,
+    "oracle_saved": 87,
+    "greedy_saved": 87,
+    "oracle_mask": 1159,
+    "greedy_mask": 1159,
+    "seed": 2715878327
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      5,
+      4,
+      5,
+      6,
+      4,
+      4,
+      5,
+      2
+    ],
+    "all_exact": 322,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 129,
+    "greedy_mask": 129,
+    "seed": 1482937988
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      4,
+      4,
+      2,
+      5,
+      6,
+      5
+    ],
+    "all_exact": 238,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 33,
+    "greedy_mask": 33,
+    "seed": 1382413312
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      5,
+      5,
+      2,
+      6,
+      6
+    ],
+    "all_exact": 231,
+    "oracle_saved": 48,
+    "greedy_saved": 48,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 3330843338
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      6,
+      4,
+      3,
+      4,
+      2,
+      6,
+      6,
+      3
+    ],
+    "all_exact": 308,
+    "oracle_saved": 54,
+    "greedy_saved": 54,
+    "oracle_mask": 147,
+    "greedy_mask": 147,
+    "seed": 1837100505
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      4,
+      6,
+      4,
+      5,
+      5,
+      6
+    ],
+    "all_exact": 294,
+    "oracle_saved": 42,
+    "greedy_saved": 42,
+    "oracle_mask": 33,
+    "greedy_mask": 33,
+    "seed": 2234386697
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      4,
+      6,
+      5,
+      3,
+      3,
+      2,
+      5,
+      5,
+      2,
+      6,
+      6,
+      6
+    ],
+    "all_exact": 490,
+    "oracle_saved": 60,
+    "greedy_saved": 42,
+    "oracle_mask": 2073,
+    "greedy_mask": 2049,
+    "seed": 2875389031
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      3,
+      2,
+      6,
+      3,
+      6,
+      5
+    ],
+    "all_exact": 224,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 33,
+    "greedy_mask": 33,
+    "seed": 2233559571
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      5,
+      3,
+      5,
+      5,
+      5
+    ],
+    "all_exact": 217,
+    "oracle_saved": 42,
+    "greedy_saved": 42,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 2526118183
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      6,
+      2,
+      2,
+      3,
+      4,
+      5,
+      4,
+      6,
+      6,
+      3
+    ],
+    "all_exact": 364,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 513,
+    "greedy_mask": 513,
+    "seed": 4081127462
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      3,
+      3,
+      3,
+      4,
+      3,
+      2
+    ],
+    "all_exact": 126,
+    "oracle_saved": 12,
+    "greedy_saved": 12,
+    "oracle_mask": 33,
+    "greedy_mask": 33,
+    "seed": 3085231681
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      4,
+      3,
+      4,
+      3,
+      6,
+      5,
+      2,
+      2,
+      6,
+      6
+    ],
+    "all_exact": 364,
+    "oracle_saved": 48,
+    "greedy_saved": 42,
+    "oracle_mask": 705,
+    "greedy_mask": 513,
+    "seed": 1681938274
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      4,
+      3,
+      5,
+      3,
+      4,
+      2,
+      2,
+      2
+    ],
+    "all_exact": 182,
+    "oracle_saved": 18,
+    "greedy_saved": 18,
+    "oracle_mask": 129,
+    "greedy_mask": 129,
+    "seed": 2437733066
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      5,
+      5,
+      3,
+      2,
+      3,
+      3,
+      6,
+      6,
+      2,
+      6,
+      4,
+      2
+    ],
+    "all_exact": 406,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 3739241031
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      2,
+      4,
+      3,
+      2,
+      2,
+      5,
+      4,
+      3,
+      5
+    ],
+    "all_exact": 231,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 3850253883
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      2,
+      3,
+      4,
+      3,
+      2,
+      6,
+      3,
+      4
+    ],
+    "all_exact": 210,
+    "oracle_saved": 18,
+    "greedy_saved": 18,
+    "oracle_mask": 129,
+    "greedy_mask": 129,
+    "seed": 1295220001
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      2,
+      6,
+      3,
+      2,
+      2,
+      3,
+      3
+    ],
+    "all_exact": 147,
+    "oracle_saved": 15,
+    "greedy_saved": 15,
+    "oracle_mask": 81,
+    "greedy_mask": 81,
+    "seed": 3229810709
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      5,
+      4,
+      4,
+      2,
+      3,
+      4,
+      6,
+      3,
+      2,
+      6,
+      6
+    ],
+    "all_exact": 399,
+    "oracle_saved": 48,
+    "greedy_saved": 48,
+    "oracle_mask": 1025,
+    "greedy_mask": 1025,
+    "seed": 2487161816
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      6,
+      6,
+      4,
+      5,
+      6,
+      6,
+      3,
+      5,
+      5,
+      4,
+      6
+    ],
+    "all_exact": 553,
+    "oracle_saved": 54,
+    "greedy_saved": 54,
+    "oracle_mask": 1025,
+    "greedy_mask": 1025,
+    "seed": 2046895076
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      6,
+      5,
+      3,
+      2,
+      4,
+      2,
+      6,
+      5,
+      3
+    ],
+    "all_exact": 315,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 925532456
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      2,
+      3,
+      5,
+      5,
+      5,
+      2,
+      4
+    ],
+    "all_exact": 217,
+    "oracle_saved": 18,
+    "greedy_saved": 18,
+    "oracle_mask": 65,
+    "greedy_mask": 65,
+    "seed": 2607482253
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      5,
+      2,
+      4,
+      3,
+      6,
+      5
+    ],
+    "all_exact": 224,
+    "oracle_saved": 72,
+    "greedy_saved": 72,
+    "oracle_mask": 51,
+    "greedy_mask": 51,
+    "seed": 3662584681
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      6,
+      6,
+      5,
+      6,
+      6,
+      6,
+      2,
+      4,
+      3
+    ],
+    "all_exact": 427,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 2953258882
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      6,
+      2,
+      5,
+      3,
+      4,
+      4,
+      6,
+      6,
+      3
+    ],
+    "all_exact": 357,
+    "oracle_saved": 39,
+    "greedy_saved": 39,
+    "oracle_mask": 259,
+    "greedy_mask": 259,
+    "seed": 3454753049
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      4,
+      5,
+      3,
+      6,
+      5,
+      5
+    ],
+    "all_exact": 266,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 33,
+    "greedy_mask": 33,
+    "seed": 2192431963
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      5,
+      2,
+      4,
+      2,
+      6,
+      4,
+      4,
+      2
+    ],
+    "all_exact": 238,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 129,
+    "greedy_mask": 129,
+    "seed": 214450351
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      2,
+      2,
+      4,
+      4,
+      2,
+      4,
+      3,
+      3,
+      5
+    ],
+    "all_exact": 217,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 703786967
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      6,
+      4,
+      2,
+      4,
+      3,
+      4
+    ],
+    "all_exact": 196,
+    "oracle_saved": 42,
+    "greedy_saved": 42,
+    "oracle_mask": 33,
+    "greedy_mask": 33,
+    "seed": 890743285
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      2,
+      4,
+      3,
+      6,
+      5
+    ],
+    "all_exact": 175,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 4042388791
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      5,
+      6,
+      4,
+      2,
+      3,
+      4
+    ],
+    "all_exact": 210,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 33,
+    "greedy_mask": 33,
+    "seed": 1878188629
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      6,
+      5,
+      6,
+      5,
+      3,
+      3,
+      6,
+      6,
+      6,
+      3,
+      2,
+      5
+    ],
+    "all_exact": 532,
+    "oracle_saved": 48,
+    "greedy_saved": 48,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 2844214082
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      4,
+      2,
+      5,
+      3,
+      5,
+      4,
+      4,
+      4,
+      3,
+      5,
+      3
+    ],
+    "all_exact": 357,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 1025,
+    "greedy_mask": 1025,
+    "seed": 258171569
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      4,
+      5,
+      2,
+      4,
+      4,
+      2,
+      3,
+      4
+    ],
+    "all_exact": 224,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 129,
+    "greedy_mask": 129,
+    "seed": 575532187
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      2,
+      3,
+      2,
+      3,
+      3,
+      2,
+      5,
+      4
+    ],
+    "all_exact": 168,
+    "oracle_saved": 21,
+    "greedy_saved": 21,
+    "oracle_mask": 161,
+    "greedy_mask": 161,
+    "seed": 3134478899
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      6,
+      4,
+      4,
+      4,
+      3,
+      6,
+      3,
+      3,
+      4,
+      5,
+      5,
+      4
+    ],
+    "all_exact": 462,
+    "oracle_saved": 42,
+    "greedy_saved": 42,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 3344885051
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      3,
+      3,
+      5,
+      2,
+      5,
+      3,
+      3
+    ],
+    "all_exact": 189,
+    "oracle_saved": 21,
+    "greedy_saved": 21,
+    "oracle_mask": 73,
+    "greedy_mask": 73,
+    "seed": 1425502261
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      2,
+      2,
+      5,
+      6,
+      2
+    ],
+    "all_exact": 133,
+    "oracle_saved": 6,
+    "greedy_saved": 6,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 345568702
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      4,
+      3,
+      2,
+      6,
+      5,
+      3,
+      4
+    ],
+    "all_exact": 231,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 65,
+    "greedy_mask": 65,
+    "seed": 2251422742
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      4,
+      3,
+      6,
+      4,
+      3,
+      6
+    ],
+    "all_exact": 238,
+    "oracle_saved": 42,
+    "greedy_saved": 42,
+    "oracle_mask": 33,
+    "greedy_mask": 33,
+    "seed": 267342058
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      5,
+      5,
+      5,
+      2,
+      3,
+      3,
+      4
+    ],
+    "all_exact": 231,
+    "oracle_saved": 45,
+    "greedy_saved": 45,
+    "oracle_mask": 97,
+    "greedy_mask": 97,
+    "seed": 3841090368
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      3,
+      5,
+      3,
+      6,
+      4,
+      6,
+      2,
+      2,
+      3,
+      6,
+      2,
+      6
+    ],
+    "all_exact": 420,
+    "oracle_saved": 39,
+    "greedy_saved": 39,
+    "oracle_mask": 3073,
+    "greedy_mask": 3073,
+    "seed": 981510838
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      4,
+      5,
+      5,
+      5,
+      6,
+      2,
+      5,
+      4,
+      3,
+      2
+    ],
+    "all_exact": 364,
+    "oracle_saved": 18,
+    "greedy_saved": 18,
+    "oracle_mask": 513,
+    "greedy_mask": 513,
+    "seed": 1995924368
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      2,
+      2,
+      3,
+      5,
+      4,
+      5,
+      6,
+      6,
+      2
+    ],
+    "all_exact": 301,
+    "oracle_saved": 9,
+    "greedy_saved": 9,
+    "oracle_mask": 259,
+    "greedy_mask": 259,
+    "seed": 28986399
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      6,
+      6,
+      5,
+      4,
+      6,
+      4
+    ],
+    "all_exact": 308,
+    "oracle_saved": 42,
+    "greedy_saved": 42,
+    "oracle_mask": 33,
+    "greedy_mask": 33,
+    "seed": 1418110756
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      6,
+      4,
+      4,
+      4,
+      4,
+      5,
+      3
+    ],
+    "all_exact": 273,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 65,
+    "greedy_mask": 65,
+    "seed": 3237993721
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      4,
+      3,
+      2,
+      4,
+      3,
+      6,
+      6,
+      6,
+      6,
+      6,
+      3
+    ],
+    "all_exact": 455,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 1025,
+    "greedy_mask": 1025,
+    "seed": 2433132449
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      6,
+      3,
+      5,
+      4,
+      3,
+      4
+    ],
+    "all_exact": 224,
+    "oracle_saved": 42,
+    "greedy_saved": 42,
+    "oracle_mask": 33,
+    "greedy_mask": 33,
+    "seed": 354064991
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      2,
+      6,
+      3,
+      6,
+      4,
+      6,
+      3,
+      3
+    ],
+    "all_exact": 294,
+    "oracle_saved": 12,
+    "greedy_saved": 12,
+    "oracle_mask": 129,
+    "greedy_mask": 129,
+    "seed": 614722609
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      2,
+      4,
+      3,
+      6,
+      4,
+      6,
+      4,
+      5,
+      5,
+      2,
+      6
+    ],
+    "all_exact": 427,
+    "oracle_saved": 33,
+    "greedy_saved": 33,
+    "oracle_mask": 1537,
+    "greedy_mask": 1537,
+    "seed": 2726103915
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      2,
+      2,
+      6,
+      4,
+      5
+    ],
+    "all_exact": 161,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 762771601
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      2,
+      5,
+      6,
+      2,
+      6,
+      6,
+      6
+    ],
+    "all_exact": 315,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 65,
+    "greedy_mask": 65,
+    "seed": 928607932
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      4,
+      6,
+      2,
+      5,
+      6,
+      6,
+      4,
+      3,
+      2,
+      6,
+      6,
+      6
+    ],
+    "all_exact": 532,
+    "oracle_saved": 42,
+    "greedy_saved": 42,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 4102627851
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      2,
+      5,
+      4,
+      4,
+      2,
+      2,
+      3,
+      5
+    ],
+    "all_exact": 210,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 129,
+    "greedy_mask": 129,
+    "seed": 2392477180
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      5,
+      3,
+      6,
+      5,
+      4,
+      2,
+      5,
+      2
+    ],
+    "all_exact": 280,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 129,
+    "greedy_mask": 129,
+    "seed": 3973689342
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      6,
+      6,
+      3,
+      6,
+      6,
+      3,
+      2,
+      5,
+      3,
+      2
+    ],
+    "all_exact": 378,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 513,
+    "greedy_mask": 513,
+    "seed": 2602629285
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      5,
+      5,
+      4,
+      2,
+      2,
+      4,
+      4,
+      4,
+      2
+    ],
+    "all_exact": 259,
+    "oracle_saved": 30,
+    "greedy_saved": 24,
+    "oracle_mask": 281,
+    "greedy_mask": 257,
+    "seed": 4282020424
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      3,
+      6,
+      3,
+      3,
+      5,
+      4,
+      2,
+      2,
+      5
+    ],
+    "all_exact": 273,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 2818397579
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      4,
+      2,
+      6,
+      5,
+      3,
+      5,
+      4,
+      2
+    ],
+    "all_exact": 266,
+    "oracle_saved": 45,
+    "greedy_saved": 45,
+    "oracle_mask": 133,
+    "greedy_mask": 133,
+    "seed": 485799571
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      4,
+      5,
+      3,
+      2,
+      6,
+      2
+    ],
+    "all_exact": 182,
+    "oracle_saved": 18,
+    "greedy_saved": 18,
+    "oracle_mask": 33,
+    "greedy_mask": 33,
+    "seed": 4249104225
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      4,
+      6,
+      6,
+      4,
+      5,
+      4,
+      2,
+      4,
+      5
+    ],
+    "all_exact": 371,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 2157854204
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      6,
+      2,
+      2,
+      3,
+      2,
+      4,
+      2,
+      6,
+      2,
+      5
+    ],
+    "all_exact": 266,
+    "oracle_saved": 48,
+    "greedy_saved": 48,
+    "oracle_mask": 513,
+    "greedy_mask": 513,
+    "seed": 858371439
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      4,
+      6,
+      6,
+      6,
+      4,
+      2,
+      3,
+      6,
+      5,
+      2,
+      5,
+      3
+    ],
+    "all_exact": 476,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 2818263132
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      2,
+      4,
+      6,
+      4,
+      2
+    ],
+    "all_exact": 147,
+    "oracle_saved": 6,
+    "greedy_saved": 6,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 2384439514
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      3,
+      4,
+      3,
+      4,
+      4
+    ],
+    "all_exact": 147,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 2386708496
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      6,
+      2,
+      2,
+      6,
+      2,
+      2
+    ],
+    "all_exact": 154,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 33,
+    "greedy_mask": 33,
+    "seed": 1568442922
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      6,
+      6,
+      5,
+      5,
+      4,
+      6,
+      5
+    ],
+    "all_exact": 371,
+    "oracle_saved": 48,
+    "greedy_saved": 48,
+    "oracle_mask": 65,
+    "greedy_mask": 65,
+    "seed": 2816755971
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      6,
+      5,
+      3,
+      5,
+      4,
+      3,
+      6,
+      4
+    ],
+    "all_exact": 336,
+    "oracle_saved": 42,
+    "greedy_saved": 42,
+    "oracle_mask": 129,
+    "greedy_mask": 129,
+    "seed": 1840333780
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      3,
+      4,
+      6,
+      5,
+      4,
+      6,
+      5,
+      4,
+      5,
+      3
+    ],
+    "all_exact": 420,
+    "oracle_saved": 18,
+    "greedy_saved": 18,
+    "oracle_mask": 513,
+    "greedy_mask": 513,
+    "seed": 939478205
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      2,
+      4,
+      6,
+      3,
+      6,
+      2,
+      3,
+      3,
+      4
+    ],
+    "all_exact": 273,
+    "oracle_saved": 18,
+    "greedy_saved": 18,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 2532804433
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      3,
+      6,
+      2,
+      3,
+      4
+    ],
+    "all_exact": 147,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 4188751244
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      5,
+      3,
+      5,
+      4,
+      2,
+      6
+    ],
+    "all_exact": 224,
+    "oracle_saved": 51,
+    "greedy_saved": 51,
+    "oracle_mask": 49,
+    "greedy_mask": 49,
+    "seed": 3082689723
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      2,
+      4,
+      5,
+      4,
+      2,
+      2,
+      2,
+      6,
+      2
+    ],
+    "all_exact": 217,
+    "oracle_saved": 6,
+    "greedy_saved": 6,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 4175384301
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      4,
+      2,
+      2,
+      5,
+      6,
+      5,
+      2,
+      3,
+      5,
+      6,
+      4,
+      3
+    ],
+    "all_exact": 406,
+    "oracle_saved": 60,
+    "greedy_saved": 60,
+    "oracle_mask": 3081,
+    "greedy_mask": 3081,
+    "seed": 1593935799
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      6,
+      6,
+      5,
+      6,
+      3,
+      4,
+      6
+    ],
+    "all_exact": 357,
+    "oracle_saved": 54,
+    "greedy_saved": 54,
+    "oracle_mask": 65,
+    "greedy_mask": 65,
+    "seed": 1405542561
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      2,
+      2,
+      4,
+      6,
+      5
+    ],
+    "all_exact": 161,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 2762960138
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      2,
+      4,
+      3,
+      6,
+      6,
+      6,
+      2,
+      4,
+      6,
+      2
+    ],
+    "all_exact": 364,
+    "oracle_saved": 6,
+    "greedy_saved": 6,
+    "oracle_mask": 513,
+    "greedy_mask": 513,
+    "seed": 2611777934
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      3,
+      5,
+      3,
+      4,
+      3,
+      4,
+      5,
+      5,
+      5,
+      2
+    ],
+    "all_exact": 336,
+    "oracle_saved": 12,
+    "greedy_saved": 12,
+    "oracle_mask": 513,
+    "greedy_mask": 513,
+    "seed": 3135097435
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      5,
+      6,
+      6,
+      6,
+      5,
+      2,
+      6,
+      2
+    ],
+    "all_exact": 364,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 129,
+    "greedy_mask": 129,
+    "seed": 1479147661
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      6,
+      2,
+      5,
+      6,
+      5,
+      4,
+      3,
+      5,
+      5,
+      4
+    ],
+    "all_exact": 420,
+    "oracle_saved": 63,
+    "greedy_saved": 63,
+    "oracle_mask": 769,
+    "greedy_mask": 769,
+    "seed": 357997075
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      4,
+      6,
+      5,
+      2,
+      5,
+      5,
+      2,
+      3,
+      2
+    ],
+    "all_exact": 287,
+    "oracle_saved": 18,
+    "greedy_saved": 18,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 634270428
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      4,
+      4,
+      4,
+      3,
+      3,
+      5,
+      3,
+      3,
+      2,
+      2,
+      2,
+      5
+    ],
+    "all_exact": 308,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 4165544415
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      3,
+      4,
+      2,
+      6,
+      5,
+      4,
+      3,
+      4,
+      4,
+      2,
+      5
+    ],
+    "all_exact": 357,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 1025,
+    "greedy_mask": 1025,
+    "seed": 857691384
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      2,
+      4,
+      3,
+      2,
+      3,
+      3,
+      2,
+      2,
+      2,
+      3,
+      4
+    ],
+    "all_exact": 189,
+    "oracle_saved": 18,
+    "greedy_saved": 18,
+    "oracle_mask": 1025,
+    "greedy_mask": 1025,
+    "seed": 495372387
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      6,
+      6,
+      4,
+      6,
+      5,
+      2,
+      2
+    ],
+    "all_exact": 287,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 65,
+    "greedy_mask": 65,
+    "seed": 4184167527
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      5,
+      3,
+      5,
+      5,
+      6,
+      2,
+      4
+    ],
+    "all_exact": 273,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 65,
+    "greedy_mask": 65,
+    "seed": 3065648476
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      4,
+      4,
+      5,
+      6,
+      4,
+      3,
+      3,
+      4,
+      2
+    ],
+    "all_exact": 301,
+    "oracle_saved": 18,
+    "greedy_saved": 18,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 1256394692
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      4,
+      3,
+      3,
+      4,
+      4,
+      3,
+      3,
+      5,
+      6,
+      6,
+      4,
+      6
+    ],
+    "all_exact": 462,
+    "oracle_saved": 42,
+    "greedy_saved": 42,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 1677655163
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      3,
+      3,
+      4,
+      3,
+      5,
+      3,
+      5,
+      5
+    ],
+    "all_exact": 266,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 129,
+    "greedy_mask": 129,
+    "seed": 2844734077
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      3,
+      3,
+      5,
+      2,
+      6,
+      2,
+      4,
+      2
+    ],
+    "all_exact": 210,
+    "oracle_saved": 12,
+    "greedy_saved": 12,
+    "oracle_mask": 129,
+    "greedy_mask": 129,
+    "seed": 644683931
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      6,
+      2,
+      3,
+      4,
+      2
+    ],
+    "all_exact": 133,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 2610988999
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      3,
+      2,
+      4,
+      5,
+      2
+    ],
+    "all_exact": 119,
+    "oracle_saved": 51,
+    "greedy_saved": 51,
+    "oracle_mask": 31,
+    "greedy_mask": 31,
+    "seed": 3499360945
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      4,
+      2,
+      5,
+      5,
+      4,
+      2,
+      5,
+      2
+    ],
+    "all_exact": 238,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 163,
+    "greedy_mask": 163,
+    "seed": 2524259735
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      3,
+      5,
+      6,
+      4,
+      6,
+      3,
+      6,
+      5,
+      2,
+      2,
+      6,
+      4
+    ],
+    "all_exact": 476,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 861504927
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      4,
+      2,
+      5,
+      3,
+      3,
+      2,
+      6,
+      6,
+      4
+    ],
+    "all_exact": 301,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 1102680094
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      2,
+      5,
+      6,
+      2,
+      2,
+      6,
+      3,
+      4,
+      3,
+      6,
+      6,
+      4
+    ],
+    "all_exact": 434,
+    "oracle_saved": 18,
+    "greedy_saved": 18,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 2252825730
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      3,
+      3,
+      4,
+      5,
+      5,
+      4,
+      5,
+      4,
+      2
+    ],
+    "all_exact": 301,
+    "oracle_saved": 12,
+    "greedy_saved": 12,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 141884582
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      3,
+      4,
+      2,
+      3,
+      5
+    ],
+    "all_exact": 133,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 2458729819
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      5,
+      6,
+      3,
+      5,
+      6,
+      3,
+      5,
+      3,
+      5,
+      3,
+      4,
+      5
+    ],
+    "all_exact": 490,
+    "oracle_saved": 42,
+    "greedy_saved": 42,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 2607111042
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      4,
+      3,
+      3,
+      3,
+      4,
+      4,
+      5
+    ],
+    "all_exact": 217,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 65,
+    "greedy_mask": 65,
+    "seed": 4239742672
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      6,
+      3,
+      2,
+      6,
+      3,
+      3,
+      3,
+      5,
+      4,
+      5
+    ],
+    "all_exact": 350,
+    "oracle_saved": 72,
+    "greedy_saved": 72,
+    "oracle_mask": 771,
+    "greedy_mask": 771,
+    "seed": 3608636629
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      4,
+      6,
+      2,
+      4,
+      2,
+      5,
+      2,
+      6,
+      3,
+      6
+    ],
+    "all_exact": 350,
+    "oracle_saved": 51,
+    "greedy_saved": 51,
+    "oracle_mask": 769,
+    "greedy_mask": 769,
+    "seed": 57807188
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      2,
+      5,
+      4,
+      2,
+      4,
+      3,
+      6,
+      2,
+      3,
+      6
+    ],
+    "all_exact": 308,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 513,
+    "greedy_mask": 513,
+    "seed": 241070201
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      6,
+      6,
+      3,
+      6,
+      3,
+      3,
+      4,
+      4,
+      6
+    ],
+    "all_exact": 385,
+    "oracle_saved": 54,
+    "greedy_saved": 54,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 3757029610
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      4,
+      3,
+      5,
+      2,
+      3,
+      5,
+      4,
+      4,
+      2
+    ],
+    "all_exact": 259,
+    "oracle_saved": 18,
+    "greedy_saved": 18,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 2249279651
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      6,
+      6,
+      2,
+      5,
+      3,
+      6,
+      3,
+      2,
+      2,
+      3,
+      4
+    ],
+    "all_exact": 357,
+    "oracle_saved": 42,
+    "greedy_saved": 42,
+    "oracle_mask": 1025,
+    "greedy_mask": 1025,
+    "seed": 4264374043
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      6,
+      2,
+      6,
+      6,
+      3,
+      2,
+      3,
+      3,
+      2
+    ],
+    "all_exact": 273,
+    "oracle_saved": 33,
+    "greedy_saved": 33,
+    "oracle_mask": 259,
+    "greedy_mask": 259,
+    "seed": 1481686327
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      3,
+      4,
+      2,
+      4,
+      3,
+      6,
+      5,
+      3,
+      6,
+      4
+    ],
+    "all_exact": 350,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 513,
+    "greedy_mask": 513,
+    "seed": 3207035522
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      2,
+      5,
+      5,
+      2,
+      5,
+      5,
+      5,
+      6,
+      6,
+      3
+    ],
+    "all_exact": 406,
+    "oracle_saved": 12,
+    "greedy_saved": 12,
+    "oracle_mask": 513,
+    "greedy_mask": 513,
+    "seed": 306624740
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      6,
+      2,
+      4,
+      4,
+      2,
+      2,
+      4
+    ],
+    "all_exact": 189,
+    "oracle_saved": 45,
+    "greedy_saved": 45,
+    "oracle_mask": 81,
+    "greedy_mask": 81,
+    "seed": 3312948337
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      4,
+      6,
+      3,
+      5,
+      5,
+      4,
+      2,
+      3
+    ],
+    "all_exact": 280,
+    "oracle_saved": 48,
+    "greedy_saved": 48,
+    "oracle_mask": 201,
+    "greedy_mask": 201,
+    "seed": 3970209283
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      4,
+      2,
+      3,
+      3,
+      4,
+      3,
+      4,
+      6,
+      3,
+      5,
+      2
+    ],
+    "all_exact": 315,
+    "oracle_saved": 18,
+    "greedy_saved": 18,
+    "oracle_mask": 1025,
+    "greedy_mask": 1025,
+    "seed": 864516290
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      4,
+      5,
+      5,
+      4,
+      2,
+      6,
+      6,
+      3,
+      3,
+      2
+    ],
+    "all_exact": 350,
+    "oracle_saved": 27,
+    "greedy_saved": 27,
+    "oracle_mask": 769,
+    "greedy_mask": 769,
+    "seed": 2275858484
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      3,
+      2,
+      6,
+      6,
+      5,
+      2,
+      4,
+      4,
+      4,
+      4,
+      3,
+      2
+    ],
+    "all_exact": 378,
+    "oracle_saved": 12,
+    "greedy_saved": 12,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 1331380557
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      3,
+      3,
+      5,
+      6,
+      6,
+      3,
+      5,
+      6,
+      6
+    ],
+    "all_exact": 413,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 2284548556
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      3,
+      2,
+      6,
+      2,
+      5,
+      4,
+      6,
+      4,
+      5
+    ],
+    "all_exact": 329,
+    "oracle_saved": 36,
+    "greedy_saved": 30,
+    "oracle_mask": 267,
+    "greedy_mask": 257,
+    "seed": 1127650003
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      5,
+      6,
+      6,
+      3,
+      5,
+      2,
+      5,
+      5,
+      3
+    ],
+    "all_exact": 371,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 768299081
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      2,
+      3,
+      6,
+      5,
+      6,
+      2,
+      3,
+      6,
+      2
+    ],
+    "all_exact": 301,
+    "oracle_saved": 6,
+    "greedy_saved": 6,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 3533104880
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      6,
+      2,
+      4,
+      4,
+      6,
+      2,
+      5,
+      5,
+      2
+    ],
+    "all_exact": 315,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 2257437098
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      2,
+      4,
+      2,
+      4,
+      2,
+      3,
+      2,
+      3,
+      2
+    ],
+    "all_exact": 147,
+    "oracle_saved": 18,
+    "greedy_saved": 18,
+    "oracle_mask": 389,
+    "greedy_mask": 389,
+    "seed": 2352026548
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      2,
+      4,
+      5,
+      6,
+      4,
+      4,
+      4,
+      2,
+      2,
+      6
+    ],
+    "all_exact": 336,
+    "oracle_saved": 45,
+    "greedy_saved": 45,
+    "oracle_mask": 577,
+    "greedy_mask": 577,
+    "seed": 517999250
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      4,
+      5,
+      3,
+      3,
+      5,
+      6,
+      2,
+      3
+    ],
+    "all_exact": 266,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 129,
+    "greedy_mask": 129,
+    "seed": 1918510380
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      3,
+      5,
+      2,
+      3,
+      2,
+      6,
+      4,
+      3,
+      3,
+      3,
+      3
+    ],
+    "all_exact": 287,
+    "oracle_saved": 27,
+    "greedy_saved": 27,
+    "oracle_mask": 1537,
+    "greedy_mask": 1537,
+    "seed": 1568723943
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      5,
+      2,
+      3,
+      2,
+      4
+    ],
+    "all_exact": 119,
+    "oracle_saved": 39,
+    "greedy_saved": 39,
+    "oracle_mask": 19,
+    "greedy_mask": 19,
+    "seed": 641525785
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      5,
+      2,
+      6,
+      4,
+      5
+    ],
+    "all_exact": 203,
+    "oracle_saved": 42,
+    "greedy_saved": 42,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 3069969054
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      3,
+      6,
+      4,
+      2,
+      2,
+      5
+    ],
+    "all_exact": 182,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 33,
+    "greedy_mask": 33,
+    "seed": 1703092933
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      5,
+      5,
+      4,
+      4,
+      4
+    ],
+    "all_exact": 203,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 1054969158
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      4,
+      3,
+      3,
+      3,
+      6,
+      5,
+      6
+    ],
+    "all_exact": 273,
+    "oracle_saved": 42,
+    "greedy_saved": 42,
+    "oracle_mask": 65,
+    "greedy_mask": 65,
+    "seed": 3223986927
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      6,
+      2,
+      3,
+      5,
+      4,
+      4,
+      2,
+      5
+    ],
+    "all_exact": 266,
+    "oracle_saved": 51,
+    "greedy_saved": 51,
+    "oracle_mask": 131,
+    "greedy_mask": 131,
+    "seed": 1945706155
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      4,
+      2,
+      4,
+      5,
+      3,
+      2,
+      3,
+      4,
+      6,
+      4
+    ],
+    "all_exact": 308,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 513,
+    "greedy_mask": 513,
+    "seed": 2472127247
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      5,
+      3,
+      2,
+      3,
+      2,
+      3,
+      2
+    ],
+    "all_exact": 133,
+    "oracle_saved": 33,
+    "greedy_saved": 33,
+    "oracle_mask": 73,
+    "greedy_mask": 73,
+    "seed": 121902499
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      3,
+      5,
+      3,
+      3,
+      2,
+      3,
+      4,
+      5,
+      2,
+      2
+    ],
+    "all_exact": 238,
+    "oracle_saved": 12,
+    "greedy_saved": 12,
+    "oracle_mask": 513,
+    "greedy_mask": 513,
+    "seed": 3146060256
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      5,
+      3,
+      4,
+      5,
+      3,
+      4,
+      2,
+      5
+    ],
+    "all_exact": 266,
+    "oracle_saved": 42,
+    "greedy_saved": 42,
+    "oracle_mask": 129,
+    "greedy_mask": 129,
+    "seed": 3492405867
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      2,
+      4,
+      4,
+      4,
+      4,
+      5,
+      2,
+      2,
+      3
+    ],
+    "all_exact": 231,
+    "oracle_saved": 12,
+    "greedy_saved": 12,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 2489533125
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      4,
+      5,
+      5,
+      3,
+      6,
+      4
+    ],
+    "all_exact": 252,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 33,
+    "greedy_mask": 33,
+    "seed": 2245182965
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      3,
+      3,
+      2,
+      2,
+      2,
+      5,
+      4,
+      6,
+      3,
+      6,
+      5,
+      3
+    ],
+    "all_exact": 364,
+    "oracle_saved": 21,
+    "greedy_saved": 21,
+    "oracle_mask": 2053,
+    "greedy_mask": 2053,
+    "seed": 2601596948
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      5,
+      6,
+      2,
+      4,
+      2,
+      4,
+      5,
+      3
+    ],
+    "all_exact": 266,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 129,
+    "greedy_mask": 129,
+    "seed": 1591641068
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      2,
+      3,
+      4,
+      2,
+      6,
+      2,
+      6,
+      2,
+      2,
+      2,
+      6,
+      4
+    ],
+    "all_exact": 322,
+    "oracle_saved": 18,
+    "greedy_saved": 18,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 888133977
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      6,
+      3,
+      5,
+      2,
+      6,
+      2,
+      5,
+      4,
+      2,
+      6
+    ],
+    "all_exact": 364,
+    "oracle_saved": 54,
+    "greedy_saved": 54,
+    "oracle_mask": 513,
+    "greedy_mask": 513,
+    "seed": 3935796720
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      2,
+      3,
+      5,
+      5,
+      5,
+      3,
+      4,
+      4
+    ],
+    "all_exact": 266,
+    "oracle_saved": 18,
+    "greedy_saved": 18,
+    "oracle_mask": 129,
+    "greedy_mask": 129,
+    "seed": 3927453629
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      3,
+      3,
+      5,
+      4,
+      4,
+      5,
+      2
+    ],
+    "all_exact": 217,
+    "oracle_saved": 12,
+    "greedy_saved": 12,
+    "oracle_mask": 65,
+    "greedy_mask": 65,
+    "seed": 1899704345
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      6,
+      4,
+      6,
+      2,
+      5,
+      5,
+      4,
+      5,
+      5,
+      5,
+      3
+    ],
+    "all_exact": 469,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 1025,
+    "greedy_mask": 1025,
+    "seed": 98493528
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      4,
+      4,
+      6,
+      6,
+      4,
+      5
+    ],
+    "all_exact": 280,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 33,
+    "greedy_mask": 33,
+    "seed": 3342995429
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      4,
+      3,
+      6,
+      6,
+      4,
+      5,
+      4
+    ],
+    "all_exact": 301,
+    "oracle_saved": 51,
+    "greedy_saved": 51,
+    "oracle_mask": 97,
+    "greedy_mask": 97,
+    "seed": 3449309917
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      4,
+      3,
+      6,
+      5,
+      2,
+      2,
+      2
+    ],
+    "all_exact": 189,
+    "oracle_saved": 18,
+    "greedy_saved": 18,
+    "oracle_mask": 65,
+    "greedy_mask": 65,
+    "seed": 2973953872
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      5,
+      4,
+      2,
+      6,
+      2,
+      6
+    ],
+    "all_exact": 224,
+    "oracle_saved": 48,
+    "greedy_saved": 48,
+    "oracle_mask": 33,
+    "greedy_mask": 33,
+    "seed": 3890565491
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      4,
+      4,
+      4,
+      4,
+      3,
+      6,
+      5,
+      6,
+      3,
+      3
+    ],
+    "all_exact": 378,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 513,
+    "greedy_mask": 513,
+    "seed": 204867537
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      2,
+      6,
+      6,
+      6,
+      5,
+      3
+    ],
+    "all_exact": 266,
+    "oracle_saved": 39,
+    "greedy_saved": 39,
+    "oracle_mask": 41,
+    "greedy_mask": 41,
+    "seed": 3233127760
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      5,
+      4,
+      4,
+      5,
+      2,
+      5,
+      6,
+      5,
+      2,
+      3,
+      4
+    ],
+    "all_exact": 399,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 1025,
+    "greedy_mask": 1025,
+    "seed": 3170416890
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      3,
+      3,
+      6,
+      6,
+      6
+    ],
+    "all_exact": 231,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 2732971523
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      6,
+      2,
+      3,
+      4,
+      2,
+      3,
+      5,
+      6,
+      3
+    ],
+    "all_exact": 287,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 523950621
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      6,
+      5,
+      5,
+      3,
+      3,
+      5,
+      5
+    ],
+    "all_exact": 301,
+    "oracle_saved": 48,
+    "greedy_saved": 48,
+    "oracle_mask": 65,
+    "greedy_mask": 65,
+    "seed": 1592034657
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      3,
+      6,
+      2,
+      2,
+      6
+    ],
+    "all_exact": 161,
+    "oracle_saved": 66,
+    "greedy_saved": 66,
+    "oracle_mask": 23,
+    "greedy_mask": 23,
+    "seed": 3130636395
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      5,
+      4,
+      4,
+      5,
+      5,
+      2,
+      4,
+      4,
+      2,
+      5,
+      2,
+      6
+    ],
+    "all_exact": 420,
+    "oracle_saved": 48,
+    "greedy_saved": 48,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 811704215
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      5,
+      2,
+      6,
+      4,
+      4,
+      4,
+      3
+    ],
+    "all_exact": 245,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 65,
+    "greedy_mask": 65,
+    "seed": 2870389617
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      4,
+      5,
+      4,
+      3,
+      2,
+      6,
+      6
+    ],
+    "all_exact": 273,
+    "oracle_saved": 42,
+    "greedy_saved": 42,
+    "oracle_mask": 65,
+    "greedy_mask": 65,
+    "seed": 3993412643
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      4,
+      6,
+      2,
+      4,
+      5,
+      2
+    ],
+    "all_exact": 196,
+    "oracle_saved": 18,
+    "greedy_saved": 18,
+    "oracle_mask": 33,
+    "greedy_mask": 33,
+    "seed": 302987501
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      2,
+      5,
+      2,
+      6,
+      5,
+      3,
+      3,
+      3,
+      4,
+      4,
+      5
+    ],
+    "all_exact": 357,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 1025,
+    "greedy_mask": 1025,
+    "seed": 275102627
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      6,
+      6,
+      2,
+      4,
+      2,
+      6
+    ],
+    "all_exact": 238,
+    "oracle_saved": 57,
+    "greedy_saved": 57,
+    "oracle_mask": 49,
+    "greedy_mask": 49,
+    "seed": 3871635299
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      2,
+      4,
+      5,
+      3,
+      3,
+      5,
+      4,
+      5
+    ],
+    "all_exact": 266,
+    "oracle_saved": 39,
+    "greedy_saved": 39,
+    "oracle_mask": 193,
+    "greedy_mask": 193,
+    "seed": 1322897436
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      3,
+      3,
+      4,
+      6,
+      2,
+      4,
+      6,
+      2,
+      3,
+      4,
+      2,
+      4
+    ],
+    "all_exact": 350,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 564607605
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      3,
+      5,
+      3,
+      5,
+      3,
+      3,
+      6,
+      6,
+      5
+    ],
+    "all_exact": 357,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 2626615384
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      2,
+      6,
+      5,
+      4,
+      5,
+      3,
+      4,
+      6,
+      6,
+      2,
+      3
+    ],
+    "all_exact": 413,
+    "oracle_saved": 12,
+    "greedy_saved": 12,
+    "oracle_mask": 1025,
+    "greedy_mask": 1025,
+    "seed": 1878788891
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      3,
+      2,
+      3,
+      3,
+      2
+    ],
+    "all_exact": 77,
+    "oracle_saved": 21,
+    "greedy_saved": 21,
+    "oracle_mask": 21,
+    "greedy_mask": 21,
+    "seed": 2485170757
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      3,
+      3,
+      6,
+      3,
+      2,
+      6
+    ],
+    "all_exact": 196,
+    "oracle_saved": 48,
+    "greedy_saved": 48,
+    "oracle_mask": 57,
+    "greedy_mask": 57,
+    "seed": 4072276088
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      5,
+      4,
+      4,
+      3,
+      2
+    ],
+    "all_exact": 147,
+    "oracle_saved": 39,
+    "greedy_saved": 39,
+    "oracle_mask": 19,
+    "greedy_mask": 19,
+    "seed": 1788259760
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      6,
+      3,
+      3,
+      3,
+      4,
+      3
+    ],
+    "all_exact": 182,
+    "oracle_saved": 60,
+    "greedy_saved": 60,
+    "oracle_mask": 51,
+    "greedy_mask": 51,
+    "seed": 1493235495
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      2,
+      3,
+      4,
+      5,
+      2
+    ],
+    "all_exact": 119,
+    "oracle_saved": 15,
+    "greedy_saved": 15,
+    "oracle_mask": 19,
+    "greedy_mask": 19,
+    "seed": 1541863651
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      6,
+      4,
+      5,
+      3,
+      2,
+      4,
+      3,
+      2,
+      6,
+      3,
+      4,
+      2
+    ],
+    "all_exact": 364,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 1294874780
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      3,
+      2,
+      6,
+      3,
+      3
+    ],
+    "all_exact": 133,
+    "oracle_saved": 48,
+    "greedy_saved": 48,
+    "oracle_mask": 23,
+    "greedy_mask": 23,
+    "seed": 415289078
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      6,
+      5,
+      4,
+      3,
+      6,
+      3,
+      4,
+      5,
+      6,
+      6,
+      3
+    ],
+    "all_exact": 483,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 1025,
+    "greedy_mask": 1025,
+    "seed": 1095141409
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      5,
+      3,
+      5,
+      4,
+      3,
+      3,
+      2,
+      6,
+      5,
+      6,
+      3
+    ],
+    "all_exact": 399,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 1025,
+    "greedy_mask": 1025,
+    "seed": 3095882018
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      6,
+      6,
+      4,
+      5,
+      6,
+      5
+    ],
+    "all_exact": 322,
+    "oracle_saved": 75,
+    "greedy_saved": 75,
+    "oracle_mask": 35,
+    "greedy_mask": 35,
+    "seed": 2838603923
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      4,
+      2,
+      5,
+      2,
+      6,
+      5,
+      2,
+      3,
+      4,
+      4
+    ],
+    "all_exact": 308,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 513,
+    "greedy_mask": 513,
+    "seed": 668333523
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      5,
+      5,
+      3,
+      5,
+      2,
+      5,
+      2,
+      4,
+      2
+    ],
+    "all_exact": 273,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 1286317580
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      2,
+      2,
+      4,
+      3,
+      4,
+      2,
+      4,
+      3
+    ],
+    "all_exact": 168,
+    "oracle_saved": 12,
+    "greedy_saved": 12,
+    "oracle_mask": 129,
+    "greedy_mask": 129,
+    "seed": 3619652858
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      3,
+      4,
+      4,
+      2,
+      6,
+      5,
+      2,
+      4,
+      6,
+      3,
+      5,
+      4
+    ],
+    "all_exact": 420,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 3278956002
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      6,
+      4,
+      6,
+      2,
+      3,
+      6,
+      2
+    ],
+    "all_exact": 259,
+    "oracle_saved": 66,
+    "greedy_saved": 66,
+    "oracle_mask": 113,
+    "greedy_mask": 113,
+    "seed": 608222038
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      2,
+      2,
+      4,
+      4,
+      4,
+      3,
+      6,
+      2,
+      6,
+      5
+    ],
+    "all_exact": 322,
+    "oracle_saved": 27,
+    "greedy_saved": 27,
+    "oracle_mask": 515,
+    "greedy_mask": 515,
+    "seed": 975516610
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      2,
+      5,
+      6,
+      6,
+      2,
+      4,
+      2,
+      2,
+      3,
+      6,
+      2,
+      4
+    ],
+    "all_exact": 364,
+    "oracle_saved": 18,
+    "greedy_saved": 18,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 2910122129
+  },
+  {
+    "blocks": 11,
+    "controls": [
+      6,
+      4,
+      4,
+      5,
+      4,
+      2,
+      5,
+      2,
+      2,
+      3,
+      4
+    ],
+    "all_exact": 343,
+    "oracle_saved": 66,
+    "greedy_saved": 60,
+    "oracle_mask": 1445,
+    "greedy_mask": 1061,
+    "seed": 4142400106
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      3,
+      3,
+      2,
+      5,
+      3,
+      6,
+      4,
+      3,
+      6
+    ],
+    "all_exact": 301,
+    "oracle_saved": 45,
+    "greedy_saved": 45,
+    "oracle_mask": 259,
+    "greedy_mask": 259,
+    "seed": 2884768404
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      6,
+      6,
+      4,
+      3,
+      4
+    ],
+    "all_exact": 217,
+    "oracle_saved": 51,
+    "greedy_saved": 51,
+    "oracle_mask": 25,
+    "greedy_mask": 25,
+    "seed": 3845202454
+  },
+  {
+    "blocks": 12,
+    "controls": [
+      5,
+      4,
+      2,
+      5,
+      4,
+      3,
+      5,
+      5,
+      4,
+      4,
+      4,
+      6
+    ],
+    "all_exact": 462,
+    "oracle_saved": 48,
+    "greedy_saved": 48,
+    "oracle_mask": 2049,
+    "greedy_mask": 2049,
+    "seed": 3286717538
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      2,
+      3,
+      3,
+      6,
+      4,
+      3,
+      5,
+      6,
+      3,
+      4
+    ],
+    "all_exact": 336,
+    "oracle_saved": 27,
+    "greedy_saved": 27,
+    "oracle_mask": 769,
+    "greedy_mask": 769,
+    "seed": 614129640
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      6,
+      4,
+      5,
+      5,
+      3
+    ],
+    "all_exact": 217,
+    "oracle_saved": 72,
+    "greedy_saved": 72,
+    "oracle_mask": 27,
+    "greedy_mask": 27,
+    "seed": 55556921
+  },
+  {
+    "blocks": 8,
+    "controls": [
+      5,
+      4,
+      6,
+      3,
+      6,
+      2,
+      5,
+      6
+    ],
+    "all_exact": 350,
+    "oracle_saved": 48,
+    "greedy_saved": 48,
+    "oracle_mask": 129,
+    "greedy_mask": 129,
+    "seed": 1576727453
+  },
+  {
+    "blocks": 7,
+    "controls": [
+      4,
+      2,
+      2,
+      2,
+      3,
+      2,
+      3
+    ],
+    "all_exact": 105,
+    "oracle_saved": 24,
+    "greedy_saved": 24,
+    "oracle_mask": 65,
+    "greedy_mask": 65,
+    "seed": 3272639797
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      4,
+      2,
+      4,
+      6,
+      5,
+      6,
+      2,
+      3,
+      6,
+      6
+    ],
+    "all_exact": 406,
+    "oracle_saved": 57,
+    "greedy_saved": 57,
+    "oracle_mask": 517,
+    "greedy_mask": 517,
+    "seed": 3208246363
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      4,
+      5,
+      4,
+      3,
+      6,
+      5
+    ],
+    "all_exact": 252,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 33,
+    "greedy_mask": 33,
+    "seed": 3121227340
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      4,
+      5,
+      5,
+      4,
+      5,
+      6,
+      3,
+      4,
+      4
+    ],
+    "all_exact": 371,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 3874461000
+  },
+  {
+    "blocks": 10,
+    "controls": [
+      2,
+      3,
+      3,
+      4,
+      3,
+      5,
+      2,
+      3,
+      6,
+      2
+    ],
+    "all_exact": 252,
+    "oracle_saved": 6,
+    "greedy_saved": 6,
+    "oracle_mask": 513,
+    "greedy_mask": 513,
+    "seed": 3739169818
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      6,
+      2,
+      4,
+      6,
+      5,
+      4,
+      6,
+      6,
+      6
+    ],
+    "all_exact": 441,
+    "oracle_saved": 54,
+    "greedy_saved": 54,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 3250959767
+  },
+  {
+    "blocks": 6,
+    "controls": [
+      4,
+      3,
+      6,
+      6,
+      3,
+      2
+    ],
+    "all_exact": 210,
+    "oracle_saved": 18,
+    "greedy_saved": 18,
+    "oracle_mask": 33,
+    "greedy_mask": 33,
+    "seed": 3733586908
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      2,
+      4,
+      4,
+      3,
+      5
+    ],
+    "all_exact": 147,
+    "oracle_saved": 33,
+    "greedy_saved": 33,
+    "oracle_mask": 25,
+    "greedy_mask": 25,
+    "seed": 2745467203
+  },
+  {
+    "blocks": 5,
+    "controls": [
+      5,
+      4,
+      6,
+      6,
+      4
+    ],
+    "all_exact": 245,
+    "oracle_saved": 36,
+    "greedy_saved": 36,
+    "oracle_mask": 17,
+    "greedy_mask": 17,
+    "seed": 3820732894
+  },
+  {
+    "blocks": 9,
+    "controls": [
+      3,
+      3,
+      6,
+      4,
+      6,
+      2,
+      6,
+      2,
+      5
+    ],
+    "all_exact": 329,
+    "oracle_saved": 30,
+    "greedy_saved": 30,
+    "oracle_mask": 257,
+    "greedy_mask": 257,
+    "seed": 2378089724
+  }
+]
