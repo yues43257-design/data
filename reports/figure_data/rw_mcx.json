@@ -1,0 +1,62 @@
+[
+  {
+    "name": "mcx(3)",
+    "qubits": 5,
+    "native": {
+      "cx": 18,
+      "t": 12,
+      "tdg": 9,
+      "h": 6
+    },
+    "toffolis": 0,
+    "t_qiskit_l0": 21,
+    "t_qiskit_l3": 19,
+    "t_todd": 17,
+    "t_todd_ours": 12,
+    "t_ours_raw": 12,
+    "relative_phase_ok": true,
+    "t_ours_safe": 12,
+    "cx_l0": 18,
+    "cx_l3": 18
+  },
+  {
+    "name": "mcx(4)",
+    "qubits": 7,
+    "native": {
+      "cx": 30,
+      "t": 20,
+      "tdg": 15,
+      "h": 10
+    },
+    "toffolis": 0,
+    "t_qiskit_l0": 35,
+    "t_qiskit_l3": 31,
+    "t_todd": 27,
+    "t_todd_ours": 20,
+    "t_ours_raw": 20,
+    "relative_phase_ok": true,
+    "t_ours_safe": 20,
+    "cx_l0": 30,
+    "cx_l3": 30
+  },
+  {
+    "name": "mcx(5)",
+    "qubits": 9,
+    "native": {
+      "cx": 42,
+      "t": 28,
+      "tdg": 21,
+      "h": 14
+    },
+    "toffolis": 0,
+    "t_qiskit_l0": 49,
+    "t_qiskit_l3": 43,
+    "t_todd": 37,
+    "t_todd_ours": 28,
+    "t_ours_raw": 28,
+    "relative_phase_ok": true,
+    "t_ours_safe": 28,
+    "cx_l0": 42,
+    "cx_l3": 42
+  }
+]

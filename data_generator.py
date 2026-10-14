@@ -28,14 +28,36 @@ computed, and the result is stored as a ``torch_geometric.data.Data`` object:
 
 ``x``            node features: spider type, phase, degree, qubit support, ...
 ``edge_index``   COO edge index (both directions), ``edge_type`` simple/Hadamard
-``y_parity``     (num_terms, max_qubits) int8 parity bitmasks, zero padded
-``y_phase``      (num_terms,) int64 phase class of each term: ``k`` means
+``y_parity``     (MAX_PHASE_TERMS, max_qubits) int8 parity bitmasks, zero padded
+``y_phase``      (MAX_PHASE_TERMS,) int64 phase class of each term: ``k`` means
                  ``k * pi/16`` modulo 32 classes (the 32-way GNN head)
-``y_block``      (num_terms,) int64 index of the phase-polynomial block
+``y_block``      (MAX_PHASE_TERMS,) int64 source block index, ``-1`` on padding
+``y_stop``       (MAX_PHASE_TERMS,) int64 end-of-sequence target: 1 exactly at
+                 the first padding step (no stop inside a truncated window)
+``y_new_block``  (MAX_PHASE_TERMS,) int64 phase-block boundary target: 1 on the
+                 first row and wherever the source Hadamard-separated block changes
+``y_seq_len``    scalar int64 number of valid (non-padded) target rows
 ``y_tcount``     scalar int64 T-count label
 ``y_depth``      scalar float T-depth after one Steiner routing pass
 ``y_count``      scalar float number of phase-polynomial terms
 ``metadata``     circuit family, qubit count, optimality level, ... (dict)
+
+The ``y_parity`` / ``y_phase`` rows are a *canonical, fixed length* target
+sequence for autoregressive training.  ``GenConfig.term_order`` selects the
+ordering:
+
+``magnitude`` (default)
+    circuit block order first, then descending phase magnitude inside each
+    block (dominant terms first; truncation drops the least significant ones).
+``parity``
+    strict descending integer parity (the earlier revision).
+
+The list is then truncated or zero padded to ``GenConfig.max_phase_terms`` rows
+(default :data:`MAX_PHASE_TERMS`).  ``data.y_seq_len`` records how many leading
+rows are real and ``data.y_stop`` marks the end-of-sequence step explicitly, so
+a masked loss can ignore the rest while the decoder still learns *where to
+stop*; ``data.num_terms`` keeps the untruncated term count while
+``metadata['num_terms_kept']`` is the number that survived the budget.
 
 Phase granularity is the 32 point grid of ``[0, 2*pi)`` (``pi/16`` per class),
 matching ``PHASE_CLASSES = tuple(Fraction(k, 16) for k in range(32))`` in
@@ -214,8 +236,14 @@ VERSION = "0.1.0"
 FAMILY_MCX = "mcx"
 FAMILY_CLIFFORD_T = "clifford_t"
 FAMILY_PHASE_POLY = "phase_poly"
-ALL_FAMILIES = (FAMILY_MCX, FAMILY_CLIFFORD_T, FAMILY_PHASE_POLY)
-DEFAULT_FAMILY_WEIGHTS = {FAMILY_MCX: 0.35, FAMILY_CLIFFORD_T: 0.35, FAMILY_PHASE_POLY: 0.30}
+FAMILY_BLOCK = "block"
+ALL_FAMILIES = (FAMILY_MCX, FAMILY_CLIFFORD_T, FAMILY_PHASE_POLY, FAMILY_BLOCK)
+DEFAULT_FAMILY_WEIGHTS = {
+    FAMILY_MCX: 0.30,
+    FAMILY_CLIFFORD_T: 0.30,
+    FAMILY_PHASE_POLY: 0.20,
+    FAMILY_BLOCK: 0.20,
+}
 
 LEVEL_EXACT = "exact_optimal"
 LEVEL_TODD = "todd_best_known"
@@ -235,9 +263,24 @@ PHASE_CLASSES = 32
 CLASSES_PER_PI = PHASE_CLASSES // 2             # 16 classes per pi
 CLASSES_PER_QUARTER_PI = CLASSES_PER_PI // 4    # pi/4 spans four classes
 
+# How the flattened phase-polynomial terms are ordered in the target sequence:
+#   "magnitude" - block order first, then descending |phase| inside the block
+#                 (dominant terms first, truncation keeps the significant ones)
+#   "parity"    - strict descending integer parity (previous revision)
+TERM_ORDERINGS = ("magnitude", "parity")
+
+# Number of phase-term rows in the (fixed length, canonically ordered) target
+# sequences ``y_parity`` / ``y_phase`` / ``y_block``.  Autoregressive training
+# needs a constant sequence length plus ``y_seq_len`` for masking.
+MAX_PHASE_TERMS = 64
+
 # Z-phases that count as a T/T-dagger gate in the scheduling pass
 # (copied from the Linux-MCX scheduler).
-T_PHASES = (Fraction(1, 4), Fraction(7, 4))
+# Any *odd* multiple of pi/4 is one T gate plus a free Clifford rotation
+# (pi/4 = T, 3pi/4 = S.T, 5pi/4 = Z.T, 7pi/4 = T-dagger).  Counting only
+# +-pi/4 made the scheduled T-depth of ``y_depth`` undercount every 3pi/4 and
+# 5pi/4 rotation as zero T layers.
+T_PHASES = (Fraction(1, 4), Fraction(3, 4), Fraction(5, 4), Fraction(7, 4))
 
 # node feature layout (kept in one place so downstream GNNs can rely on it)
 NODE_FEATURES = (
@@ -271,6 +314,8 @@ METADATA_KEYS = (
     "num_nodes",
     "num_edges",
     "num_terms",
+    "num_terms_kept",
+    "term_order",
     "n_blocks",
     "rounded_phases",
     "phase_source",
@@ -313,6 +358,8 @@ class GenConfig:
     family_weights: Dict[str, float] = field(default_factory=lambda: dict(DEFAULT_FAMILY_WEIGHTS))
     min_qubits: int = 3
     max_qubits: int = 8
+    max_phase_terms: int = MAX_PHASE_TERMS   # fixed length of the y_* target sequences
+    term_order: str = "magnitude"            # "magnitude" | "parity" (see TERM_ORDERINGS)
     seed: int = 20240914
     split_ratios: Tuple[float, float, float] = (0.8, 0.1, 0.1)
 
@@ -323,6 +370,8 @@ class GenConfig:
     mcx_random_polarity_prob: float = 0.5  # probability of inverting some controls
     mcx_relative_phase_prob: float = 0.25  # n=2: use the 4-T Margolus variant
     mcx_opt_level: int = 1
+    mcx_basis: str = "rz"                  # "rz" = {H,CX,Rz} synthesis | "clifford_t" = Toffoli ladder
+    mcx_clifford_t_max_controls: int = 6   # ladder covers n = 1..6 (needs 2n-1 qubits)
 
     # --- family: random Clifford + T
     t_min: int = 5
@@ -406,6 +455,28 @@ class TCountLabel:
 # ---------------------------------------------------------------------------
 # small helpers
 # ---------------------------------------------------------------------------
+
+
+def phase_class_magnitude(class_index: int) -> int:
+    """|phase| of a 32-class label in units of pi/16: 0 (identity) .. 16."""
+    class_index = int(class_index) % PHASE_CLASSES
+    return min(class_index, PHASE_CLASSES - class_index)
+
+
+def required_max_qubits(cfg: "GenConfig") -> int:
+    """Widest circuit a configuration can produce.
+
+    The Clifford+T MCX ladder needs ``n-2`` clean ancillas, i.e. ``2n-1`` qubits
+    for ``n`` controls (n=5 -> 9, n=6 -> 11).  Target tensors are padded to a
+    *single* width for the whole dataset, so the generator has to widen its
+    ``max_qubits`` accordingly; otherwise the parity columns of the larger
+    samples would be silently truncated.
+    """
+    width = int(cfg.max_qubits)
+    if cfg.mcx_basis == "clifford_t":
+        n_controls = min(int(cfg.mcx_max_controls), int(cfg.mcx_clifford_t_max_controls))
+        width = max(width, 2 * n_controls - 1)
+    return width
 
 
 def derive_seed(base_seed: int, index: int) -> int:
@@ -1072,16 +1143,77 @@ def _relative_phase_toffoli(n_qubits: int, c0: int, c1: int, target: int) -> zx.
     return zx.Circuit.from_qasm(_dump_qasm(qc)).to_basic_gates()
 
 
+def _clifford_t_mcx_circuit(
+    n_qubits: int,
+    controls: Sequence[int],
+    target: int,
+    polarities: Sequence[bool],
+    ancillas: Sequence[int],
+) -> zx.Circuit:
+    """Exact, ancilla-assisted C^nX in Clifford+T (Toffoli AND-ladder).
+
+    ``Toffoli(c1, c2 -> w)`` computes the AND of the controls into clean work
+    qubits (one per additional control), a final Toffoli combines the last
+    control with the target, and the ladder is uncomputed.  Every gate is a
+    Toffoli, i.e. exact Clifford+T, so the extracted phase polynomial only
+    contains multiples of pi/4 and its T-count is meaningful (unlike the
+    ``{H, CX, Rz}`` synthesis, whose pi/8 / pi/16 rotations have *no* exact
+    Clifford+T realisation and therefore always score T-count 0).
+    """
+    if not _HAS_QISKIT:
+        raise RuntimeError("qiskit is required for the mcx family")
+    qc = QuantumCircuit(n_qubits)
+    inverted = [q for q, polarity in zip(controls, polarities) if not polarity]
+    for qubit in inverted:
+        qc.x(qubit)
+    if len(controls) == 1:
+        qc.cx(controls[0], target)
+    elif len(controls) == 2:
+        qc.ccx(controls[0], controls[1], target)
+    else:
+        work = list(ancillas)
+        qc.ccx(controls[0], controls[1], work[0])
+        for i in range(1, len(work)):
+            qc.ccx(work[i - 1], controls[i + 1], work[i])
+        qc.ccx(work[-1], controls[-1], target)
+        for i in reversed(range(1, len(work))):
+            qc.ccx(work[i - 1], controls[i + 1], work[i])
+        qc.ccx(controls[0], controls[1], work[0])
+    for qubit in inverted:
+        qc.x(qubit)
+    return zx.Circuit.from_qasm(_dump_qasm(qc)).to_basic_gates()
+
+
 def gen_mcx(rng: random.Random, cfg: GenConfig) -> GeneratedSample:
-    """Random multi-controlled X gate C^nX, n = 1..6."""
+    """Random multi-controlled X gate C^nX, n = 1..6.
+
+    ``mcx_basis="rz"`` (default) uses Qiskit's {H, CX, Rz} synthesis: exact as a
+    unitary but with pi/8 / pi/16 rotations, i.e. only Clifford+T *up to
+    rounding* (labels become ``rounded_upper_bound``).
+
+    ``mcx_basis="clifford_t"`` uses the exact Toffoli AND-ladder instead: every
+    rotation is a multiple of pi/4, so the phase polynomial is genuinely
+    Clifford+T and its T-count label is meaningful.  The ladder needs one clean
+    ancilla per additional control (``2n-1`` qubits), which caps the family at
+    ``mcx_clifford_t_max_controls`` controls, i.e. up to 6 controls on 11 qubits;
+    :func:`required_max_qubits` widens the dataset width so nothing is truncated.
+    """
     max_controls = min(cfg.mcx_max_controls, max(cfg.mcx_min_controls, cfg.max_qubits - 1))
+    want_clifford_t = cfg.mcx_basis == "clifford_t"
+    if want_clifford_t:
+        # both knobs must hold: the user's cap and the ladder's own cap
+        max_controls = min(cfg.mcx_max_controls, cfg.mcx_clifford_t_max_controls)
+        max_controls = max(cfg.mcx_min_controls, max_controls)
     n_controls = rng.randint(cfg.mcx_min_controls, max_controls)
     required = n_controls + 1
-    if required > cfg.max_qubits:
+    if not want_clifford_t and required > cfg.max_qubits:
         n_controls = cfg.max_qubits - 1
         required = n_controls + 1
+    if n_controls < 1:
+        raise ValueError("max_qubits is too small for the MCX family")
 
-    n_qubits = max(required, cfg.min_qubits)
+    n_ancillas = max(0, n_controls - 2) if want_clifford_t else 0
+    n_qubits = max(required + n_ancillas, cfg.min_qubits)
     if n_qubits < cfg.max_qubits and rng.random() < cfg.mcx_padding_prob:
         n_qubits = rng.randint(n_qubits, cfg.max_qubits)
 
@@ -1095,7 +1227,18 @@ def gen_mcx(rng: random.Random, cfg: GenConfig) -> GeneratedSample:
                 polarities[i] = False
 
     use_relative_phase = n_controls == 2 and rng.random() < cfg.mcx_relative_phase_prob
-    if use_relative_phase:
+    ancillas: List[int] = []
+    if want_clifford_t:
+        chosen = list(controls) + [target]
+        spare = [q for q in range(n_qubits) if q not in chosen]
+        ancillas = spare[:n_ancillas]
+        if len(ancillas) < n_ancillas:
+            raise ValueError("clifford_t MCX synthesis ran out of clean ancilla qubits")
+        circuit = _clifford_t_mcx_circuit(
+            n_qubits, controls, target, polarities, ancillas
+        )
+        variant = "clifford_t_ladder"
+    elif use_relative_phase:
         circuit = _relative_phase_toffoli(n_qubits, controls[0], controls[1], target)
         variant = "relative_phase_toffoli"
     else:
@@ -1112,6 +1255,7 @@ def gen_mcx(rng: random.Random, cfg: GenConfig) -> GeneratedSample:
             "target": target,
             "polarities": [bool(p) for p in polarities],
             "variant": variant,
+            "ancillas": list(ancillas),
         },
     )
 
@@ -1220,10 +1364,58 @@ def gen_phase_poly(rng: random.Random, cfg: GenConfig) -> GeneratedSample:
     )
 
 
+def gen_block(rng: random.Random, cfg: GenConfig) -> GeneratedSample:
+    """One Hadamard-separated phase block of a random circuit.
+
+    The hybrid solver feeds the GNN a *single* CNOT+T block at a time, so the
+    model has to be trained on that distribution.  This family samples a random
+    Clifford+T / MCX source, splits it at its single-qubit Clifford boundaries
+    and returns one phase segment as the sample (its own graph and its local
+    phase polynomial become the input/target pair).
+    """
+    source_rng = random.Random(rng.randrange(1 << 30))
+    source = (
+        gen_mcx(source_rng, cfg)
+        if rng.random() < 0.5
+        else gen_clifford_t(source_rng, cfg)
+    )
+    segments: List[List[Gate]] = []
+    current: List[Gate] = []
+    for gate in source.circuit.gates:
+        if isinstance(gate, (CNOT, ZPhase)):
+            current.append(gate)
+        else:
+            if current:
+                segments.append(current)
+                current = []
+    if current:
+        segments.append(current)
+    segments = [segment for segment in segments if segment]
+    if not segments:  # degenerate source: fall back to a random phase polynomial
+        return gen_phase_poly(rng, cfg)
+    segment = segments[rng.randrange(len(segments))]
+    n_qubits = source.n_qubits
+    circuit = zx.Circuit(n_qubits)
+    circuit.gates = list(segment)
+    return GeneratedSample(
+        circuit=circuit,
+        n_qubits=n_qubits,
+        family=FAMILY_BLOCK,
+        input_format="zx_graph" if rng.random() < cfg.pp_native_zx_prob else "qasm",
+        info={
+            "source_family": source.family,
+            "source_variant": source.info.get("variant", ""),
+            "segment_size": len(segment),
+            "n_segments": len(segments),
+        },
+    )
+
+
 GENERATORS: Dict[str, Callable[[random.Random, GenConfig], GeneratedSample]] = {
     FAMILY_MCX: gen_mcx,
     FAMILY_CLIFFORD_T: gen_clifford_t,
     FAMILY_PHASE_POLY: gen_phase_poly,
+    FAMILY_BLOCK: gen_block,
 }
 
 
@@ -1474,22 +1666,62 @@ def graph_to_data(
     else:
         edge_index = torch.zeros((2, 0), dtype=torch.long)
 
-    parities: List[List[int]] = []
-    phases: List[int] = []
-    blocks: List[int] = []
-    for block_id, block in enumerate(polynomial.blocks):
-        for parity, units in sorted(block.items()):
-            parities.append([(parity >> q) & 1 for q in range(cfg.max_qubits)])
-            phases.append(int(units) % PHASE_CLASSES)
-            blocks.append(block_id)
-    if parities:
-        y_parity = torch.tensor(parities, dtype=torch.int8)
-        y_phase = torch.tensor(phases, dtype=torch.long)
-        y_block = torch.tensor(blocks, dtype=torch.long)
+    # --- canonical, fixed-length target sequences ---------------------------
+    # Flatten every phase-polynomial block into one list of (parity, class,
+    # block) triples and order it canonically; this order is what an
+    # autoregressive decoder has to follow.
+    #
+    # ``term_order="magnitude"`` (default) keeps the circuit's block order and
+    # sorts by descending phase magnitude inside each block, so the dominant
+    # terms of every Hadamard-separated phase layer come first and truncation
+    # drops the least significant ones.  ``term_order="parity"`` is the strict
+    # descending-parity ordering used by the earlier revision.  Both are fully
+    # deterministic (parity/class tie-breaks).
+    parity_mask = (1 << cfg.max_qubits) - 1
+    flat_terms: List[Tuple[int, int, int]] = [
+        (int(parity) & parity_mask, int(units) % PHASE_CLASSES, block_id)
+        for block_id, block in enumerate(polynomial.blocks)
+        for parity, units in block.items()
+    ]
+    if cfg.term_order == "parity":
+        flat_terms.sort(key=lambda term: (-term[0], term[2], term[1]))
     else:
-        y_parity = torch.zeros((0, cfg.max_qubits), dtype=torch.int8)
-        y_phase = torch.zeros((0,), dtype=torch.long)
-        y_block = torch.zeros((0,), dtype=torch.long)
+        flat_terms.sort(
+            key=lambda term: (
+                term[2],
+                -phase_class_magnitude(term[1]),
+                -term[0],
+                term[1],
+            )
+        )
+
+    true_seq_len = min(len(flat_terms), int(cfg.max_phase_terms))
+    padded_parity = np.zeros((cfg.max_phase_terms, cfg.max_qubits), dtype=np.int8)
+    padded_phase = np.zeros((cfg.max_phase_terms,), dtype=np.int64)
+    padded_block = np.full((cfg.max_phase_terms,), -1, dtype=np.int64)
+    for slot, (parity, units, block_id) in enumerate(flat_terms[:true_seq_len]):
+        for q in range(cfg.max_qubits):
+            padded_parity[slot, q] = (parity >> q) & 1
+        padded_phase[slot] = units
+        padded_block[slot] = block_id
+    y_parity = torch.from_numpy(padded_parity)
+    y_phase = torch.from_numpy(padded_phase)
+    y_block = torch.from_numpy(padded_block)
+    # Explicit end-of-sequence supervision: one stop target per step, set at the
+    # first padding position (a sequence truncated at the budget has no stop
+    # inside the window).
+    padded_stop = np.zeros((cfg.max_phase_terms,), dtype=np.int64)
+    if true_seq_len < int(cfg.max_phase_terms):
+        padded_stop[true_seq_len] = 1
+    y_stop = torch.from_numpy(padded_stop)
+    # Explicit phase-block boundary targets: 1 on the first row and wherever the
+    # source block changes.  A Clifford+T circuit has several Hadamard-separated
+    # blocks, so a decoder that cannot mark boundaries can never rebuild it.
+    padded_new_block = np.zeros((cfg.max_phase_terms,), dtype=np.int64)
+    for slot in range(true_seq_len):
+        if slot == 0 or padded_block[slot] != padded_block[slot - 1]:
+            padded_new_block[slot] = 1
+    y_new_block = torch.from_numpy(padded_new_block)
 
     qasm = ""
     if cfg.store_qasm:
@@ -1514,7 +1746,9 @@ def graph_to_data(
         "y_tcount": int(label.value),
         "num_nodes": int(len(verts)),
         "num_edges": int(len(edges) // 2),
-        "num_terms": int(len(phases)),
+        "num_terms": int(len(flat_terms)),
+        "num_terms_kept": int(true_seq_len),
+        "term_order": cfg.term_order,
         "n_blocks": int(polynomial.n_blocks),
         "rounded_phases": bool(not polynomial.all_exact),
         "phase_source": polynomial.source,
@@ -1553,8 +1787,12 @@ def graph_to_data(
     data.y_parity = y_parity
     data.y_phase = y_phase
     data.y_block = y_block
+    data.y_stop = y_stop
+    data.y_new_block = y_new_block
+    data.y_seq_len = torch.tensor([true_seq_len], dtype=torch.long)
     data.y_tcount = torch.tensor(int(label.value), dtype=torch.long)
-    data.num_terms = int(len(phases))
+    data.num_terms = int(len(flat_terms))
+    data.num_terms_kept = int(true_seq_len)
     data.n_qubits = int(n_qubits)
     data.family = generated.family
     data.optimality_level = label.level
@@ -1648,6 +1886,11 @@ def data_from_qasm(
     """
     cfg = cfg or GenConfig()
     spec = spec or SampleSpec(index=-1, seed=0, family=family, split="input")
+    if not isinstance(qasm, str) or not qasm.strip():
+        raise ValueError(
+            "empty QASM input; note that datasets generated with --no-qasm do not "
+            "store their source circuit"
+        )
     circuit = zx.Circuit.from_qasm(qasm)
     if circuit.qubits > cfg.max_qubits:
         raise ValueError(
@@ -1783,6 +2026,18 @@ def run_generation(cfg: GenConfig, verbose: bool = True) -> Dict[str, Any]:
     """Generate the dataset with a process pool and write train/val/test files."""
     if not _HAS_PYG:
         raise RuntimeError(f"torch / torch_geometric are required: {_PYG_ERROR}")
+
+    effective_width = required_max_qubits(cfg)
+    if effective_width > cfg.max_qubits:
+        print(
+            f"note: mcx_basis='clifford_t' with up to "
+            f"{min(cfg.mcx_max_controls, cfg.mcx_clifford_t_max_controls)} controls "
+            f"needs {effective_width} qubits (2n-1 for the clean-ancilla ladder) "
+            f"-> widening max_qubits from {cfg.max_qubits} to {effective_width} so "
+            "that no parity column is truncated",
+            file=sys.stderr,
+        )
+        cfg = replace(cfg, max_qubits=effective_width)
 
     if not _HAS_QISKIT and FAMILY_MCX in cfg.families:
         print("warning: qiskit is not installed -> dropping the 'mcx' family", file=sys.stderr)
@@ -2087,7 +2342,43 @@ def _self_test(seed: int = 0) -> int:
             assert data.x.shape[1] == len(NODE_FEATURES)
             assert data.edge_index.shape[0] == 2
             assert data.y_parity.shape[1] == cfg.max_qubits
+            assert data.y_parity.shape[0] == cfg.max_phase_terms
+            assert data.y_phase.shape[0] == cfg.max_phase_terms
+            assert data.y_block.shape[0] == cfg.max_phase_terms
             assert data.y_parity.shape[0] == data.y_phase.shape[0] == data.y_block.shape[0]
+            # canonical ordering + sequence length bookkeeping
+            seq_len = int(data.y_seq_len)
+            assert data.y_seq_len.shape == (1,) and data.y_seq_len.dtype == torch.long
+            assert seq_len == min(int(data.num_terms), cfg.max_phase_terms)
+            parities = [
+                int(sum(int(bit) << q for q, bit in enumerate(row)))
+                for row in data.y_parity[:seq_len].tolist()
+            ]
+            classes = [int(c) for c in data.y_phase[:seq_len].tolist()]
+            blocks = [int(b) for b in data.y_block[:seq_len].tolist()]
+            if cfg.term_order == "parity":
+                assert parities == sorted(parities, reverse=True), "parity order violated"
+            else:
+                # magnitude order: blocks ascending, |phase| descending inside a block
+                assert blocks == sorted(blocks), "blocks must stay in circuit order"
+                for block_id in set(blocks):
+                    inside = [
+                        phase_class_magnitude(c)
+                        for b, c in zip(blocks, classes)
+                        if b == block_id
+                    ]
+                    assert inside == sorted(inside, reverse=True), "phase magnitude order violated"
+            # explicit EOS supervision
+            assert data.y_stop.shape == (cfg.max_phase_terms,)
+            if seq_len < cfg.max_phase_terms:
+                assert int(data.y_stop.sum()) == 1 and int(data.y_stop[seq_len]) == 1
+            else:
+                assert int(data.y_stop.sum()) == 0
+            if seq_len < cfg.max_phase_terms:
+                pad_rows = data.y_parity[seq_len:]
+                assert not bool(pad_rows.any()), "padded parity rows must be zero"
+                assert not bool(data.y_phase[seq_len:].any()), "padded phase classes must be 0"
+                assert bool((data.y_block[seq_len:] == -1).all()), "padded block ids must be -1"
             assert data.optimality_level in LEVELS
             assert cfg.min_qubits <= int(data.n_qubits) <= cfg.max_qubits
             assert data.edge_type.shape[0] == data.edge_index.shape[1]
@@ -2130,6 +2421,77 @@ def _self_test(seed: int = 0) -> int:
         else:
             print("  [skip] qasm storage disabled")
 
+    # -- 7. Clifford+T MCX ladder: exact for n = 1..6 and T-rich labels ------
+    if _HAS_QISKIT and _HAS_PYG:
+        from qiskit.quantum_info import Statevector
+        from qiskit import qasm2 as qasm2_mod
+        # imported under a local alias: a plain ``MCXGate`` import here would make
+        # the name local to the whole function and break the earlier MCX check
+        from qiskit.circuit.library import MCXGate as _MCXGateLadder
+
+        ladder_cfg = GenConfig(
+            samples=4,
+            seed=seed,
+            out_dir="/tmp/_zx_gen_selftest",
+            mcx_basis="clifford_t",
+            mcx_clifford_t_max_controls=6,
+        )
+        rng_ladder = np.random.default_rng(11)
+        exact_ok = True
+        labels_ok = True
+        widths: Dict[int, Tuple[int, int]] = {}
+        for n_controls in range(1, 7):
+            sample = None
+            for attempt in range(6000):
+                candidate = gen_mcx(random.Random(attempt), ladder_cfg)
+                if candidate.info["n_controls"] == n_controls:
+                    sample = candidate
+                    break
+            assert sample is not None, f"no C^{n_controls}X sample generated"
+            widths[n_controls] = (sample.n_qubits, len(sample.info["ancillas"]))
+            # exactness up to a global phase on the ancilla=|0> subspace
+            qc = qasm2_mod.loads(sample.circuit.to_qasm())
+            controls = sample.info["controls"]
+            target = sample.info["target"]
+            ancillas = set(sample.info["ancillas"])
+            n_qubits = sample.n_qubits
+            ctrl_state = sum(
+                1 << i for i, polarity in enumerate(sample.info["polarities"]) if polarity
+            )
+            reference = QuantumCircuit(n_qubits)
+            reference.append(
+                _MCXGateLadder(n_controls, ctrl_state=ctrl_state), controls + [target]
+            )
+            free = [q for q in range(n_qubits) if q not in ancillas]
+            ratios = []
+            for _ in range(12):
+                basis = sum(1 << q for q in free if rng_ladder.random() < 0.5)
+                actual = Statevector.from_int(basis, 2**n_qubits).evolve(qc).data
+                ideal = Statevector.from_int(basis, 2**n_qubits).evolve(reference).data
+                index_a = int(np.argmax(np.abs(actual)))
+                index_i = int(np.argmax(np.abs(ideal)))
+                if index_a != index_i:
+                    exact_ok = False
+                    break
+                ratios.append(actual[index_a] / ideal[index_i])
+            if ratios:
+                ratio = np.array(ratios)
+                exact_ok &= bool(np.abs(ratio / ratio[0] - 1.0).max() < 1e-9)
+            # labels must stay inside the Clifford+T alphabet (multiples of pi/4)
+            _, simplified = simplify_circuit(sample.circuit, ladder_cfg)[:2]
+            _, polynomial = label_tcount(sample.circuit, simplified, ladder_cfg)
+            classes = [c for block in polynomial.blocks for c in block.values()]
+            if not classes or any(c % 4 for c in classes):
+                labels_ok = False
+        check("Clifford+T MCX ladder is exact for n=1..6 (up to global phase)", exact_ok)
+        check(
+            "Clifford+T MCX labels stay in the pi/4 alphabet",
+            labels_ok,
+            str({n: f"{q}q/{a}anc" for n, (q, a) in widths.items()}),
+        )
+    else:
+        print("  [skip] qiskit/torch_geometric missing: MCX ladder checks skipped")
+
     print()
     if failures:
         print(f"self-test FAILED ({len(failures)}): {failures}")
@@ -2156,9 +2518,36 @@ def _add_config_args(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--workers", type=int, default=0, help="0 = min(cpu_count, 8)")
     parser.add_argument("--chunksize", type=int, default=16)
     parser.add_argument("--shard-size", type=int, default=100_000)
-    parser.add_argument("--families", default="mcx,clifford_t,phase_poly")
+    parser.add_argument("--families", default="mcx,clifford_t,phase_poly,block")
     parser.add_argument("--min-qubits", type=int, default=3)
     parser.add_argument("--max-qubits", type=int, default=8)
+    parser.add_argument(
+        "--max-phase-terms",
+        type=int,
+        default=MAX_PHASE_TERMS,
+        help="fixed number of rows in the canonical y_parity / y_phase target sequences",
+    )
+    parser.add_argument(
+        "--term-order",
+        choices=TERM_ORDERINGS,
+        default="magnitude",
+        help="target ordering: 'magnitude' = block order then descending |phase| "
+        "(default), 'parity' = strict descending parity",
+    )
+    parser.add_argument(
+        "--mcx-basis",
+        choices=("rz", "clifford_t"),
+        default="rz",
+        help="MCX family synthesis: 'rz' = Qiskit {H,CX,Rz} (phases need "
+        "rounding), 'clifford_t' = exact Toffoli AND-ladder (pi/4 phases only)",
+    )
+    parser.add_argument(
+        "--mcx-clifford-t-max-controls",
+        type=int,
+        default=6,
+        help="largest control count for the Clifford+T ladder (needs 2n-1 qubits: "
+        "n=5 -> 9, n=6 -> 11; the dataset width is widened automatically)",
+    )
     parser.add_argument("--phase-mode", choices=PHASE_MODES, default="ceil")
     parser.add_argument("--todd-max-gates", type=int, default=400)
     parser.add_argument("--no-todd", action="store_true")
@@ -2194,6 +2583,10 @@ def _config_from_args(args: argparse.Namespace) -> GenConfig:
         family_weights=weights,
         min_qubits=args.min_qubits,
         max_qubits=args.max_qubits,
+        max_phase_terms=args.max_phase_terms,
+        term_order=args.term_order,
+        mcx_basis=args.mcx_basis,
+        mcx_clifford_t_max_controls=args.mcx_clifford_t_max_controls,
         seed=args.seed,
         out_dir=args.out_dir,
         workers=args.workers,

@@ -4,3 +4,10 @@
 /dataset
 /full_dataset
 /test_dataset
+/dataset_v2
+/dataset_v3
+/dataset_v4
+/dataset_v6
+/variant_dataset
+/checkpoints
+*.pt

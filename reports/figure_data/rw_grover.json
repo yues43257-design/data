@@ -1,0 +1,21 @@
+[
+  {
+    "name": "grover(3)",
+    "qubits": 3,
+    "native": {
+      "h": 13,
+      "x": 12,
+      "ccx": 2
+    },
+    "toffolis": 2,
+    "t_qiskit_l0": 14,
+    "t_qiskit_l3": 14,
+    "t_todd": 14,
+    "t_todd_ours": 8,
+    "t_ours_raw": 8,
+    "relative_phase_ok": false,
+    "t_ours_safe": 14,
+    "cx_l0": 12,
+    "cx_l3": 12
+  }
+]

@@ -80,8 +80,16 @@ PHASE_CLASSES = tuple(Fraction(k, 16) for k in range(32))
 PHASE_CLASS_INDEX = {phase: k for k, phase in enumerate(PHASE_CLASSES)}
 N_PHASE_CLASSES = len(PHASE_CLASSES)
 
-# Strict FTQC T-gate definition: only +-pi/4 rotations count as T/T-dagger.
-T_PHASES = (Fraction(1, 4), Fraction(7, 4))
+# FTQC T-rotation definition: *any odd multiple of pi/4* needs exactly one T
+# gate, because the even part is a free Clifford rotation:
+#   pi/4  -> T
+#   3pi/4 -> S . T
+#   5pi/4 -> Z . T
+#   7pi/4 -> T-dagger
+# Counting only +-pi/4 (as the first revision did) undercounts every 3pi/4 and
+# 5pi/4 rotation as zero T gates, which is what made the C^4X proposal report
+# T-count 0 while it still contained a 5pi/4 rotation.
+T_PHASES = (Fraction(1, 4), Fraction(3, 4), Fraction(5, 4), Fraction(7, 4))
 T_DEPTH_LAMBDA = 1.0
 T_COUNT_LAMBDA = 0.5
 
@@ -186,14 +194,144 @@ def make_source_circuit(relative_phase: bool) -> zx.Circuit:
     return circ.to_basic_gates()
 
 
-def make_mcx_source(num_controls: int) -> zx.Circuit:
-    """
-    Build an ancilla-free multi-controlled X gate in H/CNOT/Rz form.
+def _rccx_gates(control0: int, control1: int, target: int):
+    """4-T Margolus / RCCX gates (exact Clifford+T, relative-phase Toffoli)."""
+    return [
+        ("h", target),
+        ("t", target),
+        ("cx", control1, target),
+        ("tdg", target),
+        ("cx", control0, target),
+        ("t", target),
+        ("cx", control1, target),
+        ("tdg", target),
+        ("h", target),
+    ]
 
-    ``num_controls=4`` gives the requested C^4X on 5 qubits.  Qiskit's
-    no-ancilla MCX synthesis is transpiled into the phase-polynomial-friendly
-    gate set {H, CX, Rz} before we pass it to phase-polynomial routing.
+
+def relative_phase_mcx_circuit(num_controls: int) -> "QuantumCircuit":
+    """Relative-phase C^nX ladder: same AND ladder, every Toffoli replaced by RCCX.
+
+    Verified numerically (relative-phase criterion, see ``relative_phase_metrics``)
+    for n = 2..6: the result differs from the exact gate only by a **diagonal
+    +-1 (Clifford) correction**, while using ``4(2n-3)`` T gates instead of
+    ``7(2n-3)`` -- a ~43% T-count reduction.
     """
+    n_ancillas = max(0, num_controls - 2)
+    total = num_controls + 1 + n_ancillas
+    controls = list(range(num_controls))
+    ancillas = list(range(num_controls, num_controls + n_ancillas))
+    target = total - 1
+    qc = QuantumCircuit(total)
+
+    def emit(control0: int, control1: int, target_qubit: int) -> None:
+        for gate in _rccx_gates(control0, control1, target_qubit):
+            name = gate[0]
+            if name == "cx":
+                qc.cx(gate[1], gate[2])
+            else:
+                getattr(qc, name)(gate[1])
+
+    if num_controls == 1:
+        qc.cx(controls[0], target)
+        return qc
+    if num_controls == 2:
+        emit(controls[0], controls[1], target)
+        return qc
+    emit(controls[0], controls[1], ancillas[0])
+    for i in range(1, n_ancillas):
+        emit(ancillas[i - 1], controls[i + 1], ancillas[i])
+    emit(ancillas[-1], controls[-1], target)
+    for i in reversed(range(1, n_ancillas)):
+        emit(ancillas[i - 1], controls[i + 1], ancillas[i])
+    emit(controls[0], controls[1], ancillas[0])
+    return qc
+
+
+def relative_phase_metrics(
+    ideal: zx.Circuit,
+    candidate: zx.Circuit,
+    ancillas: "Optional[Sequence[int]]" = None,
+    num_controls: "Optional[int]" = None,
+):
+    """Certified relative-phase acceptance test for two C^nX circuits.
+
+    Computes ``U_ideal^dagger U_candidate`` on the clean-ancilla (=|0>) subspace;
+    the candidate is relative-phase equivalent iff that matrix is **diagonal with
+    unit modulus entries** (the Margolus/RCCX family differs from the exact gate
+    only by such a diagonal Clifford correction).  Returns
+    ``(offdiagonal_max, ||diag|-1| max)`` or ``None`` when the subspace is too
+    large for a dense check.
+
+    ``ancillas`` / ``num_controls`` must describe the circuit layout; inferring
+    the controls from ``total - 1`` is wrong as soon as ancillas are present
+    (e.g. C^4X has 4 controls and 2 ancillas on 7 qubits) and silently selects
+    the wrong subspace.
+    """
+    try:
+        import numpy as _np
+        from qiskit import qasm2 as _qasm2
+        from qiskit.quantum_info import Operator as _Operator
+    except Exception:
+        return None
+    total = ideal.qubits
+    if candidate.qubits != total or total > 11:
+        return None
+    if ancillas is None:
+        n_controls = int(num_controls) if num_controls is not None else total - 1
+        n_ancillas = max(0, n_controls - 2)
+        ancillas = list(range(n_controls, n_controls + n_ancillas))
+    ancillas = [int(a) for a in ancillas]
+    keep = [x for x in range(2 ** total) if all(not (x >> a) & 1 for a in ancillas)]
+    a = _Operator(_qasm2.loads(candidate.to_qasm())).data[_np.ix_(keep, keep)]
+    b = _Operator(_qasm2.loads(ideal.to_qasm())).data[_np.ix_(keep, keep)]
+    correction = b.conj().T @ a
+    offdiag = float(_np.max(_np.abs(correction - _np.diag(_np.diag(correction)))))
+    unit = float(_np.max(_np.abs(_np.abs(_np.diag(correction)) - 1.0)))
+    return offdiag, unit
+
+
+def make_mcx_source(num_controls: int, basis: str = "rz", relative_phase: bool = False) -> zx.Circuit:
+    """
+    Build a multi-controlled X gate in a phase-polynomial-friendly gate set.
+
+    ``basis="rz"`` (default): Qiskit's no-ancilla MCX synthesis transpiled into
+    {H, CX, Rz}.  The circuit is exact, but its rotations are pi/8 / pi/16
+    angles, i.e. *no* Clifford+T circuit can reproduce it exactly, so a T-count
+    evaluation on this source is structurally meaningless (it always reads ~0).
+
+    ``basis="clifford_t"``: an exact Toffoli AND-ladder on clean ancillas
+    (``2n-1`` qubits).  Every rotation is a multiple of pi/4, so the source is
+    genuinely Clifford+T and T-count / T-depth are well defined.  This is the
+    correct target for evaluating a Clifford+T proposal.
+    """
+    if relative_phase:
+        return zx.Circuit.from_qasm(_dump_qasm(relative_phase_mcx_circuit(num_controls))).to_basic_gates()
+    if basis == "clifford_t":
+        n_ancillas = max(0, num_controls - 2)
+        n_qubits = num_controls + 1 + n_ancillas
+        controls = list(range(num_controls))
+        # Keep the *target on the highest qubit index*: the rest of the pipeline
+        # (``build_circuit_from_phase_terms``) wraps the phase polynomial with
+        # Hadamards on ``n_qubits - 1``, so the ancillas must sit below it.
+        ancillas = list(range(num_controls, num_controls + n_ancillas))
+        target = n_qubits - 1
+        qc = QuantumCircuit(n_qubits)
+        if num_controls == 1:
+            qc.cx(controls[0], target)
+        elif num_controls == 2:
+            qc.ccx(controls[0], controls[1], target)
+        else:
+            qc.ccx(controls[0], controls[1], ancillas[0])
+            for i in range(1, len(ancillas)):
+                qc.ccx(ancillas[i - 1], controls[i + 1], ancillas[i])
+            qc.ccx(ancillas[-1], controls[-1], target)
+            for i in reversed(range(1, len(ancillas))):
+                qc.ccx(ancillas[i - 1], controls[i + 1], ancillas[i])
+            qc.ccx(controls[0], controls[1], ancillas[0])
+        return zx.Circuit.from_qasm(_dump_qasm(qc)).to_basic_gates()
+    if basis != "rz":
+        raise ValueError(f"unknown MCX basis {basis!r} (use 'rz' or 'clifford_t')")
     n_qubits = num_controls + 1
     qc = QuantumCircuit(n_qubits)
     qc.append(MCXGate(num_controls), list(range(n_qubits)))
@@ -232,10 +370,28 @@ def extract_phase_terms(circuit: zx.Circuit) -> dict[tuple[int, ...], Fraction]:
     This is the "phase polynomial" representation used by the Gray/Steiner
     phase-layer router.  The dictionary has one entry per non-Clifford
     rotation; no 2^N object is made.
+
+    Note:
+        The circuit is split at Hadamard gates and the *per-block* phase
+        polynomials are merged into one dictionary.  That merge is only exact
+        when the circuit is a single phase-polynomial block (no Hadamard in
+        between).  For multi-block circuits -- e.g. a Toffoli ladder whose CCX
+        decomposition contains Hadamards -- use
+        :func:`steiner_route_phase_layers`, which routes block by block and
+        preserves the Hadamard boundaries (a flattened reconstruction of such a
+        circuit is not equivalent; measured relative penalty ~0.35).
     """
     n = circuit.qubits
     terms: dict[tuple[int, ...], Fraction] = {}
-    for block in _phase_blocks(circuit):
+    blocks = _phase_blocks(circuit)
+    if len(blocks) > 1:
+        print(
+            f"    [warn] extract_phase_terms: circuit has {len(blocks)} "
+            "Hadamard-separated phase blocks; merging them into one phase "
+            "polynomial is exact only for single-block circuits "
+            "(use steiner_route_phase_layers for multi-block circuits)."
+        )
+    for block in blocks:
         if not all(isinstance(g, (CNOT, ZPhase)) for g in block):
             continue
         pp = PhasePoly.fromCircuit(_circuit_block(n, block))
@@ -417,17 +573,35 @@ def steiner_route_phase_layers(
     return out
 
 
-def _qasm_gate_name(phase: Fraction) -> str:
+def _qasm_gate_names(phase: Fraction) -> tuple[str, ...]:
+    """QASM gate sequence realising a Z-phase with the right T count.
+
+    Odd multiples of pi/4 are one T gate plus a free Clifford rotation, so
+    3pi/4 and 5pi/4 expand to a two-gate sequence (S.T and Z.T).  Phases that
+    are *not* multiples of pi/4 cannot be realised in Clifford+T at all: they
+    are reported instead of being silently emitted, because their T-count is
+    undefined (they need finer-angle magic-state synthesis).
+    """
     p = Fraction(phase) % 2
     if p == PHASE_EIGHTH * 2:      # +pi/4
-        return "t"
+        return ("t",)
     if p == Fraction(7, 4):        # -pi/4
-        return "tdg"
+        return ("tdg",)
+    if p == Fraction(3, 4):        # +3pi/4 = S . T
+        return ("t", "s")
+    if p == Fraction(5, 4):        # +5pi/4 = Z . T
+        return ("t", "z")
     if p == Fraction(1, 2):
-        return "s"
+        return ("s",)
     if p == Fraction(3, 2):
-        return "sdg"
-    raise ValueError(f"non-T phase {phase} cannot be emitted as a T-count gate")
+        return ("sdg",)
+    if p == 0:
+        return ()
+    raise ValueError(
+        f"phase {phase} is not a multiple of pi/4 and cannot be emitted as a "
+        "Clifford+T gate (T-count is undefined for it; it needs finer-angle "
+        "magic-state synthesis)"
+    )
 
 
 def circuit_to_t_qasm(circuit: zx.Circuit) -> str:
@@ -443,7 +617,8 @@ def circuit_to_t_qasm(circuit: zx.Circuit) -> str:
         elif isinstance(gate, CNOT):
             lines.append(f"cx q[{gate.control}], q[{gate.target}];")
         elif isinstance(gate, ZPhase):
-            lines.append(f"{_qasm_gate_name(Fraction(gate.phase))} q[{gate.target}];")
+            for name in _qasm_gate_names(Fraction(gate.phase)):
+                lines.append(f"{name} q[{gate.target}];")
         else:
             raise TypeError(f"unexpected gate: {gate!r}")
     return "\n".join(lines) + "\n"
@@ -459,11 +634,12 @@ def count_t_gates(qasm: str) -> int:
 
 @dataclass(frozen=True)
 class FTQMetrics:
-    """FTQC report: strict T-count, optimized T-depth, CX-depth."""
+    """FTQC report: T-count, optimized T-depth, CX-depth and fine-angle count."""
 
     t_count: int
     t_depth: int
     cx_depth: int
+    fine_count: int = 0          # Z-phases that are not multiples of pi/4
 
 
 def _is_t_gate(gate) -> bool:
@@ -528,19 +704,40 @@ def _t_parallel_schedule(circuit: zx.Circuit) -> tuple[int, list[tuple[int, ZPha
 
 
 def compute_ftq_metrics(circuit: zx.Circuit) -> FTQMetrics:
-    """Return T-count, scheduled T-depth, and CX-depth."""
+    """Return T-count, scheduled T-depth, CX-depth and the fine-angle count.
+
+    ``fine_count`` counts Z-phases that are *not* multiples of pi/4.  Such
+    rotations cannot be implemented in Clifford+T at all, so they are excluded
+    from the T-count (which would otherwise silently read 0 for a proposal that
+    is full of pi/8 / pi/16 rotations) and reported separately.
+    """
     t_count = sum(1 for g in circuit.gates if _is_t_gate(g))
+    fine_count = sum(
+        1
+        for g in circuit.gates
+        if isinstance(g, ZPhase)
+        and (Fraction(g.phase) % 2 * 4).denominator != 1
+    )
     t_depth, _ = _t_parallel_schedule(circuit)
     cx_depth = _layered_depth(circuit, lambda g: isinstance(g, CNOT))
-    return FTQMetrics(t_count=t_count, t_depth=t_depth, cx_depth=cx_depth)
+    return FTQMetrics(
+        t_count=t_count, t_depth=t_depth, cx_depth=cx_depth, fine_count=fine_count
+    )
 
 
 def report_ftq_metrics(circuit: zx.Circuit, label: str) -> FTQMetrics:
     metrics = compute_ftq_metrics(circuit)
     print(
         f"    [{label}] T-count={metrics.t_count}, "
-        f"T-depth={metrics.t_depth}, CX-depth={metrics.cx_depth}"
+        f"T-depth={metrics.t_depth}, CX-depth={metrics.cx_depth}, "
+        f"fine-angle rotations={metrics.fine_count}"
     )
+    if metrics.fine_count:
+        print(
+            f"        [warn] {metrics.fine_count} rotation(s) are not multiples of "
+            "pi/4 -> the circuit is NOT Clifford+T, so its T-count is undefined "
+            "(the rotations need finer-angle magic-state synthesis)."
+        )
     return metrics
 
 
@@ -689,7 +886,14 @@ class PhaseGadgetGNN(nn.Module):
     readout predicts:
       * parity bits per candidate phase term (binary logits), and
       * one discrete phase class per candidate term (softmax over the
-        :data:`PHASE_CLASSES` library).
+        :data:`PHASE_CLASSES` library),
+    emitted one term per step by an autoregressive GRU decoder seeded with the
+    pooled graph embedding.  Training runs with teacher forcing
+    (``target_sequence``), inference feeds the decoder's own predictions back.
+    Besides the per-step parity/phase logits the decoder emits an explicit
+    end-of-sequence logit (``out_stop``) and the pooled embedding predicts the
+    sequence length (``out_count``), so stopping does not depend on the padding
+    mask alone.
 
     ``node_dim`` and ``max_phase_terms`` default to the original hard-coded
     values (sparse-graph features, ``MAX_PHASE_TERMS`` candidate rows) so the
@@ -725,31 +929,151 @@ class PhaseGadgetGNN(nn.Module):
             nn.ReLU(),
             nn.Linear(self.hidden, 1),
         )
-        self.param_head = nn.Sequential(
+        # --- autoregressive decoder -----------------------------------------
+        # One decoder step consumes the previous term as
+        # ``[parity bits | phase one-hot]`` and updates the GRU state.
+        self.decoder_input_dim = self.max_qubits + N_PHASE_CLASSES
+        self.gru_cell = nn.GRUCell(self.decoder_input_dim, self.hidden)
+        self.out_parity = nn.Linear(self.hidden, self.max_qubits)
+        self.out_phase = nn.Linear(self.hidden, N_PHASE_CLASSES)
+        # explicit end-of-sequence logit (one per step) so the decoder is
+        # supervised *where to stop* instead of relying on the padding mask
+        self.out_stop = nn.Linear(self.hidden, 1)
+        # global sequence-length prediction head, read off the graph embedding
+        self.out_count = nn.Sequential(
             nn.Linear(self.hidden, self.hidden),
             nn.ReLU(),
-            nn.Linear(
-                self.hidden,
-                self.max_phase_terms * (self.max_qubits + N_PHASE_CLASSES),
-            ),
+            nn.Linear(self.hidden, 1),
         )
+        # per-step "a new Hadamard-separated phase block starts here" logit.
+        # Without it the decoder can only express ONE H-framed phase polynomial,
+        # while a Clifford+T source (e.g. a Toffoli ladder) has several
+        # Hadamard-separated blocks: a single-block proposal is then structurally
+        # unable to reproduce the source (measured relative penalty ~0.354 even
+        # when fed the *true* flattened phase polynomial).
+        self.out_block = nn.Linear(self.hidden, 1)
 
-    def forward(
-        self, data: Data
-    ) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
+    def _graph_embedding(self, data: Data) -> "torch.Tensor":
+        """Node features -> pooled graph embedding (the unchanged GNN trunk)."""
         h = F.relu(self.conv1(data.x, data.edge_index, data.edge_attr))
         h = F.relu(self.conv2(h, data.edge_index))
         batch = getattr(data, "batch", None)
         if batch is None:
-            batch = torch.zeros(h.size(0), dtype=torch.long)
-        pooled = global_mean_pool(h, batch)
-        logits = self.param_head(pooled).view(
-            -1, self.max_phase_terms, self.max_qubits + N_PHASE_CLASSES
+            batch = torch.zeros(h.size(0), dtype=torch.long, device=h.device)
+        return global_mean_pool(h, batch)
+
+    @staticmethod
+    def _start_token(batch_size: int, dim: int, device, dtype) -> "torch.Tensor":
+        """Step-0 decoder input: an all-zero start token."""
+        return torch.zeros((batch_size, dim), device=device, dtype=dtype)
+
+    @classmethod
+    def _prediction_token(
+        cls,
+        parity_logits: "torch.Tensor",
+        phase_logits: "torch.Tensor",
+        soft: bool = False,
+    ) -> "torch.Tensor":
+        """Feedback token built from the current predictions (inference mode).
+
+        The hard variant mirrors what :func:`predict_phase_polynomial` decodes
+        (parity thresholded at 0.5, argmax phase class); ``soft=True`` keeps the
+        probabilities so the feedback stays differentiable.
+        """
+        if soft:
+            parity_bits = torch.sigmoid(parity_logits)
+            phase_token = F.softmax(phase_logits, dim=-1)
+        else:
+            parity_bits = (torch.sigmoid(parity_logits) > 0.5).to(parity_logits.dtype)
+            phase_token = F.one_hot(
+                phase_logits.argmax(dim=-1), num_classes=phase_logits.size(-1)
+            ).to(phase_logits.dtype)
+        return torch.cat([parity_bits, phase_token], dim=-1)
+
+    def step_teacher_forcing(
+        self, step: int, teacher_forcing_ratio: float
+    ) -> float:
+        """Linearly annealed teacher-forcing ratio for decoder ``step``.
+
+        The schedule starts at ``teacher_forcing_ratio`` for step 0 and decays
+        linearly to ``0.3 * teacher_forcing_ratio`` at the last step, i.e.
+
+            decay_rate = 0.7 * teacher_forcing_ratio / max(1, T - 1)
+            step_tf    = teacher_forcing_ratio - decay_rate * step
+
+        Later steps therefore train the decoder on its own (free-running)
+        tokens, which is what closes the teacher-forcing / inference gap.
+        """
+        cfg_ratio = float(teacher_forcing_ratio)
+        decay_rate = 0.7 * cfg_ratio / max(1, self.max_phase_terms - 1)
+        return cfg_ratio - decay_rate * int(step)
+
+    def forward(
+        self,
+        data: Data,
+        target_sequence: Optional["torch.Tensor"] = None,
+        soft_feedback: bool = False,
+        teacher_forcing_ratio: float = 1.0,
+    ) -> tuple[
+        torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor
+    ]:
+        """Decode ``max_phase_terms`` phase terms, optionally with teacher forcing.
+
+        ``target_sequence`` has shape ``[B, T, max_qubits + N_PHASE_CLASSES]``;
+        ``target_sequence[:, t, :]`` is the token fed in at step ``t + 1``
+        (teacher forcing).  Without it the decoder feeds back its own
+        predictions.  ``teacher_forcing_ratio < 1`` enables scheduled sampling:
+        each step randomly feeds the ground-truth token with that probability
+        and the model's own prediction otherwise, which closes the
+        train/inference gap of a purely teacher-forced decoder.
+        """
+        pooled = self._graph_embedding(data)
+        h_t = pooled
+        token = self._start_token(
+            pooled.size(0), self.decoder_input_dim, pooled.device, pooled.dtype
         )
-        parity_logits = logits[..., : self.max_qubits]
-        phase_logits = logits[..., self.max_qubits :]
+
+        parity_steps: "list[torch.Tensor]" = []
+        phase_steps: "list[torch.Tensor]" = []
+        stop_steps: "list[torch.Tensor]" = []
+        block_steps: "list[torch.Tensor]" = []
+        for step in range(self.max_phase_terms):
+            h_t = self.gru_cell(token, h_t)
+            parity_logits_t = self.out_parity(h_t)
+            phase_logits_t = self.out_phase(h_t)
+            parity_steps.append(parity_logits_t)
+            phase_steps.append(phase_logits_t)
+            stop_steps.append(self.out_stop(h_t).squeeze(-1))
+            block_steps.append(self.out_block(h_t).squeeze(-1))
+            step_tf = self.step_teacher_forcing(step, teacher_forcing_ratio)
+            if target_sequence is not None and step_tf > 0.0:
+                if step_tf >= 1.0:
+                    token = target_sequence[:, step, :]
+                else:
+                    free_running = self._prediction_token(
+                        parity_logits_t, phase_logits_t, soft=soft_feedback
+                    )
+                    keep = (
+                        torch.rand(
+                            (parity_logits_t.size(0), 1),
+                            device=parity_logits_t.device,
+                            dtype=parity_logits_t.dtype,
+                        )
+                        < float(step_tf)
+                    ).to(parity_logits_t.dtype)
+                    token = keep * target_sequence[:, step, :] + (1.0 - keep) * free_running
+            else:
+                token = self._prediction_token(
+                    parity_logits_t, phase_logits_t, soft=soft_feedback
+                )
+
+        parity_logits = torch.stack(parity_steps, dim=1)   # (B, T, max_qubits)
+        phase_logits = torch.stack(phase_steps, dim=1)     # (B, T, N_PHASE_CLASSES)
+        stop_logits = torch.stack(stop_steps, dim=1)       # (B, T)
+        block_logits = torch.stack(block_steps, dim=1)     # (B, T)
         depth = F.softplus(self.depth_head(pooled)).squeeze(-1)
-        return parity_logits, phase_logits, depth
+        count = F.softplus(self.out_count(pooled)).squeeze(-1)   # (B,) >= 0
+        return parity_logits, phase_logits, depth, stop_logits, count, block_logits
 
 
 def _phase_terms_to_label(
@@ -800,7 +1124,9 @@ def _make_gnn_training_examples() -> list[Data]:
     return examples
 
 
-def train_phase_gadget_gnn(epochs: int = 600) -> PhaseGadgetGNN:
+def train_phase_gadget_gnn(
+    epochs: int = 600, teacher_forcing_ratio: float = 1.0
+) -> PhaseGadgetGNN:
     """
     Train phase classification with cross-entropy; T-count/T-depth enter as
     non-phase auxiliary objectives (no continuous phase regression).
@@ -826,7 +1152,12 @@ def train_phase_gadget_gnn(epochs: int = 600) -> PhaseGadgetGNN:
     for epoch in range(1, epochs + 1):
         model.train()
         optimizer.zero_grad()
-        pred_parity, pred_phase, pred_depth = model(batch)
+        target_sequence = build_target_sequence(y_parity, y_phase.argmax(dim=-1))
+        pred_parity, pred_phase, pred_depth, stop_logits, _count_pred, _block_logits = model(
+            batch,
+            target_sequence=target_sequence,
+            teacher_forcing_ratio=teacher_forcing_ratio,
+        )
         parity_loss = F.binary_cross_entropy_with_logits(
             pred_parity, y_parity
         )
@@ -843,7 +1174,14 @@ def train_phase_gadget_gnn(epochs: int = 600) -> PhaseGadgetGNN:
         depth_loss = T_DEPTH_LAMBDA * F.smooth_l1_loss(
             pred_depth, y_depth
         )
-        loss = parity_loss + phase_loss + count_loss + depth_loss
+        # explicit stop supervision: 1 at the first padded row of each graph
+        seq_len = (y_phase.argmax(dim=-1) != 0).sum(dim=-1)
+        stop_target = torch.zeros_like(stop_logits)
+        has_stop = seq_len < stop_logits.size(1)
+        if bool(has_stop.any()):
+            stop_target[has_stop, seq_len[has_stop]] = 1.0
+        stop_loss = F.binary_cross_entropy_with_logits(stop_logits, stop_target)
+        loss = parity_loss + phase_loss + count_loss + depth_loss + stop_loss
         loss.backward()
         optimizer.step()
         if epoch == 1 or epoch % 50 == 0:
@@ -852,6 +1190,7 @@ def train_phase_gadget_gnn(epochs: int = 600) -> PhaseGadgetGNN:
                 f"phase_CE={phase_loss.item():.4f} "
                 f"parity_BCE={parity_loss.item():.4f} "
                 f"count={count_loss.item():.4f} depth={depth_loss.item():.4f}"
+                f" stop={stop_loss.item():.4f}"
             )
     return model
 
@@ -859,10 +1198,14 @@ def train_phase_gadget_gnn(epochs: int = 600) -> PhaseGadgetGNN:
 _TRAINED_GNN: "PhaseGadgetGNN | None" = None
 
 
-def get_trained_gnn(epochs: int = 600) -> PhaseGadgetGNN:
+def get_trained_gnn(
+    epochs: int = 600, teacher_forcing_ratio: float = 1.0
+) -> PhaseGadgetGNN:
     global _TRAINED_GNN
     if _TRAINED_GNN is None:
-        _TRAINED_GNN = train_phase_gadget_gnn(epochs=epochs)
+        _TRAINED_GNN = train_phase_gadget_gnn(
+            epochs=epochs, teacher_forcing_ratio=teacher_forcing_ratio
+        )
     return _TRAINED_GNN
 
 
@@ -893,8 +1236,22 @@ class GNNTrainingConfig:
     weight_decay: float = 0.0
     parity_weight: float = 1.0
     parity_pos_weight: float = 1.0
+    parity_pos_weighting: str = "none"   # "none" | "bit_balanced" (per-qubit auto weights)
+    parity_pos_weight_clamp: float = 10.0   # 50 over-fired the sparse qubits
     phase_weight: float = 1.0
     depth_weight: float = 0.5
+    pad_loss_weight: float = 0.0   # >0 softly supervises padded steps (EOS signal)
+    phase_class_weighting: str = "none"   # "none" | "inv_freq" (class-imbalanced CE)
+    teacher_forcing_ratio: float = 1.0    # 1.0 = pure teacher forcing, <1 = scheduled sampling
+    stop_weight: float = 1.0       # explicit EOS (stop) BCE weight
+    stop_pos_weight: float = 0.0   # 0.0 = auto balance (neg/pos), else fixed weight
+    count_weight: float = 0.1      # sequence-length head weight
+    stop_threshold: float = 0.5    # inference stop threshold
+    block_weight: float = 0.2      # phase-block boundary BCE weight
+    parity_reg_weight: float = 0.5  # penalty on all-zero parity rows (relu(1 - sum p))
+    # "auto" = require the row's *target* support (a constant never binds: the
+    # model's sigmoid sum over the active qubits is already > 1 early on).
+    parity_reg_target: "float | str" = "auto"
     max_phase_terms: int = MAX_PHASE_TERMS
     hidden: int = GNN_HIDDEN
     seed: int = 0
@@ -912,12 +1269,6 @@ def _resolve_device(spec: str) -> "torch.device":
     return torch.device(spec)
 
 
-def _phase_class_magnitude(cls: int) -> int:
-    """|phase| of a 32-class label in units of pi/16: 0 (identity) .. 16."""
-    cls = int(cls) % N_PHASE_CLASSES
-    return min(cls, N_PHASE_CLASSES - cls)
-
-
 def _generator_node_features(
     sample: Data, max_qubits: int = MAX_QUBITS
 ) -> "torch.Tensor":
@@ -926,6 +1277,11 @@ def _generator_node_features(
     support = torch.zeros((x.size(0), max_qubits), dtype=torch.float)
     raw_support = getattr(sample, "x_support", None)
     if raw_support is not None and raw_support.numel():
+        if int(raw_support.size(1)) > max_qubits:
+            raise ValueError(
+                f"sample has {raw_support.size(1)} support columns but the model "
+                f"supports {max_qubits}; regenerate the dataset with a matching width"
+            )
         width = min(max_qubits, int(raw_support.size(1)))
         support[:, :width] = raw_support[:, :width].float()
     return torch.cat([x, support], dim=1)
@@ -942,29 +1298,80 @@ def _generator_edge_attr(sample: Data) -> "torch.Tensor":
 
 def _term_targets(
     sample: Data, max_terms: int, max_qubits: int = MAX_QUBITS
-) -> "tuple[torch.Tensor, torch.Tensor]":
-    """Build ``(1, max_terms, max_qubits)`` parity and ``(1, max_terms)`` phase targets.
+) -> "tuple[torch.Tensor, torch.Tensor, int, torch.Tensor, torch.Tensor]":
+    """Re-fit the generator's canonical target sequence to the model budget.
 
-    Rows are ordered by descending phase magnitude (the dominant terms survive
-    truncation) and padded with zero parity / identity class 0, matching the
-    padded-row convention used by :func:`_phase_terms_to_label`.
+    ``data_generator.py`` already emits ``y_parity`` / ``y_phase`` in canonical
+    order (``GenConfig.term_order``: block order then descending phase magnitude
+    by default) and zero padded to its own row budget, with ``y_seq_len``
+    telling how many rows are real.  That order is what an autoregressive
+    decoder has to follow, so it is preserved verbatim here -- only cropping /
+    re-padding to the model's ``max_terms`` is done.
+
+    Datasets written by an older generator have no ``y_seq_len`` and store one
+    row per term in block order; those are canonicalised on the fly with the
+    generator's default key (block index, then descending |phase|, then
+    parity).  Returns ``(parity, phase_idx, seq_len, stop, blocks)`` where
+    ``stop`` is the explicit end-of-sequence target (one 1 at the first padding
+    step) and ``blocks`` holds the per-row source block index from the generator
+    (``-1`` on padding), which supervises the phase-block boundaries.
     """
     parity = torch.zeros((1, max_terms, max_qubits), dtype=torch.float)
     phase_idx = torch.zeros((1, max_terms), dtype=torch.long)
+    stop = torch.zeros((1, max_terms), dtype=torch.float)
+    blocks_t = torch.full((1, max_terms), -1, dtype=torch.long)
     rows_parity = sample.y_parity
     rows_phase = sample.y_phase
     if rows_parity is None or rows_parity.numel() == 0:
-        return parity, phase_idx
+        return parity, phase_idx, 0, stop, blocks_t
     n_rows = int(rows_parity.size(0))
-    order = sorted(
-        range(n_rows),
-        key=lambda row: (-_phase_class_magnitude(int(rows_phase[row])), row),
-    )[:max_terms]
+    if int(rows_parity.size(1)) > max_qubits:
+        raise ValueError(
+            f"sample has {rows_parity.size(1)} parity columns but the model supports "
+            f"{max_qubits}; regenerate the dataset with a matching width instead of "
+            "silently truncating the parity targets"
+        )
     width = min(max_qubits, int(rows_parity.size(1)))
-    for slot, row in enumerate(order):
+    seq_attr = getattr(sample, "y_seq_len", None)
+    if seq_attr is not None:
+        # canonical ordering already enforced by data_generator.py
+        seq_src = max(0, min(int(seq_attr), n_rows))
+        order = list(range(seq_src))
+        src_blocks = getattr(sample, "y_block", None)
+        use_file_blocks = src_blocks is not None and int(src_blocks.numel()) == n_rows
+        row_blocks = (
+            [int(b) for b in src_blocks[:seq_src].tolist()]
+            if use_file_blocks
+            else [0] * seq_src
+        )
+    else:
+        # legacy split: canonicalise now (block, descending |phase|, parity)
+        blocks = getattr(sample, "y_block", None)
+        have_blocks = blocks is not None and int(blocks.numel()) == n_rows
+        ranked = []
+        for row in range(n_rows):
+            parity_value = 0
+            for q in range(width):
+                if int(rows_parity[row, q]):
+                    parity_value |= 1 << q
+            block = int(blocks[row]) if have_blocks else 0
+            cls = int(rows_phase[row]) % N_PHASE_CLASSES
+            magnitude = min(cls, N_PHASE_CLASSES - cls)
+            ranked.append((block, -magnitude, -parity_value, cls, row))
+        ranked.sort()
+        order = [entry[-1] for entry in ranked]
+        row_blocks = [entry[0] for entry in ranked]
+
+    kept = min(len(order), max_terms)
+    for slot, row in enumerate(order[:kept]):
         parity[0, slot, :width] = rows_parity[row, :width].float()
         phase_idx[0, slot] = int(rows_phase[row]) % N_PHASE_CLASSES
-    return parity, phase_idx
+        blocks_t[0, slot] = int(row_blocks[row])
+    if kept < max_terms:
+        # explicit EOS: either the real end of the sequence or the end of the
+        # generator's own budget (no stop inside a truncated window).
+        stop[0, kept] = 1.0
+    return parity, phase_idx, kept, stop, blocks_t
 
 
 def adapt_generator_sample(
@@ -977,9 +1384,19 @@ def adapt_generator_sample(
         edge_index=sample.edge_index.long(),
         edge_attr=_generator_edge_attr(sample),
     )
-    parity, phase_idx = _term_targets(sample, cfg.max_phase_terms)
+    parity, phase_idx, seq_len, stop, blocks = _term_targets(sample, cfg.max_phase_terms)
     data.y_parity = parity          # (1, T, Q) float -> batches to (B, T, Q)
     data.y_phase_idx = phase_idx    # (1, T) long   -> batches to (B, T)
+    data.y_seq_len = torch.tensor([seq_len], dtype=torch.long)
+    data.y_stop = stop              # (1, T) float  -> batches to (B, T)
+    # phase-block boundary targets: 1 on the first row and wherever the source
+    # block changes (lets the decoder emit multi-block proposals)
+    new_block = torch.zeros((1, cfg.max_phase_terms), dtype=torch.float)
+    row_block_ids = blocks[0, : max(0, seq_len)].tolist()
+    for t, block_id in enumerate(row_block_ids):
+        if t == 0 or block_id != row_block_ids[t - 1]:
+            new_block[0, t] = 1.0
+    data.y_new_block = new_block
     depth = getattr(sample, "y_depth", None)
     if depth is None:
         depth = (sample.metadata or {}).get("t_depth", 0.0)
@@ -1013,40 +1430,283 @@ def _joint_losses(
     model: "PhaseGadgetGNN",
     batch: Data,
     cfg: "GNNTrainingConfig",
+    phase_class_weights: "Optional[torch.Tensor]" = None,
+    parity_pos_weights: "Optional[torch.Tensor]" = None,
+    parity_active_bits: "Optional[torch.Tensor]" = None,
 ) -> "tuple[torch.Tensor, dict[str, torch.Tensor]]":
-    """Joint parity / phase / depth objective for one batch."""
-    parity_logits, phase_logits, depth_pred = model(batch)
-    y_parity = batch.y_parity.float()
-    y_phase = batch.y_phase_idx.long()
-    y_depth = batch.y_depth.float().reshape(-1)
+    """Teacher-forced, length-masked parity / phase / depth objective.
+
+    The decoder is run autoregressively with teacher forcing: the token fed in
+    at step ``t + 1`` is the ground-truth ``[parity bits | phase one-hot]`` of
+    step ``t`` (start token at step 0).  Losses are only accumulated for steps
+    ``t < y_seq_len``; padded steps are masked out of both the BCE and the
+    cross-entropy.
+    """
+    y_parity = batch.y_parity.float()                    # (B, T, Q)
+    y_phase = batch.y_phase_idx.long()                   # (B, T)
+    y_depth = batch.y_depth.float().reshape(-1)          # (B,)
+    seq_len = batch.y_seq_len.reshape(-1).long()         # (B,)
+    batch_size, n_steps = y_parity.shape[:2]
+    if n_steps != int(model.max_phase_terms):
+        raise ValueError(
+            f"dataset row budget ({n_steps}) != model max_phase_terms "
+            f"({int(model.max_phase_terms)}); adapt the data with the checkpoint's "
+            "value (GNNTrainingConfig.max_phase_terms = checkpoint['max_phase_terms'])"
+        )
+
+    # --- teacher forcing input: [parity | one-hot phase] of the previous step
+    target_sequence = build_target_sequence(y_parity, y_phase)
+    (
+        parity_logits,
+        phase_logits,
+        depth_pred,
+        stop_logits,
+        count_pred,
+        block_logits,
+    ) = model(
+        batch,
+        target_sequence=target_sequence,
+        teacher_forcing_ratio=cfg.teacher_forcing_ratio,
+    )
+
+    # --- step mask: step t is supervised only for t < y_seq_len ------------
+    steps = torch.arange(n_steps, device=parity_logits.device).unsqueeze(0)
+    step_mask = (steps < seq_len.unsqueeze(1)).to(parity_logits.dtype)   # (B, T)
+    # ``pad_loss_weight`` (default 0.0) optionally keeps a weak signal on the
+    # padded steps so the decoder also learns where to stop; the requested
+    # behaviour (padded steps fully masked out) is the default.
+    if cfg.pad_loss_weight > 0:
+        step_weight = step_mask + float(cfg.pad_loss_weight) * (1.0 - step_mask)
+    else:
+        step_weight = step_mask
+    denom = step_weight.sum().clamp(min=1.0)
 
     # parity bits are sparse (~6% positives on the generated data); the
-    # optional positive-class weight keeps the BCE from collapsing onto "all
-    # zeros" (default 1.0 = plain BCEWithLogitsLoss).
-    pos_weight = torch.as_tensor(
-        float(cfg.parity_pos_weight),
-        dtype=parity_logits.dtype,
-        device=parity_logits.device,
+    # positive-class weight keeps the BCE from collapsing onto "all zeros".
+    # Either a per-qubit vector (``parity_pos_weighting="bit_balanced"``) or the
+    # scalar ``cfg.parity_pos_weight`` (1.0 = plain BCEWithLogitsLoss) is used.
+    if parity_pos_weights is not None:
+        pos_weight: "torch.Tensor | float" = parity_pos_weights.to(
+            device=parity_logits.device, dtype=parity_logits.dtype
+        )
+    else:
+        pos_weight = torch.as_tensor(
+            float(cfg.parity_pos_weight),
+            dtype=parity_logits.dtype,
+            device=parity_logits.device,
+        )
+    parity_raw = F.binary_cross_entropy_with_logits(
+        parity_logits, y_parity, pos_weight=pos_weight, reduction="none"
+    )                                                                    # (B, T, Q)
+    parity_loss = (parity_raw * step_weight.unsqueeze(-1)).sum() / (
+        denom * max(1, parity_logits.size(-1))
     )
-    parity_loss = F.binary_cross_entropy_with_logits(
-        parity_logits, y_parity, pos_weight=pos_weight
+
+    # --- all-zero-row regularizer ------------------------------------------
+    # Penalise rows whose predicted parity is empty (relu(1 - sum_q p_q)), so
+    # the decoder cannot satisfy the BCE by emitting "no term" everywhere.
+    # ``parity_active_bits`` keeps the sum on the qubits the circuits actually
+    # use; without it the sum runs over the whole padded qubit dimension.
+    parity_probs = torch.sigmoid(parity_logits)
+    if parity_active_bits is not None:
+        active = parity_active_bits.to(device=parity_probs.device).bool()
+        row_sums = parity_probs[..., active].sum(dim=-1)      # (B, T)
+    else:
+        row_sums = parity_probs.sum(dim=-1)                   # (B, T)
+    # ``parity_reg_target`` is the required expected number of 1-bits per row.
+    # With the default "auto" it is the *target support* of that row, so the
+    # penalty actually binds (a constant 1.0 never does: the sigmoid sum over
+    # the active qubits is already > 1 early in training).
+    if isinstance(cfg.parity_reg_target, str) and cfg.parity_reg_target == "auto":
+        # "auto" = the intended all-zero-row guard: require *one* bit on the rows
+        # that must carry a term (requiring the full support instead over-fires
+        # the head: measured predicted support 4.85 vs true 1.58 bits/row).
+        reg_target = (y_parity.sum(dim=-1) > 0).to(row_sums.dtype)
+    elif isinstance(cfg.parity_reg_target, str) and cfg.parity_reg_target == "support":
+        reg_target = y_parity.sum(dim=-1)                    # (B, T) target support
+    else:
+        reg_target = torch.as_tensor(
+            float(cfg.parity_reg_target), dtype=row_sums.dtype, device=row_sums.device
+        )
+    parity_reg = F.relu(reg_target - row_sums)
+    parity_reg_loss = (parity_reg * step_weight).sum() / denom
+
+    # --- phase-block boundary supervision -----------------------------------
+    # A Clifford+T circuit is a sequence of Hadamard-separated phase blocks; the
+    # decoder must mark where each block starts, otherwise its (single-block)
+    # proposal can never reproduce the source.
+    block_target = getattr(batch, "y_new_block", None)
+    if block_target is not None:
+        block_target = block_target.to(block_logits.dtype)
+        n_pos = (block_target * step_weight).sum().clamp(min=1.0)
+        n_neg = (step_weight.sum() - n_pos).clamp(min=1.0)
+        block_pos_weight = (n_neg / n_pos).clamp(1.0, 50.0)
+        block_raw = F.binary_cross_entropy_with_logits(
+            block_logits, block_target, pos_weight=block_pos_weight, reduction="none"
+        )
+        block_loss = (block_raw * step_weight).sum() / denom
+    else:
+        block_loss = torch.zeros((), dtype=parity_logits.dtype, device=parity_logits.device)
+
+    phase_raw = F.cross_entropy(
+        phase_logits.reshape(-1, N_PHASE_CLASSES),
+        y_phase.reshape(-1),
+        weight=phase_class_weights,
+        reduction="none",
+    ).reshape(batch_size, n_steps)                                       # (B, T)
+    phase_loss = (phase_raw * step_weight).sum() / denom
+
+    # --- explicit end-of-sequence supervision ------------------------------
+    # The stop target is 1 exactly at the first padding step (derived from the
+    # sequence length, i.e. the same convention as data.y_stop on the generator
+    # side); the stop step itself is supervised, everything after is masked.
+    stop_target = torch.zeros_like(step_mask)
+    has_stop = seq_len < n_steps
+    if bool(has_stop.any()):
+        stop_target[has_stop, seq_len[has_stop]] = 1.0
+    stop_mask = ((steps <= seq_len.unsqueeze(1)) & (steps < n_steps)).to(
+        stop_logits.dtype
     )
-    phase_loss = F.cross_entropy(
-        phase_logits.reshape(-1, N_PHASE_CLASSES), y_phase.reshape(-1)
+    # only ~1 in y_seq_len steps is a stop, so the BCE needs a positive weight;
+    # 0.0 asks for the auto-balanced value (#negatives / #positives).
+    if cfg.stop_pos_weight > 0:
+        stop_pos_weight = torch.as_tensor(
+            float(cfg.stop_pos_weight), dtype=stop_logits.dtype, device=stop_logits.device
+        )
+    else:
+        n_pos = stop_target.sum().clamp(min=1.0)
+        n_neg = (stop_mask.sum() - stop_target.sum()).clamp(min=1.0)
+        stop_pos_weight = n_neg / n_pos
+    stop_raw = F.binary_cross_entropy_with_logits(
+        stop_logits, stop_target, pos_weight=stop_pos_weight, reduction="none"
     )
+    stop_loss = (stop_raw * stop_mask).sum() / stop_mask.sum().clamp(min=1.0)
+
+    # --- sequence-length regression head -----------------------------------
+    count_loss = F.smooth_l1_loss(
+        count_pred.reshape(-1), seq_len.to(count_pred.dtype)
+    )
+
     depth_loss = F.smooth_l1_loss(depth_pred.reshape(-1), y_depth)
     total = (
         cfg.parity_weight * parity_loss
+        + cfg.parity_reg_weight * parity_reg_loss
+        + cfg.block_weight * block_loss
         + cfg.phase_weight * phase_loss
+        + cfg.stop_weight * stop_loss
+        + cfg.count_weight * count_loss
         + cfg.depth_weight * depth_loss
     )
     parts = {
         "total": total,
         "parity": parity_loss,
+        "parity_reg": parity_reg_loss,
+        "block": block_loss,
         "phase": phase_loss,
+        "stop": stop_loss,
+        "count": count_loss,
         "depth": depth_loss,
     }
     return total, parts
+
+
+def build_target_sequence(
+    y_parity: "torch.Tensor", y_phase_idx: "torch.Tensor"
+) -> "torch.Tensor":
+    """``[B, T, max_qubits + N_PHASE_CLASSES]`` teacher-forcing input."""
+    onehot = F.one_hot(y_phase_idx.long(), num_classes=N_PHASE_CLASSES).to(
+        y_parity.dtype
+    )
+    return torch.cat([y_parity, onehot], dim=-1)
+
+
+def compute_phase_class_weights(
+    dataset: "list[Data]", device: "torch.device"
+) -> "torch.Tensor":
+    """Inverse-frequency CE weights over the *valid* (non-padded) steps.
+
+    The generated targets are dominated by a single phase class (the pi/2 "S"
+    class covers 80-95% of the terms), so an unweighted cross-entropy collapses
+    onto it.  These weights make every class contribute equally.
+    """
+    counts = torch.zeros(N_PHASE_CLASSES, dtype=torch.double)
+    for sample in dataset:
+        seq_len = min(int(sample.y_seq_len), int(sample.y_phase_idx.size(1)))
+        classes = sample.y_phase_idx[0, :seq_len].long()
+        if classes.numel():
+            counts += torch.bincount(classes, minlength=N_PHASE_CLASSES).double()
+    counts = counts.clamp(min=1.0)
+    weights = counts.sum() / (N_PHASE_CLASSES * counts)
+    return weights.float().to(device)
+
+
+def compute_parity_pos_weights(
+    dataset: "list[Data]",
+    max_qubits: int = MAX_QUBITS,
+    clamp_max: float = 50.0,
+    device: "torch.device" = torch.device("cpu"),
+) -> "torch.Tensor":
+    """Per-qubit balanced ``pos_weight`` for the parity BCE.
+
+    Every parity bit is a sparse event (~6% positives overall) and the rate is
+    very different per qubit (low-index qubits appear in far more gadgets), so a
+    single scalar weight over/under-weights individual bits.  This computes the
+    usual ``#negatives / #positives`` ratio *per bit* over the valid
+    (non-padded) steps, clamps it, and leaves bits that never fire at 1.0.
+    """
+    positives = torch.zeros(max_qubits, dtype=torch.double)
+    steps = 0
+    for sample in dataset:
+        seq_len = min(int(sample.y_seq_len), int(sample.y_parity.size(1)))
+        if seq_len <= 0:
+            continue
+        block = sample.y_parity[0, :seq_len, :max_qubits].double()
+        positives += block.sum(dim=0)
+        steps += seq_len
+    if steps == 0:
+        return torch.ones(max_qubits, dtype=torch.float).to(device)
+    negatives = float(steps) - positives
+    weights = torch.ones(max_qubits, dtype=torch.double)
+    active = positives > 0
+    weights[active] = (negatives[active] / positives[active]).clamp(1.0, float(clamp_max))
+    return weights.float().to(device)
+
+
+def compute_parity_active_bits(
+    dataset: "list[Data]", max_qubits: int = MAX_QUBITS
+) -> "torch.Tensor":
+    """Boolean mask of the qubit bits that are ever positive in the targets.
+
+    The dataset pads parity targets to ``MAX_QUBITS`` while circuits use fewer
+    qubits, so high bits are *always* zero.  The all-zero-row regularizer must
+    not be satisfiable by flipping those dead bits, hence this mask.
+    """
+    active = torch.zeros(max_qubits, dtype=torch.bool)
+    for sample in dataset:
+        seq_len = min(int(sample.y_seq_len), int(sample.y_parity.size(1)))
+        if seq_len <= 0:
+            continue
+        block = sample.y_parity[0, :seq_len, :max_qubits]
+        active |= block.gt(0).any(dim=0)
+    if not bool(active.any()):  # degenerate dataset: fall back to "all bits"
+        active[:] = True
+    return active
+
+
+def mean_parity_support(
+    dataset: "list[Data]", max_qubits: int = MAX_QUBITS
+) -> float:
+    """Mean number of 1-bits per valid parity row (the natural reg target)."""
+    total_bits = 0.0
+    rows = 0
+    for sample in dataset:
+        seq_len = min(int(sample.y_seq_len), int(sample.y_parity.size(1)))
+        if seq_len <= 0:
+            continue
+        block = sample.y_parity[0, :seq_len, :max_qubits]
+        total_bits += float(block.sum())
+        rows += seq_len
+    return total_bits / max(1, rows)
 
 
 def _run_epoch(
@@ -1055,16 +1715,35 @@ def _run_epoch(
     cfg: "GNNTrainingConfig",
     device: "torch.device",
     optimizer: "Optional[torch.optim.Optimizer]" = None,
+    phase_class_weights: "Optional[torch.Tensor]" = None,
+    parity_pos_weights: "Optional[torch.Tensor]" = None,
+    parity_active_bits: "Optional[torch.Tensor]" = None,
 ) -> "dict[str, float]":
     """One pass over ``loader``; returns graph-weighted mean losses."""
     training = optimizer is not None
     model.train(training)
-    totals = {"total": 0.0, "parity": 0.0, "phase": 0.0, "depth": 0.0}
+    totals = {
+        "total": 0.0,
+        "parity": 0.0,
+        "parity_reg": 0.0,
+        "block": 0.0,
+        "phase": 0.0,
+        "stop": 0.0,
+        "count": 0.0,
+        "depth": 0.0,
+    }
     seen = 0
     for batch in loader:
         batch = batch.to(device)
         with torch.set_grad_enabled(training):
-            _, parts = _joint_losses(model, batch, cfg)
+            _, parts = _joint_losses(
+                model,
+                batch,
+                cfg,
+                phase_class_weights,
+                parity_pos_weights,
+                parity_active_bits,
+            )
             if training:
                 optimizer.zero_grad(set_to_none=True)
                 parts["total"].backward()
@@ -1081,7 +1760,11 @@ def _format_losses(prefix: str, metrics: "dict[str, float]") -> str:
     return (
         f"{prefix} total={metrics['total']:.4f} "
         f"(parity={metrics['parity']:.4f} "
+        f"parity_reg={metrics['parity_reg']:.4f} "
+        f"block={metrics['block']:.4f} "
         f"phase={metrics['phase']:.4f} "
+        f"stop={metrics['stop']:.4f} "
+        f"count={metrics['count']:.4f} "
         f"depth={metrics['depth']:.4f})"
     )
 
@@ -1161,12 +1844,69 @@ def train_phase_gadget_gnn_from_dataset(
     optimizer = torch.optim.Adam(
         model.parameters(), lr=cfg.lr, weight_decay=cfg.weight_decay
     )
+    phase_class_weights: "Optional[torch.Tensor]" = None
+    if cfg.phase_class_weighting == "inv_freq":
+        phase_class_weights = compute_phase_class_weights(train_dataset, device)
+        top = sorted(
+            ((float(w), k) for k, w in enumerate(phase_class_weights.tolist())),
+            reverse=True,
+        )[:5]
+        print(
+            "    phase class weighting: inv_freq | largest weights "
+            + ", ".join(f"class {k}={w:.2f}" for w, k in top)
+            + " (class 8 ~ pi/2 dominates the raw targets)"
+        )
+    parity_pos_weights: "Optional[torch.Tensor]" = None
+    if cfg.parity_pos_weighting == "bit_balanced":
+        parity_pos_weights = compute_parity_pos_weights(
+            train_dataset,
+            max_qubits=MAX_QUBITS,
+            clamp_max=cfg.parity_pos_weight_clamp,
+            device=device,
+        )
+        preview = ", ".join(
+            f"q{q}={float(w):.1f}" for q, w in enumerate(parity_pos_weights.tolist()[:8])
+        )
+        print(
+            "    parity weighting: bit_balanced (neg/pos per qubit, clamped at "
+            f"{cfg.parity_pos_weight_clamp:g}) | {preview}"
+        )
+    parity_active_bits: "Optional[torch.Tensor]" = None
+    if cfg.parity_reg_weight > 0:
+        parity_active_bits = compute_parity_active_bits(train_dataset, max_qubits=MAX_QUBITS)
+        n_active = int(parity_active_bits.sum())
+        support = mean_parity_support(train_dataset, max_qubits=MAX_QUBITS)
+        target_desc = (
+            cfg.parity_reg_target
+            if isinstance(cfg.parity_reg_target, str)
+            else f"{cfg.parity_reg_target:g}"
+        )
+        print(
+            f"    parity all-zero-row regularizer: weight={cfg.parity_reg_weight:g} "
+            f"target={target_desc} over {n_active}/{MAX_QUBITS} active qubit bits "
+            f"(relu(target - sum_q p_q)) | data hint: mean support "
+            f"= {support:.2f} bits/row"
+        )
+        if (
+            not isinstance(cfg.parity_reg_target, str)
+            and cfg.parity_reg_target < support - 0.5
+        ):
+            print(
+                f"    [hint] the penalty rarely binds at target={cfg.parity_reg_target:g}; "
+                "try --parity_reg_target auto (per-row target support) instead."
+            )
     n_params = sum(p.numel() for p in model.parameters())
     print(
         f"    model: node_dim={node_dim}, {cfg.max_phase_terms} candidate terms, "
         f"phase classes={N_PHASE_CLASSES}, params={n_params:,} | "
         f"loss = {cfg.parity_weight}*parity + {cfg.phase_weight}*phase "
         f"+ {cfg.depth_weight}*depth"
+    )
+    tf_first = float(cfg.teacher_forcing_ratio)
+    tf_last = model.step_teacher_forcing(cfg.max_phase_terms - 1, tf_first)
+    print(
+        f"    teacher forcing: linear anneal {tf_first:.3f} (step 0) -> "
+        f"{tf_last:.3f} (step {max(0, cfg.max_phase_terms - 1)}), 0.3x floor"
     )
 
     checkpoint_path = Path(cfg.checkpoint_path)
@@ -1177,8 +1917,26 @@ def train_phase_gadget_gnn_from_dataset(
 
     for epoch in range(1, cfg.epochs + 1):
         started = time.time()
-        train_metrics = _run_epoch(model, train_loader, cfg, device, optimizer)
-        val_metrics = _run_epoch(model, val_loader, cfg, device, None)
+        train_metrics = _run_epoch(
+            model,
+            train_loader,
+            cfg,
+            device,
+            optimizer,
+            phase_class_weights,
+            parity_pos_weights,
+            parity_active_bits,
+        )
+        val_metrics = _run_epoch(
+            model,
+            val_loader,
+            cfg,
+            device,
+            None,
+            phase_class_weights,
+            parity_pos_weights,
+            parity_active_bits,
+        )
         history.append(
             {
                 "epoch": epoch,
@@ -1214,6 +1972,30 @@ def train_phase_gadget_gnn_from_dataset(
                 f"lr={cfg.lr:.2e} | {time.time() - started:5.1f}s{saved}"
             )
 
+    # --- unconditional last-epoch checkpoint --------------------------------
+    # Exposure-bias countermeasures (annealed teacher forcing, the all-zero-row
+    # regularizer) often make the validation loss plateau or bounce, so the
+    # early-stopping "best" file can hold an early, brittle state.  Always keep
+    # the weights the model actually ended on as well.
+    last_path = checkpoint_path.with_name(
+        checkpoint_path.stem + "_last" + checkpoint_path.suffix
+    )
+    last_val = history[-1]["val_total"] if history else float("inf")
+    torch.save(
+        {
+            "model_state": model.state_dict(),
+            "node_dim": node_dim,
+            "max_phase_terms": cfg.max_phase_terms,
+            "hidden": cfg.hidden,
+            "max_qubits": MAX_QUBITS,
+            "n_phase_classes": N_PHASE_CLASSES,
+            "epoch": cfg.epochs,
+            "val_loss": last_val,
+            "config": dict(vars(cfg)),
+        },
+        last_path,
+    )
+
     history_path = checkpoint_path.with_name(checkpoint_path.stem + "_history.json")
     with open(history_path, "w", encoding="utf-8") as handle:
         json.dump(
@@ -1226,10 +2008,16 @@ def train_phase_gadget_gnn_from_dataset(
         f"    best val total loss = {best_val:.4f} at epoch {best_epoch} | "
         f"checkpoint: {checkpoint_path} | history: {history_path}"
     )
+    print(
+        f"    last epoch {cfg.epochs} weights (val total {last_val:.4f}) saved "
+        f"unconditionally -> {last_path}"
+    )
     return {
         "best_val_loss": best_val,
         "best_epoch": best_epoch,
         "checkpoint": str(checkpoint_path),
+        "last_checkpoint": str(last_path),
+        "last_val_loss": last_val,
         "history": history,
         "node_dim": node_dim,
         "n_params": n_params,
@@ -1240,43 +2028,487 @@ def predict_phase_polynomial(
     model: PhaseGadgetGNN,
     data: Data,
     n_qubits: int,
-) -> dict[tuple[int, ...], Fraction]:
+    stop_threshold: float = 0.5,
+    length_tolerance: int = 2,
+    tail_threshold: float = 0.5,
+    soft_feedback: bool = False,
+    parity_thresholds: "Optional[torch.Tensor]" = None,
+    return_diagnostics: bool = False,
+) -> "dict[tuple[int, ...], Fraction] | tuple[dict[tuple[int, ...], Fraction], dict]":
     """
     Decode discrete GNN logits into ``{parity: phase}`` terms.
 
     The phase output is a softmax over :data:`PHASE_CLASSES`; the highest
     probability class is selected directly.  No continuous phase rounding is
     used.
+
+    Stopping combines the two trained signals instead of trusting the padding
+    mask:
+
+    * ``stop_len``  - first step whose explicit stop logit exceeds
+      ``stop_threshold`` (full window when it never fires);
+    * ``count_len`` - the sequence-length head rounded to an integer.
+
+    When the two agree within ``length_tolerance`` the shorter of them bounds
+    the sequence.  When they disagree the stop sequence is authoritative (it is
+    a per-step decision) and its low-confidence tail is pruned: trailing rows
+    whose confidence falls below ``tail_threshold`` are dropped.
+
+    Row confidence is the geometric mean of the phase-class probability and the
+    (rescaled) parity-decision confidence, so a row is only kept when *both*
+    heads are reasonably sure.  Rows that decode to the identity phase or to an
+    all-zero parity are dropped as no-ops, and repeated parities are merged by
+    summing their phase classes modulo 32 (a sum of library phases is exact).
+
+    With ``return_diagnostics=True`` the function also returns a dict with
+    ``stop_len``, ``count_len``, ``agreed``, ``horizon``, ``rows_kept``,
+    ``terms`` (unique parity count), ``pruned_tail`` and ``stop_fired``.
+
+    ``soft_feedback=True`` feeds the decoder's own *probabilities* back instead
+    of thresholded tokens, which measurably reduces the free-running drift of an
+    early checkpoint (it is training-time consistent with ``soft_feedback`` in
+    ``PhaseGadgetGNN.forward``).
     """
     model.eval()
     with torch.no_grad():
-        parity_logits, phase_logits, _ = model(data)
+        parity_logits, phase_logits, _depth, stop_logits, _count, block_logits = model(
+            data, soft_feedback=soft_feedback
+        )
 
     parity_probs = torch.sigmoid(parity_logits[0])
     phase_probs = F.softmax(phase_logits[0], dim=-1)
     phase_class = phase_logits[0].argmax(dim=-1)
+    stop_probs = torch.sigmoid(stop_logits[0])
+    block_probs = torch.sigmoid(block_logits[0])
+    # Respect the *loaded model's* capacity instead of the legacy module-level
+    # constant: a checkpoint trained with ``max_phase_terms=256`` has 256 decoder
+    # steps, and clamping to ``MAX_PHASE_TERMS`` (64) would silently truncate the
+    # stop/count decisions and the emitted term list.
+    n_steps = min(
+        int(stop_probs.numel()),
+        int(getattr(model, "max_phase_terms", MAX_PHASE_TERMS)),
+        int(parity_probs.size(0)),
+    )
 
-    terms: dict[tuple[int, ...], Fraction] = {}
-    ranked: list[tuple[float, tuple[int, ...], Fraction]] = []
-    for row in range(MAX_PHASE_TERMS):
+    stopped = (stop_probs > float(stop_threshold)).nonzero(as_tuple=False)
+    stop_fired = bool(stopped.numel())
+    stop_len = int(stopped[0].item()) if stop_fired else n_steps
+    count_len = int(round(float(_count[0]))) if _count is not None else stop_len
+    count_len = max(0, min(count_len, n_steps))
+    agreed = stop_fired and abs(stop_len - count_len) <= int(length_tolerance)
+    if not stop_fired:
+        # the stop head abstains: let the length head (or the whole window) rule
+        horizon = count_len if count_len > 0 else n_steps
+    elif agreed:
+        horizon = min(stop_len, count_len)
+    else:
+        # disagreement: the per-step stop decision is authoritative
+        horizon = stop_len
+    horizon = max(0, min(horizon, n_steps))
+
+    def row_confidence(row: int) -> float:
         cls = int(phase_class[row])
-        phase = PHASE_CLASSES[cls]
-        parity = tuple(
-            int(float(parity_probs[row, q]) > 0.5)
-            for q in range(n_qubits)
-        )
-        if cls == 0 or sum(parity) == 0:
-            continue
-        score = float(phase_probs[row, cls]) + float(
-            parity_probs[row, :n_qubits].mean()
-        )
-        ranked.append((score, parity, phase))
+        phase_conf = float(phase_probs[row, cls])
+        bits = parity_probs[row, :n_qubits]
+        bit_conf = float((2.0 * (bits - 0.5).abs()).mean()) if n_qubits else 0.0
+        return float(math.sqrt(max(phase_conf, 0.0) * max(bit_conf, 0.0)))
 
-    # Keep only confident non-identity rows; phase values come verbatim from
-    # the selected discrete class.
-    for _, parity, phase in sorted(ranked, reverse=True):
-        terms[tuple(parity)] = phase
-    return terms
+    thresholds = (
+        parity_thresholds.to(parity_probs.device).float()
+        if parity_thresholds is not None
+        else torch.full((parity_probs.size(-1),), 0.5)
+    )
+
+    def bit_is_one(row: int, q: int) -> bool:
+        return float(parity_probs[row, q]) >= float(thresholds[q])
+
+    def is_valid(row: int) -> bool:
+        cls = int(phase_class[row])
+        if cls == 0:
+            return False
+        return any(bit_is_one(row, q) for q in range(n_qubits))
+
+    # --- tail repair --------------------------------------------------------
+    # 1) drop trailing no-op rows, 2) drop trailing rows that are clearly less
+    # confident than the typical valid row, 3) keep at least the most confident
+    # valid row so a usable sequence never collapses to nothing.  The threshold
+    # is relative to the per-sample confidence distribution, which keeps the
+    # rule usable for weakly calibrated (early) checkpoints.
+    pruned_tail = 0
+    original_horizon = horizon
+    valid_rows = [row for row in range(horizon) if is_valid(row)]
+    if valid_rows:
+        confidences = [row_confidence(row) for row in valid_rows]
+        reference = float(np.median(confidences)) if confidences else 0.0
+        floor = float(tail_threshold) * reference
+        while horizon > 0:
+            row = horizon - 1
+            if is_valid(row) and row_confidence(row) >= floor:
+                break
+            horizon -= 1
+            pruned_tail += 1
+        if horizon == 0:
+            # relative pruning removed everything: keep the most confident valid row
+            best_row = max(valid_rows, key=lambda row: (row_confidence(row), -row))
+            horizon = best_row + 1
+    else:
+        horizon = 0
+    pruned_tail = max(0, original_horizon - horizon)
+
+    # merge duplicate parities by adding their phase classes modulo 32
+    merged: dict[tuple[int, ...], int] = {}
+    merged_blocks: "list[dict[tuple[int, ...], int]]" = [{}]
+    raw_rows: "list[tuple[tuple[int, ...], int, int]]" = []
+    rows_kept = 0
+    for row in range(horizon):
+        if row > 0 and float(block_probs[row]) > float(stop_threshold):
+            merged_blocks.append({})
+        if not is_valid(row):
+            continue
+        parity = tuple(int(bit_is_one(row, q)) for q in range(n_qubits))
+        cls = int(phase_class[row]) % N_PHASE_CLASSES
+        merged[parity] = (merged.get(parity, 0) + cls) % N_PHASE_CLASSES
+        current = merged_blocks[-1]
+        current[parity] = (current.get(parity, 0) + cls) % N_PHASE_CLASSES
+        raw_rows.append((parity, cls, len(merged_blocks) - 1))
+        rows_kept += 1
+
+    terms: dict[tuple[int, ...], Fraction] = {
+        parity: PHASE_CLASSES[cls] for parity, cls in merged.items() if cls != 0
+    }
+    if not return_diagnostics:
+        return terms
+    block_terms = [
+        {parity: PHASE_CLASSES[cls] for parity, cls in block.items() if cls != 0}
+        for block in merged_blocks
+    ]
+    return terms, {
+        "rows": raw_rows,
+        "block_terms": block_terms,
+        "n_blocks": sum(1 for block in block_terms if block),
+        "stop_fired": stop_fired,
+        "stop_len": stop_len,
+        "count_len": count_len,
+        "agreed": agreed,
+        "horizon": horizon,
+        "rows_kept": rows_kept,
+        "terms": len(terms),
+        "pruned_tail": pruned_tail,
+    }
+
+
+def calibrate_parity_thresholds(
+    model,
+    dataset: "list[Data]",
+    max_qubits: int = MAX_QUBITS,
+    grid=None,
+    min_positives: int = 8,
+) -> "torch.Tensor":
+    """Pick a per-qubit decision threshold for the parity bits.
+
+    The parity BCE is trained with a positive-class weight (``bit_balanced``
+    pushes it up to ~25 for the sparsest qubits), so 0.5 is *not* the optimal
+    decision threshold: predictions then over-fire and score worse than an
+    all-zero baseline.  This sweeps a threshold grid on the model's own
+    free-running probabilities (the same regime the decoder uses) and keeps the
+    threshold maximising F1 for each bit.  Bits without enough positives keep
+    0.5.
+    """
+    if grid is None:
+        grid = [0.02 * step for step in range(1, 50)]
+    model.eval()
+    probs: "list[torch.Tensor]" = []
+    targets: "list[torch.Tensor]" = []
+    with torch.no_grad():
+        for sample in dataset:
+            _parity, _phase, _depth, _stop, _count, _block = model(sample)
+            # clamp to both windows: the checkpoint's ``max_phase_terms`` may be
+            # smaller than the dataset's row budget
+            steps = int(
+                min(
+                    int(sample.y_seq_len),
+                    int(_parity.size(1)),
+                    int(sample.y_parity.size(1)),
+                )
+            )
+            columns = int(min(max_qubits, int(_parity.size(2)), int(sample.y_parity.size(2))))
+            if steps <= 0 or columns <= 0:
+                continue
+            probs.append(torch.sigmoid(_parity[0, :steps, :columns]).float().cpu())
+            targets.append(sample.y_parity[0, :steps, :columns].float().cpu())
+    if not probs:
+        return torch.full((max_qubits,), 0.5)
+    prob = torch.cat(probs, dim=0)          # (rows, Q)
+    target = torch.cat(targets, dim=0)
+    columns = int(prob.size(1))
+    thresholds = torch.full((max_qubits,), 0.5)
+    for q in range(min(max_qubits, columns)):
+        column = target[:, q]
+        positives = int(column.sum())
+        if positives < min_positives:
+            continue
+        best = (0.5, -1.0)
+        for thr in grid:
+            pred = (prob[:, q] >= thr).float()
+            tp = float((pred * column).sum())
+            fp = float((pred * (1 - column)).sum())
+            fn = float(((1 - pred) * column).sum())
+            tn = float(((1 - pred) * (1 - column)).sum())
+            # balanced accuracy (Youden's J): F1 would pick a far too low
+            # threshold on these sparse bits and then over-fire.
+            sensitivity = tp / max(tp + fn, 1e-9)
+            specificity = tn / max(tn + fp, 1e-9)
+            score = sensitivity + specificity
+            if score > best[1]:
+                best = (float(thr), score)
+        thresholds[q] = best[0]
+    return thresholds
+
+
+def save_parity_thresholds(path, thresholds: "torch.Tensor") -> None:
+    import json as _json
+
+    with open(path, "w", encoding="utf-8") as handle:
+        _json.dump([float(x) for x in thresholds.tolist()], handle)
+
+
+def load_parity_thresholds(path) -> "Optional[torch.Tensor]":
+    import json as _json
+
+    try:
+        with open(path, "r", encoding="utf-8") as handle:
+            values = _json.load(handle)
+    except Exception:
+        return None
+    return torch.tensor([float(x) for x in values])
+
+
+def _phase_segments(circuit: zx.Circuit):
+    """Split into maximal CNOT/ZPhase segments plus the Clifford gaps between."""
+    parts = []
+    segment: list = []
+    gap: list = []
+    for gate in circuit.gates:
+        if isinstance(gate, (CNOT, ZPhase)):
+            if gap:
+                parts.append(("gap", list(gap)))
+                gap = []
+            segment.append(gate)
+        else:
+            if segment:
+                parts.append(("seg", list(segment)))
+                segment = []
+            gap.append(gate)
+    if segment:
+        parts.append(("seg", list(segment)))
+    if gap:
+        parts.append(("gap", list(gap)))
+    return parts
+
+
+def _segment_terms(segment_gates, n_qubits: int):
+    """Exact symbolic phase polynomial of one CNOT+ZPhase segment."""
+    terms: "dict[tuple[int, ...], Fraction]" = {}
+    try:
+        polynomial = PhasePoly.fromCircuit(_circuit_block(n_qubits, segment_gates))
+    except Exception:
+        return terms
+    for parity, phase in polynomial.zphases.items():
+        key = tuple(int(parity[i]) for i in range(n_qubits))
+        terms[key] = (terms.get(key, Fraction(0)) + Fraction(phase)) % 2
+    return {key: value for key, value in terms.items() if value != 0}
+
+
+def _row_agreement(proposal, reference) -> float:
+    """Fraction of proposed terms that hit the reference exactly (phase included)."""
+    if not proposal:
+        return 0.0
+    hit = sum(1 for parity, phase in proposal.items() if reference.get(parity) == phase)
+    return hit / max(1, len(proposal))
+
+
+def hybrid_block_solve(
+    model,
+    source_circuit: zx.Circuit,
+    featurize,
+    decode,
+    use_gnn: bool = True,
+    verify: bool = True,
+    attempts: int = 3,
+    log=None,
+):
+    """Block-by-block hybrid solver: GNN proposal -> verify -> Steiner routing.
+
+    Implements the "step by step" scheme correctly:
+
+    1. split the circuit into H-separated CNOT/ZPhase segments (the *training*
+       representation of a phase block),
+    2. compute each segment's phase polynomial **exactly and symbolically**,
+    3. ask the GNN for a proposal on that segment's own ZX diagram (a local,
+       one-block inference instead of one 88-term sequence),
+    4. verify the routed proposal *locally* against the exact segment; on any
+       mismatch -- or when the block is too large to verify densely -- fall back
+       to the exact terms,
+    5. route the accepted terms with the Steiner router, append them plus the
+       segment's Clifford scaffolding, and continue (state refresh).
+
+    Returns ``(circuit, blocks)`` where ``blocks`` records, per segment, the
+    exact/proposed term counts, the row agreement, whether the proposal was
+    accepted, and the routed block's cost.
+    """
+    n_qubits = source_circuit.qubits
+    out = zx.Circuit(n_qubits)
+    blocks: "list[dict]" = []
+    for kind, gates in _phase_segments(source_circuit):
+        if kind == "gap":
+            for gate in gates:
+                out.add_gate(gate)
+            continue
+        block_circuit = _circuit_block(n_qubits, gates)
+        exact_terms = _segment_terms(gates, n_qubits)
+
+        proposal = None
+        agreement = 0.0
+        if use_gnn and exact_terms:
+            try:
+                graph = block_circuit.to_graph()
+                zx.simplify.clifford_simp(graph)
+                zx.simplify.full_reduce(graph)
+                # the model is fed this simplified view, so the accuracy metric
+                # must be measured on the same view (the routing fallback below
+                # still uses the exact raw segment terms)
+                try:
+                    simplified_block = zx.extract_circuit(graph.copy())
+                    model_terms = extract_phase_terms(simplified_block)
+                except Exception:
+                    model_terms = exact_terms
+                data = featurize(graph, n_qubits)
+                proposal = decode(model, data, n_qubits)
+                agreement = _row_agreement(proposal, model_terms)
+            except Exception:
+                proposal = None
+
+        accepted = False
+        verified = None
+        if proposal:
+            routed_proposal = route_phase_term_set(proposal, n_qubits, attempts=attempts)
+            if verify:
+                metrics = small_unitary_metrics(block_circuit, routed_proposal)
+                verified = None if metrics is None else (metrics[0] < 1e-8 and metrics[1] < 1e-8)
+                accepted = bool(verified)
+            else:
+                accepted = True
+        chosen = proposal if accepted else exact_terms
+        routed = (
+            route_phase_term_set(chosen, n_qubits, attempts=attempts)
+            if chosen
+            else _circuit_block(n_qubits, [])
+        )
+        for gate in routed.gates:
+            out.add_gate(gate)
+        cost = compute_ftq_metrics(routed)
+        blocks.append(
+            {
+                "exact_terms": len(exact_terms),
+                "proposed_terms": len(proposal or {}),
+                "agreement": agreement,
+                "accepted": accepted,
+                "verified": verified,
+                "t_count": cost.t_count,
+                "t_depth": cost.t_depth,
+            }
+        )
+    if log is not None:
+        for index, info in enumerate(blocks):
+            state = "GNN" if info["accepted"] else "exact"
+            log(
+                f"    [block {index:2d}] exact {info['exact_terms']:2d} terms | "
+                f"GNN {info['proposed_terms']:2d} terms (hit {info['agreement'] * 100:5.1f}%, "
+                f"verified={info['verified']}) -> using {state} | "
+                f"T-count={info['t_count']}, T-depth={info['t_depth']}"
+            )
+    # If the GNN contributed nothing, hand the synthesis to the reference router:
+    # it schedules the whole circuit at once (T layers of disjoint blocks overlap),
+    # which is 2 layers better than concatenating independently routed blocks.
+    accepted_any = any(info["accepted"] for info in blocks)
+    if not accepted_any and blocks:
+        reference = steiner_route_phase_layers(source_circuit)
+        if log is not None:
+            log(
+                "    [hybrid] no block was accepted -> delegating to "
+                "steiner_route_phase_layers (best-known symbolically routed circuit)"
+            )
+        return reference, blocks
+    return out, blocks
+
+
+def load_compatible_state_dict(model, state_dict, quiet: bool = False):
+    """Load ``state_dict`` into ``model``, tolerating added/removed heads.
+
+    Checkpoints trained before the phase-block head (or with a different head
+    set) still load: missing keys keep their random initialisation and are
+    reported, so an older checkpoint stays usable for the parts it does contain
+    instead of raising ``RuntimeError``.
+    """
+    missing, unexpected = model.load_state_dict(state_dict, strict=False)
+    if not quiet and (missing or unexpected):
+        print(
+            f"    [warn] checkpoint partially matched: {len(missing)} missing "
+            f"(e.g. {list(missing)[:3]}), {len(unexpected)} unexpected "
+            f"(e.g. {list(unexpected)[:3]})"
+        )
+    return missing, unexpected
+
+
+def rebuild_from_block_terms(
+    source_circuit: zx.Circuit,
+    block_terms: "list[dict[tuple[int, ...], Fraction]]",
+    attempts: int = 3,
+):
+    """Rebuild a circuit from per-block phase polynomials.
+
+    The *Clifford scaffolding* of ``source_circuit`` is reused: the circuit is
+    split into maximal CNOT/ZPhase segments with the remaining single-qubit
+    Clifford gates kept verbatim, and each segment ``i`` is replaced by the
+    Steiner-routed proposal ``block_terms[i]``.  Segments without a proposal
+    become identity (nothing is emitted) and are reported, so the equivalence
+    check stays honest.  Returns ``(circuit, covered_segments, total_segments)``.
+    """
+    n_qubits = source_circuit.qubits
+    parts: "list[tuple[str, list]]" = []
+    segment: list = []
+    gap: list = []
+    for gate in source_circuit.gates:
+        if isinstance(gate, (CNOT, ZPhase)):
+            if gap:
+                parts.append(("gap", gap))
+                gap = []
+            segment.append(gate)
+        else:
+            if segment:
+                parts.append(("seg", segment))
+                segment = []
+            gap.append(gate)
+    if segment:
+        parts.append(("seg", segment))
+    if gap:
+        parts.append(("gap", gap))
+
+    out = zx.Circuit(n_qubits)
+    covered = 0
+    total = 0
+    for kind, gates in parts:
+        if kind == "gap":
+            for gate in gates:
+                out.add_gate(gate)
+            continue
+        total += 1
+        proposal = block_terms[total - 1] if total - 1 < len(block_terms) else None
+        if proposal:
+            for gate in route_phase_term_set(proposal, n_qubits, attempts=attempts).gates:
+                out.add_gate(gate)
+            covered += 1
+    return out, covered, total
 
 
 def build_circuit_from_phase_terms(
@@ -1319,6 +2551,39 @@ def build_circuit_from_phase_terms(
         circ.add_gate(gate)
     circ.add_gate(HAD(target=n_qubits - 1))
     return circ
+
+
+def proposal_or_fallback(
+    terms: dict[tuple[int, ...], Fraction],
+    n_qubits: int,
+    fallback_terms: dict[tuple[int, ...], Fraction],
+    label: str,
+    relative_phase_candidate: bool = False,
+) -> tuple[zx.Circuit, bool]:
+    """Build a circuit from the GNN proposal, or fall back to the reference.
+
+    A freshly trained autoregressive decoder can still emit an empty or
+    identity-only term set (especially on the tiny legacy fixtures), so the demo
+    must not crash on it: the reference phase polynomial is used instead and the
+    substitution is reported explicitly.  Returns ``(circuit, used_fallback)``.
+    """
+    try:
+        return (
+            build_circuit_from_phase_terms(
+                terms, n_qubits, relative_phase_candidate=relative_phase_candidate
+            ),
+            False,
+        )
+    except ValueError as exc:
+        print(f"    [warn] {label} proposal unusable ({exc}); using the reference terms")
+        return (
+            build_circuit_from_phase_terms(
+                fallback_terms,
+                n_qubits,
+                relative_phase_candidate=relative_phase_candidate,
+            ),
+            True,
+        )
 
 
 def route_phase_term_set(
@@ -1621,12 +2886,17 @@ def alpha_tensor_quantum_workflow(
         print_phase_terms("GNN 4-T/Margolus 提议", rel_terms)
 
         if strict:
-            proposal = build_circuit_from_phase_terms(
+            proposal, used_fallback = proposal_or_fallback(
                 rel_terms,
                 rel_source.qubits,
+                target_terms,
+                "4-T/Margolus",
                 relative_phase_candidate=True,
             )
-            metrics = small_unitary_metrics(target_basic, proposal)
+            if used_fallback:
+                metrics = None
+            else:
+                metrics = small_unitary_metrics(target_basic, proposal)
             if metrics is not None:
                 rel_penalty, coherent = metrics
                 print(
@@ -1640,17 +2910,31 @@ def alpha_tensor_quantum_workflow(
 
         # Strict path builds the exact circuit from the GNN's 7-term output.
         if strict:
-            selected = build_circuit_from_phase_terms(
-                pred_terms, target_basic.qubits, relative_phase_candidate=False
+            selected, selected_fallback = proposal_or_fallback(
+                pred_terms,
+                target_basic.qubits,
+                target_terms,
+                "strict CCX",
+                relative_phase_candidate=False,
             )
-            selected_name = "7-T strict CCX (GNN)"
+            selected_name = (
+                "strict CCX (reference terms)"
+                if selected_fallback
+                else "strict CCX (GNN)"
+            )
         else:
-            selected = build_circuit_from_phase_terms(
+            selected, selected_fallback = proposal_or_fallback(
                 rel_terms,
                 rel_source.qubits,
+                target_terms,
+                "4-T relative CCX",
                 relative_phase_candidate=True,
             )
-            selected_name = "4-T relative CCX (GNN)"
+            selected_name = (
+                "4-T relative CCX (reference terms)"
+                if selected_fallback
+                else "4-T relative CCX (GNN)"
+            )
 
         check = small_unitary_metrics(target_basic, selected)
         if check is not None:
@@ -1800,7 +3084,63 @@ def build_arg_parser() -> argparse.ArgumentParser:
         type=float, default=1.0,
         help="positive-class weight of the parity BCE (parity bits are ~6%% positive; try 8-16)",
     )
+    train.add_argument(
+        "--parity_pos_weighting", "--parity-pos-weighting",
+        dest="parity_pos_weighting", choices=("none", "bit_balanced"), default="none",
+        help="'bit_balanced' = auto per-qubit neg/pos weights instead of the scalar",
+    )
+    train.add_argument(
+        "--parity_pos_weight_clamp", "--parity-pos-weight-clamp",
+        dest="parity_pos_weight_clamp", type=float, default=50.0,
+        help="upper clamp for the per-qubit parity pos_weight",
+    )
     train.add_argument("--phase_weight", "--phase-weight", dest="phase_weight", type=float, default=1.0)
+    train.add_argument(
+        "--pad_loss_weight", "--pad-loss-weight", dest="pad_loss_weight",
+        type=float, default=0.0,
+        help="weight of the padded (beyond y_seq_len) decoder steps; 0.0 = fully masked",
+    )
+    train.add_argument(
+        "--phase_class_weighting", "--phase-class-weighting", dest="phase_class_weighting",
+        choices=("none", "inv_freq"), default="none",
+        help="inverse-frequency class weights for the 32-way phase CE",
+    )
+    train.add_argument(
+        "--teacher_forcing_ratio", "--teacher-forcing-ratio",
+        dest="teacher_forcing_ratio", type=float, default=1.0,
+        help="1.0 = pure teacher forcing; <1 = scheduled sampling (closes train/inference gap)",
+    )
+    train.add_argument(
+        "--stop_weight", "--stop-weight", dest="stop_weight", type=float, default=1.0,
+        help="weight of the explicit end-of-sequence BCE",
+    )
+    train.add_argument(
+        "--stop_pos_weight", "--stop-pos-weight", dest="stop_pos_weight",
+        type=float, default=0.0,
+        help="positive weight of the stop BCE; 0 = auto balance (#neg/#pos ~ 45)",
+    )
+    train.add_argument(
+        "--count_weight", "--count-weight", dest="count_weight", type=float, default=0.1,
+        help="weight of the sequence-length regression head",
+    )
+    train.add_argument(
+        "--stop_threshold", "--stop-threshold", dest="stop_threshold", type=float, default=0.5,
+        help="inference threshold on the stop logit",
+    )
+    train.add_argument(
+        "--parity_reg_weight", "--parity-reg-weight", dest="parity_reg_weight",
+        type=float, default=0.5,
+        help="weight of the all-zero-row parity penalty relu(1 - sum_q p_q)",
+    )
+    train.add_argument(
+        "--parity_reg_target", "--parity-reg-target", dest="parity_reg_target",
+        default="auto",
+        help="'auto' = require each row's target support, or a fixed expected 1-bit count",
+    )
+    train.add_argument(
+        "--block_weight", "--block-weight", dest="block_weight", type=float, default=0.2,
+        help="weight of the phase-block boundary BCE (0 disables it)",
+    )
     train.add_argument(
         "--max_phase_terms", "--max-phase-terms", dest="max_phase_terms",
         type=int, default=MAX_PHASE_TERMS,
@@ -1842,8 +3182,24 @@ def main(argv: "Optional[Sequence[str]]" = None) -> int:
             weight_decay=args.weight_decay,
             parity_weight=args.parity_weight,
             parity_pos_weight=args.parity_pos_weight,
+            parity_pos_weighting=args.parity_pos_weighting,
+            parity_pos_weight_clamp=args.parity_pos_weight_clamp,
             phase_weight=args.phase_weight,
             depth_weight=args.depth_weight,
+            pad_loss_weight=args.pad_loss_weight,
+            phase_class_weighting=args.phase_class_weighting,
+            teacher_forcing_ratio=args.teacher_forcing_ratio,
+            stop_weight=args.stop_weight,
+            stop_pos_weight=args.stop_pos_weight,
+            count_weight=args.count_weight,
+            stop_threshold=args.stop_threshold,
+            parity_reg_weight=args.parity_reg_weight,
+            parity_reg_target=(
+                args.parity_reg_target
+                if str(args.parity_reg_target).lower() == "auto"
+                else float(args.parity_reg_target)
+            ),
+            block_weight=getattr(args, "block_weight", 0.2),
             max_phase_terms=args.max_phase_terms,
             hidden=args.hidden,
             seed=args.seed,

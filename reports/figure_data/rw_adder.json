@@ -1,0 +1,36 @@
+[
+  {
+    "name": "adder(3)",
+    "qubits": 8,
+    "native": {
+      "circuit-41": 1
+    },
+    "toffolis": 6,
+    "t_qiskit_l0": 42,
+    "t_qiskit_l3": 36,
+    "t_todd": 36,
+    "t_todd_ours": 24,
+    "t_ours_raw": 24,
+    "relative_phase_ok": true,
+    "t_ours_safe": 24,
+    "cx_l0": 49,
+    "cx_l3": 49
+  },
+  {
+    "name": "adder(4)",
+    "qubits": 10,
+    "native": {
+      "circuit-60": 1
+    },
+    "toffolis": 8,
+    "t_qiskit_l0": 56,
+    "t_qiskit_l3": 48,
+    "t_todd": 48,
+    "t_todd_ours": 32,
+    "t_ours_raw": 32,
+    "relative_phase_ok": true,
+    "t_ours_safe": 32,
+    "cx_l0": 65,
+    "cx_l3": 65
+  }
+]
