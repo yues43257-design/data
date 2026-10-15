@@ -1,0 +1,26 @@
+[
+  {
+    "h_prob": 0.1,
+    "legal": 656,
+    "tracker_safe": 132,
+    "rejected_but_legal": 524,
+    "restorable": 406,
+    "restorable_share": 0.7748091603053435
+  },
+  {
+    "h_prob": 0.3,
+    "legal": 244,
+    "tracker_safe": 24,
+    "rejected_but_legal": 220,
+    "restorable": 138,
+    "restorable_share": 0.6272727272727273
+  },
+  {
+    "h_prob": 0.7,
+    "legal": 88,
+    "tracker_safe": 24,
+    "rejected_but_legal": 64,
+    "restorable": 36,
+    "restorable_share": 0.5625
+  }
+]
