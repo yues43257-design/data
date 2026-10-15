@@ -1,0 +1,66 @@
+{
+  "setup_version": "canonical-setup-v2",
+  "script": "realcircuit_window.py",
+  "rows": [
+    {
+      "circuit": "adder-3bit",
+      "N_total": 8,
+      "N_sites": 6,
+      "N_exact_legal": 6,
+      "N_track": 6,
+      "N_useful": 0,
+      "exact_available": true,
+      "rejected_sites": 0,
+      "median_W_over_N": null,
+      "hook_fraction_W_le_N3": 0.0,
+      "median_tail_H": null,
+      "decision": "CLOSE level 2",
+      "setup_version": "canonical-setup-v2"
+    },
+    {
+      "circuit": "adder-4bit",
+      "N_total": 10,
+      "N_sites": 8,
+      "N_exact_legal": 8,
+      "N_track": 8,
+      "N_useful": 0,
+      "exact_available": true,
+      "rejected_sites": 0,
+      "median_W_over_N": null,
+      "hook_fraction_W_le_N3": 0.0,
+      "median_tail_H": null,
+      "decision": "CLOSE level 2",
+      "setup_version": "canonical-setup-v2"
+    },
+    {
+      "circuit": "comparator-3bit",
+      "N_total": 6,
+      "N_sites": 3,
+      "N_exact_legal": 3,
+      "N_track": 3,
+      "N_useful": 1,
+      "exact_available": true,
+      "rejected_sites": 0,
+      "median_W_over_N": null,
+      "hook_fraction_W_le_N3": 0.0,
+      "median_tail_H": null,
+      "decision": "CLOSE level 2",
+      "setup_version": "canonical-setup-v2"
+    },
+    {
+      "circuit": "comparator-4bit",
+      "N_total": 8,
+      "N_sites": 5,
+      "N_exact_legal": 5,
+      "N_track": 5,
+      "N_useful": 1,
+      "exact_available": true,
+      "rejected_sites": 0,
+      "median_W_over_N": null,
+      "hook_fraction_W_le_N3": 0.0,
+      "median_tail_H": null,
+      "decision": "CLOSE level 2",
+      "setup_version": "canonical-setup-v2"
+    }
+  ]
+}
