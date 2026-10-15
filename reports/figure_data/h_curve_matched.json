@@ -1,0 +1,106 @@
+{
+  "provenance": [
+    [
+      "\u00a75.1 verifier bench",
+      "exact simulation vs reduced symbolic",
+      "exact"
+    ],
+    [
+      "\u00a75.2 greedy optimality (500 circuits)",
+      "MixedVerifier.deviation_table",
+      "exact"
+    ],
+    [
+      "\u00a75.3 h_prob sweep (the 'cliff')",
+      "mixed_stress.run_stress -> MixedVerifier",
+      "exact"
+    ],
+    [
+      "\u00a75.4 conservative-criterion loss",
+      "support_tracker vs exact",
+      "tracker vs exact"
+    ],
+    [
+      "\u00a75.5 tracker audit",
+      "ReducedSymbolicVerifier vs support_tracker",
+      "exact vs tracker"
+    ],
+    [
+      "\u00a76 / \u00a77 real circuits",
+      "<=11q exact, >11q support_tracker",
+      "mixed"
+    ],
+    [
+      "\u00a78 ordering ablation A1/A2",
+      "MixedVerifier (exact)",
+      "exact"
+    ],
+    [
+      "\u00a78 ordering ablation B",
+      "support_tracker",
+      "tracker"
+    ]
+  ],
+  "rows": [
+    {
+      "h_prob": 0.0,
+      "seeds": 20,
+      "legal_fraction_mean": 1.0,
+      "legal_fraction_std": 0.0,
+      "single_block_mean": 1.0,
+      "single_block_std": 0.0,
+      "capture_mean": 1.0,
+      "capture_std": 0.0,
+      "oracle_saving_mean": 135.3,
+      "all_relative_safe_rate": 1.0
+    },
+    {
+      "h_prob": 0.1,
+      "seeds": 20,
+      "legal_fraction_mean": 0.182275390625,
+      "legal_fraction_std": 0.3597804262179491,
+      "single_block_mean": 0.4625,
+      "single_block_std": 0.28683497965826193,
+      "capture_mean": 0.9673529411764706,
+      "capture_std": 0.08625729551970043,
+      "oracle_saving_mean": 60.75,
+      "all_relative_safe_rate": 0.15
+    },
+    {
+      "h_prob": 0.3,
+      "seeds": 20,
+      "legal_fraction_mean": 0.003857421875,
+      "legal_fraction_std": 0.007031758607906919,
+      "single_block_mean": 0.2458333333333333,
+      "single_block_std": 0.11326897682556823,
+      "capture_mean": 0.9928571428571429,
+      "capture_std": 0.03113499245386197,
+      "oracle_saving_mean": 31.05,
+      "all_relative_safe_rate": 0.0
+    },
+    {
+      "h_prob": 0.7,
+      "seeds": 20,
+      "legal_fraction_mean": 0.001806640625,
+      "legal_fraction_std": 0.001642106613359398,
+      "single_block_mean": 0.20833333333333331,
+      "single_block_std": 0.06180165405913052,
+      "capture_mean": 0.9863636363636363,
+      "capture_std": 0.05943953104828191,
+      "oracle_saving_mean": 29.1,
+      "all_relative_safe_rate": 0.0
+    },
+    {
+      "h_prob": 1.0,
+      "seeds": 20,
+      "legal_fraction_mean": 0.00185546875,
+      "legal_fraction_std": 0.001631180965672858,
+      "single_block_mean": 0.19999999999999996,
+      "single_block_std": 0.06123724356957944,
+      "capture_mean": 0.9083333333333332,
+      "capture_std": 0.22071537730248375,
+      "oracle_saving_mean": 30.3,
+      "all_relative_safe_rate": 0.0
+    }
+  ]
+}
