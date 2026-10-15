@@ -1,0 +1,51 @@
+{
+  "setup_version": "canonical-setup-v2",
+  "script": "wide_h_window.py",
+  "oracle_available": false,
+  "rows": [
+    {
+      "variant": "H-free (control)",
+      "N_total": 66,
+      "N_sites": 64,
+      "N_track": 64,
+      "rejected_sites": 0,
+      "median_W_over_N": null,
+      "median_tail_H": null,
+      "hook_fraction_W_le_N3": 0.0,
+      "decision": "CLOSE level 2"
+    },
+    {
+      "variant": "H layer every 16 ccx (sparse)",
+      "N_total": 66,
+      "N_sites": 64,
+      "N_track": 16,
+      "rejected_sites": 48,
+      "median_W_over_N": 0.9848484848484849,
+      "median_tail_H": 130.0,
+      "hook_fraction_W_le_N3": 0.0,
+      "decision": "CLOSE level 2"
+    },
+    {
+      "variant": "H layer every 8 ccx",
+      "N_total": 66,
+      "N_sites": 64,
+      "N_track": 8,
+      "rejected_sites": 56,
+      "median_W_over_N": 0.9848484848484849,
+      "median_tail_H": 260.0,
+      "hook_fraction_W_le_N3": 0.03571428571428571,
+      "decision": "CLOSE level 2"
+    },
+    {
+      "variant": "H layer every 4 ccx (dense)",
+      "N_total": 66,
+      "N_sites": 64,
+      "N_track": 4,
+      "rejected_sites": 60,
+      "median_W_over_N": 0.9848484848484849,
+      "median_tail_H": 520.0,
+      "hook_fraction_W_le_N3": 0.1,
+      "decision": "CLOSE level 2"
+    }
+  ]
+}
