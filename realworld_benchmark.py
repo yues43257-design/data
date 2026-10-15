@@ -201,6 +201,33 @@ class _ToddTimeout(Exception):
     pass
 
 
+def _run_timed(fn, timeout: Optional[float], label: str, qubits: int):
+    """Run ``fn`` under an optional ``SIGALRM`` budget; return (value, seconds, timed_out)."""
+    started = time.perf_counter()
+
+    def _handler(signum, frame):  # pragma: no cover - signal path
+        raise _ToddTimeout()
+
+    previous = None
+    if timeout:
+        previous = signal.signal(signal.SIGALRM, _handler)
+        signal.setitimer(signal.ITIMER_REAL, float(timeout))
+    try:
+        return fn(), time.perf_counter() - started, False
+    except _ToddTimeout:  # pragma: no cover - signal path
+        print(f"  [warn] {label} timed out after {timeout:g}s ({qubits} qubits)",
+              file=sys.stderr)
+        return None, time.perf_counter() - started, True
+    except Exception as exc:  # pragma: no cover - optimizer refuses some gate sets
+        print(f"  [warn] {label} failed ({type(exc).__name__}: {str(exc)[:60]})",
+              file=sys.stderr)
+        return None, time.perf_counter() - started, False
+    finally:
+        if timeout:
+            signal.setitimer(signal.ITIMER_REAL, 0)
+            signal.signal(signal.SIGALRM, previous)
+
+
 def todd_t_count(qc: QuantumCircuit, timeout: Optional[float] = None):
     """PyZX' TODD (Heyfron & Campbell 2019), applied block-wise.
 
@@ -251,8 +278,27 @@ def circuit_metrics(qc: QuantumCircuit) -> Dict[str, int]:
 
 def _zx_metrics(zx_circuit) -> Dict[str, int]:
     metrics = LM.compute_ftq_metrics(zx_circuit)
+    total = int(len(zx_circuit.gates))
     return {"t_count": int(metrics.t_count), "t_depth": int(metrics.t_depth),
-            "cx_depth": int(metrics.cx_depth), "depth": int(zx_circuit.depth())}
+            "cx_depth": int(metrics.cx_depth), "depth": int(zx_circuit.depth()),
+            "qubits": int(zx_circuit.qubits), "gates": total,
+            "clifford": int(total - metrics.t_count), "fine": int(metrics.fine_count)}
+
+
+def pyzx_full_reduce(qc: QuantumCircuit, timeout: Optional[float] = None):
+    """pyZX standard pipeline: ``to_graph`` -> ``full_reduce`` -> ``extract_circuit``.
+
+    This is the *strong* pyZX baseline (TODD's ``phase_block_optimize`` is a
+    different, weaker routine).  Returns ``(metrics, seconds, timed_out)``.
+    """
+    def _solve():
+        circuit = LM.zx.Circuit.from_qasm(qasm2.dumps(qc)).to_basic_gates()
+        graph = circuit.to_graph()
+        LM.zx.simplify.full_reduce(graph)
+        extracted = LM.zx.extract_circuit(graph)
+        return _zx_metrics(extracted)
+
+    return _run_timed(_solve, timeout, "pyZX full_reduce", qc.num_qubits)
 
 
 def relative_phase_ok(ideal: QuantumCircuit, candidate: QuantumCircuit,
@@ -357,6 +403,9 @@ def benchmark_one(name: str, qc: QuantumCircuit, mode: str = "toffoli",
     m_todd = _zx_metrics(todd_circuit) if todd_circuit is not None else None
     m_todd_ours = _zx_metrics(todd_ours_circuit) if todd_ours_circuit is not None else None
 
+    # strong pyZX baseline: full_reduce + extract (exact circuit, any width)
+    m_fr, fr_seconds, fr_timed_out = pyzx_full_reduce(canonical, todd_timeout)
+
     return {
         "name": name,
         "qubits": qc.num_qubits,
@@ -385,6 +434,25 @@ def benchmark_one(name: str, qc: QuantumCircuit, mode: str = "toffoli",
         "cx_depth_ours": m_ours["cx_depth"],
         "cx_depth_l0": m_l0["cx_depth"],
         "cx_depth_l3": m_l3["cx_depth"],
+        # -- strong pyZX baseline (full_reduce + extract) --
+        "t_full_reduce": m_fr["t_count"] if m_fr else None,
+        "t_depth_full_reduce": m_fr["t_depth"] if m_fr else None,
+        "depth_full_reduce": m_fr["depth"] if m_fr else None,
+        "qubits_full_reduce": m_fr["qubits"] if m_fr else None,
+        "clifford_full_reduce": m_fr["clifford"] if m_fr else None,
+        "gates_full_reduce": m_fr["gates"] if m_fr else None,
+        "full_reduce_seconds": fr_seconds,
+        "full_reduce_timed_out": fr_timed_out,
+        # -- qubit / Clifford budget per path --
+        "qubits_ours": m_ours["qubits"],
+        "qubits_l0": m_l0["qubits"],
+        "qubits_todd": m_todd["qubits"] if m_todd else None,
+        "clifford_ours": m_ours["clifford"],
+        "clifford_l0": m_l0["clifford"],
+        "clifford_l3": m_l3["clifford"],
+        "clifford_todd": m_todd["clifford"] if m_todd else None,
+        "gates_ours": m_ours["gates"],
+        "gates_l0": m_l0["gates"],
         "todd_seconds": todd_seconds,
         "todd_ours_seconds": todd_ours_seconds,
         "todd_timed_out": todd_timed_out,
@@ -399,7 +467,8 @@ def summarise(rows: Sequence[Dict[str, Any]], sizes: Any) -> int:
     print(f"  Real-circuit T-count benchmark  (sizes={sizes}, basis=Clifford+T)")
     print("=" * 92)
     header = (f"  {'circuit':<14}{'q':>3}{'ccx':>5}{'L0':>6}{'L3':>6}"
-              f"{'TODD':>6}{'ours':>6}{'TODD(ours)':>11}{'best':>6}   {'RP valid':<11}")
+              f"{'TODD':>6}{'FR':>6}{'ours':>6}{'TODD(ours)':>11}{'best':>6}"
+              f"   {'RP valid':<11}")
     print(header)
     print("  " + "-" * 88)
     for row in rows:
@@ -419,10 +488,13 @@ def summarise(rows: Sequence[Dict[str, Any]], sizes: Any) -> int:
         branch = [row["t_ours_safe"]]
         if row["relative_phase_ok"]:
             branch.append(row["t_todd_ours"])
-        candidates = [v for v in ([row["t_todd"]] + branch) if v is not None]
+        # full_reduce is an *exact* circuit, so it always competes for `best`
+        candidates = [v for v in ([row["t_todd"], row["t_full_reduce"]] + branch)
+                      if v is not None]
         best = min(candidates) if candidates else None
         print(f"  {row['name']:<14}{row['qubits']:>3}{row['toffolis']:>5}"
               f"{row['t_qiskit_l0']:>6}{row['t_qiskit_l3']:>6}{_num(row['t_todd']):>6}"
+              f"{_num(row['t_full_reduce']):>6}"
               f"{row['t_ours_safe']:>6}{_num(row['t_todd_ours']):>11}"
               f"{_num(best):>6}   {valid:<11}")
     print("  " + "-" * 88)
@@ -431,8 +503,28 @@ def summarise(rows: Sequence[Dict[str, Any]], sizes: Any) -> int:
     print("  ours         = 4-T relative-phase rewrite, kept only when the injected")
     print("                 diagonal provably survives (Linux-MCX certified test)")
     print("  TODD(ours)   = TODD applied *on top of* ours (does it find anything more?)")
-    print("  best         = best known among TODD / ours / TODD(ours)")
+    print("  FR           = pyZX full_reduce + extract_circuit (exact; the strong baseline)")
+    print("  best         = best known among TODD / FR / ours / TODD(ours)")
     print("=" * 92)
+
+    print()
+    print("  qubit / Clifford budget and both depth metrics "
+          "(FR = pyZX full_reduce; Clifford = non-T gates)")
+    print(f"  {'circuit':<14}{'q':>3}   {'qubits L0/ours/FR':>19}"
+          f"{'Clifford L3/ours/FR':>21}{'Tdep L3/ours/FR':>18}"
+          f"{'depth L3/ours/FR':>19}{'FR s':>8}")
+    print("  " + "-" * 104)
+    for row in rows:
+        def _trio(*keys):
+            return "/".join(str(row.get(k)) if row.get(k) is not None else "n/a"
+                            for k in keys)
+        print(f"  {row['name']:<14}{row['qubits']:>3}   "
+              f"{_trio('qubits_l0', 'qubits_ours', 'qubits_full_reduce'):>19}"
+              f"{_trio('clifford_l3', 'clifford_ours', 'clifford_full_reduce'):>21}"
+              f"{_trio('t_depth_l3', 't_depth_ours', 't_depth_full_reduce'):>18}"
+              f"{_trio('depth_l3', 'depth_ours', 'depth_full_reduce'):>19}"
+              f"{row['full_reduce_seconds']:>8.2f}"
+              + ("  [FR timeout]" if row.get("full_reduce_timed_out") else ""))
 
     print()
     print("  certification & timing")
