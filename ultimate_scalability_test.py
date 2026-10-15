@@ -107,7 +107,9 @@ class WideInstance:
         pool = list(range(self.width, self.total))
         for _ in range(self.blocks):
             n = int(rng.choice(list(control_choices)))
-            n = max(1, min(n, self.width - 2))          # the window + target must fit
+            # the window + target + (n-2) clean ancillas must all fit; without the
+            # ancilla_pool term the block->register map silently drops a wire.
+            n = max(1, min(n, self.width - 2, ancilla_pool + 2))
             start = rng.randrange(self.width - n)
             controls = list(range(start, start + n))
             target = (start + n) % self.width
