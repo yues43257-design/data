@@ -1,0 +1,609 @@
+{
+  "config": {
+    "a1_data": "/home/siri/MCX/reports/figure_data/oracle_vs_greedy.json",
+    "a1_circuits": 500,
+    "deep_circuits": 20,
+    "wide_circuits": 20,
+    "widths": "24,50",
+    "budgets": "1,3,5,10",
+    "random_trials": 5,
+    "seed": 20261015,
+    "device": "cpu",
+    "checkpoint": "/home/siri/MCX/checkpoints/variant_policy_rl_best.pt",
+    "out": "/home/siri/MCX/reports/figure_data/ablation_ordering.json",
+    "quick": false
+  },
+  "a1_exact_short": {
+    "circuits": 500,
+    "oracle": "exact reduced verifier",
+    "unbudgeted": {
+      "policy": {
+        "mean_saved": 33.702,
+        "total_saved": 16851.0
+      },
+      "reverse_index": {
+        "mean_saved": 33.702,
+        "total_saved": 16851.0
+      },
+      "saving_desc": {
+        "mean_saved": 33.702,
+        "total_saved": 16851.0
+      },
+      "random": {
+        "mean_saved": 33.702,
+        "total_saved": 16851.0
+      }
+    },
+    "budgeted": {
+      "1": {
+        "policy": {
+          "mean_saved": 13.332,
+          "total_saved": 6666.0
+        },
+        "reverse_index": {
+          "mean_saved": 15.024,
+          "total_saved": 7512.0
+        },
+        "saving_desc": {
+          "mean_saved": 9.306,
+          "total_saved": 4653.0
+        },
+        "random": {
+          "mean_saved": 4.272,
+          "total_saved": 2136.0
+        }
+      },
+      "3": {
+        "policy": {
+          "mean_saved": 30.996,
+          "total_saved": 15498.0
+        },
+        "reverse_index": {
+          "mean_saved": 16.53,
+          "total_saved": 8265.0
+        },
+        "saving_desc": {
+          "mean_saved": 19.572,
+          "total_saved": 9786.0
+        },
+        "random": {
+          "mean_saved": 13.244399999999999,
+          "total_saved": 6622.2
+        }
+      },
+      "5": {
+        "policy": {
+          "mean_saved": 32.298,
+          "total_saved": 16149.0
+        },
+        "reverse_index": {
+          "mean_saved": 19.35,
+          "total_saved": 9675.0
+        },
+        "saving_desc": {
+          "mean_saved": 27.15,
+          "total_saved": 13575.0
+        },
+        "random": {
+          "mean_saved": 21.798,
+          "total_saved": 10899.0
+        }
+      },
+      "10": {
+        "policy": {
+          "mean_saved": 33.66,
+          "total_saved": 16830.0
+        },
+        "reverse_index": {
+          "mean_saved": 30.204,
+          "total_saved": 15102.0
+        },
+        "saving_desc": {
+          "mean_saved": 33.474,
+          "total_saved": 16737.0
+        },
+        "random": {
+          "mean_saved": 32.6292,
+          "total_saved": 16314.599999999999
+        }
+      }
+    }
+  },
+  "a2_exact_deep": {
+    "circuits": 20,
+    "oracle": "exact",
+    "h_prob": 0.5,
+    "width": null,
+    "mean_blocks": 38.75,
+    "unbudgeted": {
+      "policy": {
+        "mean_saved": 24.6,
+        "total_saved": 492.0
+      },
+      "reverse_index": {
+        "mean_saved": 24.6,
+        "total_saved": 492.0
+      },
+      "saving_desc": {
+        "mean_saved": 24.6,
+        "total_saved": 492.0
+      },
+      "random": {
+        "mean_saved": 24.6,
+        "total_saved": 492.0
+      }
+    },
+    "budgeted": {
+      "1": {
+        "policy": {
+          "mean_saved": 10.8,
+          "total_saved": 216.0
+        },
+        "reverse_index": {
+          "mean_saved": 11.1,
+          "total_saved": 222.0
+        },
+        "saving_desc": {
+          "mean_saved": 6.75,
+          "total_saved": 135.0
+        },
+        "random": {
+          "mean_saved": 1.02,
+          "total_saved": 20.4
+        }
+      },
+      "3": {
+        "policy": {
+          "mean_saved": 19.05,
+          "total_saved": 381.0
+        },
+        "reverse_index": {
+          "mean_saved": 11.85,
+          "total_saved": 237.0
+        },
+        "saving_desc": {
+          "mean_saved": 6.75,
+          "total_saved": 135.0
+        },
+        "random": {
+          "mean_saved": 1.7399999999999998,
+          "total_saved": 34.8
+        }
+      },
+      "5": {
+        "policy": {
+          "mean_saved": 24.45,
+          "total_saved": 489.0
+        },
+        "reverse_index": {
+          "mean_saved": 11.85,
+          "total_saved": 237.0
+        },
+        "saving_desc": {
+          "mean_saved": 6.75,
+          "total_saved": 135.0
+        },
+        "random": {
+          "mean_saved": 2.88,
+          "total_saved": 57.6
+        }
+      },
+      "10": {
+        "policy": {
+          "mean_saved": 24.6,
+          "total_saved": 492.0
+        },
+        "reverse_index": {
+          "mean_saved": 11.85,
+          "total_saved": 237.0
+        },
+        "saving_desc": {
+          "mean_saved": 9.15,
+          "total_saved": 183.0
+        },
+        "random": {
+          "mean_saved": 6.87,
+          "total_saved": 137.4
+        }
+      }
+    }
+  },
+  "b_tracker_wide": {
+    "w24_h0.1": {
+      "circuits": 20,
+      "oracle": "tracker",
+      "h_prob": 0.1,
+      "width": 24,
+      "mean_blocks": 40.7,
+      "unbudgeted": {
+        "policy": {
+          "mean_saved": 35.55,
+          "total_saved": 711.0
+        },
+        "reverse_index": {
+          "mean_saved": 35.55,
+          "total_saved": 711.0
+        },
+        "saving_desc": {
+          "mean_saved": 35.55,
+          "total_saved": 711.0
+        },
+        "random": {
+          "mean_saved": 35.55,
+          "total_saved": 711.0
+        }
+      },
+      "budgeted": {
+        "1": {
+          "policy": {
+            "mean_saved": 0.0,
+            "total_saved": 0.0
+          },
+          "reverse_index": {
+            "mean_saved": 21.6,
+            "total_saved": 432.0
+          },
+          "saving_desc": {
+            "mean_saved": 9.75,
+            "total_saved": 195.0
+          },
+          "random": {
+            "mean_saved": 1.0799999999999998,
+            "total_saved": 21.599999999999998
+          }
+        },
+        "3": {
+          "policy": {
+            "mean_saved": 0.0,
+            "total_saved": 0.0
+          },
+          "reverse_index": {
+            "mean_saved": 33.6,
+            "total_saved": 672.0
+          },
+          "saving_desc": {
+            "mean_saved": 11.7,
+            "total_saved": 234.0
+          },
+          "random": {
+            "mean_saved": 2.7,
+            "total_saved": 54.0
+          }
+        },
+        "5": {
+          "policy": {
+            "mean_saved": 0.0,
+            "total_saved": 0.0
+          },
+          "reverse_index": {
+            "mean_saved": 35.55,
+            "total_saved": 711.0
+          },
+          "saving_desc": {
+            "mean_saved": 16.65,
+            "total_saved": 333.0
+          },
+          "random": {
+            "mean_saved": 5.4,
+            "total_saved": 108.0
+          }
+        },
+        "10": {
+          "policy": {
+            "mean_saved": 16.65,
+            "total_saved": 333.0
+          },
+          "reverse_index": {
+            "mean_saved": 35.55,
+            "total_saved": 711.0
+          },
+          "saving_desc": {
+            "mean_saved": 21.0,
+            "total_saved": 420.0
+          },
+          "random": {
+            "mean_saved": 9.870000000000001,
+            "total_saved": 197.4
+          }
+        }
+      }
+    },
+    "w24_h0.5": {
+      "circuits": 20,
+      "oracle": "tracker",
+      "h_prob": 0.5,
+      "width": 24,
+      "mean_blocks": 40.7,
+      "unbudgeted": {
+        "policy": {
+          "mean_saved": 21.6,
+          "total_saved": 432.0
+        },
+        "reverse_index": {
+          "mean_saved": 21.6,
+          "total_saved": 432.0
+        },
+        "saving_desc": {
+          "mean_saved": 21.6,
+          "total_saved": 432.0
+        },
+        "random": {
+          "mean_saved": 21.6,
+          "total_saved": 432.0
+        }
+      },
+      "budgeted": {
+        "1": {
+          "policy": {
+            "mean_saved": 0.0,
+            "total_saved": 0.0
+          },
+          "reverse_index": {
+            "mean_saved": 21.6,
+            "total_saved": 432.0
+          },
+          "saving_desc": {
+            "mean_saved": 7.8,
+            "total_saved": 156.0
+          },
+          "random": {
+            "mean_saved": 0.42000000000000004,
+            "total_saved": 8.4
+          }
+        },
+        "3": {
+          "policy": {
+            "mean_saved": 0.0,
+            "total_saved": 0.0
+          },
+          "reverse_index": {
+            "mean_saved": 21.6,
+            "total_saved": 432.0
+          },
+          "saving_desc": {
+            "mean_saved": 7.8,
+            "total_saved": 156.0
+          },
+          "random": {
+            "mean_saved": 1.9799999999999998,
+            "total_saved": 39.599999999999994
+          }
+        },
+        "5": {
+          "policy": {
+            "mean_saved": 0.0,
+            "total_saved": 0.0
+          },
+          "reverse_index": {
+            "mean_saved": 21.6,
+            "total_saved": 432.0
+          },
+          "saving_desc": {
+            "mean_saved": 11.1,
+            "total_saved": 222.0
+          },
+          "random": {
+            "mean_saved": 3.5100000000000002,
+            "total_saved": 70.2
+          }
+        },
+        "10": {
+          "policy": {
+            "mean_saved": 11.25,
+            "total_saved": 225.0
+          },
+          "reverse_index": {
+            "mean_saved": 21.6,
+            "total_saved": 432.0
+          },
+          "saving_desc": {
+            "mean_saved": 12.45,
+            "total_saved": 249.0
+          },
+          "random": {
+            "mean_saved": 7.2299999999999995,
+            "total_saved": 144.6
+          }
+        }
+      }
+    },
+    "w50_h0.1": {
+      "circuits": 20,
+      "oracle": "tracker",
+      "h_prob": 0.1,
+      "width": 50,
+      "mean_blocks": 40.7,
+      "unbudgeted": {
+        "policy": {
+          "mean_saved": 28.05,
+          "total_saved": 561.0
+        },
+        "reverse_index": {
+          "mean_saved": 28.05,
+          "total_saved": 561.0
+        },
+        "saving_desc": {
+          "mean_saved": 28.05,
+          "total_saved": 561.0
+        },
+        "random": {
+          "mean_saved": 28.05,
+          "total_saved": 561.0
+        }
+      },
+      "budgeted": {
+        "1": {
+          "policy": {
+            "mean_saved": 0.0,
+            "total_saved": 0.0
+          },
+          "reverse_index": {
+            "mean_saved": 21.0,
+            "total_saved": 420.0
+          },
+          "saving_desc": {
+            "mean_saved": 7.8,
+            "total_saved": 156.0
+          },
+          "random": {
+            "mean_saved": 0.15,
+            "total_saved": 3.0
+          }
+        },
+        "3": {
+          "policy": {
+            "mean_saved": 0.0,
+            "total_saved": 0.0
+          },
+          "reverse_index": {
+            "mean_saved": 27.9,
+            "total_saved": 558.0
+          },
+          "saving_desc": {
+            "mean_saved": 9.75,
+            "total_saved": 195.0
+          },
+          "random": {
+            "mean_saved": 1.89,
+            "total_saved": 37.8
+          }
+        },
+        "5": {
+          "policy": {
+            "mean_saved": 0.0,
+            "total_saved": 0.0
+          },
+          "reverse_index": {
+            "mean_saved": 28.05,
+            "total_saved": 561.0
+          },
+          "saving_desc": {
+            "mean_saved": 11.4,
+            "total_saved": 228.0
+          },
+          "random": {
+            "mean_saved": 3.8699999999999997,
+            "total_saved": 77.39999999999999
+          }
+        },
+        "10": {
+          "policy": {
+            "mean_saved": 1.95,
+            "total_saved": 39.0
+          },
+          "reverse_index": {
+            "mean_saved": 28.05,
+            "total_saved": 561.0
+          },
+          "saving_desc": {
+            "mean_saved": 14.7,
+            "total_saved": 294.0
+          },
+          "random": {
+            "mean_saved": 7.83,
+            "total_saved": 156.6
+          }
+        }
+      }
+    },
+    "w50_h0.5": {
+      "circuits": 20,
+      "oracle": "tracker",
+      "h_prob": 0.5,
+      "width": 50,
+      "mean_blocks": 40.7,
+      "unbudgeted": {
+        "policy": {
+          "mean_saved": 21.15,
+          "total_saved": 423.0
+        },
+        "reverse_index": {
+          "mean_saved": 21.15,
+          "total_saved": 423.0
+        },
+        "saving_desc": {
+          "mean_saved": 21.15,
+          "total_saved": 423.0
+        },
+        "random": {
+          "mean_saved": 21.15,
+          "total_saved": 423.0
+        }
+      },
+      "budgeted": {
+        "1": {
+          "policy": {
+            "mean_saved": 0.0,
+            "total_saved": 0.0
+          },
+          "reverse_index": {
+            "mean_saved": 21.0,
+            "total_saved": 420.0
+          },
+          "saving_desc": {
+            "mean_saved": 7.8,
+            "total_saved": 156.0
+          },
+          "random": {
+            "mean_saved": 0.06,
+            "total_saved": 1.2
+          }
+        },
+        "3": {
+          "policy": {
+            "mean_saved": 0.0,
+            "total_saved": 0.0
+          },
+          "reverse_index": {
+            "mean_saved": 21.15,
+            "total_saved": 423.0
+          },
+          "saving_desc": {
+            "mean_saved": 7.8,
+            "total_saved": 156.0
+          },
+          "random": {
+            "mean_saved": 1.6199999999999999,
+            "total_saved": 32.4
+          }
+        },
+        "5": {
+          "policy": {
+            "mean_saved": 0.0,
+            "total_saved": 0.0
+          },
+          "reverse_index": {
+            "mean_saved": 21.15,
+            "total_saved": 423.0
+          },
+          "saving_desc": {
+            "mean_saved": 9.45,
+            "total_saved": 189.0
+          },
+          "random": {
+            "mean_saved": 2.58,
+            "total_saved": 51.6
+          }
+        },
+        "10": {
+          "policy": {
+            "mean_saved": 0.0,
+            "total_saved": 0.0
+          },
+          "reverse_index": {
+            "mean_saved": 21.15,
+            "total_saved": 423.0
+          },
+          "saving_desc": {
+            "mean_saved": 12.75,
+            "total_saved": 255.0
+          },
+          "random": {
+            "mean_saved": 6.4799999999999995,
+            "total_saved": 129.6
+          }
+        }
+      }
+    }
+  }
+}
