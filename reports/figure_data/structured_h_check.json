@@ -2,52 +2,434 @@
   "script": "structured_h_check.py",
   "rows": [
     {
-      "variant": "adder3-bit H-free",
+      "variant": "adder3-H-free",
       "N_total": 8,
       "sites": 6,
       "truth_legal": 6,
       "v1_accept": 6,
-      "conservativeness": 0.0
+      "conservativeness": 0.0,
+      "missed_sites": []
     },
     {
-      "variant": "adder3-bit H every 2 ccx",
-      "N_total": 8,
-      "sites": 6,
-      "truth_legal": 2,
-      "v1_accept": 2,
-      "conservativeness": 0.0
-    },
-    {
-      "variant": "adder3-bit H every 1 ccx",
+      "variant": "adder3-H/1ccx-full",
       "N_total": 8,
       "sites": 6,
       "truth_legal": 2,
       "v1_accept": 1,
-      "conservativeness": 0.5
+      "conservativeness": 0.5,
+      "missed_sites": [
+        {
+          "site": 0,
+          "support_width": 7,
+          "N_total": 8,
+          "tail_H": 35
+        },
+        {
+          "site": 2,
+          "support_width": 7,
+          "N_total": 8,
+          "tail_H": 21
+        }
+      ]
     },
     {
-      "variant": "adder4-bit H-free",
+      "variant": "adder3-H/1ccx-half",
+      "N_total": 8,
+      "sites": 6,
+      "truth_legal": 1,
+      "v1_accept": 1,
+      "conservativeness": 0.0,
+      "missed_sites": [
+        {
+          "site": 0,
+          "support_width": 7,
+          "N_total": 8,
+          "tail_H": 20
+        }
+      ]
+    },
+    {
+      "variant": "adder3-H/2ccx-full",
+      "N_total": 8,
+      "sites": 6,
+      "truth_legal": 2,
+      "v1_accept": 2,
+      "conservativeness": 0.0,
+      "missed_sites": [
+        {
+          "site": 0,
+          "support_width": 7,
+          "N_total": 8,
+          "tail_H": 14
+        },
+        {
+          "site": 1,
+          "support_width": 7,
+          "N_total": 8,
+          "tail_H": 14
+        }
+      ]
+    },
+    {
+      "variant": "adder3-H/2ccx-half",
+      "N_total": 8,
+      "sites": 6,
+      "truth_legal": 2,
+      "v1_accept": 2,
+      "conservativeness": 0.0,
+      "missed_sites": [
+        {
+          "site": 0,
+          "support_width": 7,
+          "N_total": 8,
+          "tail_H": 8
+        },
+        {
+          "site": 1,
+          "support_width": 7,
+          "N_total": 8,
+          "tail_H": 8
+        }
+      ]
+    },
+    {
+      "variant": "adder3-H/3ccx-full",
+      "N_total": 8,
+      "sites": 6,
+      "truth_legal": 3,
+      "v1_accept": 3,
+      "conservativeness": 0.0,
+      "missed_sites": [
+        {
+          "site": 0,
+          "support_width": 7,
+          "N_total": 8,
+          "tail_H": 7
+        },
+        {
+          "site": 1,
+          "support_width": 7,
+          "N_total": 8,
+          "tail_H": 7
+        },
+        {
+          "site": 2,
+          "support_width": 7,
+          "N_total": 8,
+          "tail_H": 7
+        }
+      ]
+    },
+    {
+      "variant": "adder3-H/3ccx-half",
+      "N_total": 8,
+      "sites": 6,
+      "truth_legal": 3,
+      "v1_accept": 3,
+      "conservativeness": 0.0,
+      "missed_sites": [
+        {
+          "site": 0,
+          "support_width": 7,
+          "N_total": 8,
+          "tail_H": 4
+        },
+        {
+          "site": 1,
+          "support_width": 7,
+          "N_total": 8,
+          "tail_H": 4
+        },
+        {
+          "site": 2,
+          "support_width": 7,
+          "N_total": 8,
+          "tail_H": 4
+        }
+      ]
+    },
+    {
+      "variant": "adder3-H/4ccx-full",
+      "N_total": 8,
+      "sites": 6,
+      "truth_legal": 4,
+      "v1_accept": 2,
+      "conservativeness": 0.5,
+      "missed_sites": [
+        {
+          "site": 0,
+          "support_width": 7,
+          "N_total": 8,
+          "tail_H": 7
+        },
+        {
+          "site": 1,
+          "support_width": 7,
+          "N_total": 8,
+          "tail_H": 7
+        },
+        {
+          "site": 2,
+          "support_width": 7,
+          "N_total": 8,
+          "tail_H": 7
+        },
+        {
+          "site": 3,
+          "support_width": 7,
+          "N_total": 8,
+          "tail_H": 7
+        }
+      ]
+    },
+    {
+      "variant": "adder3-H/4ccx-half",
+      "N_total": 8,
+      "sites": 6,
+      "truth_legal": 4,
+      "v1_accept": 2,
+      "conservativeness": 0.5,
+      "missed_sites": [
+        {
+          "site": 0,
+          "support_width": 7,
+          "N_total": 8,
+          "tail_H": 4
+        },
+        {
+          "site": 1,
+          "support_width": 7,
+          "N_total": 8,
+          "tail_H": 4
+        },
+        {
+          "site": 2,
+          "support_width": 7,
+          "N_total": 8,
+          "tail_H": 4
+        },
+        {
+          "site": 3,
+          "support_width": 7,
+          "N_total": 8,
+          "tail_H": 4
+        }
+      ]
+    },
+    {
+      "variant": "adder4-H-free",
       "N_total": 10,
       "sites": 8,
       "truth_legal": 8,
       "v1_accept": 8,
-      "conservativeness": 0.0
+      "conservativeness": 0.0,
+      "missed_sites": []
     },
     {
-      "variant": "adder4-bit H every 2 ccx",
-      "N_total": 10,
-      "sites": 8,
-      "truth_legal": 2,
-      "v1_accept": 2,
-      "conservativeness": 0.0
-    },
-    {
-      "variant": "adder4-bit H every 1 ccx",
+      "variant": "adder4-H/1ccx-full",
       "N_total": 10,
       "sites": 8,
       "truth_legal": 2,
       "v1_accept": 1,
-      "conservativeness": 0.5
+      "conservativeness": 0.5,
+      "missed_sites": [
+        {
+          "site": 0,
+          "support_width": 9,
+          "N_total": 10,
+          "tail_H": 63
+        },
+        {
+          "site": 2,
+          "support_width": 9,
+          "N_total": 10,
+          "tail_H": 45
+        }
+      ]
+    },
+    {
+      "variant": "adder4-H/1ccx-half",
+      "N_total": 10,
+      "sites": 8,
+      "truth_legal": 1,
+      "v1_accept": 1,
+      "conservativeness": 0.0,
+      "missed_sites": [
+        {
+          "site": 0,
+          "support_width": 9,
+          "N_total": 10,
+          "tail_H": 35
+        }
+      ]
+    },
+    {
+      "variant": "adder4-H/2ccx-full",
+      "N_total": 10,
+      "sites": 8,
+      "truth_legal": 2,
+      "v1_accept": 2,
+      "conservativeness": 0.0,
+      "missed_sites": [
+        {
+          "site": 0,
+          "support_width": 9,
+          "N_total": 10,
+          "tail_H": 27
+        },
+        {
+          "site": 1,
+          "support_width": 9,
+          "N_total": 10,
+          "tail_H": 27
+        }
+      ]
+    },
+    {
+      "variant": "adder4-H/2ccx-half",
+      "N_total": 10,
+      "sites": 8,
+      "truth_legal": 2,
+      "v1_accept": 2,
+      "conservativeness": 0.0,
+      "missed_sites": [
+        {
+          "site": 0,
+          "support_width": 9,
+          "N_total": 10,
+          "tail_H": 15
+        },
+        {
+          "site": 1,
+          "support_width": 9,
+          "N_total": 10,
+          "tail_H": 15
+        }
+      ]
+    },
+    {
+      "variant": "adder4-H/3ccx-full",
+      "N_total": 10,
+      "sites": 8,
+      "truth_legal": 3,
+      "v1_accept": 2,
+      "conservativeness": 0.33333333333333337,
+      "missed_sites": [
+        {
+          "site": 0,
+          "support_width": 9,
+          "N_total": 10,
+          "tail_H": 18
+        },
+        {
+          "site": 1,
+          "support_width": 9,
+          "N_total": 10,
+          "tail_H": 18
+        },
+        {
+          "site": 2,
+          "support_width": 9,
+          "N_total": 10,
+          "tail_H": 18
+        }
+      ]
+    },
+    {
+      "variant": "adder4-H/3ccx-half",
+      "N_total": 10,
+      "sites": 8,
+      "truth_legal": 3,
+      "v1_accept": 2,
+      "conservativeness": 0.33333333333333337,
+      "missed_sites": [
+        {
+          "site": 0,
+          "support_width": 9,
+          "N_total": 10,
+          "tail_H": 10
+        },
+        {
+          "site": 1,
+          "support_width": 9,
+          "N_total": 10,
+          "tail_H": 10
+        },
+        {
+          "site": 2,
+          "support_width": 9,
+          "N_total": 10,
+          "tail_H": 10
+        }
+      ]
+    },
+    {
+      "variant": "adder4-H/4ccx-full",
+      "N_total": 10,
+      "sites": 8,
+      "truth_legal": 4,
+      "v1_accept": 4,
+      "conservativeness": 0.0,
+      "missed_sites": [
+        {
+          "site": 0,
+          "support_width": 9,
+          "N_total": 10,
+          "tail_H": 9
+        },
+        {
+          "site": 1,
+          "support_width": 9,
+          "N_total": 10,
+          "tail_H": 9
+        },
+        {
+          "site": 2,
+          "support_width": 9,
+          "N_total": 10,
+          "tail_H": 9
+        },
+        {
+          "site": 3,
+          "support_width": 9,
+          "N_total": 10,
+          "tail_H": 9
+        }
+      ]
+    },
+    {
+      "variant": "adder4-H/4ccx-half",
+      "N_total": 10,
+      "sites": 8,
+      "truth_legal": 4,
+      "v1_accept": 4,
+      "conservativeness": 0.0,
+      "missed_sites": [
+        {
+          "site": 0,
+          "support_width": 9,
+          "N_total": 10,
+          "tail_H": 5
+        },
+        {
+          "site": 1,
+          "support_width": 9,
+          "N_total": 10,
+          "tail_H": 5
+        },
+        {
+          "site": 2,
+          "support_width": 9,
+          "N_total": 10,
+          "tail_H": 5
+        },
+        {
+          "site": 3,
+          "support_width": 9,
+          "N_total": 10,
+          "tail_H": 5
+        }
+      ]
     }
   ]
 }
