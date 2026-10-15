@@ -462,6 +462,37 @@ blocks=12，**全枚举 2^12**，精确判定器）：
 
 ---
 
+### 5.11 v2 收尾：CNOT 修复 + 反例固化 + setup 冻结
+
+**（1）CNOT 方向修复后重跑 —— 预注册的归因检验**
+
+| h | 精确合法 | 旧 | 朴素 v2 | sound v2 | 朴素增益 | SOUND 增益 | **UNSOUND 朴素** | **UNSOUND sound** |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 0.1 | 656 | 132 | 240 | 180 | 108 | 48 | **30** | **0** |
+| 0.3 | 244 | 24 | 60 | 24 | 36 | 0 | **2** | **0** |
+| 0.7 | 88 | 24 | 62 | 26 | 38 | 2 | **18** | **0** |
+
+**归因判断被证实**：修复前 sound 版在 h=0.1 的 **4 个 UNSOUND 确实是共用的 CNOT 方向 bug**（修复后 → **0**）。
+"类型模型不 sound"这一**理论缺陷**的证据现在是 **naive 版的 30 / 2 / 18**——更大、且分布在不同 h 上，
+**不再能被"你只是写错了 CNOT"反驳**。
+sound v2 现在**全 h UNSOUND = 0**，但收益依旧近 0：
+单块 recall **0.478 / 0.293 / 0.481**（旧 0.448 / 0.293 / 0.444，**+0.03 / +0.00 / +0.04**）。
+
+**（2）两个反例固化为永久单元测试**（`test_tracker_soundness.py`，已跑通）：
+- `H T H` 破坏对角性（实测 `max|offdiag| = 0.7071 = 1/√2`；每列 **2** 个非零 → 不是 Pauli×对角 → 类型模型不闭合）；
+- CNOT 的 X 扩散方向（**控制位 → 目标位**），并断言反向规则会被拒绝。
+
+**（3）带 bug 的 v2 移出主路径**：`tracker_bailout_check.py` 顶部加
+`!!!! NOT FOR CERTIFICATION USE !!!!` 横幅，明确 `naive_v2` **unsound**、只能作诊断。
+
+**（4）canonical setup 冻结**：新增 `experiment_setup.py`，`SETUP_VERSION = "canonical-setup-v2"`，
+`controls=(2,3,4,5)`、`blocks=6`、`seeds=3`、`seed_rule = index*7+11`、全枚举 `2^6`。
+**遗留（必须在真实电路测量前完成）**：三个 v2 诊断脚本（`tracker_bailout_check` / `tracker_relaxation_diag` /
+`support_width_scan`）目前仍用 `index*5+3`，必须全部改调 `experiment_setup.seed_for()`，
+否则数字仍会跨轮不可比（这正是 recall 从 0.351 漂到 0.448 的根源）。
+
+---
+
 ## 6. 真实电路 SOTA 对比
 
 > 数据源：`reports/figure_data/realworld_sota.json`（由 `realworld_benchmark.py --json` 直接生成，非手抄）。

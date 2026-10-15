@@ -1,6 +1,13 @@
 #!/usr/bin/env python3
 """How much recall would a *sound* tracker-v2 actually recover?
 
+!!!! NOT FOR CERTIFICATION USE !!!!
+``naive_v2`` below is **UNSOUND** and is kept only as the diagnostic that proves
+it: the "type flip" model assumes the residual is a Pauli, but ``H T H`` maps a
+diagonal residual to ``(1/sqrt2)(Z - Y)``, which is *not* diagonal.  Never route
+this file's predicates into a certification path.  See
+``test_tracker_soundness.py`` for the permanent counterexample tests.
+
 v2 idea: replace the permanent ``broken`` flag with a per-qubit X/Z type, so
 ``Z -> X -> Z`` through an even number of Hadamards is accepted.
 
@@ -60,10 +67,11 @@ def naive_v2(schedule: Dict[str, Any], mask: int) -> bool:
                     flipped.symmetric_difference_update({q})
             elif name == "cx":
                 a, b = int(qubits[0]), int(qubits[1])
-                if b in support:
+                if b in support:                    # Z-type: target -> control
                     support.add(a)
-                    if b in flipped:
-                        flipped.add(a)
+                if a in flipped:                    # X-type: control -> target
+                    support.add(b)
+                    flipped.add(b)
         if block["target"] in support:
             support.update(block["controls"])
             support.update(block["ancillas"])
@@ -86,10 +94,11 @@ def sound_v2(schedule: Dict[str, Any], mask: int) -> bool:
                     flipped.symmetric_difference_update({q})
             elif name == "cx":
                 a, b = int(qubits[0]), int(qubits[1])
-                if b in support:
+                if b in support:                    # Z-type: target -> control
                     support.add(a)
-                    if b in flipped:
-                        flipped.add(a)
+                if a in flipped:                    # X-type: control -> target
+                    support.add(b)
+                    flipped.add(b)
             elif name in ("t", "tdg", "rz", "ccz"):     # non-Clifford diagonal
                 if set(int(q) for q in qubits) & flipped:
                     return False
