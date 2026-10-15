@@ -15,7 +15,12 @@
     "t_todd_ours": 12,
     "t_ours_raw": 12,
     "relative_phase_ok": true,
+    "cert_method": "Exact Verifier",
+    "cert_seconds": 0.008994625881314278,
     "t_ours_safe": 12,
+    "todd_seconds": 0.012873108964413404,
+    "todd_ours_seconds": 0.00869582500308752,
+    "todd_timed_out": false,
     "cx_l0": 18,
     "cx_l3": 18
   },
@@ -35,7 +40,12 @@
     "t_todd_ours": 20,
     "t_ours_raw": 20,
     "relative_phase_ok": true,
+    "cert_method": "Exact Verifier",
+    "cert_seconds": 0.04872682713903487,
     "t_ours_safe": 20,
+    "todd_seconds": 0.03834435692988336,
+    "todd_ours_seconds": 0.03341989405453205,
+    "todd_timed_out": false,
     "cx_l0": 30,
     "cx_l3": 30
   },
@@ -55,43 +65,14 @@
     "t_todd_ours": 28,
     "t_ours_raw": 28,
     "relative_phase_ok": true,
+    "cert_method": "Exact Verifier",
+    "cert_seconds": 0.705269557191059,
     "t_ours_safe": 28,
+    "todd_seconds": 0.0958024519495666,
+    "todd_ours_seconds": 0.0591632891446352,
+    "todd_timed_out": false,
     "cx_l0": 42,
     "cx_l3": 42
-  },
-  {
-    "name": "adder(3)",
-    "qubits": 8,
-    "native": {
-      "circuit-41": 1
-    },
-    "toffolis": 6,
-    "t_qiskit_l0": 42,
-    "t_qiskit_l3": 36,
-    "t_todd": 36,
-    "t_todd_ours": 24,
-    "t_ours_raw": 24,
-    "relative_phase_ok": true,
-    "t_ours_safe": 24,
-    "cx_l0": 49,
-    "cx_l3": 49
-  },
-  {
-    "name": "adder(4)",
-    "qubits": 10,
-    "native": {
-      "circuit-60": 1
-    },
-    "toffolis": 8,
-    "t_qiskit_l0": 56,
-    "t_qiskit_l3": 48,
-    "t_todd": 48,
-    "t_todd_ours": 32,
-    "t_ours_raw": 32,
-    "relative_phase_ok": true,
-    "t_ours_safe": 32,
-    "cx_l0": 65,
-    "cx_l3": 65
   },
   {
     "name": "grover(3)",
@@ -108,8 +89,123 @@
     "t_todd_ours": 8,
     "t_ours_raw": 8,
     "relative_phase_ok": false,
+    "cert_method": "Exact Verifier",
+    "cert_seconds": 0.006925932830199599,
     "t_ours_safe": 14,
+    "todd_seconds": 0.008505887817591429,
+    "todd_ours_seconds": 0.003811027156189084,
+    "todd_timed_out": false,
     "cx_l0": 12,
     "cx_l3": 12
+  },
+  {
+    "name": "adder(3)",
+    "qubits": 8,
+    "native": {
+      "circuit-88": 1
+    },
+    "toffolis": 6,
+    "t_qiskit_l0": 42,
+    "t_qiskit_l3": 36,
+    "t_todd": 36,
+    "t_todd_ours": 24,
+    "t_ours_raw": 24,
+    "relative_phase_ok": true,
+    "cert_method": "Exact Verifier",
+    "cert_seconds": 0.09593418915756047,
+    "t_ours_safe": 24,
+    "todd_seconds": 0.07662954414263368,
+    "todd_ours_seconds": 0.036255362909287214,
+    "todd_timed_out": false,
+    "cx_l0": 49,
+    "cx_l3": 49
+  },
+  {
+    "name": "adder(4)",
+    "qubits": 10,
+    "native": {
+      "circuit-107": 1
+    },
+    "toffolis": 8,
+    "t_qiskit_l0": 56,
+    "t_qiskit_l3": 48,
+    "t_todd": 48,
+    "t_todd_ours": 32,
+    "t_ours_raw": 32,
+    "relative_phase_ok": true,
+    "cert_method": "Exact Verifier",
+    "cert_seconds": 2.3630248259287328,
+    "t_ours_safe": 32,
+    "todd_seconds": 0.25554016092792153,
+    "todd_ours_seconds": 0.09862541500478983,
+    "todd_timed_out": false,
+    "cx_l0": 65,
+    "cx_l3": 65
+  },
+  {
+    "name": "adder(8)",
+    "qubits": 18,
+    "native": {
+      "circuit-126": 1
+    },
+    "toffolis": 16,
+    "t_qiskit_l0": 112,
+    "t_qiskit_l3": 96,
+    "t_todd": 96,
+    "t_todd_ours": 64,
+    "t_ours_raw": 64,
+    "relative_phase_ok": true,
+    "cert_method": "Support Tracker (OOM-free)",
+    "cert_seconds": 0.0001889290288090706,
+    "t_ours_safe": 64,
+    "todd_seconds": 2.731132396031171,
+    "todd_ours_seconds": 0.58148601395078,
+    "todd_timed_out": false,
+    "cx_l0": 129,
+    "cx_l3": 129
+  },
+  {
+    "name": "adder(16)",
+    "qubits": 34,
+    "native": {
+      "circuit-139": 1
+    },
+    "toffolis": 32,
+    "t_qiskit_l0": 224,
+    "t_qiskit_l3": 192,
+    "t_todd": null,
+    "t_todd_ours": 128,
+    "t_ours_raw": 128,
+    "relative_phase_ok": true,
+    "cert_method": "Support Tracker (OOM-free)",
+    "cert_seconds": 0.00030057900585234165,
+    "t_ours_safe": 128,
+    "todd_seconds": 60.00072328001261,
+    "todd_ours_seconds": 6.296567256795242,
+    "todd_timed_out": true,
+    "cx_l0": 257,
+    "cx_l3": 257
+  },
+  {
+    "name": "adder(32)",
+    "qubits": 66,
+    "native": {
+      "circuit-152": 1
+    },
+    "toffolis": 64,
+    "t_qiskit_l0": 448,
+    "t_qiskit_l3": 384,
+    "t_todd": null,
+    "t_todd_ours": 256,
+    "t_ours_raw": 256,
+    "relative_phase_ok": true,
+    "cert_method": "Support Tracker (OOM-free)",
+    "cert_seconds": 0.0006284529808908701,
+    "t_ours_safe": 256,
+    "todd_seconds": 60.00026367092505,
+    "todd_ours_seconds": 45.685387424891815,
+    "todd_timed_out": true,
+    "cx_l0": 513,
+    "cx_l3": 513
   }
 ]

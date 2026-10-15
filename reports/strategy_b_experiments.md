@@ -244,62 +244,90 @@ h_prob 扫描（10 条混合电路/档，seed 20261012，同一批电路形状�
 ## 6. 真实电路 SOTA 对比
 
 > 数据源：`reports/figure_data/realworld_sota.json`（由 `realworld_benchmark.py --json` 直接生成，非手抄）。
-> 复现：`.venv/bin/python realworld_benchmark.py --circuits mcx,adder,grover --qubits 3,4,5`
+> 复现：`.venv/bin/python realworld_benchmark.py --size-map "mcx:3,4,5;adder:3,4,8,16,32;grover:3" --todd-timeout 60 --json reports/figure_data/realworld_sota.json`
 
-这一节把编译器放进**外部基线**里：Grover、CDKM 加法器、以及本项目自己的 C^nX 阶梯，与
-**Qiskit 默认优化器**和 **TODD（Heyfron & Campbell 2019）**正面对比。
+这一节把编译器放进**外部基线**里：Grover、CDKM 加法器（3 → 32 bit，跨越 20 比特内存墙）、
+以及本项目自己的 C^nX 阶梯，与 **Qiskit 默认优化器**和 **TODD（Heyfron & Campbell 2019）**正面对比。
 
 ### 6.1 对照设置
 
 | 列 | 含义 |
 |---|---|
 | `L0` / `L3` | Qiskit 转译到 Clifford+T，`optimization_level` = 0 / 3（"默认优化器"基线） |
-| `TODD` | **PyZX `phase_block_optimize`** —— Heyfron–Campbell TODD 的实现，按 Hadamard 分块施加 |
-| `ours` | 本项目的相对相位改写：Toffoli → 4-T RCCX，纯 C^nX → 整块 RCCX 阶梯，**仅在注入的对角修正被 `relative_phase_metrics` 认证存活时采用** |
+| `TODD` | **PyZX `phase_block_optimize`** —— Heyfron–Campbell TODD 的实现，按 Hadamard 分块施加；`--todd-timeout` 默认 60 s，超时记 `timeout` |
+| `ours` | 本项目的相对相位改写：Toffoli → 4-T RCCX，纯 C^nX → 整块 RCCX 阶梯，**仅在注入的对角修正被认证存活时采用** |
 | `TODD(ours)` | 在**我们的电路之上**再跑一遍 TODD —— 检验是否还有被我们漏掉的优化 |
 | `best` | TODD / ours / TODD(ours) 中的最优值；**非法的相对相位改写不计入** |
+| 认证方式 | `Exact Verifier`（≤ 11 qubits，构造 `2^N` 算符）或 `Support Tracker (OOM-free)`（> 11 qubits，`O(gates)` 对角性追踪） |
 
 所有电路都要求可表示为 **Toffoli + Clifford**（否则 T-count 没有定义）。Qiskit 的
 `MCXGate(n>=3)` ancilla-free 综合使用 π/8 旋转，**不属于 Clifford+T**，因此不进入本表
 （Grover(n>=4) 因此被自动跳过）。
 
-### 6.2 结果（T-count）
+### 6.2 结果（T-count 与认证方式）
 
-| 电路 | 量子位 | Toffoli | Qiskit L0 | Qiskit L3 | **TODD** | **ours** | TODD(ours) | best | 相对相位合法 |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|:--:|
-| C³X 阶梯 | 5 | – | 21 | 19 | 17 | **12** | 12 | 12 | ✅ |
-| C⁴X 阶梯 | 7 | – | 35 | 31 | 27 | **20** | 20 | 20 | ✅ |
-| C⁵X 阶梯 | 9 | – | 49 | 43 | 37 | **28** | 28 | 28 | ✅ |
-| CDKM 加法器 3-bit | 8 | 6 | 42 | 36 | 36 | **24** | 24 | 24 | ✅ |
-| CDKM 加法器 4-bit | 10 | 8 | 56 | 48 | 48 | **32** | 32 | 32 | ✅ |
-| Grover 3-qubit | 3 | 2 | 14 | 14 | 14 | **14** | 8\* | 14 | ❌ |
+| 电路 | 量子位 | Toffoli | Qiskit L0 | Qiskit L3 | **TODD** | **ours** | TODD(ours) | best | 认证方式 | 认证耗时 |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|:--|---:|
+| C³X 阶梯 | 5 | – | 21 | 19 | 17 | **12** | 12 | 12 | Exact Verifier | 9 ms |
+| C⁴X 阶梯 | 7 | – | 35 | 31 | 27 | **20** | 20 | 20 | Exact Verifier | 49 ms |
+| C⁵X 阶梯 | 9 | – | 49 | 43 | 37 | **28** | 28 | 28 | Exact Verifier | 705 ms |
+| CDKM 加法器 3-bit | 8 | 6 | 42 | 36 | 36 | **24** | 24 | 24 | Exact Verifier | 96 ms |
+| CDKM 加法器 4-bit | 10 | 8 | 56 | 48 | 48 | **32** | 32 | 32 | Exact Verifier | 2363 ms |
+| **CDKM 加法器 8-bit** | **18** | 16 | 112 | 96 | 96 | **64** | 64 | 64 | **Support Tracker** | **0.2 ms** |
+| **CDKM 加法器 16-bit** | **34** | 32 | 224 | 192 | **timeout** | **128** | 128 | 128 | **Support Tracker** | **0.3 ms** |
+| **CDKM 加法器 32-bit** | **66** | 64 | 448 | 384 | **timeout** | **256** | 256 | 256 | **Support Tracker** | **0.6 ms** |
+| Grover 3-qubit | 3 | 2 | 14 | 14 | 14 | **14** | 8\* | 14 | Exact Verifier | 7 ms |
 
 （\*Grover 的 8 是在**非法**改写上跑出的，已从 `best` 中排除。）
 
-### 6.3 三条结论
+### 6.3 求解器耗时（TODD vs ours）
+
+| 电路 | 量子位 | TODD (s) | TODD(ours) (s) | 认证耗时 |
+|---|---:|---:|---:|---:|
+| CDKM 3-bit | 8 | 0.08 | 0.04 | 96 ms |
+| CDKM 4-bit | 10 | 0.26 | 0.10 | 2363 ms |
+| CDKM 8-bit | 18 | 2.73 | 0.58 | 0.2 ms |
+| **CDKM 16-bit** | **34** | **60.00（超时）** | 6.30 | **0.3 ms** |
+| **CDKM 32-bit** | **66** | **60.00（超时）** | 45.69 | **0.6 ms** |
+
+### 6.4 四条结论
 
 1. **在改写被认证合法的电路上，我们比 TODD 少 24–33% 的 T 门。**
    C³X `17→12`（−29%）、C⁴X `27→20`（−26%）、C⁵X `37→28`（−24%）、
-   加法器 `36→24`（−33%）、`48→32`（−33%）。
+   加法器 3/4-bit `36→24`、`48→32`（各 −33%）。
    相对"每个 Toffoli 7 个 T"的朴素代价是 **−43%**；相对 Qiskit 默认优化器 L3 是 **−33…−37%**。
-2. **把 TODD 叠加在我们的结果之上，一点也压不下去**（`TODD(ours) = ours`，五条全部成立）。
-   这条堵住了"你只是没让最强工具再跑一遍"的反驳 —— **这些实例上的 best-known 就是我们**。
+2. **把 TODD 叠加在我们的结果之上，一点也压不下去**：`TODD(ours) = ours` **全部 8 条合法电路成立**
+   （含 8/16/32-bit 加法器）。这条堵住了"你只是没让最强工具再跑一遍"的反驳。
 3. **优势来源是"更便宜的基元"，不是"更好的搜索"**：TODD 在相位多项式上做 GF(2) 消元，
    它并不知道 `RCCX = 4 T` 这个电路恒等式；我们赢在把一个 7-T 基元换成 4-T 基元。
-   因此正确的"合并基线"就是 `TODD(ours)`，而它没有额外收益。
+4. **跨过 20 比特内存墙后，可比性只在"我们这边"**（§6.5）：`ours` 保持 `4×Toffoli`（32-bit：256 T，
+   相对 L3 −33%），而 TODD 在 34q / 66q 上 **60 s 超时**，我们的认证只需 **0.3 / 0.6 ms**。
 
-### 6.4 三条限制
+### 6.5 跨越 20 比特内存墙：TODD 超时，我们 0.3 ms 认证
+
+- **认证方式自动切换**：`≤ 11` qubits 用精确验证器（构造 `2^N` 算符，34q 就要 `2^34`，不可行）；
+  超过即切换到 `support_tracker.py` 的**对角性追踪**（`O(gates)` 时间、`O(qubits)` 空间）。
+  **交叉校验**：把同两个小加法器强制走 Tracker（`--exact-limit 0`），结论与精确验证器**完全一致**，
+  耗时 `0.1 ms` vs `96 ms / 2363 ms`（约 1e3–2e4×）。运行：
+  `.venv/bin/python realworld_benchmark.py --circuits adder --qubits 3,4 --exact-limit 0`
+- **T-count 线性外推**：CDKM n-bit 加法器有 `2n` 个 Toffoli，`ours = 4·(2n) = 8n`，
+  Qiskit L3 `= 6·(2n) = 12n` → 恒定 **−33%**；32-bit 实测 `384 → 256`，与公式一致。
+- **TODD 的可扩展性**：PyZX 的 `phase_block_optimize` 在 16-bit（34q）与 32-bit（66q）上 60 s 未收敛；
+  而在**我们已降级的电路上**再跑 TODD 只需 6.3 s / 45.7 s，且结果**等于 ours**（无额外收益）。
+
+### 6.6 三条限制
 
 1. **t-par 不是 T-count 基线，而且当前环境没有它的实现。**
    Amy–Maslov–Mosca 2014 的 t-par 优化的是 **T-depth**（用额外辅助比特换深度），
    **T-count 通常会变高**。所以本节的 T-count 对照用 TODD 是正确的；若要给出 T-depth 结论，
    需要一个 t-par 实现（`pytket` / `tweedledum` 均未安装，PyZX 也没有）。
    这是本报告**尚未覆盖**的一块，不应含糊带过。
-2. **结果仍是"子电路级"的。** `relative_phase_metrics` 认证的是：**该电路以 Z 基测量收尾**时，
-   对角修正无害。加法器与 MCX 阶梯都是**子程序**；一旦嵌进下游还有 Hadamard 的更大算法，
-   合法性必须对**整条电路**重判 —— 按 §5.3 的 H 断崖，那时多半会失效。Grover 就是现成反例。
-3. **TODD 是一个具体实现。** 我们用的是 PyZX 0.10.6 的 `phase_block_optimize`（按 H 分块），
-   这与 TODD 的标准用法一致，但与原论文的参考实现可能略有差异，论文中应写明版本。
+2. **34q/66q 的 "timeout" 是 PyZX 实现的墙钟现象，不是"TODD 做不到"的定论。**
+   换更快的实现 / 更长的预算可能压出更低的 T-count；论文里应写"60 s 预算内未返回"，
+   不能写成"TODD 无法处理"。同时 `ours` 在 34q/66q 上仍只是**下界**（Tracker 是充分判据）。
+3. **结果仍是"子电路级"的。** 认证的是"该电路以 Z 基测量收尾"时对角修正无害；
+   加法器与 MCX 阶梯都是**子程序**，嵌进下游还有 Hadamard 的更大算法时必须对**整条电路**重判 ——
+   按 §5.3 的 H 断崖多半会失效，Grover 就是现成反例。TODD 版本为 PyZX 0.10.6。
 
 ---
 
@@ -458,7 +486,8 @@ for frac in 0.0 0.6; do
 done
 
 # §6 真实电路 SOTA 对比（TODD / Qiskit / ours）
-.venv/bin/python realworld_benchmark.py --circuits mcx,adder,grover --qubits 3,4,5 --json reports/figure_data/realworld_sota.json
+.venv/bin/python realworld_benchmark.py --size-map "mcx:3,4,5;adder:3,4,8,16,32;grover:3" \
+    --todd-timeout 60 --json reports/figure_data/realworld_sota.json
 
 # §4 深度条件化上限（战报里会同时打印"阈值+修复"与"深度上限+修复"）
 .venv/bin/python mixed_stress.py --num-tests 2 --h-prob 0.5
