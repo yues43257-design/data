@@ -222,19 +222,37 @@ def todd_t_count(qc: QuantumCircuit, timeout: Optional[float] = None):
     try:
         circuit = LM.zx.Circuit.from_qasm(qasm2.dumps(qc)).to_basic_gates()
         optimised = LM.zx.optimize.phase_block_optimize(circuit.copy(), quiet=True)
-        return int(DG.tcount_of_gates(optimised.gates, "ceil")), time.perf_counter() - started, False
+        return (int(DG.tcount_of_gates(optimised.gates, "ceil")),
+                time.perf_counter() - started, False, optimised)
     except _ToddTimeout:  # pragma: no cover - signal path
         print(f"  [warn] TODD timed out after {timeout:g}s ({qc.num_qubits} qubits)",
               file=sys.stderr)
-        return None, time.perf_counter() - started, True
+        return None, time.perf_counter() - started, True, None
     except Exception as exc:  # pragma: no cover - TODD refuses some gate sets
         print(f"  [warn] TODD failed ({type(exc).__name__}: {str(exc)[:60]})",
               file=sys.stderr)
-        return None, time.perf_counter() - started, False
+        return None, time.perf_counter() - started, False, None
     finally:
         if timeout:
             signal.setitimer(signal.ITIMER_REAL, 0)
             signal.signal(signal.SIGALRM, previous)
+
+
+def circuit_metrics(qc: QuantumCircuit) -> Dict[str, int]:
+    """``(T-count, T-depth, CX-depth, total depth)`` using Linux-MCX's scheduler.
+
+    ``T-depth`` is the scheduled number of sequential T/T-dagger layers with all
+    Clifford gates free (``Linux-MCX.compute_ftq_metrics``), so it is comparable
+    across the Qiskit and PyZX paths.
+    """
+    zx_circuit = LM.zx.Circuit.from_qasm(qasm2.dumps(qc)).to_basic_gates()
+    return _zx_metrics(zx_circuit)
+
+
+def _zx_metrics(zx_circuit) -> Dict[str, int]:
+    metrics = LM.compute_ftq_metrics(zx_circuit)
+    return {"t_count": int(metrics.t_count), "t_depth": int(metrics.t_depth),
+            "cx_depth": int(metrics.cx_depth), "depth": int(zx_circuit.depth())}
 
 
 def relative_phase_ok(ideal: QuantumCircuit, candidate: QuantumCircuit,
@@ -330,8 +348,14 @@ def benchmark_one(name: str, qc: QuantumCircuit, mode: str = "toffoli",
     cert_seconds = time.perf_counter() - cert_started
     t_safe = t_ours if ok else t_baseline
 
-    t_todd, todd_seconds, todd_timed_out = todd_t_count(canonical, todd_timeout)
-    t_todd_ours, todd_ours_seconds, _ = todd_t_count(ours, todd_timeout)
+    m_l0 = circuit_metrics(no_opt)
+    m_l3 = circuit_metrics(best)
+    m_ours = circuit_metrics(ours)
+
+    t_todd, todd_seconds, todd_timed_out, todd_circuit = todd_t_count(canonical, todd_timeout)
+    t_todd_ours, todd_ours_seconds, _, todd_ours_circuit = todd_t_count(ours, todd_timeout)
+    m_todd = _zx_metrics(todd_circuit) if todd_circuit is not None else None
+    m_todd_ours = _zx_metrics(todd_ours_circuit) if todd_ours_circuit is not None else None
 
     return {
         "name": name,
@@ -347,6 +371,20 @@ def benchmark_one(name: str, qc: QuantumCircuit, mode: str = "toffoli",
         "cert_method": cert_method,
         "cert_seconds": cert_seconds,
         "t_ours_safe": t_safe,
+        # -- depth statistics (T-depth = scheduled T layers, Clifford-free) --
+        "t_depth_l0": m_l0["t_depth"],
+        "t_depth_l3": m_l3["t_depth"],
+        "t_depth_ours": m_ours["t_depth"],
+        "t_depth_todd": m_todd["t_depth"] if m_todd else None,
+        "t_depth_todd_ours": m_todd_ours["t_depth"] if m_todd_ours else None,
+        "depth_l0": m_l0["depth"],
+        "depth_l3": m_l3["depth"],
+        "depth_ours": m_ours["depth"],
+        "depth_todd": m_todd["depth"] if m_todd else None,
+        "depth_todd_ours": m_todd_ours["depth"] if m_todd_ours else None,
+        "cx_depth_ours": m_ours["cx_depth"],
+        "cx_depth_l0": m_l0["cx_depth"],
+        "cx_depth_l3": m_l3["cx_depth"],
         "todd_seconds": todd_seconds,
         "todd_ours_seconds": todd_ours_seconds,
         "todd_timed_out": todd_timed_out,
@@ -412,6 +450,21 @@ def summarise(rows: Sequence[Dict[str, Any]], sizes: Any) -> int:
               f"{_ms('cert_seconds'):>9}{_s('todd_seconds'):>9}"
               f"{_s('todd_ours_seconds'):>14}"
               + ("  [TODD timeout]" if row.get("todd_timed_out") else ""))
+
+    print()
+    print("  T-depth & circuit depth (T-depth = scheduled T layers, Clifford gates free)")
+    print(f"  {'circuit':<14}{'q':>3}   {'Tdep L0':>7}{'Tdep L3':>8}{'Tdep ours':>10}"
+          f"{'Tdep TODD':>10}{'depth L0':>9}{'depth L3':>9}{'depth ours':>11}"
+          f"{'depth TODD':>11}")
+    print("  " + "-" * 88)
+    for row in rows:
+        def _i(key):
+            value = row.get(key)
+            return f"{value}" if value is not None else "n/a"
+        print(f"  {row['name']:<14}{row['qubits']:>3}   {_i('t_depth_l0'):>7}"
+              f"{_i('t_depth_l3'):>8}{_i('t_depth_ours'):>10}{_i('t_depth_todd'):>10}"
+              f"{_i('depth_l0'):>9}{_i('depth_l3'):>9}{_i('depth_ours'):>11}"
+              f"{_i('depth_todd'):>11}")
 
     print()
     print("  verdicts")
