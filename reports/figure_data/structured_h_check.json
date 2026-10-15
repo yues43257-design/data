@@ -1,0 +1,53 @@
+{
+  "script": "structured_h_check.py",
+  "rows": [
+    {
+      "variant": "adder3-bit H-free",
+      "N_total": 8,
+      "sites": 6,
+      "truth_legal": 6,
+      "v1_accept": 6,
+      "conservativeness": 0.0
+    },
+    {
+      "variant": "adder3-bit H every 2 ccx",
+      "N_total": 8,
+      "sites": 6,
+      "truth_legal": 2,
+      "v1_accept": 2,
+      "conservativeness": 0.0
+    },
+    {
+      "variant": "adder3-bit H every 1 ccx",
+      "N_total": 8,
+      "sites": 6,
+      "truth_legal": 2,
+      "v1_accept": 1,
+      "conservativeness": 0.5
+    },
+    {
+      "variant": "adder4-bit H-free",
+      "N_total": 10,
+      "sites": 8,
+      "truth_legal": 8,
+      "v1_accept": 8,
+      "conservativeness": 0.0
+    },
+    {
+      "variant": "adder4-bit H every 2 ccx",
+      "N_total": 10,
+      "sites": 8,
+      "truth_legal": 2,
+      "v1_accept": 2,
+      "conservativeness": 0.0
+    },
+    {
+      "variant": "adder4-bit H every 1 ccx",
+      "N_total": 10,
+      "sites": 8,
+      "truth_legal": 2,
+      "v1_accept": 1,
+      "conservativeness": 0.5
+    }
+  ]
+}
