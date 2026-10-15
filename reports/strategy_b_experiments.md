@@ -493,6 +493,34 @@ sound v2 现在**全 h UNSOUND = 0**，但收益依旧近 0：
 
 ---
 
+### 5.12 **冻结种子后的重跑：数字变了，结论更硬**（setup v2）
+
+三个诊断脚本改调 `experiment_setup.seed_for()`（`index*7+11`）后重跑，**同一批 h、同一枚举**：
+
+| 量 | 旧（`index*5+3`） | **canonical（`index*7+11`）** |
+|---|---|---|
+| §5.7 可恢复占比 h=0.1/0.3/0.7 | 77% / 63% / 56% | **98% / 44% / 42%** |
+| §5.8 sound v2 单块 recall | 0.478 / 0.293 / 0.481 | **0.351 / 0.412 / 0.500** |
+| §5.8 sound v2 **单块增益** | +0.03 / +0.00 / +0.04 | **0 / 0 / 0** |
+| known-unsound 语料规模 | 50 | **20** |
+
+**三条结论：**
+
+1. **seed 未冻结确实在污染数字**：同一个量在两套种子下差了 **2 倍以上**（98% vs 77%、0.351 vs 0.478）。
+   这正是"口径不变性"必须被当成检查项的原因。
+2. **结论更硬了**：在 canonical setup 下，**sound v2 对单块 recall 的增益是 0 / 0 / 0**——
+   旧数字里那 +0.03/+0.04 是种子噪声。**"v2 不值得做"从"接近 0"变成"精确 0"。**
+3. **known-unsound 语料从 50 变成 20**，且语料**是自生成的**（`test_tracker_soundness.py` 按
+   `experiment_setup` 重新生成并断言 sound 版全部拒绝）——所以它不会因为种子改动而失效。
+   **旧数字 50 列为 `superseded`。**
+
+**遗留（诚实交代）**：`support_width_scan.py` 的 canonical 重跑**尚未执行**（Part A 的结论是天花板效应，
+与种子无关，但为了口径一致仍应重跑并冻结）。已记入 `reports/lineage.md`。
+
+**血缘表已建立**：`reports/lineage.md`，逐条记录"报告数字 → 脚本 → setup/seed → 状态（current / superseded）"。
+
+---
+
 ## 6. 真实电路 SOTA 对比
 
 > 数据源：`reports/figure_data/realworld_sota.json`（由 `realworld_benchmark.py --json` 直接生成，非手抄）。

@@ -47,6 +47,7 @@ def _load(name: str, filename: str):
 
 ST = _load("rd_tracker", "support_tracker.py")
 SYM = _load("rd_symbolic", "symbolic_verifier.py")
+SETUP = _load("rd_setup", "experiment_setup.py")
 
 
 def first_break_detail(schedule: Dict[str, Any], mask: int):
@@ -101,10 +102,11 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         legal_total = track_total = rejected_legal = restorable = 0
         for num_controls in controls:
             for seed in range(args.seeds):
+                instance_seed = SETUP.seed_for(seed)
                 verifier = SYM.ReducedSymbolicVerifier(num_controls, args.blocks,
-                                                       seed * 5 + 3, h_prob)
+                                                       instance_seed, h_prob)
                 schedule = ST.homogeneous_schedule(num_controls, args.blocks,
-                                                   seed * 5 + 3, h_prob)
+                                                   instance_seed, h_prob)
                 for mask in range(1 << args.blocks):
                     legal = bool(verifier.is_safe(mask))
                     track = bool(ST.track_safe(schedule, mask))
@@ -126,7 +128,9 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     print("  qubit, i.e. the correction returns to Z-type (Z -> X -> Z) at the end.")
     out = Path(args.out)
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(rows, indent=2), encoding="utf-8")
+    payload = {"setup_version": SETUP.SETUP_VERSION,
+               "script": "tracker_relaxation_diag.py", "rows": rows}
+    out.write_text(json.dumps(payload, indent=2), encoding="utf-8")
     print(f"  wrote {out}")
     return 0
 

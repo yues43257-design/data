@@ -52,6 +52,7 @@ ST = _load("sw_tracker", "support_tracker.py")
 SYM = _load("sw_symbolic", "symbolic_verifier.py")
 ULT = _load("sw_ult", "ultimate_scalability_test.py")
 WIDE = _load("sw_wide", "wide_scale_stress.py")
+SETUP = _load("sw_setup", "experiment_setup.py")
 
 
 def final_support_size(schedule: Dict[str, Any], mask: int) -> int:
@@ -94,10 +95,11 @@ def part_a(controls, blocks, seeds, h_probs, thresholds):
         widths: List[int] = []
         for num_controls in controls:
             for seed in range(seeds):
+                instance_seed = SETUP.seed_for(seed)
                 verifier = SYM.ReducedSymbolicVerifier(num_controls, blocks,
-                                                       seed * 5 + 3, h_prob)
+                                                       instance_seed, h_prob)
                 schedule = ST.homogeneous_schedule(num_controls, blocks,
-                                                   seed * 5 + 3, h_prob)
+                                                   instance_seed, h_prob)
                 for mask in range(1 << blocks):
                     if verifier.is_safe(mask) and not ST.track_safe(schedule, mask):
                         widths.append(final_support_size(schedule, mask))
@@ -176,7 +178,9 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 
     out = Path(args.out)
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps({"part_a": a, "part_b": b}, indent=2), encoding="utf-8")
+    payload = {"setup_version": SETUP.SETUP_VERSION,
+               "script": "support_width_scan.py", "part_a": a, "part_b": b}
+    out.write_text(json.dumps(payload, indent=2), encoding="utf-8")
     print(f"  wrote {out}")
     return 0
 

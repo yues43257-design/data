@@ -1,26 +1,30 @@
-[
-  {
-    "h_prob": 0.1,
-    "legal": 656,
-    "tracker_safe": 132,
-    "rejected_but_legal": 524,
-    "restorable": 406,
-    "restorable_share": 0.7748091603053435
-  },
-  {
-    "h_prob": 0.3,
-    "legal": 244,
-    "tracker_safe": 24,
-    "rejected_but_legal": 220,
-    "restorable": 138,
-    "restorable_share": 0.6272727272727273
-  },
-  {
-    "h_prob": 0.7,
-    "legal": 88,
-    "tracker_safe": 24,
-    "rejected_but_legal": 64,
-    "restorable": 36,
-    "restorable_share": 0.5625
-  }
-]
+{
+  "setup_version": "canonical-setup-v2",
+  "script": "tracker_relaxation_diag.py",
+  "rows": [
+    {
+      "h_prob": 0.1,
+      "legal": 504,
+      "tracker_safe": 50,
+      "rejected_but_legal": 454,
+      "restorable": 444,
+      "restorable_share": 0.9779735682819384
+    },
+    {
+      "h_prob": 0.3,
+      "legal": 152,
+      "tracker_safe": 28,
+      "rejected_but_legal": 124,
+      "restorable": 54,
+      "restorable_share": 0.43548387096774194
+    },
+    {
+      "h_prob": 0.7,
+      "legal": 48,
+      "tracker_safe": 24,
+      "rejected_but_legal": 24,
+      "restorable": 10,
+      "restorable_share": 0.4166666666666667
+    }
+  ]
+}

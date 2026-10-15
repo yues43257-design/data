@@ -1,47 +1,51 @@
-[
-  {
-    "h_prob": 0.1,
-    "exact_legal": 656,
-    "old_accept": 132,
-    "naive_v2_accept": 240,
-    "sound_v2_accept": 180,
-    "naive_gain": 108,
-    "sound_gain": 48,
-    "naive_unsound": 30,
-    "sound_unsound": 0,
-    "site_exact_legal": 67,
-    "site_old_accept": 30,
-    "site_naive_v2_accept": 36,
-    "site_sound_v2_accept": 32
-  },
-  {
-    "h_prob": 0.3,
-    "exact_legal": 244,
-    "old_accept": 24,
-    "naive_v2_accept": 60,
-    "sound_v2_accept": 24,
-    "naive_gain": 36,
-    "sound_gain": 0,
-    "naive_unsound": 2,
-    "sound_unsound": 0,
-    "site_exact_legal": 41,
-    "site_old_accept": 12,
-    "site_naive_v2_accept": 17,
-    "site_sound_v2_accept": 12
-  },
-  {
-    "h_prob": 0.7,
-    "exact_legal": 88,
-    "old_accept": 24,
-    "naive_v2_accept": 62,
-    "sound_v2_accept": 26,
-    "naive_gain": 38,
-    "sound_gain": 2,
-    "naive_unsound": 18,
-    "sound_unsound": 0,
-    "site_exact_legal": 27,
-    "site_old_accept": 12,
-    "site_naive_v2_accept": 15,
-    "site_sound_v2_accept": 13
-  }
-]
+{
+  "setup_version": "canonical-setup-v2",
+  "script": "tracker_bailout_check.py",
+  "rows": [
+    {
+      "h_prob": 0.1,
+      "exact_legal": 504,
+      "old_accept": 50,
+      "naive_v2_accept": 66,
+      "sound_v2_accept": 50,
+      "naive_gain": 16,
+      "sound_gain": 0,
+      "naive_unsound": 16,
+      "sound_unsound": 0,
+      "site_exact_legal": 57,
+      "site_old_accept": 20,
+      "site_naive_v2_accept": 21,
+      "site_sound_v2_accept": 20
+    },
+    {
+      "h_prob": 0.3,
+      "exact_legal": 152,
+      "old_accept": 28,
+      "naive_v2_accept": 28,
+      "sound_v2_accept": 28,
+      "naive_gain": 0,
+      "sound_gain": 0,
+      "naive_unsound": 0,
+      "sound_unsound": 0,
+      "site_exact_legal": 34,
+      "site_old_accept": 14,
+      "site_naive_v2_accept": 14,
+      "site_sound_v2_accept": 14
+    },
+    {
+      "h_prob": 0.7,
+      "exact_legal": 48,
+      "old_accept": 24,
+      "naive_v2_accept": 28,
+      "sound_v2_accept": 24,
+      "naive_gain": 4,
+      "sound_gain": 0,
+      "naive_unsound": 4,
+      "sound_unsound": 0,
+      "site_exact_legal": 24,
+      "site_old_accept": 12,
+      "site_naive_v2_accept": 13,
+      "site_sound_v2_accept": 12
+    }
+  ]
+}
