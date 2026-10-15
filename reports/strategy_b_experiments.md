@@ -725,6 +725,44 @@ sound v2 现在**全 h UNSOUND = 0**，但收益依旧近 0：
 
 ---
 
+### 5.19 `relative_phase_metrics` 语义钉死：**它只检查"右乘序"**
+
+**源码**（`Linux-MCX:251-291`）：
+
+```python
+keep = [x for x in range(2**total) if all(not (x >> a) & 1 for a in ancillas)]  # clean-ancilla 子空间
+correction = U_ideal.conj().T @ U_candidate          # <<< 注意顺序
+offdiag = max|correction - diag(correction)|
+unit    = max||diag(correction)| - 1|
+接受 ⟺ offdiag < 1e-8 且 unit < 1e-8
+```
+
+⇒ 它检测的是 **`U_cand = U_ideal · D`（右乘对角修正）**。
+
+**而项目自己的构造是左乘**：`block_diagonal` 的文档写明 `B_relative = D · B_exact`。
+
+**决定性微观检验**（2 量子位，`D` 为对角酉）：
+
+| 候选 | `\|U_cand\| = \|U\|`（测量安全） | `relative_phase_metrics` |
+|---|:--|---|
+| `U_cand = D·U`（**左乘**，= 我们的构造） | **True** | **(0.7071, 0.2929) → 拒绝** |
+| `U_cand = U·D`（右乘） | True | (0.0, 0.0) → 接受 |
+
+**两种顺序都测量安全**（`|D U| = |U| = |U D|`），但这个函数**只接受右乘序** ⇒ **它对我们的构造误拒**。
+
+**四条后果：**
+
+1. **正确判据是逐元素幅度相等 `|U_cand| = |U_ideal|`**（等价于"**任一顺序**的对角修正"），而不是只查一个顺序。
+2. **§5.15 / §5.16 的"真值"列确认作废**（它们用的就是这个函数）。
+3. **§6 的"相对相位合法 ✅"列必须用新判据重审**：若整条电路的**合成**修正恰好落在右乘序，结论不变；
+   否则 §6 的合法列**低估**了合法性（方向对我们有利，但判据必须写准）。
+4. **tracker 未被证伪**，而且在争议位点上**逐元素判据与它一致**（§5.18 的直接计算：C 对角 ≈ 1e-16）。
+
+**写作解锁条件（唯一）**：把 `relative_phase_ok` 换成**逐元素幅度判据**（或"任一顺序对角"），
+重跑 §5.15 / §5.16 / §6 的合法列。**在此之前，合法性与紧致度相关的一切数字不得进论文。**
+
+---
+
 ## 6. 真实电路 SOTA 对比
 
 > 数据源：`reports/figure_data/realworld_sota.json`（由 `realworld_benchmark.py --json` 直接生成，非手抄）。
