@@ -1,0 +1,145 @@
+[
+  {
+    "class": "one-hot QROM",
+    "n": 2,
+    "qubits": 6,
+    "m": 1,
+    "k": 1,
+    "k_over_m": 1.0,
+    "ours": 4,
+    "fr": 7,
+    "gain": 3
+  },
+  {
+    "class": "one-hot QROM",
+    "n": 4,
+    "qubits": 20,
+    "m": 10,
+    "k": 10,
+    "k_over_m": 1.0,
+    "ours": 40,
+    "fr": 108,
+    "gain": 68
+  },
+  {
+    "class": "unary iteration",
+    "n": 3,
+    "qubits": 4,
+    "m": 1,
+    "k": 1,
+    "k_over_m": 1.0,
+    "ours": 4,
+    "fr": 7,
+    "gain": 3
+  },
+  {
+    "class": "unary iteration",
+    "n": 4,
+    "qubits": 5,
+    "m": 2,
+    "k": 2,
+    "k_over_m": 1.0,
+    "ours": 8,
+    "fr": 22,
+    "gain": 14
+  },
+  {
+    "class": "unary iteration",
+    "n": 5,
+    "qubits": 6,
+    "m": 3,
+    "k": 3,
+    "k_over_m": 1.0,
+    "ours": 12,
+    "fr": 43,
+    "gain": 31
+  },
+  {
+    "class": "unary iteration",
+    "n": 6,
+    "qubits": 7,
+    "m": 4,
+    "k": 4,
+    "k_over_m": 1.0,
+    "ours": 16,
+    "fr": 72,
+    "gain": 56
+  },
+  {
+    "class": "comparator network",
+    "n": 2,
+    "qubits": 6,
+    "m": 3,
+    "k": 1,
+    "k_over_m": 0.3333333333333333,
+    "ours": 12,
+    "fr": 15,
+    "gain": 3
+  },
+  {
+    "class": "comparator network",
+    "n": 3,
+    "qubits": 6,
+    "m": 6,
+    "k": 0,
+    "k_over_m": 0.0,
+    "ours": 24,
+    "fr": 20,
+    "gain": 0
+  },
+  {
+    "class": "comparator network",
+    "n": 4,
+    "qubits": 6,
+    "m": 9,
+    "k": 1,
+    "k_over_m": 0.1111111111111111,
+    "ours": 36,
+    "fr": 31,
+    "gain": 0
+  },
+  {
+    "class": "modexp (chained adder)",
+    "n": 2,
+    "qubits": 8,
+    "m": 12,
+    "k": 0,
+    "k_over_m": 0.0,
+    "ours": 48,
+    "fr": 28,
+    "gain": 0
+  },
+  {
+    "class": "modexp (chained adder)",
+    "n": 3,
+    "qubits": 8,
+    "m": 18,
+    "k": 0,
+    "k_over_m": 0.0,
+    "ours": 72,
+    "fr": 36,
+    "gain": 0
+  },
+  {
+    "class": "modexp (chained adder)",
+    "n": 4,
+    "qubits": 8,
+    "m": 24,
+    "k": 0,
+    "k_over_m": 0.0,
+    "ours": 96,
+    "fr": 40,
+    "gain": 0
+  },
+  {
+    "class": "Grover oracle",
+    "n": 3,
+    "qubits": 3,
+    "m": 2,
+    "k": 0,
+    "k_over_m": 0.0,
+    "ours": 8,
+    "fr": 14,
+    "gain": 6
+  }
+]
