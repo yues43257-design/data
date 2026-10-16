@@ -11,3 +11,4 @@
 /variant_dataset
 /checkpoints
 *.pt
+reports/figure_data/superset_corpus.jsonl
