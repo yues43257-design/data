@@ -1,0 +1,153 @@
+{
+  "setup_version": "canonical-setup-v2",
+  "part_a_b": {
+    "note": "reuse previous run (already recorded)"
+  },
+  "part_c": {
+    "masks": 192,
+    "accepted": 32,
+    "counterexamples": 26,
+    "examples": [
+      {
+        "width": 4,
+        "blocks": 3,
+        "h": 0.5,
+        "seed": 697,
+        "mask": 0
+      },
+      {
+        "width": 4,
+        "blocks": 3,
+        "h": 0.5,
+        "seed": 697,
+        "mask": 4
+      },
+      {
+        "width": 4,
+        "blocks": 3,
+        "h": 1.0,
+        "seed": 697,
+        "mask": 0
+      },
+      {
+        "width": 4,
+        "blocks": 3,
+        "h": 1.0,
+        "seed": 697,
+        "mask": 4
+      },
+      {
+        "width": 4,
+        "blocks": 4,
+        "h": 0.5,
+        "seed": 439,
+        "mask": 0
+      },
+      {
+        "width": 4,
+        "blocks": 4,
+        "h": 0.5,
+        "seed": 439,
+        "mask": 8
+      },
+      {
+        "width": 4,
+        "blocks": 4,
+        "h": 0.5,
+        "seed": 698,
+        "mask": 0
+      },
+      {
+        "width": 4,
+        "blocks": 4,
+        "h": 0.5,
+        "seed": 698,
+        "mask": 8
+      },
+      {
+        "width": 4,
+        "blocks": 4,
+        "h": 1.0,
+        "seed": 439,
+        "mask": 0
+      },
+      {
+        "width": 4,
+        "blocks": 4,
+        "h": 1.0,
+        "seed": 439,
+        "mask": 8
+      },
+      {
+        "width": 4,
+        "blocks": 4,
+        "h": 1.0,
+        "seed": 698,
+        "mask": 0
+      },
+      {
+        "width": 4,
+        "blocks": 4,
+        "h": 1.0,
+        "seed": 698,
+        "mask": 8
+      },
+      {
+        "width": 5,
+        "blocks": 3,
+        "h": 0.5,
+        "seed": 445,
+        "mask": 0
+      },
+      {
+        "width": 5,
+        "blocks": 3,
+        "h": 0.5,
+        "seed": 445,
+        "mask": 4
+      },
+      {
+        "width": 5,
+        "blocks": 3,
+        "h": 0.5,
+        "seed": 704,
+        "mask": 0
+      },
+      {
+        "width": 5,
+        "blocks": 3,
+        "h": 0.5,
+        "seed": 704,
+        "mask": 4
+      },
+      {
+        "width": 5,
+        "blocks": 3,
+        "h": 1.0,
+        "seed": 704,
+        "mask": 0
+      },
+      {
+        "width": 5,
+        "blocks": 3,
+        "h": 1.0,
+        "seed": 704,
+        "mask": 4
+      },
+      {
+        "width": 5,
+        "blocks": 4,
+        "h": 0.5,
+        "seed": 446,
+        "mask": 0
+      },
+      {
+        "width": 5,
+        "blocks": 4,
+        "h": 0.5,
+        "seed": 446,
+        "mask": 8
+      }
+    ]
+  }
+}
