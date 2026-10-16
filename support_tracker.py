@@ -96,6 +96,23 @@ def homogeneous_schedule(num_controls: int, blocks: int, seed: int, h_prob: floa
 # ---------------------------------------------------------------------------
 
 
+# Gate names the tracker's model actually covers, plus the ones that are provably
+# harmless to it (diagonal / sign-flip only).  ANYTHING ELSE must be rejected
+# explicitly: silently ignoring an unmodelled gate (``measure``, ``reset``,
+# ``if_else``, ...) would let the tracker certify a circuit it does not model.
+_MODELLED = frozenset({"h", "cx", "swap"})
+_HARMLESS = frozenset({"x", "z", "s", "sdg", "t", "tdg", "cz", "rz", "id", "barrier"})
+
+
+class UnsupportedGateError(ValueError):
+    """Raised when a layer contains a gate the tracker does not model.
+
+    This is deliberately fatal rather than silent: a measurement-based or
+    classically-controlled circuit is *outside* the tracker's declared domain,
+    and returning a verdict for it would be unsound.
+    """
+
+
 class DiagonalTracker:
     """``O(gates)`` time / ``O(qubits)`` space soundness check for one mask."""
 
@@ -124,7 +141,18 @@ class DiagonalTracker:
                     self.support.add(b)
                 if in_b:
                     self.support.add(a)
-            # x / z / s / t / tdg / cz / rz are diagonal or sign-flip only
+            elif name in _HARMLESS:
+                # diagonal or sign-flip only: conjugation leaves the correction
+                # diagonal and does not move its support
+                continue
+            else:
+                raise UnsupportedGateError(
+                    f"support_tracker does not model the gate {name!r}. "
+                    "Circuits containing measurements, resets or classical "
+                    "control are OUTSIDE the declared domain (no ancilla, no "
+                    "measurement, no classical control) and must not be "
+                    "certified by this tracker."
+                )
 
     def apply_block(self, block: Dict[str, Any]) -> None:
         """Conjugate by an MCX block (a permutation): only the target spreads."""

@@ -94,12 +94,38 @@ def test_known_unsound_corpus_rejected() -> None:
     print(f"  [ok  ] known-unsound corpus = {corpus} masks; sound tracker rejects all")
 
 
+def test_unmodelled_gates_are_rejected() -> None:
+    """The tracker must REFUSE dynamic circuits, not silently ignore them."""
+    tracker = _load("ts_tracker2", "support_tracker.py")
+    schedule = {
+        "total": 3,
+        "layers": [
+            [],
+            [("measure", [2])],                 # <- unmodelled
+            [],
+        ],
+        "blocks": [
+            {"controls": [0], "ancillas": [], "target": 1},
+            {"controls": [0, 1], "ancillas": [], "target": 2},
+        ],
+    }
+    try:
+        tracker.track_safe(schedule, 0b01)
+    except tracker.UnsupportedGateError:
+        print("  [ok  ] unmodelled gate 'measure' raises UnsupportedGateError")
+        return
+    raise AssertionError(
+        "tracker silently accepted a circuit containing 'measure' "
+        "(this is the silent-failure defect)")
+
+
 if __name__ == "__main__":
     print("tracker soundness regression tests")
     try:
         test_hth_breaks_diagonality()
         test_cnot_spreads_x_from_control_to_target()
         test_known_unsound_corpus_rejected()
+        test_unmodelled_gates_are_rejected()
     except AssertionError as exc:
         print(f"  [FAIL] {exc}")
         raise SystemExit(1)
