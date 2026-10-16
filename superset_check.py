@@ -77,9 +77,10 @@ def true_support(u_ideal: np.ndarray, u_cand: np.ndarray, n: int) -> Set[int]:
     diag = diag / diag[0]
     out: Set[int] = set()
     for q in range(n):
-        x = np.eye(2 ** q)
-        x = np.kron(np.kron(np.eye(2 ** q), np.array([[0, 1], [1, 0]])),
-                    np.eye(2 ** (n - q - 1)))
+        # Qiskit is LITTLE-endian: qubit q carries weight 2**q, so it is the
+        # LAST factor of the Kronecker product (the reflected index was a bug).
+        x = np.kron(np.kron(np.eye(2 ** (n - q - 1)), np.array([[0, 1], [1, 0]])),
+                    np.eye(2 ** q))
         if not np.allclose(r @ x, x @ r, atol=1e-9):
             out.add(q)
             continue

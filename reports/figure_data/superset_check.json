@@ -1,57 +1,5 @@
 {
   "masks": 76,
-  "violations": 18,
-  "examples": [
-    {
-      "width": 4,
-      "blocks": 2,
-      "h": 0.5,
-      "mask": 2,
-      "true": [
-        1,
-        2,
-        3,
-        4
-      ],
-      "tracked": [
-        1,
-        2,
-        3
-      ]
-    },
-    {
-      "width": 4,
-      "blocks": 2,
-      "h": 0.5,
-      "mask": 2,
-      "true": [
-        1,
-        2,
-        3,
-        4
-      ],
-      "tracked": [
-        1,
-        2,
-        3
-      ]
-    },
-    {
-      "width": 4,
-      "blocks": 2,
-      "h": 1.0,
-      "mask": 2,
-      "true": [
-        1,
-        2,
-        3,
-        4
-      ],
-      "tracked": [
-        1,
-        2,
-        3
-      ]
-    }
-  ]
+  "violations": 0,
+  "examples": []
 }
