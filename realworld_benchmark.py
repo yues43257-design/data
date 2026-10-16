@@ -79,6 +79,7 @@ def _load(name: str, filename: str):
 LM = _load("linux_mcx_realworld", "Linux-MCX")
 DG = _load("data_generator_realworld", "data_generator.py")
 ST = _load("support_tracker_realworld", "support_tracker.py")
+RPC = _load("relative_phase_criterion_realworld", "relative_phase_criterion.py")
 
 # The exact relative-phase test builds 2**N operators, so it is only usable up to
 # this width (2**11 -> 4M complex entries ~ 67 MB).  Above it we certify with the
@@ -305,19 +306,16 @@ def relative_phase_ok(ideal: QuantumCircuit, candidate: QuantumCircuit,
                       limit: int = EXACT_QUBIT_LIMIT) -> Optional[bool]:
     """Exact operator test: is ``candidate`` equal to ``ideal`` up to a diagonal?
 
-    Builds ``U_ideal^dagger U_candidate`` and checks it is diagonal -- a ``2**N``
-    object, hence ``None`` above ``limit`` qubits (the tracker takes over).
+    Uses the CORRECTED convention (``C = U_candidate . U_ideal^dagger`` diagonal)
+    from ``relative_phase_criterion``.  The old ``LM.relative_phase_metrics`` used
+    the right-multiplied convention and was wrong in both directions; see
+    ``calibrate_truth_criterion.py``.  A ``2**N`` object, hence ``None`` above
+    ``limit`` qubits (the tracker takes over).
     """
     total = ideal.num_qubits
     if total > limit:
         return None
-    reference = LM.zx.Circuit.from_qasm(qasm2.dumps(ideal))
-    trial = LM.zx.Circuit.from_qasm(qasm2.dumps(candidate))
-    metrics = LM.relative_phase_metrics(reference, trial, ancillas=[])
-    if metrics is None:
-        return None
-    offdiag, unit = metrics
-    return bool(offdiag < 1e-8 and unit < 1e-8)
+    return RPC.relative_phase_ok(ideal, candidate)
 
 
 def _tracker_schedule(qc: QuantumCircuit) -> Dict[str, Any]:

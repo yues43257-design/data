@@ -803,6 +803,38 @@ unit    = max||diag(correction)| - 1|
 
 ---
 
+### 5.21 重做真值 · 第 1 步完成：新判据落地 + 旧函数隔离
+
+**新增 `relative_phase_criterion.py`**（左乘约定，判据 = `C = U_cand · U_ideal†` 对角且单位模）：
+- `--self-test` **5/5 通过**，且**含负对照**（右乘 `U·D` 必须拒绝、随机酉必须拒绝）→ 不会退化成"接受一切"；
+- 可选 `ancillas` 参数把比较限定到 clean-ancilla 子空间。
+
+**旧函数隔离**（按 buggy-v2 的同样处理）：
+- `Linux-MCX.relative_phase_metrics` 加 `DeprecationWarning`，明写"**右乘约定、双向错**、改用新模块"；
+- **认证入口改道**：`realworld_benchmark.relative_phase_ok` 已改为**直接调用新判据**（§6 的产生路径已切到正确判据）；
+- 凡以旧判定器判合法性的结论，**全部标 `void`**。
+
+**新判据在争议实例上的效果**（adder3 + H/1ccx，6 个位点）：
+
+| 位点 | tracker | **新判据** | 一致 |
+|---:|:--|:--|:--|
+| 0 | False | False | ✓ |
+| 1 | False | False | ✓ |
+| 2 | False | False | ✓ |
+| 3 | **False** | **True** | ✗ **tracker 少判了一个合法位点** |
+| 4 | False | False | ✓ |
+| 5 | True | True | ✓ |
+
+- **5/6 一致**；唯一不一致是 tracker **保守**（site 3 真合法却被拒）。
+- **没有任何位点是"tracker 接受 ∧ 新判据判不合法"** ⇒ 该实例上**未出现 unsound 迹象**（对引理有利）。
+- ⚠️ **注意**：合法位点的**个数没变**（仍是 2 个），但**是哪两个变了**
+  （旧判据认 `{5}`，新判据认 `{3, 5}`）。**这正是必须"重算"而不是"换算"的原因。**
+
+**下一步（第 3 步）**：用新判据重算 §5.15 / §5.16 的合法性与保守度、**§6 的合法列（Grover 优先）**，
+并把各轮对不上的计数（`126/56/48/8`、`42`、`34`）在同一张表里对齐。
+
+---
+
 ## 6. 真实电路 SOTA 对比
 
 > 数据源：`reports/figure_data/realworld_sota.json`（由 `realworld_benchmark.py --json` 直接生成，非手抄）。

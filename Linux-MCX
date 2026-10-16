@@ -277,6 +277,15 @@ def relative_phase_metrics(
     total = ideal.qubits
     if candidate.qubits != total or total > 11:
         return None
+    import warnings as _warnings
+    _warnings.warn(
+        "relative_phase_metrics uses the RIGHT-multiplied convention "
+        "(U_ideal^dagger U_candidate) and is wrong in BOTH directions: it "
+        "false-rejects this project's left-multiplied construction and "
+        "false-accepts right-multiplied ones (safe only for basis inputs). "
+        "Use relative_phase_criterion.relative_phase_ok instead. "
+        "See calibrate_truth_criterion.py.",
+        DeprecationWarning, stacklevel=2)
     if ancillas is None:
         n_controls = int(num_controls) if num_controls is not None else total - 1
         n_ancillas = max(0, n_controls - 2)
