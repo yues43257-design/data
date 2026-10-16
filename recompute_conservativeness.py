@@ -68,7 +68,7 @@ def main(argv=None) -> int:
     L = T = HIT = MISS = UNS = 0
     for n in (3, 4):
         canon = RB.to_canonical(CDKMRippleCarryAdder(n))
-        for every in (0, 1, 2, 3, 4):
+        for every in (0, 1, 2, 3, 4, 5, 6):
             for h_qubits in (canon.num_qubits, max(2, canon.num_qubits // 2)):
                 if every == 0 and h_qubits != canon.num_qubits:
                     continue

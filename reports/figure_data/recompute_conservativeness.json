@@ -92,6 +92,46 @@
       "conservativeness": 0.0
     },
     {
+      "variant": "adder3-H/5ccx-full",
+      "sites": 6,
+      "legal": 1,
+      "tracker": 1,
+      "hit": 1,
+      "miss": 0,
+      "unsound": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "variant": "adder3-H/5ccx-half",
+      "sites": 6,
+      "legal": 1,
+      "tracker": 1,
+      "hit": 1,
+      "miss": 0,
+      "unsound": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "variant": "adder3-H/6ccx-full",
+      "sites": 6,
+      "legal": 6,
+      "tracker": 6,
+      "hit": 6,
+      "miss": 0,
+      "unsound": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "variant": "adder3-H/6ccx-half",
+      "sites": 6,
+      "legal": 6,
+      "tracker": 6,
+      "hit": 6,
+      "miss": 0,
+      "unsound": 0,
+      "conservativeness": 0.0
+    },
+    {
       "variant": "adder4-H-free",
       "sites": 8,
       "legal": 8,
@@ -180,20 +220,60 @@
       "miss": 0,
       "unsound": 0,
       "conservativeness": 0.0
+    },
+    {
+      "variant": "adder4-H/5ccx-full",
+      "sites": 8,
+      "legal": 3,
+      "tracker": 3,
+      "hit": 3,
+      "miss": 0,
+      "unsound": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "variant": "adder4-H/5ccx-half",
+      "sites": 8,
+      "legal": 3,
+      "tracker": 3,
+      "hit": 3,
+      "miss": 0,
+      "unsound": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "variant": "adder4-H/6ccx-full",
+      "sites": 8,
+      "legal": 2,
+      "tracker": 2,
+      "hit": 2,
+      "miss": 0,
+      "unsound": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "variant": "adder4-H/6ccx-half",
+      "sites": 8,
+      "legal": 2,
+      "tracker": 2,
+      "hit": 2,
+      "miss": 0,
+      "unsound": 0,
+      "conservativeness": 0.0
     }
   ],
   "pooled": {
-    "instances": 18,
-    "sites": 126,
-    "legal": 50,
-    "tracker": 48,
-    "hit": 48,
+    "instances": 26,
+    "sites": 182,
+    "legal": 74,
+    "tracker": 72,
+    "hit": 72,
     "miss": 2,
     "unsound": 0,
-    "conservativeness": 0.04,
+    "conservativeness": 0.02702702702702703,
     "conservativeness_ci": [
-      0.0034133804021732744,
-      0.14222865103819998
+      0.0017831816798637573,
+      0.09895472709898971
     ],
     "unsoundness": 0.0
   }
