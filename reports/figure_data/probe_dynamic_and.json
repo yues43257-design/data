@@ -1,0 +1,28 @@
+{
+  "rows": [
+    {
+      "n": 3,
+      "toffolis": 6,
+      "naive_T": 42,
+      "rccx_T": 24,
+      "measurement_based_T": 18,
+      "measures": 6,
+      "feed_forwards": 6,
+      "ancillas_added": 6,
+      "saving_vs_naive": 0.5714285714285714,
+      "tracker_applies": true
+    },
+    {
+      "n": 4,
+      "toffolis": 8,
+      "naive_T": 56,
+      "rccx_T": 32,
+      "measurement_based_T": 24,
+      "measures": 8,
+      "feed_forwards": 8,
+      "ancillas_added": 8,
+      "saving_vs_naive": 0.5714285714285714,
+      "tracker_applies": true
+    }
+  ]
+}
