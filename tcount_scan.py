@@ -111,7 +111,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     print("  family scan: where does the pass beat the STRONG baseline (pyZX full_reduce)?")
     print("=" * 108)
     print(f"  {'family':<20}{'n':>3}{'q':>4}{'m':>5}{'k':>5}{'k/m':>7}"
-          f"{'naive':>7}{'ours':>7}{'FR':>7}{'ours-FR':>9}{'naive-ours':>12}")
+          f"{'naive':>7}{'ours':>7}{'FR':>7}{'ours-FR':>9}{'naive-ours':>12}"
+          f"{'QiskitL0':>8}{'L3':>7}{'blk2':>8}{'blk4':>8}")
     rows: List[Dict[str, Any]] = []
     for name, build in families:
         for n in sizes:
@@ -128,13 +129,32 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             m = len(tri)
             k = sum(1 for v in collections.Counter(tri).values() if v % 2 == 1)
             naive, ours = 7 * m, 4 * m
+            l0 = RB.t_count(RB.to_clifford_t(canon, 0))
+            l3 = RB.t_count(RB.to_clifford_t(canon, 3))
             started = time.perf_counter()
             fr = fr_tcount(canon)
             fr_s = time.perf_counter() - started
+            def blocked(circ, chunks):
+                data = list(circ.data); nn = len(data); tot = 0
+                for i in range(chunks):
+                    sub = QuantumCircuit(circ.num_qubits)
+                    for ins in data[i*nn//chunks:(i+1)*nn//chunks]:
+                        sub.append(ins.operation,
+                                   [circ.find_bit(q).index for q in ins.qubits])
+                    val = fr_tcount(sub)
+                    if val is None:
+                        return None
+                    tot += val
+                return tot
+            b2 = blocked(canon, 2)
+            b4 = blocked(canon, 4)
             print(f"  {name:<20}{n:>3}{canon.num_qubits:>4}{m:>5}{k:>5}{k / m:>7.2f}"
                   f"{naive:>7}{ours:>7}{(fr if fr is not None else -1):>7}"
                   f"{(ours - fr) if fr is not None else 0:>9}"
-                  f"{naive - ours:>12}")
+                  f"{naive - ours:>12}"
+                  f"{l0:>8}{l3:>7}"
+                  f"{(b2 if b2 is not None else -1):>8}"
+                  f"{(b4 if b4 is not None else -1):>8}")
             rows.append({"family": name, "n": n, "qubits": canon.num_qubits,
                          "m": m, "k": k, "k_over_m": k / m, "naive_T": naive,
                          "ours_T": ours, "fr_T": fr, "fr_seconds": fr_s})

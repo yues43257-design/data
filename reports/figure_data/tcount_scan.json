@@ -9,7 +9,7 @@
     "naive_T": 21,
     "ours_T": 12,
     "fr_T": 15,
-    "fr_seconds": 0.03803699999116361
+    "fr_seconds": 0.03544874698854983
   },
   {
     "family": "comparator",
@@ -21,7 +21,7 @@
     "naive_T": 35,
     "ours_T": 20,
     "fr_T": 23,
-    "fr_seconds": 0.11480660806410015
+    "fr_seconds": 0.06394811696372926
   },
   {
     "family": "comparator",
@@ -33,7 +33,7 @@
     "naive_T": 49,
     "ours_T": 28,
     "fr_T": 31,
-    "fr_seconds": 0.13233562489040196
+    "fr_seconds": 0.11151291499845684
   },
   {
     "family": "comparator",
@@ -45,7 +45,7 @@
     "naive_T": 63,
     "ours_T": 36,
     "fr_T": 39,
-    "fr_seconds": 0.23143045417964458
+    "fr_seconds": 0.18388289399445057
   },
   {
     "family": "CDKM adder",
@@ -57,7 +57,7 @@
     "naive_T": 42,
     "ours_T": 24,
     "fr_T": 24,
-    "fr_seconds": 0.0844799370970577
+    "fr_seconds": 0.08215035288594663
   },
   {
     "family": "CDKM adder",
@@ -69,7 +69,7 @@
     "naive_T": 56,
     "ours_T": 32,
     "fr_T": 32,
-    "fr_seconds": 0.16154400608502328
+    "fr_seconds": 0.1554354529362172
   },
   {
     "family": "CDKM adder",
@@ -81,7 +81,7 @@
     "naive_T": 70,
     "ours_T": 40,
     "fr_T": 40,
-    "fr_seconds": 0.18611609190702438
+    "fr_seconds": 0.18421640386804938
   },
   {
     "family": "CDKM adder",
@@ -93,7 +93,7 @@
     "naive_T": 84,
     "ours_T": 48,
     "fr_T": 48,
-    "fr_seconds": 0.2447294529993087
+    "fr_seconds": 0.23942433996126056
   },
   {
     "family": "Grover oracle",
@@ -105,7 +105,7 @@
     "naive_T": 14,
     "ours_T": 8,
     "fr_T": 14,
-    "fr_seconds": 0.03419774607755244
+    "fr_seconds": 0.0214862700086087
   },
   {
     "family": "two CDKM adders",
@@ -117,7 +117,7 @@
     "naive_T": 84,
     "ours_T": 48,
     "fr_T": 28,
-    "fr_seconds": 0.3775204010307789
+    "fr_seconds": 0.36802434106357396
   },
   {
     "family": "two CDKM adders",
@@ -129,7 +129,7 @@
     "naive_T": 112,
     "ours_T": 64,
     "fr_T": 40,
-    "fr_seconds": 0.4392888068687171
+    "fr_seconds": 0.43137229001149535
   },
   {
     "family": "two CDKM adders",
@@ -141,7 +141,7 @@
     "naive_T": 140,
     "ours_T": 80,
     "fr_T": 52,
-    "fr_seconds": 0.593710444169119
+    "fr_seconds": 0.593154160073027
   },
   {
     "family": "two CDKM adders",
@@ -153,6 +153,6 @@
     "naive_T": 168,
     "ours_T": 96,
     "fr_T": 64,
-    "fr_seconds": 0.7890939780045301
+    "fr_seconds": 0.7836624630726874
   }
 ]
