@@ -129,7 +129,7 @@ def main() -> int:
     print("  real-class scan: how dense are UNPAIRED Toffolis?  (decides case D)")
     print("=" * 104)
     print(f"  {'class':<26}{'n':>3}{'q':>5}{'m':>5}{'k':>5}{'k/m':>7}"
-          f"{'ours':>7}{'FR':>7}{'GAIN':>7}")
+          f"{'naive':>7}{'ours':>7}{'FR':>7}{'GAIN':>7}")
     rows: List[Dict[str, Any]] = []
     for name, build, sizes in families:
         for n in sizes:
@@ -148,14 +148,20 @@ def main() -> int:
                 continue
             m = len(tri)
             k = sum(1 for v in collections.Counter(tri).values() if v % 2 == 1)
-            ours = 4 * m
+            # cost model from the ACTUAL circuits: Qiskit's mcx synthesis leaves
+            # free T gates outside the ccx's, so 7m/4m are NOT the naive/ours costs.
+            naive = RB.t_count(RB.to_clifford_t(canon, 0))
+            ours = RB.t_count(RB.substitute_rccx(canon))
+            assert ours <= naive, f"ours={ours} > naive={naive} on {name}({n})"
             fr = fr_tcount(canon)
+            if fr is not None:
+                assert fr <= naive, f"FR={fr} > naive={naive} on {name}({n})  <-- impossible"
             gain = max(0, fr - ours) if fr is not None else None
             print(f"  {name:<26}{n:>3}{canon.num_qubits:>5}{m:>5}{k:>5}{k / m:>7.2f}"
-                  f"{ours:>7}{(fr if fr is not None else -1):>7}"
+                  f"{naive:>7}{ours:>7}{(fr if fr is not None else -1):>7}"
                   f"{(gain if gain is not None else -1):>7}")
             rows.append({"class": name, "n": n, "qubits": canon.num_qubits, "m": m,
-                         "k": k, "k_over_m": k / m, "ours": ours, "fr": fr,
+                         "k": k, "k_over_m": k / m, "naive": naive, "ours": ours, "fr": fr,
                          "gain": gain})
     print("=" * 104)
     print("  k/m >> 0  -> case D has a target in this class")

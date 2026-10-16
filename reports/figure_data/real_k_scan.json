@@ -6,6 +6,7 @@
     "m": 1,
     "k": 1,
     "k_over_m": 1.0,
+    "naive": 7,
     "ours": 4,
     "fr": 7,
     "gain": 3
@@ -17,9 +18,10 @@
     "m": 10,
     "k": 10,
     "k_over_m": 1.0,
-    "ours": 40,
+    "naive": 132,
+    "ours": 102,
     "fr": 108,
-    "gain": 68
+    "gain": 6
   },
   {
     "class": "unary iteration",
@@ -28,6 +30,7 @@
     "m": 1,
     "k": 1,
     "k_over_m": 1.0,
+    "naive": 7,
     "ours": 4,
     "fr": 7,
     "gain": 3
@@ -39,9 +42,10 @@
     "m": 2,
     "k": 2,
     "k_over_m": 1.0,
-    "ours": 8,
+    "naive": 22,
+    "ours": 16,
     "fr": 22,
-    "gain": 14
+    "gain": 6
   },
   {
     "class": "unary iteration",
@@ -50,9 +54,10 @@
     "m": 3,
     "k": 3,
     "k_over_m": 1.0,
-    "ours": 12,
+    "naive": 45,
+    "ours": 36,
     "fr": 43,
-    "gain": 31
+    "gain": 7
   },
   {
     "class": "unary iteration",
@@ -61,9 +66,10 @@
     "m": 4,
     "k": 4,
     "k_over_m": 1.0,
-    "ours": 16,
+    "naive": 76,
+    "ours": 64,
     "fr": 72,
-    "gain": 56
+    "gain": 8
   },
   {
     "class": "comparator network",
@@ -72,6 +78,7 @@
     "m": 3,
     "k": 1,
     "k_over_m": 0.3333333333333333,
+    "naive": 21,
     "ours": 12,
     "fr": 15,
     "gain": 3
@@ -83,6 +90,7 @@
     "m": 6,
     "k": 0,
     "k_over_m": 0.0,
+    "naive": 42,
     "ours": 24,
     "fr": 20,
     "gain": 0
@@ -94,6 +102,7 @@
     "m": 9,
     "k": 1,
     "k_over_m": 0.1111111111111111,
+    "naive": 63,
     "ours": 36,
     "fr": 31,
     "gain": 0
@@ -105,6 +114,7 @@
     "m": 12,
     "k": 0,
     "k_over_m": 0.0,
+    "naive": 84,
     "ours": 48,
     "fr": 28,
     "gain": 0
@@ -116,6 +126,7 @@
     "m": 18,
     "k": 0,
     "k_over_m": 0.0,
+    "naive": 126,
     "ours": 72,
     "fr": 36,
     "gain": 0
@@ -127,6 +138,7 @@
     "m": 24,
     "k": 0,
     "k_over_m": 0.0,
+    "naive": 168,
     "ours": 96,
     "fr": 40,
     "gain": 0
@@ -138,6 +150,7 @@
     "m": 2,
     "k": 0,
     "k_over_m": 0.0,
+    "naive": 14,
     "ours": 8,
     "fr": 14,
     "gain": 6
