@@ -208,6 +208,61 @@ def grid(phase: str) -> List[Tuple[int, int, int, float, int]]:
 PHASE_JOBS = {"smoke": 4, "small": 5, "n10": 4, "n11": 3, "n12": 2}
 
 
+def check_tracker_equivalence(phases: Sequence[str]) -> int:
+    """The rule set above must reproduce the SHIPPED ``DiagonalTracker`` exactly.
+
+    ``tracked_support`` is a re-implementation (it needs the rules switchable
+    for the negative control), so "0 violations" is only a statement about the
+    shipped tracker if the two agree.  This replays ``ST.DiagonalTracker`` by
+    hand on every mask of the grid and compares both the support set (on
+    accepted masks) and the safety verdict.
+    """
+    from collections import Counter
+
+    names: Counter = Counter()
+    checked = accepted = 0
+    bad_safety = bad_support = 0
+    examples: List[Any] = []
+    for phase in phases:
+        for width, pool, blocks, h_prob, seed in grid(phase):
+            inst = ULT.WideInstance(width=width, blocks=blocks, seed=seed,
+                                    h_prob=h_prob, ancilla_pool=pool)
+            schedule = WS.build_schedule(inst)
+            for layer in schedule["layers"]:
+                for name, _ in layer:
+                    names[name] += 1
+            for mask in range(1 << blocks):
+                tracker = ST.DiagonalTracker(schedule["total"])
+                for index, block in enumerate(schedule["blocks"]):
+                    tracker.apply_layer(schedule["layers"][index])
+                    tracker.apply_block(block)
+                    if (mask >> index) & 1:
+                        tracker.inject_correction(block)
+                checked += 1
+                if tracker.is_safe() != ST.track_safe(schedule, mask):
+                    bad_safety += 1
+                if tracker.is_safe():
+                    accepted += 1
+                    if tracked_support(schedule, mask) != tracker.support:
+                        bad_support += 1
+                        if len(examples) < 3:
+                            examples.append((width, blocks, h_prob, mask,
+                                             sorted(tracker.support),
+                                             sorted(tracked_support(schedule, mask))))
+    print("=" * 96)
+    print("  does the local rule set reproduce the SHIPPED DiagonalTracker?")
+    print(f"    layer gate names seen : {dict(names)}")
+    print(f"    masks replayed        : {checked} (accepted {accepted})")
+    print(f"    safety verdict differs: {bad_safety}")
+    print(f"    support set differs   : {bad_support}")
+    for example in examples:
+        print(f"      {example}")
+    ok = bad_safety == 0 and bad_support == 0
+    print(f"    -> {'IDENTICAL on every accepted mask' if ok else 'DIVERGES'}")
+    print("=" * 96)
+    return 0 if ok else 1
+
+
 def run_phase(phase: str, jobs: int, sink_path: Path, truncate: bool) -> Dict[str, Any]:
     work = grid(phase)
     print(f"  phase {phase:<6} jobs={len(work):<4} workers={jobs}")
@@ -276,8 +331,12 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--all", action="store_true")
     parser.add_argument("--fresh", action="store_true",
                         help="discard records from earlier phases")
+    parser.add_argument("--check-tracker", action="store_true",
+                        help="cross-check the rule set against the shipped tracker")
     args = parser.parse_args(argv)
     phases = ["smoke", "small", "n10", "n11", "n12"] if args.all else [args.phase]
+    if args.check_tracker:
+        return check_tracker_equivalence(phases)
     all_rows: List[Dict[str, Any]] = []
     for phase in phases:
         workers = args.jobs or PHASE_JOBS[phase]

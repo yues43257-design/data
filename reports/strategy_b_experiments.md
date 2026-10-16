@@ -1713,6 +1713,11 @@ T(t) ; H(t) ; S(t) ; measure(t)
 |---|---|
 | `qiskit.quantum_info.Operator` 的 `U_cand·U_ideal†`（88 个残差） | 最大偏差 **7.8e-15** |
 | **原 `O(8^n)` 定义**给出的 `true_support`（84 个可比掩码） | 分歧 **0** |
+| **已发布的 `DiagonalTracker`**（`--check-tracker`，全网格 **5124 掩码 / 2286 被接受**） | 安全判定 **0** 分歧、支撑集 **0** 分歧 |
+
+最后一行是必须的：`superset_corpus.tracked_support` 是**重写版**（为了让负对照能逐条关掉规则），
+所以"0 违反"只有在这份重写与**真正发布的那份实现**逐掩码一致时，才算是在陈述发布代码的性质。
+（网格里的层门集是 `{h, x, s, z, cx}`；`x/s/z` 属于 `_HARMLESS`，不改变支撑集。）
 
 单掩码成本（实测）：`N=10` 7s、`N=11` 35s、`N=12` 157s —— 这是 `N=12` 只覆盖
 12 个实例的真实原因（不是选择，是成本）。
@@ -2340,6 +2345,7 @@ done
 
 # §5.47 ④ 的验收：内核自检 + 负对照 + 扩展语料（N=4…12，约 35 分钟）
 .venv/bin/python fast_residual.py                 # 必须全绿：88 残差对齐 qiskit，84 支撑对齐旧定义
+.venv/bin/python superset_corpus.py --all --check-tracker   # 规则集与已发布 tracker 逐掩码一致（秒级）
 .venv/bin/python superset_corpus.py --phase smoke  # 4 实例 / 8 掩码，秒级
 .venv/bin/python superset_corpus.py --all          # 678 实例 / 2278 掩码；结果写入 figure_data/superset_corpus.json(l)
 ```
