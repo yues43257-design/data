@@ -1,0 +1,282 @@
+{
+  "declared_definition": "C = U_cand U_ideal^dagger diagonal on the clean-ancilla subspace (ancillas post-selected)",
+  "setup_version": "canonical-setup-v2",
+  "script": "adversarial_tracker_search.py",
+  "total_masks": 2016,
+  "tracker_accepted": 230,
+  "legal": 230,
+  "counterexamples_count": 0,
+  "counterexamples": [],
+  "rows": [
+    {
+      "N_total": 4,
+      "blocks": 3,
+      "h_prob": 0.3,
+      "masks": 32,
+      "tracker_accept": 8,
+      "legal": 8,
+      "counterexamples": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "N_total": 4,
+      "blocks": 3,
+      "h_prob": 0.7,
+      "masks": 32,
+      "tracker_accept": 8,
+      "legal": 8,
+      "counterexamples": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "N_total": 4,
+      "blocks": 3,
+      "h_prob": 1.0,
+      "masks": 32,
+      "tracker_accept": 8,
+      "legal": 8,
+      "counterexamples": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "N_total": 4,
+      "blocks": 4,
+      "h_prob": 0.3,
+      "masks": 64,
+      "tracker_accept": 10,
+      "legal": 10,
+      "counterexamples": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "N_total": 4,
+      "blocks": 4,
+      "h_prob": 0.7,
+      "masks": 64,
+      "tracker_accept": 10,
+      "legal": 10,
+      "counterexamples": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "N_total": 4,
+      "blocks": 4,
+      "h_prob": 1.0,
+      "masks": 64,
+      "tracker_accept": 8,
+      "legal": 8,
+      "counterexamples": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "N_total": 4,
+      "blocks": 5,
+      "h_prob": 0.3,
+      "masks": 128,
+      "tracker_accept": 14,
+      "legal": 14,
+      "counterexamples": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "N_total": 4,
+      "blocks": 5,
+      "h_prob": 0.7,
+      "masks": 128,
+      "tracker_accept": 8,
+      "legal": 8,
+      "counterexamples": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "N_total": 4,
+      "blocks": 5,
+      "h_prob": 1.0,
+      "masks": 128,
+      "tracker_accept": 8,
+      "legal": 8,
+      "counterexamples": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "N_total": 5,
+      "blocks": 3,
+      "h_prob": 0.3,
+      "masks": 32,
+      "tracker_accept": 8,
+      "legal": 8,
+      "counterexamples": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "N_total": 5,
+      "blocks": 3,
+      "h_prob": 0.7,
+      "masks": 32,
+      "tracker_accept": 8,
+      "legal": 8,
+      "counterexamples": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "N_total": 5,
+      "blocks": 3,
+      "h_prob": 1.0,
+      "masks": 32,
+      "tracker_accept": 8,
+      "legal": 8,
+      "counterexamples": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "N_total": 5,
+      "blocks": 4,
+      "h_prob": 0.3,
+      "masks": 64,
+      "tracker_accept": 10,
+      "legal": 10,
+      "counterexamples": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "N_total": 5,
+      "blocks": 4,
+      "h_prob": 0.7,
+      "masks": 64,
+      "tracker_accept": 8,
+      "legal": 8,
+      "counterexamples": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "N_total": 5,
+      "blocks": 4,
+      "h_prob": 1.0,
+      "masks": 64,
+      "tracker_accept": 8,
+      "legal": 8,
+      "counterexamples": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "N_total": 5,
+      "blocks": 5,
+      "h_prob": 0.3,
+      "masks": 128,
+      "tracker_accept": 8,
+      "legal": 8,
+      "counterexamples": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "N_total": 5,
+      "blocks": 5,
+      "h_prob": 0.7,
+      "masks": 128,
+      "tracker_accept": 8,
+      "legal": 8,
+      "counterexamples": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "N_total": 5,
+      "blocks": 5,
+      "h_prob": 1.0,
+      "masks": 128,
+      "tracker_accept": 8,
+      "legal": 8,
+      "counterexamples": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "N_total": 6,
+      "blocks": 3,
+      "h_prob": 0.3,
+      "masks": 32,
+      "tracker_accept": 8,
+      "legal": 8,
+      "counterexamples": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "N_total": 6,
+      "blocks": 3,
+      "h_prob": 0.7,
+      "masks": 32,
+      "tracker_accept": 8,
+      "legal": 8,
+      "counterexamples": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "N_total": 6,
+      "blocks": 3,
+      "h_prob": 1.0,
+      "masks": 32,
+      "tracker_accept": 8,
+      "legal": 8,
+      "counterexamples": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "N_total": 6,
+      "blocks": 4,
+      "h_prob": 0.3,
+      "masks": 64,
+      "tracker_accept": 8,
+      "legal": 8,
+      "counterexamples": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "N_total": 6,
+      "blocks": 4,
+      "h_prob": 0.7,
+      "masks": 64,
+      "tracker_accept": 8,
+      "legal": 8,
+      "counterexamples": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "N_total": 6,
+      "blocks": 4,
+      "h_prob": 1.0,
+      "masks": 64,
+      "tracker_accept": 8,
+      "legal": 8,
+      "counterexamples": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "N_total": 6,
+      "blocks": 5,
+      "h_prob": 0.3,
+      "masks": 128,
+      "tracker_accept": 10,
+      "legal": 10,
+      "counterexamples": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "N_total": 6,
+      "blocks": 5,
+      "h_prob": 0.7,
+      "masks": 128,
+      "tracker_accept": 8,
+      "legal": 8,
+      "counterexamples": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "N_total": 6,
+      "blocks": 5,
+      "h_prob": 1.0,
+      "masks": 128,
+      "tracker_accept": 8,
+      "legal": 8,
+      "counterexamples": 0,
+      "conservativeness": 0.0
+    }
+  ]
+}
