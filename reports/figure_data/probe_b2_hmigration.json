@@ -1,0 +1,134 @@
+[
+  {
+    "variant": "adder3-H/1ccx",
+    "n": 3,
+    "sites": 6,
+    "safe": 1,
+    "rejected": 5,
+    "free_unlockable": 0,
+    "UB": 18,
+    "net": 0,
+    "net_over_UB": 0.0
+  },
+  {
+    "variant": "adder3-H/2ccx",
+    "n": 3,
+    "sites": 6,
+    "safe": 2,
+    "rejected": 4,
+    "free_unlockable": 0,
+    "UB": 18,
+    "net": 0,
+    "net_over_UB": 0.0
+  },
+  {
+    "variant": "adder3-H/4ccx",
+    "n": 3,
+    "sites": 6,
+    "safe": 2,
+    "rejected": 4,
+    "free_unlockable": 0,
+    "UB": 18,
+    "net": 0,
+    "net_over_UB": 0.0
+  },
+  {
+    "variant": "adder4-H/1ccx",
+    "n": 4,
+    "sites": 8,
+    "safe": 1,
+    "rejected": 7,
+    "free_unlockable": 0,
+    "UB": 24,
+    "net": 0,
+    "net_over_UB": 0.0
+  },
+  {
+    "variant": "adder4-H/2ccx",
+    "n": 4,
+    "sites": 8,
+    "safe": 2,
+    "rejected": 6,
+    "free_unlockable": 0,
+    "UB": 24,
+    "net": 0,
+    "net_over_UB": 0.0
+  },
+  {
+    "variant": "adder4-H/4ccx",
+    "n": 4,
+    "sites": 8,
+    "safe": 4,
+    "rejected": 4,
+    "free_unlockable": 0,
+    "UB": 24,
+    "net": 0,
+    "net_over_UB": 0.0
+  },
+  {
+    "variant": "adder6-H/1ccx",
+    "n": 6,
+    "sites": 12,
+    "safe": 1,
+    "rejected": 11,
+    "free_unlockable": 0,
+    "UB": 36,
+    "net": 0,
+    "net_over_UB": 0.0
+  },
+  {
+    "variant": "adder6-H/2ccx",
+    "n": 6,
+    "sites": 12,
+    "safe": 2,
+    "rejected": 10,
+    "free_unlockable": 0,
+    "UB": 36,
+    "net": 0,
+    "net_over_UB": 0.0
+  },
+  {
+    "variant": "adder6-H/4ccx",
+    "n": 6,
+    "sites": 12,
+    "safe": 4,
+    "rejected": 8,
+    "free_unlockable": 0,
+    "UB": 36,
+    "net": 0,
+    "net_over_UB": 0.0
+  },
+  {
+    "variant": "adder8-H/1ccx",
+    "n": 8,
+    "sites": 16,
+    "safe": 1,
+    "rejected": 15,
+    "free_unlockable": 0,
+    "UB": 48,
+    "net": 0,
+    "net_over_UB": 0.0
+  },
+  {
+    "variant": "adder8-H/2ccx",
+    "n": 8,
+    "sites": 16,
+    "safe": 2,
+    "rejected": 14,
+    "free_unlockable": 0,
+    "UB": 48,
+    "net": 0,
+    "net_over_UB": 0.0
+  },
+  {
+    "variant": "adder8-H/4ccx",
+    "n": 8,
+    "sites": 16,
+    "safe": 4,
+    "rejected": 12,
+    "free_unlockable": 0,
+    "UB": 48,
+    "net": 0,
+    "net_over_UB": 0.0
+  }
+]
