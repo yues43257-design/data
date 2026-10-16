@@ -1,0 +1,92 @@
+{
+  "declared_definition": "C = U_cand U_ideal^dagger diagonal on the clean-ancilla subspace (ancillas post-selected)",
+  "setup_version": "canonical-setup-v2",
+  "script": "adversarial_tracker_search.py",
+  "total_masks": 1440,
+  "tracker_accepted": 106,
+  "legal": 106,
+  "counterexamples_count": 0,
+  "counterexamples": [],
+  "rows": [
+    {
+      "N_total": 4,
+      "blocks": 3,
+      "h_prob": 0.5,
+      "masks": 48,
+      "tracker_accept": 12,
+      "legal": 12,
+      "counterexamples": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "N_total": 4,
+      "blocks": 3,
+      "h_prob": 1.0,
+      "masks": 48,
+      "tracker_accept": 12,
+      "legal": 12,
+      "counterexamples": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "N_total": 4,
+      "blocks": 4,
+      "h_prob": 0.5,
+      "masks": 96,
+      "tracker_accept": 14,
+      "legal": 14,
+      "counterexamples": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "N_total": 4,
+      "blocks": 4,
+      "h_prob": 1.0,
+      "masks": 96,
+      "tracker_accept": 12,
+      "legal": 12,
+      "counterexamples": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "N_total": 4,
+      "blocks": 5,
+      "h_prob": 0.5,
+      "masks": 192,
+      "tracker_accept": 18,
+      "legal": 18,
+      "counterexamples": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "N_total": 4,
+      "blocks": 5,
+      "h_prob": 1.0,
+      "masks": 192,
+      "tracker_accept": 12,
+      "legal": 12,
+      "counterexamples": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "N_total": 4,
+      "blocks": 6,
+      "h_prob": 0.5,
+      "masks": 384,
+      "tracker_accept": 14,
+      "legal": 14,
+      "counterexamples": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "N_total": 4,
+      "blocks": 6,
+      "h_prob": 1.0,
+      "masks": 384,
+      "tracker_accept": 12,
+      "legal": 12,
+      "counterexamples": 0,
+      "conservativeness": 0.0
+    }
+  ]
+}
