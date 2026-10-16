@@ -1,0 +1,200 @@
+{
+  "declared_definition": "C = U_cand U_ideal^dagger diagonal (full space; no post-selected ancillas in CDKM adders)",
+  "rows": [
+    {
+      "variant": "adder3-H-free",
+      "sites": 6,
+      "legal": 6,
+      "tracker": 6,
+      "hit": 6,
+      "miss": 0,
+      "unsound": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "variant": "adder3-H/1ccx-full",
+      "sites": 6,
+      "legal": 2,
+      "tracker": 1,
+      "hit": 1,
+      "miss": 1,
+      "unsound": 0,
+      "conservativeness": 0.5
+    },
+    {
+      "variant": "adder3-H/1ccx-half",
+      "sites": 6,
+      "legal": 1,
+      "tracker": 1,
+      "hit": 1,
+      "miss": 0,
+      "unsound": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "variant": "adder3-H/2ccx-full",
+      "sites": 6,
+      "legal": 2,
+      "tracker": 2,
+      "hit": 2,
+      "miss": 0,
+      "unsound": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "variant": "adder3-H/2ccx-half",
+      "sites": 6,
+      "legal": 2,
+      "tracker": 2,
+      "hit": 2,
+      "miss": 0,
+      "unsound": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "variant": "adder3-H/3ccx-full",
+      "sites": 6,
+      "legal": 3,
+      "tracker": 3,
+      "hit": 3,
+      "miss": 0,
+      "unsound": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "variant": "adder3-H/3ccx-half",
+      "sites": 6,
+      "legal": 3,
+      "tracker": 3,
+      "hit": 3,
+      "miss": 0,
+      "unsound": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "variant": "adder3-H/4ccx-full",
+      "sites": 6,
+      "legal": 2,
+      "tracker": 2,
+      "hit": 2,
+      "miss": 0,
+      "unsound": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "variant": "adder3-H/4ccx-half",
+      "sites": 6,
+      "legal": 2,
+      "tracker": 2,
+      "hit": 2,
+      "miss": 0,
+      "unsound": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "variant": "adder4-H-free",
+      "sites": 8,
+      "legal": 8,
+      "tracker": 8,
+      "hit": 8,
+      "miss": 0,
+      "unsound": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "variant": "adder4-H/1ccx-full",
+      "sites": 8,
+      "legal": 2,
+      "tracker": 1,
+      "hit": 1,
+      "miss": 1,
+      "unsound": 0,
+      "conservativeness": 0.5
+    },
+    {
+      "variant": "adder4-H/1ccx-half",
+      "sites": 8,
+      "legal": 1,
+      "tracker": 1,
+      "hit": 1,
+      "miss": 0,
+      "unsound": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "variant": "adder4-H/2ccx-full",
+      "sites": 8,
+      "legal": 2,
+      "tracker": 2,
+      "hit": 2,
+      "miss": 0,
+      "unsound": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "variant": "adder4-H/2ccx-half",
+      "sites": 8,
+      "legal": 2,
+      "tracker": 2,
+      "hit": 2,
+      "miss": 0,
+      "unsound": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "variant": "adder4-H/3ccx-full",
+      "sites": 8,
+      "legal": 2,
+      "tracker": 2,
+      "hit": 2,
+      "miss": 0,
+      "unsound": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "variant": "adder4-H/3ccx-half",
+      "sites": 8,
+      "legal": 2,
+      "tracker": 2,
+      "hit": 2,
+      "miss": 0,
+      "unsound": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "variant": "adder4-H/4ccx-full",
+      "sites": 8,
+      "legal": 4,
+      "tracker": 4,
+      "hit": 4,
+      "miss": 0,
+      "unsound": 0,
+      "conservativeness": 0.0
+    },
+    {
+      "variant": "adder4-H/4ccx-half",
+      "sites": 8,
+      "legal": 4,
+      "tracker": 4,
+      "hit": 4,
+      "miss": 0,
+      "unsound": 0,
+      "conservativeness": 0.0
+    }
+  ],
+  "pooled": {
+    "instances": 18,
+    "sites": 126,
+    "legal": 50,
+    "tracker": 48,
+    "hit": 48,
+    "miss": 2,
+    "unsound": 0,
+    "conservativeness": 0.04,
+    "conservativeness_ci": [
+      0.0034133804021732744,
+      0.14222865103819998
+    ],
+    "unsoundness": 0.0
+  }
+}
