@@ -1,0 +1,202 @@
+[
+  {
+    "family": "AND tree (compute only)",
+    "n": 3,
+    "m": 2,
+    "k": 2,
+    "k_over_m": 1.0,
+    "ours": 8,
+    "fr": 14,
+    "gain": 6
+  },
+  {
+    "family": "AND tree (compute only)",
+    "n": 4,
+    "m": 3,
+    "k": 3,
+    "k_over_m": 1.0,
+    "ours": 12,
+    "fr": 21,
+    "gain": 9
+  },
+  {
+    "family": "AND tree (compute only)",
+    "n": 5,
+    "m": 4,
+    "k": 4,
+    "k_over_m": 1.0,
+    "ours": 16,
+    "fr": 28,
+    "gain": 12
+  },
+  {
+    "family": "AND tree (compute only)",
+    "n": 6,
+    "m": 5,
+    "k": 5,
+    "k_over_m": 1.0,
+    "ours": 20,
+    "fr": 35,
+    "gain": 15
+  },
+  {
+    "family": "AND tree (compute only)",
+    "n": 8,
+    "m": 7,
+    "k": 7,
+    "k_over_m": 1.0,
+    "ours": 28,
+    "fr": 49,
+    "gain": 21
+  },
+  {
+    "family": "compute-only adder",
+    "n": 3,
+    "m": 3,
+    "k": 3,
+    "k_over_m": 1.0,
+    "ours": 12,
+    "fr": 21,
+    "gain": 9
+  },
+  {
+    "family": "compute-only adder",
+    "n": 4,
+    "m": 4,
+    "k": 4,
+    "k_over_m": 1.0,
+    "ours": 16,
+    "fr": 28,
+    "gain": 12
+  },
+  {
+    "family": "compute-only adder",
+    "n": 5,
+    "m": 5,
+    "k": 5,
+    "k_over_m": 1.0,
+    "ours": 20,
+    "fr": 35,
+    "gain": 15
+  },
+  {
+    "family": "compute-only adder",
+    "n": 6,
+    "m": 6,
+    "k": 6,
+    "k_over_m": 1.0,
+    "ours": 24,
+    "fr": 42,
+    "gain": 18
+  },
+  {
+    "family": "compute-only adder",
+    "n": 8,
+    "m": 8,
+    "k": 8,
+    "k_over_m": 1.0,
+    "ours": 32,
+    "fr": 56,
+    "gain": 24
+  },
+  {
+    "family": "Toffoli fan-out",
+    "n": 3,
+    "m": 3,
+    "k": 3,
+    "k_over_m": 1.0,
+    "ours": 12,
+    "fr": 15,
+    "gain": 3
+  },
+  {
+    "family": "Toffoli fan-out",
+    "n": 4,
+    "m": 4,
+    "k": 4,
+    "k_over_m": 1.0,
+    "ours": 16,
+    "fr": 16,
+    "gain": 0
+  },
+  {
+    "family": "Toffoli fan-out",
+    "n": 5,
+    "m": 5,
+    "k": 5,
+    "k_over_m": 1.0,
+    "ours": 20,
+    "fr": 23,
+    "gain": 3
+  },
+  {
+    "family": "Toffoli fan-out",
+    "n": 6,
+    "m": 6,
+    "k": 6,
+    "k_over_m": 1.0,
+    "ours": 24,
+    "fr": 24,
+    "gain": 0
+  },
+  {
+    "family": "Toffoli fan-out",
+    "n": 8,
+    "m": 8,
+    "k": 8,
+    "k_over_m": 1.0,
+    "ours": 32,
+    "fr": 32,
+    "gain": 0
+  },
+  {
+    "family": "CDKM adder (paired, control)",
+    "n": 3,
+    "m": 6,
+    "k": 0,
+    "k_over_m": 0.0,
+    "ours": 24,
+    "fr": 24,
+    "gain": 0
+  },
+  {
+    "family": "CDKM adder (paired, control)",
+    "n": 4,
+    "m": 8,
+    "k": 0,
+    "k_over_m": 0.0,
+    "ours": 32,
+    "fr": 32,
+    "gain": 0
+  },
+  {
+    "family": "CDKM adder (paired, control)",
+    "n": 5,
+    "m": 10,
+    "k": 0,
+    "k_over_m": 0.0,
+    "ours": 40,
+    "fr": 40,
+    "gain": 0
+  },
+  {
+    "family": "CDKM adder (paired, control)",
+    "n": 6,
+    "m": 12,
+    "k": 0,
+    "k_over_m": 0.0,
+    "ours": 48,
+    "fr": 48,
+    "gain": 0
+  },
+  {
+    "family": "CDKM adder (paired, control)",
+    "n": 8,
+    "m": 16,
+    "k": 0,
+    "k_over_m": 0.0,
+    "ours": 64,
+    "fr": 64,
+    "gain": 0
+  }
+]
