@@ -1,0 +1,1792 @@
+{
+  "probe_version": "window-probe-v1",
+  "family": "chained CDKM adder (two_adders)",
+  "decision_space": "per-ccx exact(7T) vs relative(4T), topology fixed",
+  "structural_premises": {
+    "exact_block_is_permutation": true,
+    "exact_block_equals_ccx": 4.440892098500626e-16,
+    "relative_x_exact_dagger_offdiag": 2.2204460492503123e-16,
+    "relative_x_exact_dagger_unit_dev": 7.771561172376096e-16,
+    "exact_block_tcount": 7,
+    "relative_block_tcount": 4
+  },
+  "sizes": [
+    3,
+    4,
+    5,
+    6
+  ],
+  "per_n": [
+    {
+      "n": 3,
+      "qubits": 8,
+      "blocks": 12,
+      "gate_names": [
+        "ccx",
+        "cx"
+      ],
+      "only_permutation_atoms": true,
+      "tcount_all_exact": 84,
+      "tcount_all_relative": 48,
+      "tcount_per_block_exact": 7,
+      "tcount_per_block_relative": 4,
+      "windows": [
+        {
+          "window": [
+            0,
+            1
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 78,
+          "best_joint_saving": 36,
+          "best_joint_tcount": 48
+        },
+        {
+          "window": [
+            1,
+            2
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 78,
+          "best_joint_saving": 36,
+          "best_joint_tcount": 48
+        },
+        {
+          "window": [
+            2,
+            3
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 78,
+          "best_joint_saving": 36,
+          "best_joint_tcount": 48
+        },
+        {
+          "window": [
+            3,
+            4
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 78,
+          "best_joint_saving": 36,
+          "best_joint_tcount": 48
+        },
+        {
+          "window": [
+            4,
+            5
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 78,
+          "best_joint_saving": 36,
+          "best_joint_tcount": 48
+        },
+        {
+          "window": [
+            5,
+            6
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 78,
+          "best_joint_saving": 36,
+          "best_joint_tcount": 48
+        },
+        {
+          "window": [
+            6,
+            7
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 78,
+          "best_joint_saving": 36,
+          "best_joint_tcount": 48
+        },
+        {
+          "window": [
+            7,
+            8
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 78,
+          "best_joint_saving": 36,
+          "best_joint_tcount": 48
+        },
+        {
+          "window": [
+            8,
+            9
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 78,
+          "best_joint_saving": 36,
+          "best_joint_tcount": 48
+        },
+        {
+          "window": [
+            9,
+            10
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 78,
+          "best_joint_saving": 36,
+          "best_joint_tcount": 48
+        },
+        {
+          "window": [
+            10,
+            11
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 78,
+          "best_joint_saving": 36,
+          "best_joint_tcount": 48
+        },
+        {
+          "window": [
+            0,
+            2
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 75,
+          "best_joint_saving": 36,
+          "best_joint_tcount": 48
+        },
+        {
+          "window": [
+            1,
+            3
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 75,
+          "best_joint_saving": 36,
+          "best_joint_tcount": 48
+        },
+        {
+          "window": [
+            2,
+            4
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 75,
+          "best_joint_saving": 36,
+          "best_joint_tcount": 48
+        },
+        {
+          "window": [
+            3,
+            5
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 75,
+          "best_joint_saving": 36,
+          "best_joint_tcount": 48
+        },
+        {
+          "window": [
+            4,
+            6
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 75,
+          "best_joint_saving": 36,
+          "best_joint_tcount": 48
+        },
+        {
+          "window": [
+            5,
+            7
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 75,
+          "best_joint_saving": 36,
+          "best_joint_tcount": 48
+        },
+        {
+          "window": [
+            6,
+            8
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 75,
+          "best_joint_saving": 36,
+          "best_joint_tcount": 48
+        },
+        {
+          "window": [
+            7,
+            9
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 75,
+          "best_joint_saving": 36,
+          "best_joint_tcount": 48
+        },
+        {
+          "window": [
+            8,
+            10
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 75,
+          "best_joint_saving": 36,
+          "best_joint_tcount": 48
+        },
+        {
+          "window": [
+            9,
+            11
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 75,
+          "best_joint_saving": 36,
+          "best_joint_tcount": 48
+        }
+      ],
+      "window_rows": 124,
+      "dense_checks": 124,
+      "dense_disagreements": [],
+      "every_window_all_legal": true,
+      "best_joint_saving": 36,
+      "background_mask": 4095,
+      "baselines": {
+        "n": 3,
+        "blocks": 12,
+        "exact_t": 84,
+        "greedy_mask": 4095,
+        "local_pass": {
+          "mask_bits": 12,
+          "tcount": 48,
+          "legality_verified": true,
+          "saving": 36
+        },
+        "per_block_greedy": {
+          "mask_bits": 12,
+          "tcount": 48,
+          "saving": 36
+        },
+        "pyzx_full_reduce_t": 28,
+        "selection_lower_bound_t": 48,
+        "selection_minus_pyzx": 20
+      }
+    },
+    {
+      "n": 4,
+      "qubits": 10,
+      "blocks": 16,
+      "gate_names": [
+        "ccx",
+        "cx"
+      ],
+      "only_permutation_atoms": true,
+      "tcount_all_exact": 112,
+      "tcount_all_relative": 64,
+      "tcount_per_block_exact": 7,
+      "tcount_per_block_relative": 4,
+      "windows": [
+        {
+          "window": [
+            0,
+            1
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 106,
+          "best_joint_saving": 48,
+          "best_joint_tcount": 64
+        },
+        {
+          "window": [
+            1,
+            2
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 106,
+          "best_joint_saving": 48,
+          "best_joint_tcount": 64
+        },
+        {
+          "window": [
+            2,
+            3
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 106,
+          "best_joint_saving": 48,
+          "best_joint_tcount": 64
+        },
+        {
+          "window": [
+            3,
+            4
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 106,
+          "best_joint_saving": 48,
+          "best_joint_tcount": 64
+        },
+        {
+          "window": [
+            4,
+            5
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 106,
+          "best_joint_saving": 48,
+          "best_joint_tcount": 64
+        },
+        {
+          "window": [
+            5,
+            6
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 106,
+          "best_joint_saving": 48,
+          "best_joint_tcount": 64
+        },
+        {
+          "window": [
+            6,
+            7
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 106,
+          "best_joint_saving": 48,
+          "best_joint_tcount": 64
+        },
+        {
+          "window": [
+            7,
+            8
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 106,
+          "best_joint_saving": 48,
+          "best_joint_tcount": 64
+        },
+        {
+          "window": [
+            8,
+            9
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 106,
+          "best_joint_saving": 48,
+          "best_joint_tcount": 64
+        },
+        {
+          "window": [
+            9,
+            10
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 106,
+          "best_joint_saving": 48,
+          "best_joint_tcount": 64
+        },
+        {
+          "window": [
+            10,
+            11
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 106,
+          "best_joint_saving": 48,
+          "best_joint_tcount": 64
+        },
+        {
+          "window": [
+            11,
+            12
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 106,
+          "best_joint_saving": 48,
+          "best_joint_tcount": 64
+        },
+        {
+          "window": [
+            12,
+            13
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 106,
+          "best_joint_saving": 48,
+          "best_joint_tcount": 64
+        },
+        {
+          "window": [
+            13,
+            14
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 106,
+          "best_joint_saving": 48,
+          "best_joint_tcount": 64
+        },
+        {
+          "window": [
+            14,
+            15
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 106,
+          "best_joint_saving": 48,
+          "best_joint_tcount": 64
+        },
+        {
+          "window": [
+            0,
+            2
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 103,
+          "best_joint_saving": 48,
+          "best_joint_tcount": 64
+        },
+        {
+          "window": [
+            1,
+            3
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 103,
+          "best_joint_saving": 48,
+          "best_joint_tcount": 64
+        },
+        {
+          "window": [
+            2,
+            4
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 103,
+          "best_joint_saving": 48,
+          "best_joint_tcount": 64
+        },
+        {
+          "window": [
+            3,
+            5
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 103,
+          "best_joint_saving": 48,
+          "best_joint_tcount": 64
+        },
+        {
+          "window": [
+            4,
+            6
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 103,
+          "best_joint_saving": 48,
+          "best_joint_tcount": 64
+        },
+        {
+          "window": [
+            5,
+            7
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 103,
+          "best_joint_saving": 48,
+          "best_joint_tcount": 64
+        },
+        {
+          "window": [
+            6,
+            8
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 103,
+          "best_joint_saving": 48,
+          "best_joint_tcount": 64
+        },
+        {
+          "window": [
+            7,
+            9
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 103,
+          "best_joint_saving": 48,
+          "best_joint_tcount": 64
+        },
+        {
+          "window": [
+            8,
+            10
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 103,
+          "best_joint_saving": 48,
+          "best_joint_tcount": 64
+        },
+        {
+          "window": [
+            9,
+            11
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 103,
+          "best_joint_saving": 48,
+          "best_joint_tcount": 64
+        },
+        {
+          "window": [
+            10,
+            12
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 103,
+          "best_joint_saving": 48,
+          "best_joint_tcount": 64
+        },
+        {
+          "window": [
+            11,
+            13
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 103,
+          "best_joint_saving": 48,
+          "best_joint_tcount": 64
+        },
+        {
+          "window": [
+            12,
+            14
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 103,
+          "best_joint_saving": 48,
+          "best_joint_tcount": 64
+        },
+        {
+          "window": [
+            13,
+            15
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 103,
+          "best_joint_saving": 48,
+          "best_joint_tcount": 64
+        }
+      ],
+      "window_rows": 172,
+      "dense_checks": 172,
+      "dense_disagreements": [],
+      "every_window_all_legal": true,
+      "best_joint_saving": 48,
+      "background_mask": 65535,
+      "baselines": {
+        "n": 4,
+        "blocks": 16,
+        "exact_t": 112,
+        "greedy_mask": 65535,
+        "local_pass": {
+          "mask_bits": 16,
+          "tcount": 64,
+          "legality_verified": true,
+          "saving": 48
+        },
+        "per_block_greedy": {
+          "mask_bits": 16,
+          "tcount": 64,
+          "saving": 48
+        },
+        "pyzx_full_reduce_t": 40,
+        "selection_lower_bound_t": 64,
+        "selection_minus_pyzx": 24
+      }
+    },
+    {
+      "n": 5,
+      "qubits": 12,
+      "blocks": 20,
+      "gate_names": [
+        "ccx",
+        "cx"
+      ],
+      "only_permutation_atoms": true,
+      "tcount_all_exact": 140,
+      "tcount_all_relative": 80,
+      "tcount_per_block_exact": 7,
+      "tcount_per_block_relative": 4,
+      "windows": [
+        {
+          "window": [
+            0,
+            1
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 134,
+          "best_joint_saving": 60,
+          "best_joint_tcount": 80
+        },
+        {
+          "window": [
+            1,
+            2
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 134,
+          "best_joint_saving": 60,
+          "best_joint_tcount": 80
+        },
+        {
+          "window": [
+            2,
+            3
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 134,
+          "best_joint_saving": 60,
+          "best_joint_tcount": 80
+        },
+        {
+          "window": [
+            3,
+            4
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 134,
+          "best_joint_saving": 60,
+          "best_joint_tcount": 80
+        },
+        {
+          "window": [
+            4,
+            5
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 134,
+          "best_joint_saving": 60,
+          "best_joint_tcount": 80
+        },
+        {
+          "window": [
+            5,
+            6
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 134,
+          "best_joint_saving": 60,
+          "best_joint_tcount": 80
+        },
+        {
+          "window": [
+            6,
+            7
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 134,
+          "best_joint_saving": 60,
+          "best_joint_tcount": 80
+        },
+        {
+          "window": [
+            7,
+            8
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 134,
+          "best_joint_saving": 60,
+          "best_joint_tcount": 80
+        },
+        {
+          "window": [
+            8,
+            9
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 134,
+          "best_joint_saving": 60,
+          "best_joint_tcount": 80
+        },
+        {
+          "window": [
+            9,
+            10
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 134,
+          "best_joint_saving": 60,
+          "best_joint_tcount": 80
+        },
+        {
+          "window": [
+            10,
+            11
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 134,
+          "best_joint_saving": 60,
+          "best_joint_tcount": 80
+        },
+        {
+          "window": [
+            11,
+            12
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 134,
+          "best_joint_saving": 60,
+          "best_joint_tcount": 80
+        },
+        {
+          "window": [
+            12,
+            13
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 134,
+          "best_joint_saving": 60,
+          "best_joint_tcount": 80
+        },
+        {
+          "window": [
+            13,
+            14
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 134,
+          "best_joint_saving": 60,
+          "best_joint_tcount": 80
+        },
+        {
+          "window": [
+            14,
+            15
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 134,
+          "best_joint_saving": 60,
+          "best_joint_tcount": 80
+        },
+        {
+          "window": [
+            15,
+            16
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 134,
+          "best_joint_saving": 60,
+          "best_joint_tcount": 80
+        },
+        {
+          "window": [
+            16,
+            17
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 134,
+          "best_joint_saving": 60,
+          "best_joint_tcount": 80
+        },
+        {
+          "window": [
+            17,
+            18
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 134,
+          "best_joint_saving": 60,
+          "best_joint_tcount": 80
+        },
+        {
+          "window": [
+            18,
+            19
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 134,
+          "best_joint_saving": 60,
+          "best_joint_tcount": 80
+        },
+        {
+          "window": [
+            0,
+            2
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 131,
+          "best_joint_saving": 60,
+          "best_joint_tcount": 80
+        },
+        {
+          "window": [
+            1,
+            3
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 131,
+          "best_joint_saving": 60,
+          "best_joint_tcount": 80
+        },
+        {
+          "window": [
+            2,
+            4
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 131,
+          "best_joint_saving": 60,
+          "best_joint_tcount": 80
+        },
+        {
+          "window": [
+            3,
+            5
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 131,
+          "best_joint_saving": 60,
+          "best_joint_tcount": 80
+        },
+        {
+          "window": [
+            4,
+            6
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 131,
+          "best_joint_saving": 60,
+          "best_joint_tcount": 80
+        },
+        {
+          "window": [
+            5,
+            7
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 131,
+          "best_joint_saving": 60,
+          "best_joint_tcount": 80
+        },
+        {
+          "window": [
+            6,
+            8
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 131,
+          "best_joint_saving": 60,
+          "best_joint_tcount": 80
+        },
+        {
+          "window": [
+            7,
+            9
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 131,
+          "best_joint_saving": 60,
+          "best_joint_tcount": 80
+        },
+        {
+          "window": [
+            8,
+            10
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 131,
+          "best_joint_saving": 60,
+          "best_joint_tcount": 80
+        },
+        {
+          "window": [
+            9,
+            11
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 131,
+          "best_joint_saving": 60,
+          "best_joint_tcount": 80
+        },
+        {
+          "window": [
+            10,
+            12
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 131,
+          "best_joint_saving": 60,
+          "best_joint_tcount": 80
+        },
+        {
+          "window": [
+            11,
+            13
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 131,
+          "best_joint_saving": 60,
+          "best_joint_tcount": 80
+        },
+        {
+          "window": [
+            12,
+            14
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 131,
+          "best_joint_saving": 60,
+          "best_joint_tcount": 80
+        },
+        {
+          "window": [
+            13,
+            15
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 131,
+          "best_joint_saving": 60,
+          "best_joint_tcount": 80
+        },
+        {
+          "window": [
+            14,
+            16
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 131,
+          "best_joint_saving": 60,
+          "best_joint_tcount": 80
+        },
+        {
+          "window": [
+            15,
+            17
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 131,
+          "best_joint_saving": 60,
+          "best_joint_tcount": 80
+        },
+        {
+          "window": [
+            16,
+            18
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 131,
+          "best_joint_saving": 60,
+          "best_joint_tcount": 80
+        },
+        {
+          "window": [
+            17,
+            19
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 131,
+          "best_joint_saving": 60,
+          "best_joint_tcount": 80
+        }
+      ],
+      "window_rows": 220,
+      "dense_checks": 4,
+      "dense_disagreements": [],
+      "every_window_all_legal": true,
+      "best_joint_saving": 60,
+      "background_mask": 1048575,
+      "baselines": {
+        "n": 5,
+        "blocks": 20,
+        "exact_t": 140,
+        "greedy_mask": 1048575,
+        "local_pass": {
+          "mask_bits": 20,
+          "tcount": 80,
+          "legality_verified": true,
+          "saving": 60
+        },
+        "per_block_greedy": {
+          "mask_bits": 20,
+          "tcount": 80,
+          "saving": 60
+        },
+        "pyzx_full_reduce_t": 52,
+        "selection_lower_bound_t": 80,
+        "selection_minus_pyzx": 28
+      }
+    },
+    {
+      "n": 6,
+      "qubits": 14,
+      "blocks": 24,
+      "gate_names": [
+        "ccx",
+        "cx"
+      ],
+      "only_permutation_atoms": true,
+      "tcount_all_exact": 168,
+      "tcount_all_relative": 96,
+      "tcount_per_block_exact": 7,
+      "tcount_per_block_relative": 4,
+      "windows": [
+        {
+          "window": [
+            0,
+            1
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 162,
+          "best_joint_saving": 72,
+          "best_joint_tcount": 96
+        },
+        {
+          "window": [
+            1,
+            2
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 162,
+          "best_joint_saving": 72,
+          "best_joint_tcount": 96
+        },
+        {
+          "window": [
+            2,
+            3
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 162,
+          "best_joint_saving": 72,
+          "best_joint_tcount": 96
+        },
+        {
+          "window": [
+            3,
+            4
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 162,
+          "best_joint_saving": 72,
+          "best_joint_tcount": 96
+        },
+        {
+          "window": [
+            4,
+            5
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 162,
+          "best_joint_saving": 72,
+          "best_joint_tcount": 96
+        },
+        {
+          "window": [
+            5,
+            6
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 162,
+          "best_joint_saving": 72,
+          "best_joint_tcount": 96
+        },
+        {
+          "window": [
+            6,
+            7
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 162,
+          "best_joint_saving": 72,
+          "best_joint_tcount": 96
+        },
+        {
+          "window": [
+            7,
+            8
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 162,
+          "best_joint_saving": 72,
+          "best_joint_tcount": 96
+        },
+        {
+          "window": [
+            8,
+            9
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 162,
+          "best_joint_saving": 72,
+          "best_joint_tcount": 96
+        },
+        {
+          "window": [
+            9,
+            10
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 162,
+          "best_joint_saving": 72,
+          "best_joint_tcount": 96
+        },
+        {
+          "window": [
+            10,
+            11
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 162,
+          "best_joint_saving": 72,
+          "best_joint_tcount": 96
+        },
+        {
+          "window": [
+            11,
+            12
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 162,
+          "best_joint_saving": 72,
+          "best_joint_tcount": 96
+        },
+        {
+          "window": [
+            12,
+            13
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 162,
+          "best_joint_saving": 72,
+          "best_joint_tcount": 96
+        },
+        {
+          "window": [
+            13,
+            14
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 162,
+          "best_joint_saving": 72,
+          "best_joint_tcount": 96
+        },
+        {
+          "window": [
+            14,
+            15
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 162,
+          "best_joint_saving": 72,
+          "best_joint_tcount": 96
+        },
+        {
+          "window": [
+            15,
+            16
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 162,
+          "best_joint_saving": 72,
+          "best_joint_tcount": 96
+        },
+        {
+          "window": [
+            16,
+            17
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 162,
+          "best_joint_saving": 72,
+          "best_joint_tcount": 96
+        },
+        {
+          "window": [
+            17,
+            18
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 162,
+          "best_joint_saving": 72,
+          "best_joint_tcount": 96
+        },
+        {
+          "window": [
+            18,
+            19
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 162,
+          "best_joint_saving": 72,
+          "best_joint_tcount": 96
+        },
+        {
+          "window": [
+            19,
+            20
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 162,
+          "best_joint_saving": 72,
+          "best_joint_tcount": 96
+        },
+        {
+          "window": [
+            20,
+            21
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 162,
+          "best_joint_saving": 72,
+          "best_joint_tcount": 96
+        },
+        {
+          "window": [
+            21,
+            22
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 162,
+          "best_joint_saving": 72,
+          "best_joint_tcount": 96
+        },
+        {
+          "window": [
+            22,
+            23
+          ],
+          "width": 2,
+          "assignments": 4,
+          "legal": 4,
+          "best_local_tcount": 162,
+          "best_joint_saving": 72,
+          "best_joint_tcount": 96
+        },
+        {
+          "window": [
+            0,
+            2
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 159,
+          "best_joint_saving": 72,
+          "best_joint_tcount": 96
+        },
+        {
+          "window": [
+            1,
+            3
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 159,
+          "best_joint_saving": 72,
+          "best_joint_tcount": 96
+        },
+        {
+          "window": [
+            2,
+            4
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 159,
+          "best_joint_saving": 72,
+          "best_joint_tcount": 96
+        },
+        {
+          "window": [
+            3,
+            5
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 159,
+          "best_joint_saving": 72,
+          "best_joint_tcount": 96
+        },
+        {
+          "window": [
+            4,
+            6
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 159,
+          "best_joint_saving": 72,
+          "best_joint_tcount": 96
+        },
+        {
+          "window": [
+            5,
+            7
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 159,
+          "best_joint_saving": 72,
+          "best_joint_tcount": 96
+        },
+        {
+          "window": [
+            6,
+            8
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 159,
+          "best_joint_saving": 72,
+          "best_joint_tcount": 96
+        },
+        {
+          "window": [
+            7,
+            9
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 159,
+          "best_joint_saving": 72,
+          "best_joint_tcount": 96
+        },
+        {
+          "window": [
+            8,
+            10
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 159,
+          "best_joint_saving": 72,
+          "best_joint_tcount": 96
+        },
+        {
+          "window": [
+            9,
+            11
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 159,
+          "best_joint_saving": 72,
+          "best_joint_tcount": 96
+        },
+        {
+          "window": [
+            10,
+            12
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 159,
+          "best_joint_saving": 72,
+          "best_joint_tcount": 96
+        },
+        {
+          "window": [
+            11,
+            13
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 159,
+          "best_joint_saving": 72,
+          "best_joint_tcount": 96
+        },
+        {
+          "window": [
+            12,
+            14
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 159,
+          "best_joint_saving": 72,
+          "best_joint_tcount": 96
+        },
+        {
+          "window": [
+            13,
+            15
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 159,
+          "best_joint_saving": 72,
+          "best_joint_tcount": 96
+        },
+        {
+          "window": [
+            14,
+            16
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 159,
+          "best_joint_saving": 72,
+          "best_joint_tcount": 96
+        },
+        {
+          "window": [
+            15,
+            17
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 159,
+          "best_joint_saving": 72,
+          "best_joint_tcount": 96
+        },
+        {
+          "window": [
+            16,
+            18
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 159,
+          "best_joint_saving": 72,
+          "best_joint_tcount": 96
+        },
+        {
+          "window": [
+            17,
+            19
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 159,
+          "best_joint_saving": 72,
+          "best_joint_tcount": 96
+        },
+        {
+          "window": [
+            18,
+            20
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 159,
+          "best_joint_saving": 72,
+          "best_joint_tcount": 96
+        },
+        {
+          "window": [
+            19,
+            21
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 159,
+          "best_joint_saving": 72,
+          "best_joint_tcount": 96
+        },
+        {
+          "window": [
+            20,
+            22
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 159,
+          "best_joint_saving": 72,
+          "best_joint_tcount": 96
+        },
+        {
+          "window": [
+            21,
+            23
+          ],
+          "width": 3,
+          "assignments": 8,
+          "legal": 8,
+          "best_local_tcount": 159,
+          "best_joint_saving": 72,
+          "best_joint_tcount": 96
+        }
+      ],
+      "window_rows": 268,
+      "dense_checks": 0,
+      "dense_disagreements": [],
+      "every_window_all_legal": true,
+      "best_joint_saving": 72,
+      "background_mask": 16777215,
+      "baselines": {
+        "n": 6,
+        "blocks": 24,
+        "exact_t": 168,
+        "greedy_mask": 16777215,
+        "local_pass": {
+          "mask_bits": 24,
+          "tcount": 96,
+          "legality_verified": true,
+          "saving": 72
+        },
+        "per_block_greedy": {
+          "mask_bits": 24,
+          "tcount": 96,
+          "saving": 72
+        },
+        "pyzx_full_reduce_t": 64,
+        "selection_lower_bound_t": 96,
+        "selection_minus_pyzx": 32
+      }
+    }
+  ],
+  "decision": {
+    "deltas": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "pyzx_gaps": [
+      20,
+      24,
+      28,
+      32
+    ],
+    "growth": false,
+    "GO": false,
+    "reason": "delta == 0 in every enumerated window: selection adds nothing"
+  },
+  "verdict": "KILL",
+  "seconds": 508.0
+}
