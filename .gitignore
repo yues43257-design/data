@@ -12,3 +12,4 @@
 /checkpoints
 *.pt
 reports/figure_data/superset_corpus.jsonl
+reports/figure_data/frozen_superset.jsonl
