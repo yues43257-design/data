@@ -1,0 +1,24 @@
+{
+  "checkpoint": "/home/siri/MCX/checkpoints/variant_policy_best.pt",
+  "test": {
+    "instances": 400,
+    "blocks": 1586,
+    "block_acc": 0.9066834804539723,
+    "block_auc": 0.9695819568295287,
+    "mean_all_exact": 174.16,
+    "mean_oracle": 133.1125,
+    "mean_policy": 136.51,
+    "mean_policy_repaired": 136.465,
+    "mean_all_relative": 99.52,
+    "oracle_saving": 41.0475,
+    "policy_saving": 37.65,
+    "policy_repaired_saving": 37.695,
+    "mean_policy_greedy": 133.72,
+    "policy_greedy_saving": 40.44,
+    "headroom_captured_greedy": 0.9852000730860588,
+    "policy_usable_rate": 0.9925,
+    "all_relative_usable_rate": 0.3075,
+    "illegal_saving_per_instance": 0.0675,
+    "headroom_captured": 0.9172300383701809
+  }
+}
