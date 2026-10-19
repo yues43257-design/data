@@ -59,6 +59,35 @@ def ccx_positions(canon: QuantumCircuit) -> List[List[int]]:
     return out
 
 
+def tracker_dynamic_verdict(circuit: QuantumCircuit) -> Dict[str, Any]:
+    """Ask the SHIPPED tracker itself whether it models this circuit.
+
+    ``RB._tracker_schedule`` only *collects* gates into layers -- it never calls
+    the tracker, so it cannot answer "does the tracker apply?".  Treating "no
+    exception from the collector" as "tracker applies" was the bug: every
+    dynamic circuit came back True.
+
+    Here the gates are replayed through ``DiagonalTracker.apply_layer`` exactly
+    as ``track_safe`` would, and a ``measure`` / ``reset`` / ``if_else`` is
+    *required* to raise ``UnsupportedGateError`` (§5.43).  If it does not, that
+    is a soundness gap and we fail loudly instead of recording a false pass.
+    """
+    tracker = ST.DiagonalTracker(circuit.num_qubits)
+    non_unitary = ("measure", "reset")
+    for instruction in circuit.data:
+        name = instruction.operation.name
+        qubits = [circuit.find_bit(q).index for q in instruction.qubits]
+        try:
+            tracker.apply_layer([(name, qubits)])
+        except ST.UnsupportedGateError as exc:
+            return {"applies": False, "rejected_gate": name,
+                    "error": f"{type(exc).__name__}: {str(exc)[:90]}"}
+        if name in non_unitary or "if_else" in name:
+            return {"applies": True, "rejected_gate": None,
+                    "error": f"TRACKER DID NOT REJECT {name!r} (soundness gap)"}
+    return {"applies": True, "rejected_gate": None, "error": "no unmodelled gate"}
+
+
 def measurement_based(canon: QuantumCircuit) -> QuantumCircuit:
     """Replace every ccx by 4-T AND + measure + feed-forward (exact)."""
     sites = ccx_positions(canon)
@@ -101,15 +130,13 @@ def main() -> int:
         dyn_t = sum(1 for ins in dyn.data if ins.operation.name in ("t", "tdg"))
         n_meas = sum(1 for ins in dyn.data if ins.operation.name == "measure")
         n_feed = sum(1 for ins in dyn.data if "if_else" in ins.operation.name)
-        # (b) can the existing tracker certify it?  The schedule builder sees only
-        # unitary gates; a measurement/if_else is not a permutation, so the
-        # tracker's model does not apply at all.
-        try:
-            RB._tracker_schedule(dyn)
-            tracker_applies = True
-        except Exception as exc:
-            tracker_applies = False
-            why = f"{type(exc).__name__}: {str(exc)[:60]}"
+        # (b) ask the tracker, not the schedule collector (§5.43 contract).
+        verdict = tracker_dynamic_verdict(dyn)
+        tracker_applies = verdict["applies"]
+        why = verdict["error"]
+        if tracker_applies:
+            raise RuntimeError(
+                f"tracker silently accepted a dynamic circuit at n={n}: {why}")
         print(f"  adder({n}): m={m}  naive={naive} T | RCCX(up-to-diag)={ours} T | "
               f"measurement-based={dyn_t} T")
         print(f"     dynamic ops: {n_meas} measure, {n_feed} if_else; "
@@ -122,7 +149,9 @@ def main() -> int:
                      "feed_forwards": n_feed,
                      "ancillas_added": dyn.num_qubits - canon.num_qubits,
                      "saving_vs_naive": (naive - dyn_t) / naive,
-                     "tracker_applies": tracker_applies})
+                     "tracker_applies": tracker_applies,
+                     "tracker_rejected_gate": verdict["rejected_gate"],
+                     "tracker_error": why})
     print("=" * 100)
     n = rows[-1]
     saving = n["saving_vs_naive"]
@@ -137,8 +166,20 @@ def main() -> int:
     print("  => GO on 'automation + T-count', KILL on 'certification as the core':")
     print("     the dynamic route dominates our RCCX route in T-count AND exactness,")
     print("     and needs no certificate -- it trades ancillas + classical control for it.")
+    print("-" * 100)
+    print("  WARNING: this script's (a)/(c) verdict is RETRACTED by §5.38.")
+    print("  The transcribed gadget is NOT a deterministic AND (3 T, P(a=1)=0.85),")
+    print("  so the 57% / 18 T figures do not belong to a valid construction.")
+    print("  What survives is only (b): the shipped tracker rejects dynamic gates.")
     out = ROOT / "reports" / "figure_data" / "probe_dynamic_and.json"
-    out.write_text(json.dumps({"rows": rows}, indent=2), encoding="utf-8")
+    out.write_text(json.dumps({
+        "status": "retracted",
+        "retraction": "§5.38: the transcribed gadget is not a deterministic AND "
+                      "(3 T, P(anc=1)=0.85); 57%/18 T do not belong to a valid "
+                      "construction. Only the tracker-rejection check (b) survives.",
+        "tracker_contract": "measure/reset/if_else must raise UnsupportedGateError",
+        "rows": rows,
+    }, indent=2), encoding="utf-8")
     print(f"  wrote {out}")
     return 0
 

@@ -1,4 +1,7 @@
 {
+  "status": "retracted",
+  "retraction": "\u00a75.38: the transcribed gadget is not a deterministic AND (3 T, P(anc=1)=0.85); 57%/18 T do not belong to a valid construction. Only the tracker-rejection check (b) survives.",
+  "tracker_contract": "measure/reset/if_else must raise UnsupportedGateError",
   "rows": [
     {
       "n": 3,
@@ -10,7 +13,9 @@
       "feed_forwards": 6,
       "ancillas_added": 6,
       "saving_vs_naive": 0.5714285714285714,
-      "tracker_applies": true
+      "tracker_applies": false,
+      "tracker_rejected_gate": "measure",
+      "tracker_error": "UnsupportedGateError: support_tracker does not model the gate 'measure'. Circuits containing measurements, reset"
     },
     {
       "n": 4,
@@ -22,7 +27,9 @@
       "feed_forwards": 8,
       "ancillas_added": 8,
       "saving_vs_naive": 0.5714285714285714,
-      "tracker_applies": true
+      "tracker_applies": false,
+      "tracker_rejected_gate": "measure",
+      "tracker_error": "UnsupportedGateError: support_tracker does not model the gate 'measure'. Circuits containing measurements, reset"
     }
   ]
 }
