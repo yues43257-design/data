@@ -104,6 +104,11 @@ def tracked_support(schedule: Dict[str, Any], mask: int, *,
             support.update(int(q) for q in block["controls"])
             if ancillas:
                 support.update(int(q) for q in block["ancillas"])
+    # tail layer: gates after the last block (same fix as support_tracker.replay)
+    if len(schedule["layers"]) == len(schedule["blocks"]) + 1 and cx_rule:
+        for name, qubits in schedule["layers"][-1]:
+            if name == "cx" and int(qubits[1]) in support:
+                support.add(int(qubits[0]))
     return support
 
 
@@ -238,6 +243,8 @@ def check_tracker_equivalence(phases: Sequence[str]) -> int:
                     tracker.apply_block(block)
                     if (mask >> index) & 1:
                         tracker.inject_correction(block)
+                if len(schedule["layers"]) == len(schedule["blocks"]) + 1:
+                    tracker.apply_layer(schedule["layers"][-1])
                 checked += 1
                 if tracker.is_safe() != ST.track_safe(schedule, mask):
                     bad_safety += 1

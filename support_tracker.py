@@ -172,15 +172,34 @@ class DiagonalTracker:
         return not self.broken
 
 
-def track_safe(schedule: Dict[str, Any], mask: int) -> bool:
-    """True only when the accumulated correction provably stays diagonal."""
+def replay(schedule: Dict[str, Any], mask: int) -> "DiagonalTracker":
+    """Replay a schedule through the tracker, **including the tail layer**.
+
+    ``layers`` is either ``blocks`` long (one layer before each block, no gates
+    after the last block) or ``blocks + 1`` long, in which case ``layers[-1]``
+    holds the gates *after* the last block.  Omitting that tail was a real
+    soundness bug: ``CCX; H(target)`` with the CCX downgraded was accepted while
+    its residual had off-diagonal weight 1.0 (see ``test_tracker_soundness``).
+    """
+    layers = schedule["layers"]
+    blocks = schedule["blocks"]
+    if len(layers) not in (len(blocks), len(blocks) + 1):
+        raise ValueError(
+            f"schedule has {len(layers)} layers for {len(blocks)} blocks")
     tracker = DiagonalTracker(schedule["total"])
-    for index, block in enumerate(schedule["blocks"]):
-        tracker.apply_layer(schedule["layers"][index])
+    for index, block in enumerate(blocks):
+        tracker.apply_layer(layers[index])
         tracker.apply_block(block)
         if (mask >> index) & 1:
             tracker.inject_correction(block)
-    return tracker.is_safe()
+    if len(layers) == len(blocks) + 1:
+        tracker.apply_layer(layers[-1])
+    return tracker
+
+
+def track_safe(schedule: Dict[str, Any], mask: int) -> bool:
+    """True only when the accumulated correction provably stays diagonal."""
+    return replay(schedule, mask).is_safe()
 
 
 def tracker_greedy(schedule: Dict[str, Any], probs: Sequence[float],

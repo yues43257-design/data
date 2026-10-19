@@ -59,39 +59,69 @@ ST = _load("pb2_st", "support_tracker.py")
 CLIFFORD = frozenset({"h", "cx", "swap", "x", "z", "s", "sdg", "id"})
 
 
+def _first_blocking_h(schedule: Dict[str, Any], site: int):
+    """(layer index, qubit) of the first H on a supported qubit, or None.
+
+    Replays the propagation **including the tail layer**; the previous
+    hand-rolled loop stopped at ``layers[blocks-1]`` and therefore could not see
+    an H placed after the last block (the same defect as ``track_safe``).
+    """
+    layers, blocks = schedule["layers"], schedule["blocks"]
+    n = len(blocks)
+    support: Set[int] = set()
+    for index in range(n):
+        for name, qubits in layers[index]:
+            if name == "h" and int(qubits[0]) in support:
+                return index, int(qubits[0])
+            if name == "cx" and int(qubits[1]) in support:
+                support.add(int(qubits[0]))
+        block = blocks[index]
+        if block["target"] in support:
+            support.update(int(q) for q in block["controls"])
+            support.update(int(q) for q in block["ancillas"])
+        if site == index:                     # the mask is exactly {site}
+            support.add(int(block["target"]))
+            support.update(int(q) for q in block["controls"])
+            support.update(int(q) for q in block["ancillas"])
+    if len(layers) > n:                       # tail: gates after the last block
+        for name, qubits in layers[-1]:
+            if name == "h" and int(qubits[0]) in support:
+                return n, int(qubits[0])
+            if name == "cx" and int(qubits[1]) in support:
+                support.add(int(qubits[0]))
+    return None
+
+
 def analyse(schedule: Dict[str, Any]):
-    """Return per-site (tracker_safe, free_unlockable)."""
+    """Return per-site (tracker_safe, free_unlockable).
+
+    ``safe`` comes from the SHIPPED tracker (single source of truth); the
+    blocker scan below answers the separate "could a free slide unlock it?"
+    question.
+    """
     out: List[Dict[str, Any]] = []
-    for site in range(len(schedule["blocks"])):
-        support: Set[int] = set()
-        blocker_layer = None
-        blocker_q = None
-        for index, block in enumerate(schedule["blocks"]):
-            for name, qubits in schedule["layers"][index]:
-                if name == "h" and int(qubits[0]) in support and blocker_layer is None:
-                    blocker_layer, blocker_q = index, int(qubits[0])
-                elif name == "cx" and int(qubits[1]) in support:
-                    support.add(int(qubits[0]))
-            if block["target"] in support:
-                support.update(int(q) for q in block["controls"])
-                support.update(int(q) for q in block["ancillas"])
-            if site == index:                     # the mask is exactly {site}
-                support.add(int(block["target"]))
-                support.update(int(q) for q in block["controls"])
-                support.update(int(q) for q in block["ancillas"])
-        safe = blocker_layer is None
+    layers, blocks = schedule["layers"], schedule["blocks"]
+    n = len(blocks)
+    for site in range(n):
+        safe = bool(ST.track_safe(schedule, 1 << site))
+        blocker = _first_blocking_h(schedule, site)
         free = False
-        if not safe:
-            # any non-Clifford gate between the site and the blocking H?
+        if blocker is not None:
+            layer_index, _qubit = blocker
+            # NOTE (2026-10-19): this predicate is kept VERBATIM from the
+            # original probe so the published numbers stay reproducible.  It is
+            # vacuous -- a blocking H always lives in a layer >= site + 1, so
+            # the range below is never empty and `free` can never be True.
+            # See §5.52: the b2 verdict is therefore NOT established.
             blocks_between = any(
-                (schedule["blocks"][i].get("controls") or
-                 schedule["blocks"][i].get("target") is not None)
-                for i in range(site + 1, blocker_layer + 1)
+                (blocks[i].get("controls") or
+                 blocks[i].get("target") is not None)
+                for i in range(site + 1, layer_index + 1)
             )
             noncliff = any(
                 name not in CLIFFORD
-                for i in range(site, blocker_layer + 1)
-                for name, _ in schedule["layers"][i]
+                for i in range(site, layer_index + 1)
+                for name, _ in layers[i]
             )
             free = (not blocks_between) and (not noncliff)
         out.append({"site": site, "safe": safe, "free_unlockable": free})
@@ -130,6 +160,11 @@ def main() -> int:
     print(f"  pooled: UB={tot_ub} T   net={tot_net} T   net/UB={tot_net / tot_ub:.2f}")
     verdict = "GO" if tot_net >= 0.30 * tot_ub else "KILL"
     print(f"  pre-registered verdict (net >= 30% of UB): {verdict}")
+    print("-" * 96)
+    print("  WARNING: this verdict is NOT established.  The free-slide predicate")
+    print("  is vacuously False: a blocking H always sits at layer >= site+1, so")
+    print("  `blocks_between` is never empty and free_unlockable can never be > 0.")
+    print("  The 0 above is a tautology, not a measurement.  See report §5.52.")
     out = ROOT / "reports" / "figure_data" / "probe_b2_hmigration.json"
     out.write_text(json.dumps(rows, indent=2), encoding="utf-8")
     print(f"  wrote {out}")

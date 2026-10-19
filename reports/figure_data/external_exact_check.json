@@ -1,0 +1,54 @@
+{
+  "checker": "external-exact-v1",
+  "criterion": "C diagonal <=> [C, Z_q] = 0 for all q (one QCEC call per qubit)",
+  "tools": {
+    "mqt.qcec": "3.9.0",
+    "manjushri": "not on PyPI",
+    "pandora": "PyPI name is an unrelated CV package",
+    "phase_polynomial": "see pp_exact_checker.py (0/12 applicable)"
+  },
+  "timeout_s": 150,
+  "hard_timeout_s": 200,
+  "rows": [
+    {
+      "N": 10,
+      "gates": 193,
+      "qcec_verdict": "equivalent",
+      "qcec_seconds": 0.024,
+      "tracker_safe": true,
+      "tracker_seconds": 3.1e-05
+    },
+    {
+      "N": 8,
+      "gates": 781,
+      "qcec_verdict": "equivalent",
+      "qcec_seconds": 0.028,
+      "tracker_safe": true,
+      "tracker_seconds": 5e-05
+    },
+    {
+      "N": 16,
+      "gates": 817,
+      "qcec_verdict": "equivalent",
+      "qcec_seconds": 0.045,
+      "tracker_safe": true,
+      "tracker_seconds": 3.8e-05
+    },
+    {
+      "N": 18,
+      "gates": 897,
+      "qcec_verdict": "equivalent",
+      "qcec_seconds": 0.05,
+      "tracker_safe": true,
+      "tracker_seconds": 4.7e-05
+    },
+    {
+      "N": 30,
+      "gates": 1921,
+      "qcec_verdict": "HARD-TIMEOUT",
+      "qcec_seconds": 200.14,
+      "tracker_safe": true,
+      "tracker_seconds": 0.000465
+    }
+  ]
+}

@@ -119,6 +119,46 @@ def test_unmodelled_gates_are_rejected() -> None:
         "(this is the silent-failure defect)")
 
 
+def test_tail_layer_is_applied() -> None:
+    """Regression: ``CCX; H(target)`` with the CCX downgraded must be REJECTED.
+
+    ``layers`` carries one layer before each block plus (optionally) a tail
+    layer after the last block.  ``track_safe`` used to replay only
+    ``layers[0..blocks-1]``, so a Hadamard in the tail was invisible and the
+    mask was accepted while the true residual had off-diagonal weight 1.0.
+    """
+    from qiskit import QuantumCircuit
+    from qiskit.quantum_info import Operator
+
+    RB = _load("tail_rb", "realworld_benchmark.py")
+    tracker = _load("tail_st", "support_tracker.py")
+    window = _load("tail_rcw", "realcircuit_window.py")
+
+    circuit = QuantumCircuit(3)
+    circuit.ccx(0, 1, 2)
+    circuit.h(2)
+    schedule = RB._tracker_schedule(circuit)
+    assert len(schedule["layers"]) == len(schedule["blocks"]) + 1, schedule
+
+    # ground truth: downgrading the CCX leaves a non-diagonal residual
+    ideal = np.asarray(Operator(circuit).data, dtype=complex)
+    candidate = np.asarray(Operator(window.replace_one_ccx(circuit, 0)).data,
+                           dtype=complex)
+    residual = candidate @ ideal.conj().T
+    off = float(np.abs(residual - np.diag(np.diag(residual))).max())
+    assert off > 0.9, f"expected a non-diagonal residual, got {off}"
+
+    assert tracker.track_safe(schedule, 1) is False, (
+        "tracker accepted CCX;H(target) -- the tail layer is being dropped")
+
+    # control: the same shape with a CNOT instead of H is safe
+    safe = QuantumCircuit(3)
+    safe.ccx(0, 1, 2)
+    safe.cx(0, 2)
+    assert tracker.track_safe(RB._tracker_schedule(safe), 1) is True
+    print(f"  [ok  ] tail layer applied: CCX;H rejected (true offdiag={off:.3f})")
+
+
 if __name__ == "__main__":
     print("tracker soundness regression tests")
     try:
@@ -126,6 +166,7 @@ if __name__ == "__main__":
         test_cnot_spreads_x_from_control_to_target()
         test_known_unsound_corpus_rejected()
         test_unmodelled_gates_are_rejected()
+        test_tail_layer_is_applied()
     except AssertionError as exc:
         print(f"  [FAIL] {exc}")
         raise SystemExit(1)
