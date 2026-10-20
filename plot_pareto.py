@@ -40,7 +40,7 @@ def main() -> int:
         enum_best = max(enum["best_saving"], 1)
         points = []
         points.append(("tracker-only", enum["tracker_s"], enum["tracker_only_saving"]))
-        for mode in ("one_shot", "greedy", "enum"):
+        for mode in ("one_shot", "two_per_group", "greedy", "enum"):
             tot = data["results"][f"{population}/{mode}"]["totals"]
             cost = tot["tracker_s"] + tot["exact_s"]
             points.append((mode, cost, tot["best_saving"]))

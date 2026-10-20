@@ -117,7 +117,20 @@ def proposals(blocks: int, mode: str, schedule: Dict[str, Any]) -> List[int]:
             if ST.track_safe(schedule, candidate):
                 accepted = candidate
         return [accepted]
+    if mode == "two_per_group":
+        accepted = 0
+        for index in range(blocks):
+            candidate = accepted | (1 << index)
+            if ST.track_safe(schedule, candidate):
+                accepted = candidate
+        # budget of two proposals per group: the all-relative mask and the
+        # tracker's own greedy answer (deduplicated)
+        return sorted({(1 << blocks) - 1, accepted})
     raise ValueError(mode)
+
+
+BUDGET = {"enum": "all", "one_shot": "1/group", "greedy": "1/group",
+          "two_per_group": "2/group"}
 
 
 def certificate_bytes(cert: Dict[str, Any]) -> int:
@@ -153,7 +166,9 @@ def run_population(kind: str, mode: str, backend: str,
             truth = lambda mask, i=inst: bool(RPC.relative_phase_ok(i.circuit(0), i.circuit(mask)))
         masks = proposals(blocks, mode, schedule)
         row = {"population": kind, "config": f"{first}/h={h_prob}", "N": n_qubits,
-               "mode": mode, "proposals": len(masks),
+               "mode": mode, "budget": BUDGET[mode],
+               "oracle": ("reduced(symbolic)" if kind == "homogeneous" else "dense"),
+               "proposals": len(masks),
                "tracker_s": 0.0, "exact_s": 0.0, "exact_calls": 0,
                "legal": 0, "accepted": 0, "illegal_accepted": 0,
                "tracker_accept": 0, "cert_bytes": 0, "tracker_only_saving": 0,
@@ -196,7 +211,8 @@ def run_population(kind: str, mode: str, backend: str,
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--proposal", default="all",
-                        choices=["enum", "one_shot", "greedy", "all"])
+                        choices=["enum", "one_shot", "greedy", "two_per_group",
+                                 "all"])
     parser.add_argument("--backend", default="auto", choices=["auto", "dense", "qcec"])
     parser.add_argument("--qcec-python", default="/tmp/qcec-venv/bin/python")
     parser.add_argument("--threshold", type=int, default=11,
@@ -205,7 +221,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--out", default=str(ROOT / "reports" / "figure_data" /
                                             "hybrid_check.json"))
     args = parser.parse_args(argv)
-    modes = ["enum", "one_shot", "greedy"] if args.proposal == "all" else [args.proposal]
+    modes = (["enum", "one_shot", "two_per_group", "greedy"]
+             if args.proposal == "all" else [args.proposal])
     started = time.perf_counter()
     print("=" * 104)
     print(f"  HYBRID PRE-FILTER  version={HYBRID_VERSION}  backend={args.backend}  "
@@ -232,8 +249,10 @@ def main(argv: Sequence[str] | None = None) -> int:
             out["results"][f"{kind}/{mode}"] = data
             t = data["totals"]
             ratio = (t["best_saving"] / enum_best) if enum_best else float("nan")
-            print(f"  {kind:<12}{mode:<10} proposals={t['proposals']:>3} "
-                  f"legal_in_prop={t['legal']:>3} best_T={t['best_saving']:>3} "
+            oracle = "reduced" if kind == "homogeneous" else "dense"
+            print(f"  {kind:<12}{mode:<15}{BUDGET[mode]:<9}{oracle:<9}"
+                  f"prop={t['proposals']:>3} legal_in_prop={t['legal']:>3} "
+                  f"best_T={t['best_saving']:>3} "
                   f"enum_best={enum_best:>3} ratio={ratio:.2f} "
                   f"trackerOnly_T={t['tracker_only_saving']:>3} "
                   f"illegal={t['illegal_accepted']} "

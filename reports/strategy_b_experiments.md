@@ -2436,14 +2436,19 @@ QCEC 结果只对"单线程、本机、上述配置"成立。
 
 `hybrid_check.py v2`（`--proposal enum|one_shot|greedy`）。**质量表**（不是 recall 表）：
 
-| 群体 | 提案 | proposals | legal_in_proposals | **best_T** | **enum_best_T** | **best_T/enum** | tracker-only T | exact_calls | exact_s |
-|---|---|---:|---:|---:|---:|---:|---:|---:|---:|
-| homogeneous | enum | 48 | 36 | **30** | 30 | **1.00** | 12 | 40 | **1.5 ms** |
-| homogeneous | one_shot | 3 | 2 | 24 | 30 | 0.80 | 0 | 3 | 0.1 ms |
-| homogeneous | greedy | 3 | 3 | 12 | 30 | 0.40 | 12 | **0** | 0 |
-| wide (H 插层) | enum | 32 | 4 | 6 | 6 | 1.00 | 6 | 28 | **8.9 s** |
-| wide (H 插层) | **one_shot** | 2 | **0** | **0** | 6 | **0.00** | 0 | 2 | 0.62 s |
-| wide (H 插层) | greedy | 2 | 2 | **6** | 6 | **1.00** | 6 | **0** | 0 |
+`budget` = 每组（population config）允许的提案数；`oracle` = 精检后端；
+**`tracker-only` 就是 greedy/repair**（本数据里两者数值完全相同，已合并为一列）。
+
+| 群体 | 提案 | **budget** | **oracle** | proposals | legal_in_prop | **best_T** | enum_best | **/enum** | **tracker-only (=greedy/repair)** | exact_calls | exact_s |
+|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| homogeneous | enum | all | reduced | 48 | 36 | **30** | 30 | **1.00** | 12 | 40 | 1.4 ms |
+| homogeneous | one_shot | 1/group | reduced | 3 | 2 | 24 | 30 | 0.80 | 0 | 3 | 0.2 ms |
+| homogeneous | **two_per_group** | 2/group | reduced | 6 | 5 | **27** | 30 | **0.90** | 12 | 3 | **0.1 ms** |
+| homogeneous | greedy | 1/group | reduced | 3 | 3 | 12 | 30 | 0.40 | 12 | **0** | 0 |
+| wide (H 插层) | enum | all | dense | 32 | 4 | 6 | 6 | 1.00 | 6 | 28 | **7.9 s** |
+| wide (H 插层) | **one_shot** | 1/group | dense | 2 | **0** | **0** | 6 | **0.00** | 0 | 2 | 0.53 s |
+| wide (H 插层) | two_per_group | 2/group | dense | 4 | 2 | **6** | 6 | **1.00** | 6 | 2 | 0.55 s |
+| wide (H 插层) | greedy | 1/group | dense | 2 | 2 | **6** | 6 | **1.00** | 6 | **0** | 0 |
 
 > **口径警告**：recall 的分母是**提案里**的 legal 数，不是全群体的 legal 数；
 > 因此 one-shot / greedy 的 "recall 1.00" **不能**和 enum 的 1.00 直接比较。
@@ -2454,9 +2459,23 @@ QCEC 结果只对"单线程、本机、上述配置"成立。
 1. **tracker 保守时（homogeneous）**：tracker 单独只能拿到 **12 T**，hybrid 拿到 **30 T（2.5×）**，代价 **1.5 ms**；
 2. **one-shot 在 homogeneous** 拿到 24 T（enum 的 80%），只要 0.1 ms —— **这是它唯一有价值的场景**；
 3. **H 插层时 one-shot 提案全部非法**（legal=0）⇒ 精检花 0.62 s 换 **0 T**；
-4. **H 插层时 greedy 用 0 次精检拿到 enum 的 100%（6 T）**，而 enum+精检花 **8.9 s**。
+4. **H 插层时 greedy 用 0 次精检拿到 enum 的 100%（6 T）**，而 enum+精检花 **7.9 s**；
+   `two_per_group` 也拿到 6 T，但要 2 次精检 / 0.55 s ⇒ **仍被 greedy 支配**。
 
 ⇒ 混合系统的正确用法是 **"tracker 保守的族上补质量"**；H 插层族上 **greedy 已支配 enum**。
+
+#### (a′) 决策表（论文的"使用说明"）
+
+| 场景 | 推荐 | 质量（best T） | 成本（tracker + exact） |
+|---|---|---:|---:|
+| homogeneous **最高 T** | **enum + hybrid** | **30** | **1.7 ms**（0.3 + 1.4） |
+| homogeneous **便宜** | **one-shot + hybrid** | 24 | **0.2 ms** |
+| homogeneous **零精检** | **greedy** | 12 | **0.1 ms** |
+| homogeneous 折中 | two_per_group + hybrid | 27 | 0.2 ms |
+| wide H **最高 T** | **greedy** | **6** | **0.1 ms** |
+| wide H **不要用** | one-shot（0 T）/ enum+exact（6 T） | 0 / 6 | 0.53 s / 7.9 s |
+
+这张表就是"什么时候用哪一档"的正文答案：**H 插层族上 greedy 直接赢；只有 tracker 保守的族才值得上精检**。
 
 #### (b) 成本必须分三档报（不要用一个 0.2 ms 概括）
 
@@ -2501,6 +2520,8 @@ enum / one_shot / greedy / tracker-only。
 QASMBench 的 `adder_n4` 全电路只有 **8 个 T（4 t + 4 tdg）**，远少于 `7 × #Toffoli`，
 说明它**不是**标准的 7-T Toffoli 分解——模式匹配恢复不了块结构，需要**重新综合**。
 ⇒ 论文写 **"constructed benchmarks"**，并注明"标准基准需要去测量 + 重新综合的预处理"。
+**并且不写任何"标准基准性能"结论**——本文没有跑过标准基准上的优化效果，
+那 5 个数字只说明**域边界**（0/5 在域内）。
 
 ### 5.60 论文正文只写四条贡献（其余进附录）
 
@@ -2508,7 +2529,7 @@ QASMBench 的 `adder_n4` 全电路只有 **8 个 T（4 t + 4 tdg）**，远少�
 |---:|---|---|
 | 1 | **证书 schema + verifier + 四层信任链** | `diagonal-certificate-v1`；`verify_certificate` 抓篡改；§5.59(c) |
 | 2 | **实现忠实性验收** | 52 断言 / 2278 掩码超集 / 3456 对抗 / 200 电路 fuzz（旧 844→0）/ Grover 回归 |
-| 3 | **hybrid + Pareto（含 enum/one-shot/greedy 的 best T 对照）** | §5.59(a) 质量表 + `pareto_best_t.pdf` |
+| 3 | **hybrid + Pareto + 决策表**（enum / one-shot / two-per-group / greedy 的 best T 对照） | §5.59(a)(a′) + `pareto_best_t.pdf` |
 | 4 | **限制**：ccx-block 域、H-free vs H-interleaved、标准基准需重综合前端 | §5.57(c)/§5.59(e)/§10 |
 
 **移到附录 / limitations 的内容**：学习式选择（§8）、定价律（§6.11–6.13）、窗口选择（§5.49）、
