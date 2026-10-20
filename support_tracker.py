@@ -202,6 +202,85 @@ def track_safe(schedule: Dict[str, Any], mask: int) -> bool:
     return replay(schedule, mask).is_safe()
 
 
+CERTIFICATE_SCHEMA = "diagonal-certificate-v1"
+
+
+def certify(schedule: Dict[str, Any], mask: int) -> Dict[str, Any]:
+    """Replay a mask and return a **machine-checkable witness**.
+
+    The theorem is one line: conjugating a diagonal operator by a basis
+    permutation keeps it diagonal, and diagonal gates commute with it, so the
+    accumulated correction stays diagonal **as long as no Hadamard ever acts on
+    a qubit in its support**.  The tracker only ever returns a boolean; this
+    function returns the evidence for that precondition:
+
+        final_support        S, the qubits the correction can touch
+        h_checks             for every H: its stage, qubit, and the support
+                             at that moment
+        violations           the H's that hit the support (empty <=> accepted)
+
+    A reader can check ``S ∩ {H qubits} = ∅`` directly from the record, and
+    ``verify_certificate`` re-derives it independently.  The certificate
+    witnesses the *precondition*; the diagonal-conjugation lemma is the proof
+    that the precondition suffices.
+    """
+    layers, blocks = schedule["layers"], schedule["blocks"]
+    n_blocks = len(blocks)
+    if len(layers) not in (n_blocks, n_blocks + 1):
+        raise ValueError(
+            f"schedule has {len(layers)} layers for {n_blocks} blocks")
+    tracker = DiagonalTracker(schedule["total"])
+    checks: List[Dict[str, Any]] = []
+
+    def run_layer(index: int, gates: Sequence[Tuple[str, Sequence[int]]]) -> None:
+        for name, qubits in gates:
+            if name == "h":
+                checks.append({
+                    "stage": f"layer {index}", "qubit": int(qubits[0]),
+                    "in_support": int(qubits[0]) in tracker.support,
+                    "support_before": sorted(tracker.support),
+                })
+            tracker.apply_layer([(name, qubits)])
+
+    for index, block in enumerate(blocks):
+        run_layer(index, layers[index])
+        tracker.apply_block(block)
+        if (mask >> index) & 1:
+            tracker.inject_correction(block)
+    if len(layers) == n_blocks + 1:
+        run_layer(n_blocks, layers[-1])
+
+    violations = [{"stage": c["stage"], "qubit": c["qubit"]}
+                  for c in checks if c["in_support"]]
+    return {
+        "schema": CERTIFICATE_SCHEMA,
+        "mask": int(mask),
+        "blocks": n_blocks,
+        "accepted": not tracker.broken,
+        "final_support": sorted(tracker.support),
+        "h_checks": checks,
+        "violations": violations,
+    }
+
+
+def verify_certificate(schedule: Dict[str, Any], mask: int,
+                       certificate: Dict[str, Any]) -> bool:
+    """Independently re-derive the witness and compare every claim."""
+    fresh = certify(schedule, mask)
+    if certificate.get("schema") != CERTIFICATE_SCHEMA:
+        return False
+    if certificate.get("mask") != fresh["mask"]:
+        return False
+    if certificate.get("accepted") != fresh["accepted"]:
+        return False
+    if sorted(certificate.get("final_support", [])) != fresh["final_support"]:
+        return False
+    recorded = [(c["stage"], c["qubit"], c["in_support"])
+                for c in certificate.get("h_checks", [])]
+    expected = [(c["stage"], c["qubit"], c["in_support"]) for c in fresh["h_checks"]]
+    return recorded == expected
+
+
 def tracker_greedy(schedule: Dict[str, Any], probs: Sequence[float],
                    threshold: float = 0.0) -> int:
     """Greedy decode with the tracker standing in for the exact verifier."""

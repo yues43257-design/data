@@ -2331,6 +2331,9 @@ QCEC 结果只对"单线程、本机、上述配置"成立。
 | 8 | H 迁移（b2） | **OPEN** | 旧 KILL 是**空真**，已撤回；定义已写，未实现、未验证 |
 | 9 | 窗口组合选择 | **在该选择空间/该族上关闭** | Δ≡0；选择地板 `4m` 比 PyZX 高 20–32 T。**不是全局不可能性**：只说明"每块 7T/4T 的选择"这一空间没有余量 |
 
+> §5.57 把路线 3 从"布尔判定"升级为**可复核证书 + 混合精检**，并给出 Standard-benchmark 的**域边界**
+> （QASMBench 5 例 0/5 在域内：无块级站点 + 含 measure）。
+
 **论文 claim（最终版，三句话）**：
 
 1. **在 H-free / 低 H 的 block 式 Toffoli/MCX 算术电路上**，相对相位改写相对
@@ -2347,6 +2350,83 @@ QCEC 结果只对"单线程、本机、上述配置"成立。
 **禁止的写法**（每条都有实测反例）：
 第一句直接写 −33% 而不带 "H-free / 低 H" 限定；**"任意宽度"**；
 "唯一可扩展"；"exact 不可行"；"我们比 Manjushri/Pandora 快"（未测）。
+
+---
+
+### 5.57 证书、混合系统、标准基准：三件落地
+
+#### (a) 证书输出：把"经验验证"变成"可复核见证"
+
+`support_tracker.certify(schedule, mask)` 返回 `diagonal-certificate-v1`：
+
+| 字段 | 内容 |
+|---|---|
+| `final_support` | **S**：残差能触及的量子位 |
+| `h_checks` | 每个 H 的 `stage / qubit / in_support / support_before` |
+| `violations` | 命中支撑的 H（**空 ⟺ accepted**） |
+| `accepted` | `violations == []` |
+
+**定理（一句话）**：对角算子被计算基置换共轭后仍对角，对角门与之交换 ⇒
+只要 **任何时刻都没有 H 作用在支撑上**，累积修正始终保持对角。
+证书见证的是**前提**（`S ∩ H = ∅`），定理负责"前提 ⇒ 只改相位"。
+
+`verify_certificate(schedule, mask, cert)` **独立重放并逐项比对**；
+测试里还做了**篡改检测**：把 `accepted` 改成 True、或清空 `h_checks`，验证器都必须拒绝。
+（`CCX; H(target)` 的证书：`violations=[{stage:"layer 1", qubit:2}]`，`support_before=[0,1,2]`。）
+
+#### (b) 混合系统：tracker 预筛 + 精确精检
+
+`hybrid_check.py`（`hybrid-v1`）：accept → 附证书直接返回；reject → 仅对**这一个掩码**做精确判定
+（`N ≤ 11` 稠密，`12–18` 走 QCEC，`>18` 记 unresolved）。
+
+在**tracker 已知偏保守**的 homogeneous 群体（§5.5 同族，288 掩码 / 208 legal）：
+
+| 策略 | legal 命中 | recall |
+|---|---:|---:|
+| tracker 单独 | 82 | **0.394** |
+| **混合（对 206 个 reject 做精确）** | **208** | **1.000** |
+
+代价：tracker 1.98 ms + exact **0.2 ms**（该规模下 symbolic verifier 极快）。
+⇒ **"预筛 + 精检"在小/中规模上严格支配"只用 tracker"**：召回补满，成本可忽略；
+在 N≥30 时精确变贵（§5.53：全判据 1–15 s），阈值把两者接起来。
+
+#### (c) 标准基准：**5 个 QASMBench 电路，0/5 在本工具域内**
+
+已从 `pnnl/QASMBench@master` 下载 5 个真实电路（`benchmarks/qasmbench/`）：
+
+| 电路 | q | gates | ccx | H | blocks | 在域内 | 原因 |
+|---|---:|---:|---:|---:|---:|---|---|
+| adder_n4 | 4 | 27 | 0 | 2 | 0 | **否** | 无 ccx 块 + 末尾 measure |
+| cat_state_n4 | 4 | 8 | 0 | 1 | 0 | **否** | 无 ccx 块 + measure |
+| fredkin_n3 | 3 | 22 | 0 | 2 | 0 | **否** | 无 ccx 块 + measure |
+| grover_n2 | 2 | 18 | 0 | 10 | 0 | **否** | 无 ccx 块 + measure |
+| qft_n4 | 4 | 17 | 0 | 4 | 0 | **否** | `cu1` 非 ccx + measure |
+
+**两条独立原因，必须分开写**：
+
+1. **它们已被预先分解**（Toffoli 拆成 `h/t/tdg/cx`，或用 `cu1`），**没有块级站点**——
+   我们的重写单位（MCX/Toffoli 块）在这些文件里**不存在**；
+2. **全部含 `measure`**（读出口），而 §5.43 的判据对 `measure` 一律拒绝——
+   连"只在末尾读出的测量"也被一刀切拒绝，这是**声明域的保守性**，不是电路不安全。
+
+⇒ 论文里必须写：**标准基准需要"去测量 + 重新综合成块"的预处理**才能进入本工具域；
+当前结果仍是 **constructed benchmarks**。这 5 个数的价值是**给出域边界**，不是性能对比。
+
+---
+
+### 5.58 两项研究性方向：只做界定，不做承诺
+
+**跨块相位抵消（原第 4 项）**：把"遇 H 即拒"替换成"用相位多项式让后续块抵消残差"，
+这是**改写**而不是**选择**。理由：§5.49 已证明选择空间地板 `4m` 比 PyZX 高 20–32 T；
+§5.53 又说明精确判据可用但慢。两者合起来说明余量在**联合改写**，不在选择。
+**状态：未实现**；最小探针应是"固定一个 H 插层族，允许把一个残差相位项合并进后续块，
+用稠密 oracle 验证"，成本 3–5 天，**不与当前工具论文混写**。
+
+**安全包装器（原第 5 项）**：`certify()` 已经是"给定电路 + 降级掩码 → 证书"的接口，
+可以直接包在**任何**产生"块级相对相位改写"的流程外。但对 **TODD/pyZX 的输出**直接套用**没有意义**：
+它们输出的是**精确等价**、已分解的电路，**没有降级站点**可认证。可行版本是
+"先在自己的块级表示上做改写 → 用 `certify` 认证 → 再交给 TODD 做精检"。
+**QContext / Maslov 工具 / Bartkiewicz 2026**：本环境**未获取**，**不做任何比较声明**。
 
 ---
 
@@ -2903,6 +2983,11 @@ done
 # §5.55 9 个 SOTA 电路的尾层回归 + 随机 tail fuzz
 .venv/bin/python tail_regression_sota.py
 .venv/bin/python tail_fuzz.py --circuits 200
+
+# §5.57 证书自检 + 混合预筛/精检 + QASMBench 域边界普查
+.venv/bin/python test_tracker_soundness.py
+.venv/bin/python hybrid_check.py
+.venv/bin/python qasmbench_census.py
 ```
 
 ---

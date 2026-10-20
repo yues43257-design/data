@@ -1,0 +1,95 @@
+{
+  "source": "pnnl/QASMBench@master",
+  "rows": [
+    {
+      "circuit": "adder_n4",
+      "qubits": 4,
+      "gates": 27,
+      "ccx": 0,
+      "h": 2,
+      "blocks": 0,
+      "in_domain": false,
+      "tracker_all_relative": "-",
+      "exact_all_relative": "-",
+      "gate_histogram": {
+        "x": 2,
+        "h": 2,
+        "cx": 10,
+        "t": 4,
+        "tdg": 4,
+        "s": 1,
+        "measure": 4
+      }
+    },
+    {
+      "circuit": "cat_state_n4",
+      "qubits": 4,
+      "gates": 8,
+      "ccx": 0,
+      "h": 1,
+      "blocks": 0,
+      "in_domain": false,
+      "tracker_all_relative": "-",
+      "exact_all_relative": "-",
+      "gate_histogram": {
+        "h": 1,
+        "cx": 3,
+        "measure": 4
+      }
+    },
+    {
+      "circuit": "fredkin_n3",
+      "qubits": 3,
+      "gates": 22,
+      "ccx": 0,
+      "h": 2,
+      "blocks": 0,
+      "in_domain": false,
+      "tracker_all_relative": "-",
+      "exact_all_relative": "-",
+      "gate_histogram": {
+        "x": 2,
+        "cx": 8,
+        "h": 2,
+        "t": 4,
+        "tdg": 3,
+        "measure": 3
+      }
+    },
+    {
+      "circuit": "grover_n2",
+      "qubits": 2,
+      "gates": 18,
+      "ccx": 0,
+      "h": 10,
+      "blocks": 0,
+      "in_domain": false,
+      "tracker_all_relative": "-",
+      "exact_all_relative": "-",
+      "gate_histogram": {
+        "h": 10,
+        "cx": 2,
+        "x": 4,
+        "measure": 2
+      }
+    },
+    {
+      "circuit": "qft_n4",
+      "qubits": 4,
+      "gates": 17,
+      "ccx": 0,
+      "h": 4,
+      "blocks": 0,
+      "in_domain": false,
+      "tracker_all_relative": "-",
+      "exact_all_relative": "-",
+      "gate_histogram": {
+        "x": 2,
+        "barrier": 1,
+        "h": 4,
+        "cu1": 6,
+        "measure": 4
+      }
+    }
+  ]
+}

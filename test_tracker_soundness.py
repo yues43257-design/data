@@ -126,6 +126,40 @@ def test_unmodelled_gates_are_rejected() -> None:
         "(this is the silent-failure defect)")
 
 
+def test_certificate_witness() -> None:
+    """The certificate must expose S, the H checks, and survive tampering checks."""
+    from qiskit import QuantumCircuit
+
+    RB = _load("cert_rb", "realworld_benchmark.py")
+    tracker = _load("cert_st", "support_tracker.py")
+
+    safe = QuantumCircuit(3)
+    safe.ccx(0, 1, 2)
+    safe.cx(0, 2)
+    good = tracker.certify(RB._tracker_schedule(safe), 1)
+    assert good["accepted"] is True
+    assert good["final_support"] == [0, 1, 2], good["final_support"]
+    assert good["violations"] == []
+    assert tracker.verify_certificate(RB._tracker_schedule(safe), 1, good)
+
+    bad = QuantumCircuit(3)
+    bad.ccx(0, 1, 2)
+    bad.h(2)
+    cert = tracker.certify(RB._tracker_schedule(bad), 1)
+    assert cert["accepted"] is False
+    assert cert["violations"] == [{"stage": "layer 1", "qubit": 2}], cert["violations"]
+    hit = [c for c in cert["h_checks"] if c["in_support"]]
+    assert hit and hit[0]["support_before"] == [0, 1, 2], hit
+    assert tracker.verify_certificate(RB._tracker_schedule(bad), 1, cert)
+
+    # tampering must be detected: flip the verdict and the check record
+    forged = dict(cert, accepted=True)
+    assert not tracker.verify_certificate(RB._tracker_schedule(bad), 1, forged)
+    forged2 = dict(cert, h_checks=[])
+    assert not tracker.verify_certificate(RB._tracker_schedule(bad), 1, forged2)
+    print("  [ok  ] certificate: S exposed, S∩H recorded, tampering detected")
+
+
 def test_tail_layer_is_applied() -> None:
     """Regression: ``CCX; H(target)`` with the CCX downgraded must be REJECTED.
 
@@ -174,6 +208,7 @@ if __name__ == "__main__":
         test_known_unsound_corpus_rejected()
         test_unmodelled_gates_are_rejected()
         test_tail_layer_is_applied()
+        test_certificate_witness()
     except AssertionError as exc:
         print(f"  [FAIL] {exc}")
         raise SystemExit(1)
