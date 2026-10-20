@@ -138,7 +138,8 @@ def certificate_bytes(cert: Dict[str, Any]) -> int:
 
 
 def run_population(kind: str, mode: str, backend: str,
-                   qcec_python: str, threshold: int) -> Dict[str, Any]:
+                   qcec_python: str, threshold: int,
+                   seed_index: int = 0) -> Dict[str, Any]:
     import experiment_setup as SETUP
     import symbolic_verifier as SYM
 
@@ -151,14 +152,16 @@ def run_population(kind: str, mode: str, backend: str,
                [(4, 0.5), (6, 0.7)])
     for first, h_prob in configs:
         if kind == "homogeneous":
-            verifier = SYM.ReducedSymbolicVerifier(first, 4, SETUP.seed_for(0), h_prob)
-            schedule = ST.homogeneous_schedule(first, 4, SETUP.seed_for(0), h_prob)
+            seed = SETUP.seed_for(seed_index)
+            verifier = SYM.ReducedSymbolicVerifier(first, 4, seed, h_prob)
+            schedule = ST.homogeneous_schedule(first, 4, seed, h_prob)
             blocks = 4
             ideal = build = None
             truth = verifier.is_safe
             n_qubits = first + 3
         else:
-            inst = ULT.WideInstance(width=first, blocks=4, seed=20261020,
+            inst = ULT.WideInstance(width=first, blocks=4,
+                                    seed=20261020 + seed_index,
                                     h_prob=h_prob, ancilla_pool=2)
             schedule = WS.build_schedule(inst)
             blocks, ideal, n_qubits = inst.blocks, inst.circuit(0), inst.total
@@ -218,6 +221,9 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--threshold", type=int, default=11,
                         help="exact fallback up to this width. Default 11 is "
                              "interactive; 12-18 is an explicit slow path.")
+    parser.add_argument("--seed-index", type=int, default=0)
+    parser.add_argument("--populations", default="both",
+                        choices=["homogeneous", "wide", "both"])
     parser.add_argument("--out", default=str(ROOT / "reports" / "figure_data" /
                                             "hybrid_check.json"))
     args = parser.parse_args(argv)
@@ -234,14 +240,16 @@ def main(argv: Sequence[str] | None = None) -> int:
         "note": "recall denominators differ by proposal mode; compare "
                 "best_T / enum_best_T instead",
         "results": {}}
-    for kind in ("homogeneous", "wide"):
+    kinds = (("homogeneous", "wide") if args.populations == "both"
+             else (args.populations,))
+    for kind in kinds:
         enum_data = run_population(kind, "enum", args.backend, args.qcec_python,
-                                   args.threshold)
+                                   args.threshold, args.seed_index)
         enum_best = enum_data["totals"]["best_saving"]
         for mode in modes:
             data = (enum_data if mode == "enum" else
                     run_population(kind, mode, args.backend, args.qcec_python,
-                                   args.threshold))
+                                   args.threshold, args.seed_index))
             for row in data["rows"]:
                 row["enum_best_T"] = enum_best
                 row["best_over_enum"] = (round(row["best_saving"] / enum_best, 3)

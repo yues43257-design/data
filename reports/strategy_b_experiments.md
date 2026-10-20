@@ -2442,7 +2442,7 @@ QCEC 结果只对"单线程、本机、上述配置"成立。
 | 群体 | 提案 | **budget** | **oracle** | proposals | legal_in_prop | **best_T** | enum_best | **/enum** | **tracker-only (=greedy/repair)** | exact_calls | exact_s |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | homogeneous | enum | all | reduced | 48 | 36 | **30** | 30 | **1.00** | 12 | 40 | 1.4 ms |
-| homogeneous | one_shot | 1/group | reduced | 3 | 2 | 24 | 30 | 0.80 | 0 | 3 | 0.2 ms |
+| homogeneous | one_shot ⚠️被 2/group 支配（ablation） | 1/group | reduced | 3 | 2 | 24 | 30 | 0.80 | 0 | 3 | 0.2 ms |
 | homogeneous | **two_per_group** | 2/group | reduced | 6 | 5 | **27** | 30 | **0.90** | 12 | 3 | **0.1 ms** |
 | homogeneous | greedy | 1/group | reduced | 3 | 3 | 12 | 30 | 0.40 | 12 | **0** | 0 |
 | wide (H 插层) | enum | all | dense | 32 | 4 | 6 | 6 | 1.00 | 6 | 28 | **7.9 s** |
@@ -2469,13 +2469,32 @@ QCEC 结果只对"单线程、本机、上述配置"成立。
 | 场景 | 推荐 | 质量（best T） | 成本（tracker + exact） |
 |---|---|---:|---:|
 | homogeneous **最高 T** | **enum + hybrid** | **30** | **1.7 ms**（0.3 + 1.4） |
-| homogeneous **便宜** | **one-shot + hybrid** | 24 | **0.2 ms** |
+| homogeneous **便宜** | **two_per_group + hybrid** | **≥ one-shot（5/5 seed）** | **0.1–0.3 ms** |
 | homogeneous **零精检** | **greedy** | 12 | **0.1 ms** |
-| homogeneous 折中 | two_per_group + hybrid | 27 | 0.2 ms |
+| ~~homogeneous 折中~~ | ~~one-shot~~ | — | **被 2/group 支配，仅作 ablation** |
 | wide H **最高 T** | **greedy** | **6** | **0.1 ms** |
 | wide H **不要用** | one-shot（0 T）/ enum+exact（6 T） | 0 / 6 | 0.53 s / 7.9 s |
 
 这张表就是"什么时候用哪一档"的正文答案：**H 插层族上 greedy 直接赢；只有 tracker 保守的族才值得上精检**。
+
+#### (a″) two_per_group 的多 seed 确认（5 seeds，homogeneous）
+
+| seed | enum | one_shot | **2/group** | greedy | 2/group − one-shot | 2/group 精检 |
+|---:|---:|---:|---:|---:|---:|---:|
+| 0 | 30 | 24 | **27** | 12 | **+3** | 0.10 ms |
+| 1 | 30 | 24 | **27** | 21 | **+3** | 0.07 ms |
+| 2 | 36 | 36 | **36** | 12 | 0 | 0.09 ms |
+| 3 | 18 | 0 | **9** | 9 | **+9** | 0.32 ms |
+| 4 | 27 | 12 | **18** | 12 | **+6** | 0.13 ms |
+| **均值** | 28.2 | 19.2 | **23.4** | 13.2 | **+4.2** | 0.14 ms |
+
+**结论必须分层写**：
+
+1. **排序稳定**：**5/5 个 seed 上 2/group ≥ one-shot**（差距 0/3/3/6/9）⇒
+   "**2/group 是便宜的默认选择，one-shot 被它弱支配**"这句话**可以写**；
+2. **幅度不稳定**：+3 T 只是 seed 0/1 的值，跨 seed 是 **0–9 T** ⇒
+   **不能把 "27 vs 24" 写成常数**；
+3. 绝对质量也随 seed 大幅波动（enum 18–36），所以正文应报**相对值**与**区间**，不报单点。
 
 #### (b) 成本必须分三档报（不要用一个 0.2 ms 概括）
 
