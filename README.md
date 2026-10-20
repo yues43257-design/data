@@ -32,7 +32,21 @@ standalone preprocessor rewrites gate-level circuits back into blocks.
   as-is. `benchmarks/qasmbench/adder_n4.qasm` is such a case (8 T total, no
   exact Toffoli window) and the report says `why: no matching pattern`.
 
-**Measured (QASMBench, `reports/figure_data/toffoli_recover.json`)**
+**Measured — full QASMBench `small/` scan (42 circuits,
+`reports/figure_data/toffoli_recover_scan_all.json`)**
+
+| quantity | value |
+|---|---:|
+| files scanned | 42 |
+| QASM2 parse errors (`swap` etc. not in std) | 7 |
+| already contained `ccx` | 4 |
+| **new blocks recovered** | **2** (`fredkin_n3`, `toffoli_n3`) |
+| **in tracker domain after recovery** | **4** (`fredkin_n3`, `sat_n7`, `simon_n6`, `toffoli_n3`) |
+| windows tried | 61,608 |
+| recovery time (median / max / total) | **0.016 s / 3.26 s / 13.1 s** |
+| timeouts | 0 |
+
+**The five-circuit subset** (`reports/figure_data/toffoli_recover.json`):
 
 | circuit | gates in | blocks recovered | gates out | in tracker domain |
 |---|---:|---:|---:|---|
@@ -44,6 +58,9 @@ standalone preprocessor rewrites gate-level circuits back into blocks.
 
 Every recovered circuit is checked against the measurement-stripped input up to
 global phase (max error ≤ 6.7e-16).
+
+`toffoli_scan.py --qasm-dir <dir>` reproduces the scan (per-circuit windows /
+seconds / timeout flags).
 
 ```bash
 .venv/bin/python toffoli_recover.py                       # census + JSON

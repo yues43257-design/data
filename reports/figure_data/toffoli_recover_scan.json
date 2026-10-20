@@ -1,0 +1,106 @@
+{
+  "version": "toffoli-scan-v1",
+  "timeout_s": 30.0,
+  "max_window": 20,
+  "summary": {
+    "circuits": 5,
+    "with_ccx_before": 0,
+    "recovered_any": 1,
+    "in_domain": 1,
+    "timed_out": 0,
+    "windows_total": 564,
+    "seconds_total": 0.1,
+    "seconds_median": 0.0131,
+    "seconds_max": 0.0698
+  },
+  "rows": [
+    {
+      "circuit": "adder_n4",
+      "has_ccx_before": 0,
+      "in_domain": false,
+      "windows_tried": 270,
+      "seconds": 0.0131,
+      "timed_out": false,
+      "recovered": 0,
+      "remaining_gates": 23,
+      "remaining_histogram": {
+        "x": 2,
+        "h": 2,
+        "cx": 10,
+        "t": 4,
+        "tdg": 4,
+        "s": 1
+      },
+      "equivalence_max_error": 6.661338147750939e-16,
+      "reason": "why: no matching pattern"
+    },
+    {
+      "circuit": "cat_state_n4",
+      "has_ccx_before": 0,
+      "in_domain": false,
+      "windows_tried": 10,
+      "seconds": 0.0021,
+      "timed_out": false,
+      "recovered": 0,
+      "remaining_gates": 4,
+      "remaining_histogram": {
+        "h": 1,
+        "cx": 3
+      },
+      "equivalence_max_error": 2.2371143170757382e-17,
+      "reason": "why: no matching pattern"
+    },
+    {
+      "circuit": "fredkin_n3",
+      "has_ccx_before": 0,
+      "in_domain": true,
+      "windows_tried": 57,
+      "seconds": 0.0698,
+      "timed_out": false,
+      "recovered": 1,
+      "remaining_gates": 5,
+      "remaining_histogram": {
+        "x": 2,
+        "cx": 2,
+        "ccx": 1
+      },
+      "equivalence_max_error": 1.1102230246251565e-16,
+      "reason": "ok"
+    },
+    {
+      "circuit": "grover_n2",
+      "has_ccx_before": 0,
+      "in_domain": false,
+      "windows_tried": 136,
+      "seconds": 0.0016,
+      "timed_out": false,
+      "recovered": 0,
+      "remaining_gates": 16,
+      "remaining_histogram": {
+        "h": 10,
+        "cx": 2,
+        "x": 4
+      },
+      "equivalence_max_error": 0.0,
+      "reason": "why: no matching pattern"
+    },
+    {
+      "circuit": "qft_n4",
+      "has_ccx_before": 0,
+      "in_domain": false,
+      "windows_tried": 91,
+      "seconds": 0.0134,
+      "timed_out": false,
+      "recovered": 0,
+      "remaining_gates": 13,
+      "remaining_histogram": {
+        "x": 2,
+        "barrier": 1,
+        "h": 4,
+        "cu1": 6
+      },
+      "equivalence_max_error": 4.440955846329143e-16,
+      "reason": "why: no matching pattern"
+    }
+  ]
+}

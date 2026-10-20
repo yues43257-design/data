@@ -1,0 +1,742 @@
+{
+  "version": "toffoli-scan-v1",
+  "timeout_s": 30.0,
+  "max_window": 20,
+  "summary": {
+    "circuits": 42,
+    "with_ccx_before": 4,
+    "recovered_any": 2,
+    "in_domain": 4,
+    "timed_out": 0,
+    "windows_total": 61608,
+    "seconds_total": 13.089,
+    "seconds_median": 0.0164,
+    "seconds_max": 3.259
+  },
+  "rows": [
+    {
+      "circuit": "adder_n10",
+      "has_ccx_before": 0,
+      "in_domain": false,
+      "windows_tried": 105,
+      "seconds": 0.0123,
+      "timed_out": false,
+      "recovered": 0,
+      "remaining_gates": 14,
+      "remaining_histogram": {
+        "x": 5,
+        "majority": 4,
+        "cx": 1,
+        "unmaj": 4
+      },
+      "equivalence_max_error": 0.0,
+      "reason": "why: no matching pattern"
+    },
+    {
+      "circuit": "adder_n4",
+      "has_ccx_before": 0,
+      "in_domain": false,
+      "windows_tried": 270,
+      "seconds": 0.0147,
+      "timed_out": false,
+      "recovered": 0,
+      "remaining_gates": 23,
+      "remaining_histogram": {
+        "x": 2,
+        "h": 2,
+        "cx": 10,
+        "t": 4,
+        "tdg": 4,
+        "s": 1
+      },
+      "equivalence_max_error": 6.661338147750939e-16,
+      "reason": "why: no matching pattern"
+    },
+    {
+      "circuit": "basis_change_n3",
+      "has_ccx_before": 0,
+      "in_domain": false,
+      "windows_tried": 470,
+      "seconds": 0.5222,
+      "timed_out": false,
+      "recovered": 0,
+      "remaining_gates": 33,
+      "remaining_histogram": {
+        "u3": 23,
+        "cz": 10
+      },
+      "equivalence_max_error": 5.551626323621177e-16,
+      "reason": "why: no matching pattern"
+    },
+    {
+      "circuit": "basis_trotter_n4",
+      "error": "QASM2ParseError: \"<input>:146,0: 'swap' is not defined in this scope\"",
+      "has_ccx_before": null,
+      "in_domain": false,
+      "windows_tried": 0,
+      "seconds": 0.0,
+      "timed_out": false,
+      "recovered": 0,
+      "remaining_gates": null,
+      "remaining_histogram": {},
+      "equivalence_max_error": null,
+      "reason": "parse-error"
+    },
+    {
+      "circuit": "bb84_n8",
+      "has_ccx_before": 0,
+      "in_domain": false,
+      "windows_tried": 570,
+      "seconds": 0.0161,
+      "timed_out": false,
+      "recovered": 0,
+      "remaining_gates": 38,
+      "remaining_histogram": {
+        "x": 9,
+        "h": 18,
+        "measure": 11
+      },
+      "equivalence_max_error": null,
+      "reason": "why: no matching pattern"
+    },
+    {
+      "circuit": "bell_n4",
+      "has_ccx_before": 0,
+      "in_domain": false,
+      "windows_tried": 470,
+      "seconds": 0.1151,
+      "timed_out": false,
+      "recovered": 0,
+      "remaining_gates": 33,
+      "remaining_histogram": {
+        "h": 3,
+        "cx": 7,
+        "rx": 7,
+        "ry": 6,
+        "u3": 8,
+        "rz": 2
+      },
+      "equivalence_max_error": 5.552034150910586e-16,
+      "reason": "why: no matching pattern"
+    },
+    {
+      "circuit": "cat_state_n4",
+      "has_ccx_before": 0,
+      "in_domain": false,
+      "windows_tried": 10,
+      "seconds": 0.0021,
+      "timed_out": false,
+      "recovered": 0,
+      "remaining_gates": 4,
+      "remaining_histogram": {
+        "h": 1,
+        "cx": 3
+      },
+      "equivalence_max_error": 2.2371143170757382e-17,
+      "reason": "why: no matching pattern"
+    },
+    {
+      "circuit": "deutsch_n2",
+      "has_ccx_before": 0,
+      "in_domain": false,
+      "windows_tried": 15,
+      "seconds": 0.0007,
+      "timed_out": false,
+      "recovered": 0,
+      "remaining_gates": 5,
+      "remaining_histogram": {
+        "x": 1,
+        "h": 3,
+        "cx": 1
+      },
+      "equivalence_max_error": 2.3615800235104444e-17,
+      "reason": "why: no matching pattern"
+    },
+    {
+      "circuit": "dnn_n2",
+      "has_ccx_before": 0,
+      "in_domain": false,
+      "windows_tried": 4330,
+      "seconds": 0.0611,
+      "timed_out": false,
+      "recovered": 0,
+      "remaining_gates": 226,
+      "remaining_histogram": {
+        "rx": 58,
+        "ry": 32,
+        "rz": 38,
+        "u3": 56,
+        "cx": 42
+      },
+      "equivalence_max_error": 1.1825471375888454e-15,
+      "reason": "why: no matching pattern"
+    },
+    {
+      "circuit": "dnn_n8",
+      "has_ccx_before": 0,
+      "in_domain": false,
+      "windows_tried": 19970,
+      "seconds": 3.2057,
+      "timed_out": false,
+      "recovered": 0,
+      "remaining_gates": 1008,
+      "remaining_histogram": {
+        "rx": 256,
+        "ry": 144,
+        "rz": 160,
+        "u3": 256,
+        "cx": 192
+      },
+      "equivalence_max_error": 1.554312370235097e-15,
+      "reason": "why: no matching pattern"
+    },
+    {
+      "circuit": "error_correctiond3_n5",
+      "has_ccx_before": 0,
+      "in_domain": false,
+      "windows_tried": 2090,
+      "seconds": 0.9156,
+      "timed_out": false,
+      "recovered": 0,
+      "remaining_gates": 114,
+      "remaining_histogram": {
+        "h": 62,
+        "u": 1,
+        "cx": 49,
+        "sdg": 2
+      },
+      "equivalence_max_error": 1.4914401489334754e-30,
+      "reason": "why: no matching pattern"
+    },
+    {
+      "circuit": "fredkin_n3",
+      "has_ccx_before": 0,
+      "in_domain": true,
+      "windows_tried": 57,
+      "seconds": 0.0636,
+      "timed_out": false,
+      "recovered": 1,
+      "remaining_gates": 5,
+      "remaining_histogram": {
+        "x": 2,
+        "cx": 2,
+        "ccx": 1
+      },
+      "equivalence_max_error": 1.1102230246251565e-16,
+      "reason": "ok"
+    },
+    {
+      "circuit": "grover_n2",
+      "has_ccx_before": 0,
+      "in_domain": false,
+      "windows_tried": 136,
+      "seconds": 0.0018,
+      "timed_out": false,
+      "recovered": 0,
+      "remaining_gates": 16,
+      "remaining_histogram": {
+        "h": 10,
+        "cx": 2,
+        "x": 4
+      },
+      "equivalence_max_error": 0.0,
+      "reason": "why: no matching pattern"
+    },
+    {
+      "circuit": "hhl_n10",
+      "error": "QASM2ParseError: \"<input>:186801,8: 'q' is not defined in this scope\"",
+      "has_ccx_before": null,
+      "in_domain": false,
+      "windows_tried": 0,
+      "seconds": 0.0,
+      "timed_out": false,
+      "recovered": 0,
+      "remaining_gates": null,
+      "remaining_histogram": {},
+      "equivalence_max_error": null,
+      "reason": "parse-error"
+    },
+    {
+      "circuit": "hhl_n7",
+      "has_ccx_before": 0,
+      "in_domain": false,
+      "windows_tried": 13610,
+      "seconds": 3.259,
+      "timed_out": false,
+      "recovered": 0,
+      "remaining_gates": 690,
+      "remaining_histogram": {
+        "rz": 310,
+        "ry": 173,
+        "rx": 6,
+        "cx": 196,
+        "h": 4,
+        "barrier": 1
+      },
+      "equivalence_max_error": 1.5543122344752192e-15,
+      "reason": "why: no matching pattern"
+    },
+    {
+      "circuit": "hs4_n4",
+      "has_ccx_before": 0,
+      "in_domain": false,
+      "windows_tried": 370,
+      "seconds": 0.028,
+      "timed_out": false,
+      "recovered": 0,
+      "remaining_gates": 28,
+      "remaining_histogram": {
+        "h": 20,
+        "x": 4,
+        "cx": 4
+      },
+      "equivalence_max_error": 0.0,
+      "reason": "why: no matching pattern"
+    },
+    {
+      "circuit": "inverseqft_n4",
+      "has_ccx_before": 0,
+      "in_domain": false,
+      "windows_tried": 171,
+      "seconds": 0.005,
+      "timed_out": false,
+      "recovered": 0,
+      "remaining_gates": 18,
+      "remaining_histogram": {
+        "h": 8,
+        "barrier": 1,
+        "measure": 3,
+        "if_else": 6
+      },
+      "equivalence_max_error": null,
+      "reason": "why: no matching pattern"
+    },
+    {
+      "circuit": "ipea_n2",
+      "has_ccx_before": 0,
+      "in_domain": false,
+      "windows_tried": 610,
+      "seconds": 0.0113,
+      "timed_out": false,
+      "recovered": 0,
+      "remaining_gates": 40,
+      "remaining_histogram": {
+        "h": 8,
+        "ctu": 15,
+        "measure": 3,
+        "reset": 3,
+        "if_else": 11
+      },
+      "equivalence_max_error": null,
+      "reason": "why: no matching pattern"
+    },
+    {
+      "circuit": "ising_n10",
+      "has_ccx_before": 0,
+      "in_domain": false,
+      "windows_tried": 9410,
+      "seconds": 1.2651,
+      "timed_out": false,
+      "recovered": 0,
+      "remaining_gates": 480,
+      "remaining_histogram": {
+        "h": 110,
+        "rz": 280,
+        "cx": 90
+      },
+      "equivalence_max_error": 1.2212534788503272e-15,
+      "reason": "why: no matching pattern"
+    },
+    {
+      "circuit": "iswap_n2",
+      "has_ccx_before": 0,
+      "in_domain": false,
+      "windows_tried": 45,
+      "seconds": 0.001,
+      "timed_out": false,
+      "recovered": 0,
+      "remaining_gates": 9,
+      "remaining_histogram": {
+        "x": 1,
+        "s": 2,
+        "h": 4,
+        "cx": 2
+      },
+      "equivalence_max_error": 0.0,
+      "reason": "why: no matching pattern"
+    },
+    {
+      "circuit": "linearsolver_n3",
+      "has_ccx_before": 0,
+      "in_domain": false,
+      "windows_tried": 190,
+      "seconds": 0.1368,
+      "timed_out": false,
+      "recovered": 0,
+      "remaining_gates": 19,
+      "remaining_histogram": {
+        "h": 12,
+        "x": 1,
+        "cx": 4,
+        "u3": 2
+      },
+      "equivalence_max_error": 1.1656213729308159e-16,
+      "reason": "why: no matching pattern"
+    },
+    {
+      "circuit": "lpn_n5",
+      "has_ccx_before": 0,
+      "in_domain": false,
+      "windows_tried": 66,
+      "seconds": 0.0079,
+      "timed_out": false,
+      "recovered": 0,
+      "remaining_gates": 11,
+      "remaining_histogram": {
+        "h": 9,
+        "cx": 2
+      },
+      "equivalence_max_error": 4.956823241083708e-18,
+      "reason": "why: no matching pattern"
+    },
+    {
+      "circuit": "pea_n5",
+      "has_ccx_before": 0,
+      "in_domain": false,
+      "windows_tried": 390,
+      "seconds": 0.5874,
+      "timed_out": false,
+      "recovered": 0,
+      "remaining_gates": 29,
+      "remaining_histogram": {
+        "h": 8,
+        "ctu": 15,
+        "cu1": 6
+      },
+      "equivalence_max_error": 4.447679009772377e-16,
+      "reason": "why: no matching pattern"
+    },
+    {
+      "circuit": "qaoa_n3",
+      "has_ccx_before": 0,
+      "in_domain": false,
+      "windows_tried": 136,
+      "seconds": 0.0761,
+      "timed_out": false,
+      "recovered": 0,
+      "remaining_gates": 16,
+      "remaining_histogram": {
+        "h": 3,
+        "cx": 6,
+        "rz": 3,
+        "rx": 3,
+        "measure": 1
+      },
+      "equivalence_max_error": null,
+      "reason": "why: no matching pattern"
+    },
+    {
+      "circuit": "qaoa_n6",
+      "has_ccx_before": 0,
+      "in_domain": false,
+      "windows_tried": 5210,
+      "seconds": 1.7818,
+      "timed_out": false,
+      "recovered": 0,
+      "remaining_gates": 270,
+      "remaining_histogram": {
+        "h": 6,
+        "rz": 54,
+        "u3": 72,
+        "rx": 66,
+        "cx": 54,
+        "ry": 18
+      },
+      "equivalence_max_error": 8.215653587662449e-15,
+      "reason": "why: no matching pattern"
+    },
+    {
+      "circuit": "qec_en_n5",
+      "has_ccx_before": 0,
+      "in_domain": false,
+      "windows_tried": 310,
+      "seconds": 0.0542,
+      "timed_out": false,
+      "recovered": 0,
+      "remaining_gates": 25,
+      "remaining_histogram": {
+        "h": 14,
+        "t": 1,
+        "cx": 10
+      },
+      "equivalence_max_error": 1.116321107857879e-16,
+      "reason": "why: no matching pattern"
+    },
+    {
+      "circuit": "qec_sm_n5",
+      "has_ccx_before": 0,
+      "in_domain": false,
+      "windows_tried": 36,
+      "seconds": 0.0024,
+      "timed_out": false,
+      "recovered": 0,
+      "remaining_gates": 8,
+      "remaining_histogram": {
+        "x": 1,
+        "barrier": 1,
+        "syndrome": 1,
+        "measure": 2,
+        "if_else": 3
+      },
+      "equivalence_max_error": null,
+      "reason": "why: no matching pattern"
+    },
+    {
+      "circuit": "qft_n4",
+      "has_ccx_before": 0,
+      "in_domain": false,
+      "windows_tried": 91,
+      "seconds": 0.0144,
+      "timed_out": false,
+      "recovered": 0,
+      "remaining_gates": 13,
+      "remaining_histogram": {
+        "x": 2,
+        "barrier": 1,
+        "h": 4,
+        "cu1": 6
+      },
+      "equivalence_max_error": 4.440955846329143e-16,
+      "reason": "why: no matching pattern"
+    },
+    {
+      "circuit": "qpe_n9",
+      "has_ccx_before": 2,
+      "in_domain": false,
+      "windows_tried": 630,
+      "seconds": 0.0238,
+      "timed_out": false,
+      "recovered": 0,
+      "remaining_gates": 41,
+      "remaining_histogram": {
+        "h": 12,
+        "x": 3,
+        "barrier": 3,
+        "ccx": 2,
+        "cz": 1,
+        "cu1": 15,
+        "measure": 5
+      },
+      "equivalence_max_error": null,
+      "reason": "why: no matching pattern"
+    },
+    {
+      "circuit": "qrng_n4",
+      "has_ccx_before": 0,
+      "in_domain": false,
+      "windows_tried": 10,
+      "seconds": 0.0017,
+      "timed_out": false,
+      "recovered": 0,
+      "remaining_gates": 4,
+      "remaining_histogram": {
+        "h": 4
+      },
+      "equivalence_max_error": 1.3877787807814463e-17,
+      "reason": "why: no matching pattern"
+    },
+    {
+      "circuit": "quantumwalks_n2",
+      "has_ccx_before": 0,
+      "in_domain": false,
+      "windows_tried": 66,
+      "seconds": 0.005,
+      "timed_out": false,
+      "recovered": 0,
+      "remaining_gates": 11,
+      "remaining_histogram": {
+        "u3": 8,
+        "cx": 3
+      },
+      "equivalence_max_error": 6.661338147750939e-16,
+      "reason": "why: no matching pattern"
+    },
+    {
+      "circuit": "sat_n7",
+      "has_ccx_before": 10,
+      "in_domain": true,
+      "windows_tried": 610,
+      "seconds": 0.1725,
+      "timed_out": false,
+      "recovered": 0,
+      "remaining_gates": 40,
+      "remaining_histogram": {
+        "h": 9,
+        "x": 21,
+        "ccx": 10
+      },
+      "equivalence_max_error": 4.440892098500626e-16,
+      "reason": "why: no matching pattern"
+    },
+    {
+      "circuit": "shor_n5",
+      "error": "QASM2ParseError: \"<input>:18,0: 'cswap' is not defined in this scope\"",
+      "has_ccx_before": null,
+      "in_domain": false,
+      "windows_tried": 0,
+      "seconds": 0.0,
+      "timed_out": false,
+      "recovered": 0,
+      "remaining_gates": null,
+      "remaining_histogram": {},
+      "equivalence_max_error": null,
+      "reason": "parse-error"
+    },
+    {
+      "circuit": "simon_n6",
+      "has_ccx_before": 2,
+      "in_domain": true,
+      "windows_tried": 171,
+      "seconds": 0.0192,
+      "timed_out": false,
+      "recovered": 0,
+      "remaining_gates": 18,
+      "remaining_histogram": {
+        "h": 6,
+        "barrier": 2,
+        "cx": 2,
+        "x": 6,
+        "ccx": 2
+      },
+      "equivalence_max_error": 1.232595164407831e-32,
+      "reason": "why: no matching pattern"
+    },
+    {
+      "circuit": "teleportation_n3",
+      "has_ccx_before": 0,
+      "in_domain": false,
+      "windows_tried": 36,
+      "seconds": 0.0195,
+      "timed_out": false,
+      "recovered": 0,
+      "remaining_gates": 8,
+      "remaining_histogram": {
+        "h": 4,
+        "t": 1,
+        "s": 1,
+        "cx": 2
+      },
+      "equivalence_max_error": 1.110336118722154e-16,
+      "reason": "why: no matching pattern"
+    },
+    {
+      "circuit": "toffoli_n3",
+      "has_ccx_before": 0,
+      "in_domain": true,
+      "windows_tried": 36,
+      "seconds": 0.045,
+      "timed_out": false,
+      "recovered": 1,
+      "remaining_gates": 3,
+      "remaining_histogram": {
+        "x": 2,
+        "ccx": 1
+      },
+      "equivalence_max_error": 1.1102230246251565e-16,
+      "reason": "ok"
+    },
+    {
+      "circuit": "variational_n4",
+      "has_ccx_before": 0,
+      "in_domain": false,
+      "windows_tried": 890,
+      "seconds": 0.6236,
+      "timed_out": false,
+      "recovered": 0,
+      "remaining_gates": 54,
+      "remaining_histogram": {
+        "x": 2,
+        "rz": 28,
+        "cx": 16,
+        "h": 8
+      },
+      "equivalence_max_error": 5.551115123125783e-16,
+      "reason": "why: no matching pattern"
+    },
+    {
+      "circuit": "vqe_n4",
+      "error": "QASM2ParseError: \"<input>:5,0: 'sx' is not defined in this scope\"",
+      "has_ccx_before": null,
+      "in_domain": false,
+      "windows_tried": 0,
+      "seconds": 0.0,
+      "timed_out": false,
+      "recovered": 0,
+      "remaining_gates": null,
+      "remaining_histogram": {},
+      "equivalence_max_error": null,
+      "reason": "parse-error"
+    },
+    {
+      "circuit": "vqe_uccsd_n4",
+      "error": "QASM2ParseError: \"<input>:225,8: 'q' is not defined in this scope\"",
+      "has_ccx_before": null,
+      "in_domain": false,
+      "windows_tried": 0,
+      "seconds": 0.0,
+      "timed_out": false,
+      "recovered": 0,
+      "remaining_gates": null,
+      "remaining_histogram": {},
+      "equivalence_max_error": null,
+      "reason": "parse-error"
+    },
+    {
+      "circuit": "vqe_uccsd_n6",
+      "error": "QASM2ParseError: \"<input>:2286,8: 'q' is not defined in this scope\"",
+      "has_ccx_before": null,
+      "in_domain": false,
+      "windows_tried": 0,
+      "seconds": 0.0,
+      "timed_out": false,
+      "recovered": 0,
+      "remaining_gates": null,
+      "remaining_histogram": {},
+      "equivalence_max_error": null,
+      "reason": "parse-error"
+    },
+    {
+      "circuit": "vqe_uccsd_n8",
+      "error": "QASM2ParseError: \"<input>:10813,8: 'q' is not defined in this scope\"",
+      "has_ccx_before": null,
+      "in_domain": false,
+      "windows_tried": 0,
+      "seconds": 0.0,
+      "timed_out": false,
+      "recovered": 0,
+      "remaining_gates": null,
+      "remaining_histogram": {},
+      "equivalence_max_error": null,
+      "reason": "parse-error"
+    },
+    {
+      "circuit": "wstate_n3",
+      "has_ccx_before": 1,
+      "in_domain": false,
+      "windows_tried": 21,
+      "seconds": 0.0168,
+      "timed_out": false,
+      "recovered": 0,
+      "remaining_gates": 6,
+      "remaining_histogram": {
+        "u3": 1,
+        "cH": 1,
+        "ccx": 1,
+        "x": 2,
+        "cx": 1
+      },
+      "equivalence_max_error": 2.232119962529433e-16,
+      "reason": "why: no matching pattern"
+    }
+  ]
+}

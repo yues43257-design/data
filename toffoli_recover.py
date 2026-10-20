@@ -49,6 +49,9 @@ RECOVER_VERSION = "toffoli-recover-v1"
 DEFAULT_MAX_WINDOW = 20
 DEFAULT_TOL = 1e-9
 _IGNORED = frozenset({"barrier", "id"})
+# gates the shipped DiagonalTracker actually models (see support_tracker.py)
+_TRACKER_GATES = frozenset({"h", "cx", "swap", "x", "z", "s", "sdg", "t",
+                            "tdg", "cz", "rz", "id", "barrier", "ccx"})
 
 # Qiskit's own 7-T decomposition (15 gates).  Kept as a fast-path label only;
 # the generic window search below is what actually decides.
@@ -124,6 +127,10 @@ def _match_window(circuit: QuantumCircuit, start: int, length: int,
                   tol: float) -> Optional[Dict[str, Any]]:
     """Try to match ``circuit.data[start:start+length]`` to one Toffoli."""
     window = list(circuit.data[start:start + length])
+    # An existing single ccx is already a block: copying it is a no-op, and
+    # counting it as "recovered" would inflate the report.
+    if len(window) == 1 and window[0].operation.name == "ccx":
+        return None
     if any(ins.clbits for ins in window):
         return None
     qubits: List[int] = []
@@ -161,8 +168,12 @@ def _match_window(circuit: QuantumCircuit, start: int, length: int,
 def recover(circuit_or_qasm: Any, *,
             strip_terminal_measurements: bool = True,
             max_window: int = DEFAULT_MAX_WINDOW,
-            tol: float = DEFAULT_TOL) -> Tuple[QuantumCircuit, Dict[str, Any]]:
+            tol: float = DEFAULT_TOL,
+            timeout_s: float = 30.0) -> Tuple[QuantumCircuit, Dict[str, Any]]:
     """Rewrite exact-Toffoli windows into ``ccx`` blocks."""
+    import time
+
+    started = time.perf_counter()
     circuit = _as_circuit(circuit_or_qasm)
     strip_report = {"removed_terminal_measurements": 0,
                     "mid_circuit_measurements": 0}
@@ -171,11 +182,19 @@ def recover(circuit_or_qasm: Any, *,
     data = list(circuit.data)
     out = _empty_like(circuit)
     matches: List[Dict[str, Any]] = []
+    windows_tried = 0
+    timed_out = False
     index = 0
     while index < len(data):
+        if time.perf_counter() - started > timeout_s:
+            timed_out = True
+            for instruction in data[index:]:
+                _append(out, circuit, instruction)
+            break
         matched = None
         longest = min(max_window, len(data) - index)
         for length in range(longest, 0, -1):
+            windows_tried += 1
             matched = _match_window(circuit, index, length, tol)
             if matched:
                 break
@@ -195,20 +214,27 @@ def recover(circuit_or_qasm: Any, *,
     remaining_measure = names.count("measure")
     remaining_ccx = names.count("ccx")
     dynamic = any(name in ("measure", "reset", "if_else") for name in names)
+    unsupported = sorted({name for name in names
+                          if name not in _TRACKER_GATES})
     report: Dict[str, Any] = {
         "version": RECOVER_VERSION,
         **strip_report,
         "input_gates": len(data),
         "recovered_blocks": len(matches),
+        "windows_tried": windows_tried,
+        "seconds": round(time.perf_counter() - started, 4),
+        "timed_out": timed_out,
         "matches": matches,
         "remaining_gates": len(out.data),
         "remaining_ccx": remaining_ccx,
         "remaining_measurements": remaining_measure,
-        "in_tracker_domain": bool(remaining_ccx > 0 and not dynamic),
+        "in_tracker_domain": bool(remaining_ccx > 0 and not dynamic
+                                  and not unsupported),
+        "unsupported_gates": unsupported,
         "unmatched_reason": (None if matches else
                              "why: no matching pattern"),
     }
-    if out.num_qubits <= 10:
+    if out.num_qubits <= 10 and not dynamic:
         recovered_u = np.asarray(Operator(out).data, dtype=complex)
         original_u = np.asarray(Operator(circuit).data, dtype=complex)
         m = recovered_u @ original_u.conj().T
@@ -220,6 +246,8 @@ def recover(circuit_or_qasm: Any, *,
     else:
         report["equivalence_checked"] = False
         report["equivalence_max_error"] = None
+        report["equivalence_skipped_because"] = (
+            "non-unitary (measure/reset/if_else)" if dynamic else "wider than 10 qubits")
     return out, report
 
 

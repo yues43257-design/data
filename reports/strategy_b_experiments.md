@@ -2418,6 +2418,8 @@ QCEC 结果只对"单线程、本机、上述配置"成立。
 > 其余 4 个仍是 `why: no matching pattern`（`adder_n4` 总共只有 8 T，不是精确 Toffoli 分解）。
 > ⇒ 域边界从"0/5"变成 **"1/5（fredkin_n3）"**；**仍然不能**写标准基准性能结论。
 > 每个恢复电路都与"去终端测量"的原电路做过全局相位等价检查（误差 ≤ 6.7e-16）。
+> **全 42 个 QASMBench small 电路的扫描**（见 §A.1）：**2 个恢复出新块**（fredkin_n3、toffoli_n3），
+> **4 个进入 tracker 域**（另两个是本来就带 ccx 的 sat_n7 / simon_n6）。
 
 ---
 
@@ -3203,4 +3205,39 @@ done
 11. **tracker 是"快 3–6 个数量级的预筛"，不是"唯一可判定者"**（§5.50/§5.53）：相位多项式精确判据适用率 **0/12**（H 在块内 + Toffoli 非仿射）；但**QCEC 在 N=106 仍能判定**（legal 0.17 s/量子位、illegal 3.6 s/量子位，`alternating`）。所以**不能写**"exact 不可行""唯一可扩展""我们比 Manjushri/Pandora 快"；正确写法是"**掩码枚举内环的 fast sound pre-filter**"，并用 **speed–precision Pareto** 作为核心图。它在有用的一档是保守的（recall 0.099–0.500，另一个 population）。
 12. **b2 的 KILL 已撤回，判定未建立**（§5.52）：`free_unlockable` 判据恒为 False（阻塞 H 必然在下游），所以"0 个可免费解锁"是空真；改成非空真的读法后同一批电路可给出 `net/UB` 高达 0.94。**不得再引用 §5.44 的 KILL**。
 13. **回归语料有结构性盲区**（§5.51）：尾层 bug（`layers[-1]` 漏应用）在 38 个电路 / 308 个位点上影响为 0，因为所有生成器都把 H 放在块之间、从不放在末尾。这是第一个由**外部审阅**而不是自检抓到的 bug ⇒ 论文的方法学一节应写"语料覆盖边界"，而不是"测试很全"。
-14. **所有数字都来自构造电路，不是标准基准**（截至 2026-10-19）：`two_adders` / CDKM / MCX 阶梯 / `WideInstance` 都是本仓库生成的。QASMBench / RevLib **未接入**——本机到 GitHub 的 443 连接被拒（实测 `git ls-remote` 超时 21 s 后 `Connection refused`），拿不到基准文件。论文里必须写 **"constructed benchmarks"**，**不得**暗示标准基准；接入是独立的工程任务，不是"再跑一次脚本"。
+14. **标准基准：QASMBench small 已接入并扫描，RevLib 未接入**（2026-10-20）：42 个 QASMBench small 电路已下载（`benchmarks/qasmbench_all/`），其中 **7 个 QASM2 解析失败**（`swap` 等不在标准库里）、**4 个进入 tracker 域**（§A.1）。但**性能与证书数字仍全部来自构造电路**；论文写 **"constructed benchmarks"**，标准基准确切地说是"**需要去测量 + 重新综合前端**"，**不写标准基准性能**。RevLib 仍未接入。
+
+---
+
+## 附录 A. 块恢复前端（不计入正文四条贡献）
+
+### A.1 `toffoli_recover.py`：把门级电路恢复成 ccx 块
+
+**目的**：tracker 的域是"Toffoli/MCX 块"；QASMBench 文件多为门级分解，没有块站点。
+该前端只把**精确等于一个 Toffoli（允许全局相位、不允许相对相位）**的连续窗口换回 `ccx`。
+
+| 约束 | 实现 |
+|---|---|
+| 精确性 | 3 量子位、≤20 门窗口；与 `ccx` 的 8×8 酉矩阵比较，容差 `1e-9`，只允许全局相位 |
+| 相对相位 | **不匹配**（RCCX 差一个对角，不是全局相位） |
+| 测量 | 只剥离**终端** measurement（flag 控制）；中途 measurement/reset/经典控制保留并报告 |
+| 超时 | `timeout_s`（默认 30 s）+ 每窗口计数；超时后原样拷贝剩余门并标记 `timed_out` |
+| 不改主流程 | 未修改 `support_tracker.py` / `relative_phase_criterion.py` |
+
+**全 QASMBench small 扫描（42 个文件）**：
+
+| 量 | 值 |
+|---|---:|
+| 解析成功 / 失败 | 35 / **7**（`swap` 等不在 QASM2 标准库） |
+| 原本已含 `ccx` | 4 |
+| **恢复出新块** | **2**（`fredkin_n3`、`toffoli_n3`） |
+| **进入 tracker 域** | **4**（+ `sat_n7`、`simon_n6` 本来就有 ccx） |
+| 尝试窗口数 | **61,608** |
+| 恢复耗时（中位 / 最大 / 总计） | **0.016 s / 3.26 s / 13.1 s** |
+| 超时 | **0** |
+
+**`adder_n4` 仍是 0 块**：全电路只有 8 T（4 t + 4 tdg），不是 7-T Toffoli 分解——
+模式匹配恢复不了，需要**重新综合前端**；本附录**不做**，也不硬塞。
+
+**定位**：这是**前端工具**，不是证书/Pareto 的贡献；正文只引用它的结论
+"标准基准需去测量 + 重新综合"。
