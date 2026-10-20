@@ -197,15 +197,45 @@ def replay(schedule: Dict[str, Any], mask: int) -> "DiagonalTracker":
     return tracker
 
 
-def track_safe(schedule: Dict[str, Any], mask: int) -> bool:
+def _cancel_hh(layer: Sequence[Tuple[str, Sequence[int]]]):
+    """Drop H,H pairs that are adjacent **on the same qubit** (H H = I).
+
+    Only exact cancellations: a gate touching the qubit between the two H's
+    flushes the pending one, so nothing is cancelled across a CX or a block.
+    """
+    pending: Dict[int, int] = {}
+    out: List[Any] = []
+    for name, qubits in layer:
+        if name == "h":
+            q = int(qubits[0])
+            if q in pending:
+                out[pending.pop(q)] = None          # remove the first H
+                continue                            # and drop this one
+            pending[q] = len(out)
+            out.append((name, qubits))
+        else:
+            for q in qubits:
+                pending.pop(int(q), None)
+            out.append((name, qubits))
+    return [gate for gate in out if gate is not None]
+
+
+def peephole(schedule: Dict[str, Any]) -> Dict[str, Any]:
+    """A copy of ``schedule`` with exact H-H cancellations applied per layer."""
+    return {**schedule, "layers": [_cancel_hh(layer) for layer in schedule["layers"]]}
+
+
+def track_safe(schedule: Dict[str, Any], mask: int,
+               cancel_hh: bool = False) -> bool:
     """True only when the accumulated correction provably stays diagonal."""
-    return replay(schedule, mask).is_safe()
+    return replay(peephole(schedule) if cancel_hh else schedule, mask).is_safe()
 
 
 CERTIFICATE_SCHEMA = "diagonal-certificate-v1"
 
 
-def certify(schedule: Dict[str, Any], mask: int) -> Dict[str, Any]:
+def certify(schedule: Dict[str, Any], mask: int,
+            cancel_hh: bool = False) -> Dict[str, Any]:
     """Replay a mask and return a **machine-checkable witness**.
 
     The theorem is one line: conjugating a diagonal operator by a basis
@@ -224,6 +254,8 @@ def certify(schedule: Dict[str, Any], mask: int) -> Dict[str, Any]:
     witnesses the *precondition*; the diagonal-conjugation lemma is the proof
     that the precondition suffices.
     """
+    if cancel_hh:
+        schedule = peephole(schedule)
     layers, blocks = schedule["layers"], schedule["blocks"]
     n_blocks = len(blocks)
     if len(layers) not in (n_blocks, n_blocks + 1):
