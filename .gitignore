@@ -13,3 +13,9 @@
 *.pt
 reports/figure_data/superset_corpus.jsonl
 reports/figure_data/frozen_superset.jsonl
+.venv/
+__pycache__/
+*.pyc
+.venv/
+__pycache__/
+*.pyc
