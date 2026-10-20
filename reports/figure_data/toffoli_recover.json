@@ -1,0 +1,107 @@
+{
+  "version": "toffoli-recover-v1",
+  "rows": [
+    {
+      "circuit": "adder_n4",
+      "version": "toffoli-recover-v1",
+      "removed_terminal_measurements": 4,
+      "mid_circuit_measurements": 0,
+      "input_gates": 23,
+      "recovered_blocks": 0,
+      "matches": [],
+      "remaining_gates": 23,
+      "remaining_ccx": 0,
+      "remaining_measurements": 0,
+      "in_tracker_domain": false,
+      "unmatched_reason": "why: no matching pattern",
+      "equivalence_checked": true,
+      "equivalence_max_error": 6.661338147750939e-16
+    },
+    {
+      "circuit": "cat_state_n4",
+      "version": "toffoli-recover-v1",
+      "removed_terminal_measurements": 4,
+      "mid_circuit_measurements": 0,
+      "input_gates": 4,
+      "recovered_blocks": 0,
+      "matches": [],
+      "remaining_gates": 4,
+      "remaining_ccx": 0,
+      "remaining_measurements": 0,
+      "in_tracker_domain": false,
+      "unmatched_reason": "why: no matching pattern",
+      "equivalence_checked": true,
+      "equivalence_max_error": 2.2371143170757382e-17
+    },
+    {
+      "circuit": "fredkin_n3",
+      "version": "toffoli-recover-v1",
+      "removed_terminal_measurements": 3,
+      "mid_circuit_measurements": 0,
+      "input_gates": 19,
+      "recovered_blocks": 1,
+      "matches": [
+        {
+          "qubits": [
+            0,
+            1,
+            2
+          ],
+          "target_local": 2,
+          "controls_local": [
+            0,
+            1
+          ],
+          "pattern": "search",
+          "gates": 15,
+          "start": 3,
+          "global_qubits": [
+            0,
+            1,
+            2
+          ],
+          "global_target": 2
+        }
+      ],
+      "remaining_gates": 5,
+      "remaining_ccx": 1,
+      "remaining_measurements": 0,
+      "in_tracker_domain": true,
+      "unmatched_reason": null,
+      "equivalence_checked": true,
+      "equivalence_max_error": 1.1102230246251565e-16
+    },
+    {
+      "circuit": "grover_n2",
+      "version": "toffoli-recover-v1",
+      "removed_terminal_measurements": 2,
+      "mid_circuit_measurements": 0,
+      "input_gates": 16,
+      "recovered_blocks": 0,
+      "matches": [],
+      "remaining_gates": 16,
+      "remaining_ccx": 0,
+      "remaining_measurements": 0,
+      "in_tracker_domain": false,
+      "unmatched_reason": "why: no matching pattern",
+      "equivalence_checked": true,
+      "equivalence_max_error": 0.0
+    },
+    {
+      "circuit": "qft_n4",
+      "version": "toffoli-recover-v1",
+      "removed_terminal_measurements": 4,
+      "mid_circuit_measurements": 0,
+      "input_gates": 13,
+      "recovered_blocks": 0,
+      "matches": [],
+      "remaining_gates": 13,
+      "remaining_ccx": 0,
+      "remaining_measurements": 0,
+      "in_tracker_domain": false,
+      "unmatched_reason": "why: no matching pattern",
+      "equivalence_checked": true,
+      "equivalence_max_error": 4.440955846329143e-16
+    }
+  ]
+}
