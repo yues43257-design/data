@@ -1,28 +1,42 @@
 #!/usr/bin/env python3
-"""Item 2: tracker as a pre-filter, exact check only on the rejects.
+"""Hybrid pre-filter + exact refinement, with proposal modes (v2).
 
-    accept  ->  certified by the tracker (certificate attached), stop
-    reject  ->  if N <= threshold, run the exact criterion on that one mask
-    reject and N > threshold -> "unresolved" (the tracker cannot certify it and
-                                exact is too expensive here)
+    accept  -> certificate (no exact check)
+    reject  -> exact check, if this width has a backend:
+                 N <= 11          dense Operator        (``dense``)
+                 12 <= N <= 18    QCEC, alternating     (``qcec``, needs a venv)
+                 otherwise        unresolved
 
-The point is the cost profile: the tracker is sound, so an *accept* never needs
-verification; only rejects pay for exact checking, and only up to the threshold.
-On small N this gives recall 1.0 at a measurable price, which is exactly the
-speed/recall trade-off the paper's Pareto figure should show.
+Proposal modes (``--proposal``):
+
+    enum      every mask (2**blocks)             -- upper bound on recall
+    one_shot  only the all-relative mask         -- what a policy proposes
+    greedy    sequential accept, tracker only    -- no exact calls at all
+
+The three cost regimes are reported **separately** (they differ by 4 orders of
+magnitude):
+
+    homogeneous + reduced verifier   ~ms total
+    WideInstance + dense             ~10 ms .. 10 s per call
+    large N + QCEC                   0.1-0.9 s per query, 1-15 s per full check
 
 Usage
 -----
     .venv/bin/python hybrid_check.py
+    .venv/bin/python hybrid_check.py --proposal one_shot
+    .venv/bin/python hybrid_check.py --proposal enum --qcec-python /tmp/qcec-venv/bin/python
 """
 
 from __future__ import annotations
 
+import argparse
 import json
+import statistics
 import sys
+import tempfile
 import time
 from pathlib import Path
-from typing import Any, Callable, Dict, List, Sequence
+from typing import Any, Callable, Dict, List, Optional, Sequence
 
 ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT))
@@ -32,170 +46,187 @@ import support_tracker as ST                # noqa: E402
 import ultimate_scalability_test as ULT     # noqa: E402
 import wide_scale_stress as WS              # noqa: E402
 
-HYBRID_VERSION = "hybrid-v1"
-DENSE_LIMIT = 11          # dense Operator is affordable here
+HYBRID_VERSION = "hybrid-v2"
+DENSE_LIMIT = 11
 
 
-def check_mask(schedule: Dict[str, Any],
-               ideal: Any,
-               build_candidate: Callable[[int], Any],
-               mask: int, n_qubits: int,
-               threshold: int = 18) -> Dict[str, Any]:
-    """One mask through the hybrid pipeline."""
+# ---------------------------------------------------------------------------
+# exact backends
+# ---------------------------------------------------------------------------
+
+def exact_dense(ideal: Any, candidate: Any) -> bool:
+    return bool(RPC.relative_phase_ok(ideal, candidate))
+
+
+def exact_qcec(ideal: Any, candidate: Any, python: str,
+               timeout: float = 30) -> Optional[bool]:
+    """All-n Z_q commutation via QCEC; None if the checker is unavailable."""
+    if not Path(python).exists():
+        return None
+    import qcec_validate as QV
+
+    pairs = QV._diag_pairs(0, ideal, candidate)
+    with tempfile.TemporaryDirectory() as tmp:
+        results = QV._run_config(python, pairs, "alternating", timeout,
+                                 timeout * 2, Path(tmp))
+    if any(r["verdict"] == "not_equivalent" for r in results):
+        return False
+    if all(r["verdict"] == "equivalent" for r in results):
+        return True
+    return None
+
+
+def check_mask(schedule: Dict[str, Any], ideal: Any,
+               build_candidate: Callable[[int], Any], mask: int,
+               n_qubits: int, *, threshold: int = 18, backend: str = "auto",
+               qcec_python: str = "",
+               exact_fn: Optional[Callable[[int], bool]] = None) -> Dict[str, Any]:
     started = time.perf_counter()
     certificate = ST.certify(schedule, mask)
     if certificate["accepted"]:
         return {"mask": mask, "verdict": "accepted", "route": "tracker",
                 "seconds": time.perf_counter() - started,
                 "certificate": certificate}
-    if n_qubits <= min(threshold, DENSE_LIMIT):
-        legal = bool(RPC.relative_phase_ok(ideal, build_candidate(mask)))
-        return {"mask": mask, "verdict": "legal" if legal else "illegal",
-                "route": "exact", "seconds": time.perf_counter() - started,
-                "certificate": certificate}
-    return {"mask": mask, "verdict": "unresolved", "route": "none",
-            "seconds": time.perf_counter() - started,
-            "certificate": certificate}
+    exact: Optional[bool] = None
+    route = "none"
+    if exact_fn is not None:                       # symbolic verifier backend
+        exact, route = bool(exact_fn(mask)), "symbolic"
+    elif n_qubits <= DENSE_LIMIT and backend in ("auto", "dense"):
+        exact, route = exact_dense(ideal, build_candidate(mask)), "dense"
+    elif n_qubits <= threshold and backend in ("auto", "qcec") and qcec_python:
+        exact = exact_qcec(ideal, build_candidate(mask), qcec_python)
+        route = "qcec" if exact is not None else "none"
+    verdict = ("legal" if exact else "illegal") if exact is not None else "unresolved"
+    return {"mask": mask, "verdict": verdict, "route": route,
+            "seconds": time.perf_counter() - started, "certificate": certificate}
 
 
-def run_experiment() -> Dict[str, Any]:
-    rows: List[Dict[str, Any]] = []
-    totals = {"masks": 0, "legal": 0, "tracker_accept": 0, "hybrid_legal": 0,
-              "exact_calls": 0, "tracker_s": 0.0, "exact_s": 0.0}
-    for width, blocks, h_prob in ((4, 3, 0.1), (4, 3, 0.5), (4, 3, 0.7),
-                                  (6, 3, 0.1), (6, 3, 0.7), (8, 2, 0.7),
-                                  (4, 4, 0.5)):
-        inst = ULT.WideInstance(width=width, blocks=blocks, seed=20261020,
-                                h_prob=h_prob, ancilla_pool=2)
-        if inst.total > 10:
-            continue
-        ideal = inst.circuit(0)
-        schedule = WS.build_schedule(inst)
-        legal = accept = hybrid = exact_calls = 0
-        t_tracker = t_exact = 0.0
-        for mask in range(1 << blocks):
-            truth = bool(RPC.relative_phase_ok(ideal, inst.circuit(mask)))
-            result = check_mask(schedule, ideal, lambda m: inst.circuit(m),
-                                mask, inst.total, threshold=18)
-            legal += truth
-            accept += int(result["verdict"] == "accepted")
-            hybrid += int(result["verdict"] in ("accepted", "legal"))
-            exact_calls += int(result["route"] == "exact")
-            if result["route"] == "exact":
-                t_exact += result["seconds"]
-            else:
-                t_tracker += result["seconds"]
-        rows.append({"N": inst.total, "h_prob": h_prob, "blocks": blocks,
-                     "masks": 1 << blocks, "legal": legal,
-                     "tracker_accept": accept, "hybrid_legal": hybrid,
-                     "exact_calls": exact_calls,
-                     "tracker_s": round(t_tracker, 4),
-                     "exact_s": round(t_exact, 4),
-                     "tracker_recall": round(accept / legal, 3) if legal else None,
-                     "hybrid_recall": round(hybrid / legal, 3) if legal else None})
-        for key in ("masks", "legal", "tracker_accept", "hybrid_legal"):
-            pass
-        totals["masks"] += 1 << blocks
-        totals["legal"] += legal
-        totals["tracker_accept"] += accept
-        totals["hybrid_legal"] += hybrid
-        totals["exact_calls"] += exact_calls
-        totals["tracker_s"] += t_tracker
-        totals["exact_s"] += t_exact
-    return {"rows": rows, "totals": totals}
+# ---------------------------------------------------------------------------
+# proposals
+# ---------------------------------------------------------------------------
+
+def proposals(blocks: int, mode: str, schedule: Dict[str, Any]) -> List[int]:
+    if mode == "enum":
+        return list(range(1 << blocks))
+    if mode == "one_shot":
+        return [(1 << blocks) - 1]
+    if mode == "greedy":
+        accepted = 0
+        for index in range(blocks):
+            candidate = accepted | (1 << index)
+            if ST.track_safe(schedule, candidate):
+                accepted = candidate
+        return [accepted]
+    raise ValueError(mode)
 
 
-def run_homogeneous() -> Dict[str, Any]:
-    """The population where the tracker is known to be conservative (§5.5)."""
+def certificate_bytes(cert: Dict[str, Any]) -> int:
+    return len(json.dumps(cert))
+
+
+def run_population(kind: str, mode: str, backend: str,
+                   qcec_python: str, threshold: int) -> Dict[str, Any]:
     import experiment_setup as SETUP
     import symbolic_verifier as SYM
 
     rows: List[Dict[str, Any]] = []
-    agg = {"masks": 0, "legal": 0, "tracker_accept": 0, "hybrid_legal": 0,
-           "exact_calls": 0, "tracker_s": 0.0, "exact_s": 0.0}
-    for h_prob in (0.1, 0.3, 0.7):
-        for num_controls in (2, 3, 4):
-            for seed_index in range(2):
-                seed = SETUP.seed_for(seed_index)
-                blocks = 4
-                verifier = SYM.ReducedSymbolicVerifier(num_controls, blocks, seed, h_prob)
-                schedule = ST.homogeneous_schedule(num_controls, blocks, seed, h_prob)
-                legal = accept = hybrid = exact_calls = 0
-                t_trk = t_ex = 0.0
-                for mask in range(1 << blocks):
-                    truth = bool(verifier.is_safe(mask))
-                    t0 = time.perf_counter()
-                    cert = ST.certify(schedule, mask)
-                    if cert["accepted"]:
-                        t_trk += time.perf_counter() - t0
-                        accept += 1
-                        hybrid += int(truth)
-                    else:
-                        t0 = time.perf_counter()
-                        ok = bool(verifier.is_safe(mask))
-                        t_ex += time.perf_counter() - t0
-                        exact_calls += 1
-                        hybrid += int(ok)
-                    legal += truth
-                rows.append({"controls": num_controls, "h_prob": h_prob,
-                             "seed": seed, "masks": 1 << blocks, "legal": legal,
-                             "tracker_accept": accept, "hybrid_legal": hybrid,
-                             "exact_calls": exact_calls,
-                             "tracker_s": round(t_trk, 5),
-                             "exact_s": round(t_ex, 5)})
-                agg["masks"] += 1 << blocks
-                agg["legal"] += legal
-                agg["tracker_accept"] += accept
-                agg["hybrid_legal"] += hybrid
-                agg["exact_calls"] += exact_calls
-                agg["tracker_s"] += t_trk
-                agg["exact_s"] += t_ex
+    agg = {"proposals": 0, "legal": 0, "accepted": 0, "illegal_accepted": 0,
+           "tracker_accept": 0,
+           "tracker_s": 0.0, "exact_s": 0.0, "exact_calls": 0,
+           "cert_bytes": 0, "best_saving": 0}
+    configs = ([(2, 0.1), (3, 0.3), (4, 0.7)] if kind == "homogeneous" else
+               [(4, 0.5), (6, 0.7)])
+    for first, h_prob in configs:
+        if kind == "homogeneous":
+            verifier = SYM.ReducedSymbolicVerifier(first, 4, SETUP.seed_for(0), h_prob)
+            schedule = ST.homogeneous_schedule(first, 4, SETUP.seed_for(0), h_prob)
+            blocks = 4
+            ideal = build = None
+            truth = verifier.is_safe
+            n_qubits = first + 3
+        else:
+            inst = ULT.WideInstance(width=first, blocks=4, seed=20261020,
+                                    h_prob=h_prob, ancilla_pool=2)
+            schedule = WS.build_schedule(inst)
+            blocks, ideal, n_qubits = inst.blocks, inst.circuit(0), inst.total
+            build = inst.circuit
+            truth = lambda mask, i=inst: bool(RPC.relative_phase_ok(i.circuit(0), i.circuit(mask)))
+        masks = proposals(blocks, mode, schedule)
+        row = {"population": kind, "config": f"{first}/h={h_prob}", "N": n_qubits,
+               "mode": mode, "proposals": len(masks),
+               "tracker_s": 0.0, "exact_s": 0.0, "exact_calls": 0,
+               "legal": 0, "accepted": 0, "illegal_accepted": 0,
+               "tracker_accept": 0, "cert_bytes": 0,
+               "best_saving": 0}
+        for mask in masks:
+            legal = bool(truth(mask))
+            row["legal"] += int(legal)
+            result = check_mask(
+                schedule, ideal, build if build else (lambda m: None), mask,
+                n_qubits, threshold=threshold, backend=backend,
+                qcec_python=qcec_python,
+                exact_fn=(lambda m, v=verifier: bool(v.is_safe(m)))
+                if kind == "homogeneous" else None)
+            accepted = result["verdict"] in ("accepted", "legal")
+            row["accepted"] += int(accepted)
+            row["illegal_accepted"] += int(accepted and not legal)
+            if accepted:      # only count T for masks we actually certify
+                row["best_saving"] = max(row["best_saving"], 3 * bin(mask).count("1"))
+            row["cert_bytes"] += certificate_bytes(result["certificate"])
+            if result["route"] == "tracker":
+                row["tracker_s"] += result["seconds"]
+                row["tracker_accept"] += 1
+            elif result["route"] in ("dense", "qcec", "symbolic"):
+                row["exact_s"] += result["seconds"]
+                row["exact_calls"] += 1
+        rows.append(row)
+        for key in ("proposals", "legal", "accepted", "illegal_accepted",
+                    "tracker_accept", "exact_calls"):
+            agg[key] += row[key]
+        agg["tracker_s"] += row["tracker_s"]
+        agg["exact_s"] += row["exact_s"]
+        agg["cert_bytes"] += row["cert_bytes"]
+        agg["best_saving"] += row["best_saving"]
     return {"rows": rows, "totals": agg}
 
 
-def main() -> int:
+def main(argv: Sequence[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--proposal", default="all",
+                        choices=["enum", "one_shot", "greedy", "all"])
+    parser.add_argument("--backend", default="auto", choices=["auto", "dense", "qcec"])
+    parser.add_argument("--qcec-python", default="/tmp/qcec-venv/bin/python")
+    parser.add_argument("--threshold", type=int, default=18)
+    parser.add_argument("--out", default=str(ROOT / "reports" / "figure_data" /
+                                            "hybrid_check.json"))
+    args = parser.parse_args(argv)
+    modes = ["enum", "one_shot", "greedy"] if args.proposal == "all" else [args.proposal]
     started = time.perf_counter()
-    print("=" * 100)
-    print(f"  HYBRID PRE-FILTER  version={HYBRID_VERSION}")
-    print("  tracker accept -> certified; tracker reject -> exact (N <= 18)")
-    print("=" * 100)
-    data = run_experiment()
-    print(f"  {'N':>3}{'h':>5}{'masks':>7}{'legal':>7}{'trackAcc':>10}"
-          f"{'hybrid':>8}{'exactCalls':>12}{'trk ms':>9}{'exact ms':>10}")
-    for r in data["rows"]:
-        print(f"  {r['N']:>3}{r['h_prob']:>5.1f}{r['masks']:>7}{r['legal']:>7}"
-              f"{r['tracker_accept']:>10}{r['hybrid_legal']:>8}{r['exact_calls']:>12}"
-              f"{r['tracker_s'] * 1e3:>9.2f}{r['exact_s'] * 1e3:>10.1f}")
-    t = data["totals"]
-    tr = t["tracker_accept"] / t["legal"] if t["legal"] else float("nan")
-    hr = t["hybrid_legal"] / t["legal"] if t["legal"] else float("nan")
-    print("-" * 100)
-    print(f"  pooled: legal={t['legal']}  tracker={t['tracker_accept']} "
-          f"(recall {tr:.3f})  hybrid={t['hybrid_legal']} (recall {hr:.3f})")
-    print(f"  exact calls={t['exact_calls']}  tracker={t['tracker_s'] * 1e3:.2f} ms  "
-          f"exact={t['exact_s'] * 1e3:.1f} ms")
+    print("=" * 104)
+    print(f"  HYBRID PRE-FILTER  version={HYBRID_VERSION}  backend={args.backend}  "
+          f"threshold={args.threshold}")
+    print("=" * 104)
+    out: Dict[str, Any] = {"version": HYBRID_VERSION, "backend": args.backend,
+                           "threshold": args.threshold, "results": {}}
+    for kind in ("homogeneous", "wide"):
+        for mode in modes:
+            data = run_population(kind, mode, args.backend, args.qcec_python,
+                                  args.threshold)
+            out["results"][f"{kind}/{mode}"] = data
+            t = data["totals"]
+            recall = t["accepted"] / t["legal"] if t["legal"] else float("nan")
+            tr_only = t["tracker_accept"] / t["legal"] if t["legal"] else float("nan")
+            print(f"  {kind:<12}{mode:<10} proposals={t['proposals']:>3} "
+                  f"legal={t['legal']:>3} accepted={t['accepted']:>3} "
+                  f"trackerOnly={tr_only:.2f} recall={recall:.2f} "
+                  f"illegal={t['illegal_accepted']} T={t['best_saving']:>3} "
+                  f"tracker={t['tracker_s'] * 1e3:8.2f} ms "
+                  f"exact={t['exact_s'] * 1e3:9.1f} ms "
+                  f"calls={t['exact_calls']:>3} cert={t['cert_bytes']:>6} B", flush=True)
     print(f"  ({time.perf_counter() - started:.1f}s)")
-    print("\n" + "=" * 100)
-    print("  homogeneous population (§5.5): where the tracker IS conservative")
-    print("=" * 100)
-    hom = run_homogeneous()
-    ht = hom["totals"]
-    htr = ht["tracker_accept"] / ht["legal"] if ht["legal"] else float("nan")
-    hhr = ht["hybrid_legal"] / ht["legal"] if ht["legal"] else float("nan")
-    print(f"  {'ctrl':>5}{'h':>5}{'masks':>7}{'legal':>7}{'trackAcc':>10}"
-          f"{'hybrid':>8}{'exactCalls':>12}")
-    for r in hom["rows"]:
-        print(f"  {r['controls']:>5}{r['h_prob']:>5.1f}{r['masks']:>7}{r['legal']:>7}"
-              f"{r['tracker_accept']:>10}{r['hybrid_legal']:>8}{r['exact_calls']:>12}")
-    print(f"  pooled: legal={ht['legal']} tracker={ht['tracker_accept']} "
-          f"(recall {htr:.3f}) hybrid={ht['hybrid_legal']} (recall {hhr:.3f})")
-    print(f"  tracker={ht['tracker_s'] * 1e3:.2f} ms  exact={ht['exact_s'] * 1e3:.1f} ms")
-    out = ROOT / "reports" / "figure_data" / "hybrid_check.json"
-    out.write_text(json.dumps({"version": HYBRID_VERSION,
-                               "threshold": 18, "dense_limit": DENSE_LIMIT,
-                               **data, "homogeneous": hom}, indent=2),
-                   encoding="utf-8")
-    print(f"  wrote {out}")
+    out_path = Path(args.out)
+    out_path.write_text(json.dumps(out, indent=2), encoding="utf-8")
+    print(f"  wrote {out_path}")
     return 0
 
 

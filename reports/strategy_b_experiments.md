@@ -2430,6 +2430,66 @@ QCEC 结果只对"单线程、本机、上述配置"成立。
 
 ---
 
+### 5.59 混合系统 v2：提案模式、成本分档、信任链、CI
+
+#### (a) 提案模式：**one-shot 放进 hybrid 没有用**
+
+`hybrid_check.py v2`（`--proposal enum|one_shot|greedy`）。下表是 2 个群体 × 3 种提案：
+
+| 群体 | 提案 | 提案数 | legal | **tracker 单独 recall** | **hybrid recall** | 精检调用 | 精检耗时 | 证书字节 | 最佳 T |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| homogeneous | enum | 48 | 36 | **0.22** | **1.00** | 40 | **1.3 ms** | 52 KB | 30 |
+| homogeneous | one_shot | 3 | 2 | 0.00 | 1.00 | 3 | 0.1 ms | 3.6 KB | 24 |
+| homogeneous | greedy | 3 | 3 | 1.00 | 1.00 | **0** | 0 | 2.4 KB | 12 |
+| wide (H 插层) | enum | 32 | 4 | 1.00 | 1.00 | 28 | **8.0 s** | 36 KB | 6 |
+| wide (H 插层) | **one_shot** | 2 | **0** | — | — | 2 | 0.53 s | 2.5 KB | **0** |
+| wide (H 插层) | greedy | 2 | 2 | 1.00 | 1.00 | **0** | 0 | 1.7 KB | 6 |
+
+**三条可直接写进论文的结论**：
+
+1. **tracker 保守时（homogeneous），hybrid 把 recall 0.22 → 1.00**，代价仅 **1.3 ms**；
+2. **H 插层时，one-shot 提案本身全部非法**（legal=0）⇒ **精检只是花钱确认"不行"**（0.53 s 换 0 收益）；
+3. H 插层时 **greedy + 纯 tracker 已经 recall 1.00、精检 0 次**；enum+精检花 8 s 也**没有多拿到一个 T**。
+
+⇒ 混合系统的正确用法是 **"tracker 保守的族上补 recall"**，不是"任何族都上精检"。
+
+#### (b) 成本必须分三档报（不要用一个 0.2 ms 概括）
+
+| 档位 | 单次精检成本 | 实测 |
+|---|---|---|
+| homogeneous + reduced verifier | **~0.03 ms/次** | 40 次 = **1.3 ms** |
+| `WideInstance` + 稠密 Operator | N=6 **23 ms**；N=8 **0.50 s**；N=10 **8.6 s** | 指数增长（4^N） |
+| 大 N + QCEC（`alternating`） | **0.03–0.08 s / 单查询** | 全判据 N=18 **0.80 s** … N=106 **14.6 s** |
+
+> **12–18 的 QCEC 分支已实现并烟测**：`N=14`、tracker 拒绝 → `route=qcec`、
+> 判定 `illegal`、耗时 **37 s**（该实例 h=0.7、电路更密，成本随实例波动，不能引用成常数）。
+
+#### (c) 证书的信任链（四层，别混为一谈）
+
+| 层 | 谁保证 | 证据 |
+|---|---|---|
+| 1. `S ∩ H = ∅` | **证书本身** | `h_checks` 里每个 H 的 `in_support` 全为 False |
+| 2. 不相交 ⇒ 只改相位 | **定理**（一行证明） | 对角算子被置换共轭仍对角；对角门与之交换 |
+| 3. 真实支撑 ⊆ S | **实现忠实性** | 2278 掩码超集检查 + 200 电路 fuzz + ancilla fuzz |
+| 4. 证书没被篡改 | **`verify_certificate`** | **重新执行**并逐项比对（**不是独立实现**，须如实说明） |
+
+第 4 层必须写清楚：它是"重放校验"，能抓篡改和漂移，**不构成对实现本身的独立证明**；
+独立的证据是第 3 层（与稠密 oracle 对照）。
+
+#### (d) Pareto 数据与 CI
+
+- `reports/figure_data/hybrid_check.json` 里每个 (群体, 提案) 都有 `tracker_s / exact_s / exact_calls / cert_bytes / best_saving` —— 直接就是 speed–precision 曲线的数据点。
+- `frozen_ci.py`（`frozen-ci-v1`）：**一个版本号、一个退出码**，跑 6 条回归 + SOTA 尾层 + 200 电路 fuzz（含 ancilla 布局）+ QASMBench 普查。
+  实测 **4/4 PASS、155 s**。
+
+#### (e) 标准基准预处理：**没有做 `toffoli_recover.py`，原因写清楚**
+
+QASMBench 的 `adder_n4` 全电路只有 **8 个 T（4 t + 4 tdg）**，远少于 `7 × #Toffoli`，
+说明它**不是**标准的 7-T Toffoli 分解——模式匹配恢复不了块结构，需要**重新综合**。
+⇒ 论文写 **"constructed benchmarks"**，并注明"标准基准需要去测量 + 重新综合的预处理"。
+
+---
+
 ## 6. 真实电路 SOTA 对比
 
 > 数据源：`reports/figure_data/realworld_sota.json`（由 `realworld_benchmark.py --json` 直接生成，非手抄）。
@@ -2988,6 +3048,10 @@ done
 .venv/bin/python test_tracker_soundness.py
 .venv/bin/python hybrid_check.py
 .venv/bin/python qasmbench_census.py
+
+# §5.59 一键 CI（一个版本号、一个退出码）
+.venv/bin/python frozen_ci.py                    # 4 步，约 155 s
+.venv/bin/python frozen_ci.py --with-qcec        # 追加 QCEC 边界（需 /tmp/qcec-venv）
 ```
 
 ---

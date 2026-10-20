@@ -1,0 +1,46 @@
+{
+  "version": "frozen-ci-v1",
+  "ok": true,
+  "steps": [
+    {
+      "step": "regressions",
+      "ok": true,
+      "seconds": 6.5,
+      "tail": [
+        "  [ok  ] tail layer applied: CCX;H rejected (true offdiag=1.000)",
+        "  [ok  ] certificate: S exposed, S\u2229H recorded, tampering detected",
+        "  all tracker-v2 counterexample tests passed"
+      ]
+    },
+    {
+      "step": "sota_tail",
+      "ok": true,
+      "seconds": 22.7,
+      "tail": [
+        "  Grover 3-qubit         3     2      4      1       1       0  yes",
+        "========================================================================================================",
+        "  total sites=128  tailH=34  flips=1  wrote /home/siri/MCX/reports/figure_data/tail_regression_sota.json"
+      ]
+    },
+    {
+      "step": "tail_fuzz",
+      "ok": true,
+      "seconds": 120.2,
+      "tail": [
+        "================================================================================================",
+        "  VERDICT: PASS (fuzz exercises the bug and the fix closes it)",
+        "  wrote /home/siri/MCX/reports/figure_data/tail_fuzz.json"
+      ]
+    },
+    {
+      "step": "qasmbench",
+      "ok": true,
+      "seconds": 5.9,
+      "tail": [
+        "  qft_n4          4     17    0    4      0     False        -       -",
+        "========================================================================================================",
+        "  in-domain: 0/5   wrote /home/siri/MCX/reports/figure_data/qasmbench_census.json"
+      ]
+    }
+  ]
+}
