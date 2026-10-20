@@ -158,15 +158,24 @@ def main() -> int:
     tot_ub = sum(r["UB"] for r in rows)
     tot_net = sum(r["net"] for r in rows)
     print(f"  pooled: UB={tot_ub} T   net={tot_net} T   net/UB={tot_net / tot_ub:.2f}")
-    verdict = "GO" if tot_net >= 0.30 * tot_ub else "KILL"
-    print(f"  pre-registered verdict (net >= 30% of UB): {verdict}")
+    provisional = "GO" if tot_net >= 0.30 * tot_ub else "KILL"
+    print(f"  provisional label from the (vacuous) predicate: {provisional}")
+    print("  FINAL STATUS: OPEN / not established  (see §5.52)")
     print("-" * 96)
     print("  WARNING: this verdict is NOT established.  The free-slide predicate")
     print("  is vacuously False: a blocking H always sits at layer >= site+1, so")
     print("  `blocks_between` is never empty and free_unlockable can never be > 0.")
     print("  The 0 above is a tautology, not a measurement.  See report §5.52.")
     out = ROOT / "reports" / "figure_data" / "probe_b2_hmigration.json"
-    out.write_text(json.dumps(rows, indent=2), encoding="utf-8")
+    out.write_text(json.dumps({
+        "status": "OPEN",
+        "status_reason": "the free-slide predicate is vacuously False (a blocking "
+                         "H always sits at layer >= site+1), so the 0 is a "
+                         "tautology, not a measurement; see report §5.52",
+        "provisional_label_under_vacuous_predicate": provisional,
+        "is_verdict_established": False,
+        "rows": rows,
+    }, indent=2), encoding="utf-8")
     print(f"  wrote {out}")
     return 0
 

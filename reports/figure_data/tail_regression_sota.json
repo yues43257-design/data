@@ -7,6 +7,8 @@
       "sites": 0,
       "tail_h": 6,
       "flips": 0,
+      "blocks_in_schedule": 0,
+      "tracker_covers": false,
       "old_unsound": 0,
       "new_unsound": 0,
       "exact_checked": true
@@ -17,6 +19,8 @@
       "sites": 0,
       "tail_h": 10,
       "flips": 0,
+      "blocks_in_schedule": 0,
+      "tracker_covers": false,
       "old_unsound": 0,
       "new_unsound": 0,
       "exact_checked": true
@@ -27,6 +31,8 @@
       "sites": 0,
       "tail_h": 14,
       "flips": 0,
+      "blocks_in_schedule": 0,
+      "tracker_covers": false,
       "old_unsound": 0,
       "new_unsound": 0,
       "exact_checked": true
@@ -37,6 +43,8 @@
       "sites": 6,
       "tail_h": 0,
       "flips": 0,
+      "blocks_in_schedule": 6,
+      "tracker_covers": true,
       "old_unsound": 0,
       "new_unsound": 0,
       "exact_checked": true
@@ -47,6 +55,8 @@
       "sites": 8,
       "tail_h": 0,
       "flips": 0,
+      "blocks_in_schedule": 8,
+      "tracker_covers": true,
       "old_unsound": 0,
       "new_unsound": 0,
       "exact_checked": true
@@ -57,6 +67,8 @@
       "sites": 16,
       "tail_h": 0,
       "flips": 0,
+      "blocks_in_schedule": 16,
+      "tracker_covers": true,
       "old_unsound": null,
       "new_unsound": null,
       "exact_checked": false
@@ -67,6 +79,8 @@
       "sites": 32,
       "tail_h": 0,
       "flips": 0,
+      "blocks_in_schedule": 32,
+      "tracker_covers": true,
       "old_unsound": null,
       "new_unsound": null,
       "exact_checked": false
@@ -77,6 +91,8 @@
       "sites": 64,
       "tail_h": 0,
       "flips": 0,
+      "blocks_in_schedule": 64,
+      "tracker_covers": true,
       "old_unsound": null,
       "new_unsound": null,
       "exact_checked": false
@@ -87,6 +103,8 @@
       "sites": 2,
       "tail_h": 4,
       "flips": 1,
+      "blocks_in_schedule": 2,
+      "tracker_covers": true,
       "old_unsound": 1,
       "new_unsound": 0,
       "exact_checked": true

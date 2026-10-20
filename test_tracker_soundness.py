@@ -90,6 +90,13 @@ def test_known_unsound_corpus_rejected() -> None:
                             "a sound tracker accepted a known-unsound mask "
                             f"(h={h_prob}, controls={num_controls}, seed={seed}, mask={mask})"
                         )
+                        # and the SHIPPED tracker must reject it too: testing only
+                        # bailout.sound_v2 left `DiagonalTracker.track_safe`
+                        # unasserted on this corpus.
+                        assert not tracker.track_safe(schedule, mask), (
+                            "DiagonalTracker.track_safe accepted a known-unsound mask "
+                            f"(h={h_prob}, controls={num_controls}, seed={seed}, mask={mask})"
+                        )
     assert corpus > 0, "the known-unsound corpus came out empty - setup drift?"
     print(f"  [ok  ] known-unsound corpus = {corpus} masks; sound tracker rejects all")
 

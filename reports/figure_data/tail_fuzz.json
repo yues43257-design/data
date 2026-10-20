@@ -9,6 +9,14 @@
   "flips": 968,
   "circuits_exercising_bug": 157,
   "verdict": "PASS",
+  "ancilla_layout": {
+    "circuits": 40,
+    "masks": 252,
+    "accepted": 59,
+    "old_unsound": 80,
+    "new_unsound": 0,
+    "circuits_exercising_bug": 28
+  },
   "rows": [
     {
       "qubits": 5,

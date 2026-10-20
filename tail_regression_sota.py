@@ -84,13 +84,16 @@ def main() -> int:
                 new_uns += int(new and not legal)
         row = {"circuit": name, "qubits": circuit.num_qubits, "sites": len(positions),
                "tail_h": tail_h, "flips": flips,
+               "blocks_in_schedule": n_blocks,
+               "tracker_covers": n_blocks > 0,
                "old_unsound": old_uns if exact else None,
                "new_unsound": new_uns if exact else None,
                "exact_checked": exact}
         rows.append(row)
         uns = f"{old_uns:>8}{new_uns:>8}" if exact else f"{'n/a':>8}{'n/a':>8}"
+        coverage = "" if n_blocks else "   [OUTSIDE tracker: 0 ccx blocks]"
         print(f"  {name:<20}{circuit.num_qubits:>4}{len(positions):>6}{tail_h:>7}"
-              f"{flips:>7}{uns}  {'yes' if exact else 'no (>11q)'}")
+              f"{flips:>7}{uns}  {'yes' if exact else 'no (>11q)'}{coverage}")
     out = ROOT / "reports" / "figure_data" / "tail_regression_sota.json"
     out.write_text(json.dumps({"exact_max_qubits": EXACT_MAX_QUBITS, "rows": rows},
                               indent=2), encoding="utf-8")

@@ -94,6 +94,8 @@ def old_track_safe(schedule: Dict[str, Any], mask: int) -> bool:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--circuits", type=int, default=200)
+    parser.add_argument("--wide-circuits", type=int, default=40,
+                        help="ancilla + tail-H circuits (WideInstance layout)")
     parser.add_argument("--seed", type=int, default=20261020)
     parser.add_argument("--out", default=str(ROOT / "reports" / "figure_data" /
                                             "tail_fuzz.json"))
@@ -131,6 +133,40 @@ def main() -> int:
                      "tail_h": tail_h, "masks": 1 << blocks,
                      "flips": case_flip, "old_unsound": case_old,
                      "new_unsound": case_new})
+    # ---- ancilla + tail-H fuzz on the WideInstance layout -----------------
+    import ultimate_scalability_test as ULT
+    import wide_scale_stress as WS
+    wide_masks = wide_accepted = wide_new_unsound = wide_old_unsound = 0
+    wide_exercised = 0
+    for _ in range(args.wide_circuits):
+        width = rng.choice([4, 5, 6])
+        pool = rng.choice([2, 3])
+        blocks = rng.choice([2, 3])
+        h_prob = rng.choice([0.0, 0.3])
+        inst = ULT.WideInstance(width=width, blocks=blocks, seed=rng.randint(0, 10**6),
+                                h_prob=h_prob, ancilla_pool=pool)
+        base = inst.circuit(0)
+        schedule = WS.build_schedule(inst)
+        # tail H, deliberately on a random qubit -- ancillas included
+        tail_q = rng.randrange(inst.total)
+        schedule["layers"].append([("h", [tail_q])])     # blocks+1 layers now
+        tail_base = base.copy()
+        tail_base.h(tail_q)
+        case_new = case_old = 0
+        for mask in range(1 << blocks):
+            candidate = inst.circuit(mask).copy()
+            candidate.h(tail_q)
+            legal = bool(RPC.relative_phase_ok(tail_base, candidate))
+            new = bool(ST.track_safe(schedule, mask))
+            old = old_track_safe(schedule, mask)
+            wide_masks += 1
+            wide_accepted += int(new)
+            case_new += int(new and not legal)
+            case_old += int(old and not legal)
+        wide_new_unsound += case_new
+        wide_old_unsound += case_old
+        wide_exercised += int(case_old > 0)
+
     print("=" * 96)
     print(f"  tail fuzz  version={FUZZ_VERSION}  circuits={args.circuits}")
     print(f"  masks={total_masks}  tracker-accepted={accepted}")
@@ -138,9 +174,14 @@ def main() -> int:
           f"in {exercised} circuits   <- negative control")
     print(f"  NEW (tail applied) unsound accepts = {new_unsound}")
     print(f"  old/new verdict flips              = {flips}")
+    print(f"  [ancilla layout] circuits={args.wide_circuits} masks={wide_masks} "
+          f"accepted={wide_accepted}")
+    print(f"  [ancilla layout] OLD unsound={wide_old_unsound} "
+          f"(exercised in {wide_exercised})  NEW unsound={wide_new_unsound}")
     print(f"  ({time.perf_counter() - started:.1f}s)")
     print("=" * 96)
-    ok = new_unsound == 0 and old_unsound > 0
+    ok = (new_unsound == 0 and old_unsound > 0 and
+          wide_new_unsound == 0 and wide_old_unsound > 0)
     print(f"  VERDICT: {'PASS' if ok else 'FAIL'} "
           f"({'fuzz exercises the bug and the fix closes it' if ok else 'not discriminative or still unsound'})")
     out = Path(args.out)
@@ -150,6 +191,11 @@ def main() -> int:
         "accepted": accepted, "old_unsound": old_unsound,
         "new_unsound": new_unsound, "flips": flips,
         "circuits_exercising_bug": exercised, "verdict": "PASS" if ok else "FAIL",
+        "ancilla_layout": {"circuits": args.wide_circuits, "masks": wide_masks,
+                           "accepted": wide_accepted,
+                           "old_unsound": wide_old_unsound,
+                           "new_unsound": wide_new_unsound,
+                           "circuits_exercising_bug": wide_exercised},
         "rows": rows,
     }, indent=2), encoding="utf-8")
     print(f"  wrote {out}")
