@@ -86,8 +86,10 @@ def main(argv: Sequence[str] | None = None) -> int:
             ideal, cand = inst.circuit(0), inst.circuit((1 << blocks) - 1)
             n = ideal.num_qubits
             correction = QuantumCircuit(n)
-            correction.compose(cand, inplace=True)
+            # compose() appends, so the declared C = U_cand . U_ideal^dagger
+            # requires the inverse first (see qcec_validate.py).
             correction.compose(ideal.inverse(), inplace=True)
+            correction.compose(cand, inplace=True)
             left, right = QuantumCircuit(n), QuantumCircuit(n)
             left.z(0)
             left.compose(correction, inplace=True)      # C . Z_0

@@ -1,0 +1,1814 @@
+{
+  "fuzz_version": "tail-fuzz-v1",
+  "seed": 20261020,
+  "circuits": 200,
+  "masks": 1534,
+  "accepted": 354,
+  "old_unsound": 844,
+  "new_unsound": 0,
+  "flips": 968,
+  "circuits_exercising_bug": 157,
+  "verdict": "PASS",
+  "rows": [
+    {
+      "qubits": 5,
+      "blocks": 4,
+      "tail_h": 1,
+      "masks": 16,
+      "flips": 0,
+      "old_unsound": 0,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 7,
+      "blocks": 3,
+      "tail_h": 1,
+      "masks": 8,
+      "flips": 4,
+      "old_unsound": 4,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 3,
+      "blocks": 2,
+      "tail_h": 2,
+      "masks": 4,
+      "flips": 3,
+      "old_unsound": 3,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 6,
+      "blocks": 4,
+      "tail_h": 1,
+      "masks": 16,
+      "flips": 12,
+      "old_unsound": 12,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 7,
+      "blocks": 1,
+      "tail_h": 1,
+      "masks": 2,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 5,
+      "blocks": 4,
+      "tail_h": 2,
+      "masks": 16,
+      "flips": 15,
+      "old_unsound": 14,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 4,
+      "blocks": 1,
+      "tail_h": 1,
+      "masks": 2,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 3,
+      "blocks": 3,
+      "tail_h": 1,
+      "masks": 8,
+      "flips": 7,
+      "old_unsound": 7,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 4,
+      "blocks": 2,
+      "tail_h": 2,
+      "masks": 4,
+      "flips": 3,
+      "old_unsound": 3,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 5,
+      "blocks": 3,
+      "tail_h": 2,
+      "masks": 8,
+      "flips": 7,
+      "old_unsound": 7,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 3,
+      "blocks": 2,
+      "tail_h": 2,
+      "masks": 4,
+      "flips": 3,
+      "old_unsound": 3,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 4,
+      "blocks": 1,
+      "tail_h": 2,
+      "masks": 2,
+      "flips": 1,
+      "old_unsound": 0,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 5,
+      "blocks": 4,
+      "tail_h": 1,
+      "masks": 16,
+      "flips": 12,
+      "old_unsound": 12,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 4,
+      "blocks": 3,
+      "tail_h": 1,
+      "masks": 8,
+      "flips": 0,
+      "old_unsound": 0,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 6,
+      "blocks": 4,
+      "tail_h": 1,
+      "masks": 16,
+      "flips": 15,
+      "old_unsound": 15,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 6,
+      "blocks": 3,
+      "tail_h": 1,
+      "masks": 8,
+      "flips": 6,
+      "old_unsound": 6,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 5,
+      "blocks": 3,
+      "tail_h": 1,
+      "masks": 8,
+      "flips": 6,
+      "old_unsound": 6,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 6,
+      "blocks": 2,
+      "tail_h": 2,
+      "masks": 4,
+      "flips": 2,
+      "old_unsound": 0,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 3,
+      "blocks": 1,
+      "tail_h": 1,
+      "masks": 2,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 6,
+      "blocks": 3,
+      "tail_h": 2,
+      "masks": 8,
+      "flips": 7,
+      "old_unsound": 7,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 3,
+      "blocks": 1,
+      "tail_h": 1,
+      "masks": 2,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 7,
+      "blocks": 3,
+      "tail_h": 2,
+      "masks": 8,
+      "flips": 7,
+      "old_unsound": 7,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 5,
+      "blocks": 3,
+      "tail_h": 1,
+      "masks": 8,
+      "flips": 6,
+      "old_unsound": 4,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 7,
+      "blocks": 4,
+      "tail_h": 2,
+      "masks": 16,
+      "flips": 14,
+      "old_unsound": 14,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 7,
+      "blocks": 3,
+      "tail_h": 2,
+      "masks": 8,
+      "flips": 6,
+      "old_unsound": 6,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 3,
+      "blocks": 3,
+      "tail_h": 2,
+      "masks": 8,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 6,
+      "blocks": 4,
+      "tail_h": 2,
+      "masks": 16,
+      "flips": 7,
+      "old_unsound": 7,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 7,
+      "blocks": 1,
+      "tail_h": 2,
+      "masks": 2,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 5,
+      "blocks": 4,
+      "tail_h": 2,
+      "masks": 16,
+      "flips": 3,
+      "old_unsound": 3,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 3,
+      "blocks": 4,
+      "tail_h": 2,
+      "masks": 16,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 3,
+      "blocks": 4,
+      "tail_h": 2,
+      "masks": 16,
+      "flips": 15,
+      "old_unsound": 0,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 6,
+      "blocks": 2,
+      "tail_h": 2,
+      "masks": 4,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 7,
+      "blocks": 3,
+      "tail_h": 1,
+      "masks": 8,
+      "flips": 6,
+      "old_unsound": 6,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 3,
+      "blocks": 3,
+      "tail_h": 1,
+      "masks": 8,
+      "flips": 7,
+      "old_unsound": 6,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 3,
+      "blocks": 3,
+      "tail_h": 2,
+      "masks": 8,
+      "flips": 7,
+      "old_unsound": 0,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 7,
+      "blocks": 1,
+      "tail_h": 1,
+      "masks": 2,
+      "flips": 0,
+      "old_unsound": 0,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 4,
+      "blocks": 4,
+      "tail_h": 2,
+      "masks": 16,
+      "flips": 15,
+      "old_unsound": 15,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 7,
+      "blocks": 3,
+      "tail_h": 1,
+      "masks": 8,
+      "flips": 7,
+      "old_unsound": 7,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 7,
+      "blocks": 3,
+      "tail_h": 2,
+      "masks": 8,
+      "flips": 7,
+      "old_unsound": 7,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 5,
+      "blocks": 1,
+      "tail_h": 1,
+      "masks": 2,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 6,
+      "blocks": 4,
+      "tail_h": 1,
+      "masks": 16,
+      "flips": 0,
+      "old_unsound": 0,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 7,
+      "blocks": 4,
+      "tail_h": 1,
+      "masks": 16,
+      "flips": 12,
+      "old_unsound": 12,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 4,
+      "blocks": 4,
+      "tail_h": 2,
+      "masks": 16,
+      "flips": 15,
+      "old_unsound": 15,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 6,
+      "blocks": 4,
+      "tail_h": 1,
+      "masks": 16,
+      "flips": 14,
+      "old_unsound": 14,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 6,
+      "blocks": 2,
+      "tail_h": 1,
+      "masks": 4,
+      "flips": 2,
+      "old_unsound": 2,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 3,
+      "blocks": 3,
+      "tail_h": 1,
+      "masks": 8,
+      "flips": 7,
+      "old_unsound": 6,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 3,
+      "blocks": 3,
+      "tail_h": 2,
+      "masks": 8,
+      "flips": 7,
+      "old_unsound": 7,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 3,
+      "blocks": 1,
+      "tail_h": 2,
+      "masks": 2,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 5,
+      "blocks": 1,
+      "tail_h": 2,
+      "masks": 2,
+      "flips": 0,
+      "old_unsound": 0,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 5,
+      "blocks": 2,
+      "tail_h": 2,
+      "masks": 4,
+      "flips": 3,
+      "old_unsound": 3,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 7,
+      "blocks": 2,
+      "tail_h": 2,
+      "masks": 4,
+      "flips": 2,
+      "old_unsound": 2,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 7,
+      "blocks": 4,
+      "tail_h": 2,
+      "masks": 16,
+      "flips": 14,
+      "old_unsound": 14,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 6,
+      "blocks": 2,
+      "tail_h": 2,
+      "masks": 4,
+      "flips": 2,
+      "old_unsound": 2,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 3,
+      "blocks": 2,
+      "tail_h": 2,
+      "masks": 4,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 6,
+      "blocks": 1,
+      "tail_h": 2,
+      "masks": 2,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 4,
+      "blocks": 2,
+      "tail_h": 1,
+      "masks": 4,
+      "flips": 3,
+      "old_unsound": 3,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 5,
+      "blocks": 2,
+      "tail_h": 1,
+      "masks": 4,
+      "flips": 0,
+      "old_unsound": 0,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 5,
+      "blocks": 4,
+      "tail_h": 1,
+      "masks": 16,
+      "flips": 6,
+      "old_unsound": 6,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 4,
+      "blocks": 1,
+      "tail_h": 1,
+      "masks": 2,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 7,
+      "blocks": 4,
+      "tail_h": 2,
+      "masks": 16,
+      "flips": 15,
+      "old_unsound": 15,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 5,
+      "blocks": 4,
+      "tail_h": 2,
+      "masks": 16,
+      "flips": 7,
+      "old_unsound": 0,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 7,
+      "blocks": 4,
+      "tail_h": 1,
+      "masks": 16,
+      "flips": 14,
+      "old_unsound": 14,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 3,
+      "blocks": 1,
+      "tail_h": 2,
+      "masks": 2,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 5,
+      "blocks": 3,
+      "tail_h": 1,
+      "masks": 8,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 5,
+      "blocks": 1,
+      "tail_h": 1,
+      "masks": 2,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 6,
+      "blocks": 4,
+      "tail_h": 2,
+      "masks": 16,
+      "flips": 14,
+      "old_unsound": 0,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 7,
+      "blocks": 4,
+      "tail_h": 2,
+      "masks": 16,
+      "flips": 15,
+      "old_unsound": 15,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 5,
+      "blocks": 4,
+      "tail_h": 2,
+      "masks": 16,
+      "flips": 14,
+      "old_unsound": 14,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 4,
+      "blocks": 3,
+      "tail_h": 2,
+      "masks": 8,
+      "flips": 7,
+      "old_unsound": 7,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 3,
+      "blocks": 3,
+      "tail_h": 1,
+      "masks": 8,
+      "flips": 7,
+      "old_unsound": 5,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 7,
+      "blocks": 3,
+      "tail_h": 2,
+      "masks": 8,
+      "flips": 4,
+      "old_unsound": 4,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 7,
+      "blocks": 1,
+      "tail_h": 2,
+      "masks": 2,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 6,
+      "blocks": 4,
+      "tail_h": 1,
+      "masks": 16,
+      "flips": 7,
+      "old_unsound": 7,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 6,
+      "blocks": 2,
+      "tail_h": 1,
+      "masks": 4,
+      "flips": 0,
+      "old_unsound": 0,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 4,
+      "blocks": 2,
+      "tail_h": 2,
+      "masks": 4,
+      "flips": 3,
+      "old_unsound": 3,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 7,
+      "blocks": 2,
+      "tail_h": 1,
+      "masks": 4,
+      "flips": 2,
+      "old_unsound": 2,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 7,
+      "blocks": 2,
+      "tail_h": 2,
+      "masks": 4,
+      "flips": 3,
+      "old_unsound": 3,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 4,
+      "blocks": 2,
+      "tail_h": 2,
+      "masks": 4,
+      "flips": 3,
+      "old_unsound": 3,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 5,
+      "blocks": 2,
+      "tail_h": 1,
+      "masks": 4,
+      "flips": 2,
+      "old_unsound": 2,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 4,
+      "blocks": 2,
+      "tail_h": 2,
+      "masks": 4,
+      "flips": 3,
+      "old_unsound": 3,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 3,
+      "blocks": 3,
+      "tail_h": 2,
+      "masks": 8,
+      "flips": 7,
+      "old_unsound": 7,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 5,
+      "blocks": 1,
+      "tail_h": 2,
+      "masks": 2,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 5,
+      "blocks": 3,
+      "tail_h": 2,
+      "masks": 8,
+      "flips": 7,
+      "old_unsound": 7,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 7,
+      "blocks": 4,
+      "tail_h": 1,
+      "masks": 16,
+      "flips": 15,
+      "old_unsound": 15,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 4,
+      "blocks": 3,
+      "tail_h": 2,
+      "masks": 8,
+      "flips": 7,
+      "old_unsound": 7,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 3,
+      "blocks": 3,
+      "tail_h": 2,
+      "masks": 8,
+      "flips": 7,
+      "old_unsound": 0,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 7,
+      "blocks": 1,
+      "tail_h": 2,
+      "masks": 2,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 5,
+      "blocks": 2,
+      "tail_h": 2,
+      "masks": 4,
+      "flips": 0,
+      "old_unsound": 0,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 3,
+      "blocks": 1,
+      "tail_h": 2,
+      "masks": 2,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 6,
+      "blocks": 4,
+      "tail_h": 2,
+      "masks": 16,
+      "flips": 15,
+      "old_unsound": 0,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 7,
+      "blocks": 1,
+      "tail_h": 2,
+      "masks": 2,
+      "flips": 0,
+      "old_unsound": 0,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 4,
+      "blocks": 4,
+      "tail_h": 2,
+      "masks": 16,
+      "flips": 15,
+      "old_unsound": 15,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 4,
+      "blocks": 3,
+      "tail_h": 2,
+      "masks": 8,
+      "flips": 7,
+      "old_unsound": 7,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 4,
+      "blocks": 1,
+      "tail_h": 1,
+      "masks": 2,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 5,
+      "blocks": 3,
+      "tail_h": 1,
+      "masks": 8,
+      "flips": 7,
+      "old_unsound": 7,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 6,
+      "blocks": 1,
+      "tail_h": 2,
+      "masks": 2,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 7,
+      "blocks": 3,
+      "tail_h": 2,
+      "masks": 8,
+      "flips": 7,
+      "old_unsound": 7,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 3,
+      "blocks": 3,
+      "tail_h": 2,
+      "masks": 8,
+      "flips": 7,
+      "old_unsound": 7,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 3,
+      "blocks": 4,
+      "tail_h": 1,
+      "masks": 16,
+      "flips": 15,
+      "old_unsound": 15,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 7,
+      "blocks": 1,
+      "tail_h": 1,
+      "masks": 2,
+      "flips": 0,
+      "old_unsound": 0,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 7,
+      "blocks": 3,
+      "tail_h": 1,
+      "masks": 8,
+      "flips": 4,
+      "old_unsound": 4,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 5,
+      "blocks": 3,
+      "tail_h": 2,
+      "masks": 8,
+      "flips": 7,
+      "old_unsound": 7,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 3,
+      "blocks": 1,
+      "tail_h": 2,
+      "masks": 2,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 3,
+      "blocks": 3,
+      "tail_h": 2,
+      "masks": 8,
+      "flips": 3,
+      "old_unsound": 0,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 3,
+      "blocks": 1,
+      "tail_h": 2,
+      "masks": 2,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 6,
+      "blocks": 3,
+      "tail_h": 1,
+      "masks": 8,
+      "flips": 0,
+      "old_unsound": 0,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 7,
+      "blocks": 1,
+      "tail_h": 2,
+      "masks": 2,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 6,
+      "blocks": 1,
+      "tail_h": 1,
+      "masks": 2,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 7,
+      "blocks": 3,
+      "tail_h": 1,
+      "masks": 8,
+      "flips": 0,
+      "old_unsound": 0,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 5,
+      "blocks": 3,
+      "tail_h": 1,
+      "masks": 8,
+      "flips": 3,
+      "old_unsound": 3,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 3,
+      "blocks": 2,
+      "tail_h": 2,
+      "masks": 4,
+      "flips": 3,
+      "old_unsound": 3,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 3,
+      "blocks": 3,
+      "tail_h": 2,
+      "masks": 8,
+      "flips": 7,
+      "old_unsound": 7,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 3,
+      "blocks": 2,
+      "tail_h": 2,
+      "masks": 4,
+      "flips": 3,
+      "old_unsound": 3,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 5,
+      "blocks": 1,
+      "tail_h": 2,
+      "masks": 2,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 7,
+      "blocks": 3,
+      "tail_h": 1,
+      "masks": 8,
+      "flips": 3,
+      "old_unsound": 3,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 6,
+      "blocks": 3,
+      "tail_h": 1,
+      "masks": 8,
+      "flips": 3,
+      "old_unsound": 3,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 5,
+      "blocks": 3,
+      "tail_h": 1,
+      "masks": 8,
+      "flips": 6,
+      "old_unsound": 6,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 6,
+      "blocks": 3,
+      "tail_h": 1,
+      "masks": 8,
+      "flips": 6,
+      "old_unsound": 6,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 7,
+      "blocks": 2,
+      "tail_h": 2,
+      "masks": 4,
+      "flips": 3,
+      "old_unsound": 3,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 6,
+      "blocks": 1,
+      "tail_h": 2,
+      "masks": 2,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 5,
+      "blocks": 3,
+      "tail_h": 1,
+      "masks": 8,
+      "flips": 6,
+      "old_unsound": 6,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 6,
+      "blocks": 1,
+      "tail_h": 2,
+      "masks": 2,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 3,
+      "blocks": 2,
+      "tail_h": 2,
+      "masks": 4,
+      "flips": 3,
+      "old_unsound": 0,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 6,
+      "blocks": 2,
+      "tail_h": 2,
+      "masks": 4,
+      "flips": 2,
+      "old_unsound": 0,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 4,
+      "blocks": 1,
+      "tail_h": 2,
+      "masks": 2,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 5,
+      "blocks": 1,
+      "tail_h": 1,
+      "masks": 2,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 5,
+      "blocks": 4,
+      "tail_h": 1,
+      "masks": 16,
+      "flips": 12,
+      "old_unsound": 8,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 7,
+      "blocks": 1,
+      "tail_h": 2,
+      "masks": 2,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 7,
+      "blocks": 1,
+      "tail_h": 1,
+      "masks": 2,
+      "flips": 0,
+      "old_unsound": 0,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 5,
+      "blocks": 2,
+      "tail_h": 2,
+      "masks": 4,
+      "flips": 3,
+      "old_unsound": 0,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 5,
+      "blocks": 3,
+      "tail_h": 1,
+      "masks": 8,
+      "flips": 6,
+      "old_unsound": 6,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 4,
+      "blocks": 3,
+      "tail_h": 2,
+      "masks": 8,
+      "flips": 7,
+      "old_unsound": 0,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 3,
+      "blocks": 3,
+      "tail_h": 2,
+      "masks": 8,
+      "flips": 7,
+      "old_unsound": 7,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 5,
+      "blocks": 4,
+      "tail_h": 2,
+      "masks": 16,
+      "flips": 15,
+      "old_unsound": 15,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 7,
+      "blocks": 4,
+      "tail_h": 1,
+      "masks": 16,
+      "flips": 6,
+      "old_unsound": 6,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 4,
+      "blocks": 1,
+      "tail_h": 1,
+      "masks": 2,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 5,
+      "blocks": 2,
+      "tail_h": 2,
+      "masks": 4,
+      "flips": 3,
+      "old_unsound": 3,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 7,
+      "blocks": 1,
+      "tail_h": 1,
+      "masks": 2,
+      "flips": 0,
+      "old_unsound": 0,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 6,
+      "blocks": 2,
+      "tail_h": 2,
+      "masks": 4,
+      "flips": 2,
+      "old_unsound": 2,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 5,
+      "blocks": 2,
+      "tail_h": 1,
+      "masks": 4,
+      "flips": 2,
+      "old_unsound": 2,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 7,
+      "blocks": 3,
+      "tail_h": 1,
+      "masks": 8,
+      "flips": 7,
+      "old_unsound": 7,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 3,
+      "blocks": 1,
+      "tail_h": 1,
+      "masks": 2,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 3,
+      "blocks": 3,
+      "tail_h": 2,
+      "masks": 8,
+      "flips": 7,
+      "old_unsound": 7,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 6,
+      "blocks": 3,
+      "tail_h": 2,
+      "masks": 8,
+      "flips": 7,
+      "old_unsound": 7,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 6,
+      "blocks": 4,
+      "tail_h": 2,
+      "masks": 16,
+      "flips": 14,
+      "old_unsound": 14,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 4,
+      "blocks": 4,
+      "tail_h": 1,
+      "masks": 16,
+      "flips": 15,
+      "old_unsound": 15,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 7,
+      "blocks": 4,
+      "tail_h": 1,
+      "masks": 16,
+      "flips": 8,
+      "old_unsound": 8,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 3,
+      "blocks": 3,
+      "tail_h": 1,
+      "masks": 8,
+      "flips": 7,
+      "old_unsound": 7,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 4,
+      "blocks": 3,
+      "tail_h": 2,
+      "masks": 8,
+      "flips": 7,
+      "old_unsound": 0,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 5,
+      "blocks": 3,
+      "tail_h": 2,
+      "masks": 8,
+      "flips": 6,
+      "old_unsound": 6,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 4,
+      "blocks": 4,
+      "tail_h": 2,
+      "masks": 16,
+      "flips": 15,
+      "old_unsound": 15,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 3,
+      "blocks": 2,
+      "tail_h": 1,
+      "masks": 4,
+      "flips": 3,
+      "old_unsound": 3,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 6,
+      "blocks": 1,
+      "tail_h": 1,
+      "masks": 2,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 6,
+      "blocks": 4,
+      "tail_h": 1,
+      "masks": 16,
+      "flips": 0,
+      "old_unsound": 0,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 5,
+      "blocks": 2,
+      "tail_h": 1,
+      "masks": 4,
+      "flips": 2,
+      "old_unsound": 2,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 7,
+      "blocks": 2,
+      "tail_h": 2,
+      "masks": 4,
+      "flips": 3,
+      "old_unsound": 2,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 6,
+      "blocks": 3,
+      "tail_h": 1,
+      "masks": 8,
+      "flips": 6,
+      "old_unsound": 6,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 5,
+      "blocks": 3,
+      "tail_h": 2,
+      "masks": 8,
+      "flips": 7,
+      "old_unsound": 7,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 6,
+      "blocks": 4,
+      "tail_h": 2,
+      "masks": 16,
+      "flips": 6,
+      "old_unsound": 6,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 5,
+      "blocks": 1,
+      "tail_h": 2,
+      "masks": 2,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 5,
+      "blocks": 3,
+      "tail_h": 1,
+      "masks": 8,
+      "flips": 0,
+      "old_unsound": 0,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 4,
+      "blocks": 2,
+      "tail_h": 2,
+      "masks": 4,
+      "flips": 3,
+      "old_unsound": 3,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 4,
+      "blocks": 1,
+      "tail_h": 1,
+      "masks": 2,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 7,
+      "blocks": 1,
+      "tail_h": 2,
+      "masks": 2,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 3,
+      "blocks": 1,
+      "tail_h": 1,
+      "masks": 2,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 6,
+      "blocks": 3,
+      "tail_h": 2,
+      "masks": 8,
+      "flips": 6,
+      "old_unsound": 0,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 6,
+      "blocks": 1,
+      "tail_h": 1,
+      "masks": 2,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 7,
+      "blocks": 4,
+      "tail_h": 2,
+      "masks": 16,
+      "flips": 15,
+      "old_unsound": 15,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 6,
+      "blocks": 4,
+      "tail_h": 2,
+      "masks": 16,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 5,
+      "blocks": 4,
+      "tail_h": 1,
+      "masks": 16,
+      "flips": 15,
+      "old_unsound": 15,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 5,
+      "blocks": 2,
+      "tail_h": 2,
+      "masks": 4,
+      "flips": 2,
+      "old_unsound": 2,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 4,
+      "blocks": 1,
+      "tail_h": 2,
+      "masks": 2,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 7,
+      "blocks": 4,
+      "tail_h": 2,
+      "masks": 16,
+      "flips": 14,
+      "old_unsound": 14,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 3,
+      "blocks": 2,
+      "tail_h": 2,
+      "masks": 4,
+      "flips": 3,
+      "old_unsound": 3,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 3,
+      "blocks": 2,
+      "tail_h": 2,
+      "masks": 4,
+      "flips": 3,
+      "old_unsound": 3,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 3,
+      "blocks": 1,
+      "tail_h": 1,
+      "masks": 2,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 6,
+      "blocks": 2,
+      "tail_h": 1,
+      "masks": 4,
+      "flips": 0,
+      "old_unsound": 0,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 6,
+      "blocks": 3,
+      "tail_h": 1,
+      "masks": 8,
+      "flips": 0,
+      "old_unsound": 0,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 4,
+      "blocks": 3,
+      "tail_h": 2,
+      "masks": 8,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 3,
+      "blocks": 1,
+      "tail_h": 2,
+      "masks": 2,
+      "flips": 1,
+      "old_unsound": 0,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 5,
+      "blocks": 2,
+      "tail_h": 2,
+      "masks": 4,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 7,
+      "blocks": 1,
+      "tail_h": 2,
+      "masks": 2,
+      "flips": 0,
+      "old_unsound": 0,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 7,
+      "blocks": 4,
+      "tail_h": 2,
+      "masks": 16,
+      "flips": 7,
+      "old_unsound": 0,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 6,
+      "blocks": 3,
+      "tail_h": 1,
+      "masks": 8,
+      "flips": 6,
+      "old_unsound": 6,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 4,
+      "blocks": 4,
+      "tail_h": 2,
+      "masks": 16,
+      "flips": 3,
+      "old_unsound": 3,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 6,
+      "blocks": 1,
+      "tail_h": 2,
+      "masks": 2,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 7,
+      "blocks": 3,
+      "tail_h": 1,
+      "masks": 8,
+      "flips": 6,
+      "old_unsound": 6,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 4,
+      "blocks": 3,
+      "tail_h": 2,
+      "masks": 8,
+      "flips": 7,
+      "old_unsound": 7,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 7,
+      "blocks": 4,
+      "tail_h": 2,
+      "masks": 16,
+      "flips": 14,
+      "old_unsound": 14,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 4,
+      "blocks": 1,
+      "tail_h": 2,
+      "masks": 2,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 6,
+      "blocks": 1,
+      "tail_h": 1,
+      "masks": 2,
+      "flips": 0,
+      "old_unsound": 0,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 3,
+      "blocks": 2,
+      "tail_h": 2,
+      "masks": 4,
+      "flips": 3,
+      "old_unsound": 0,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 3,
+      "blocks": 4,
+      "tail_h": 1,
+      "masks": 16,
+      "flips": 15,
+      "old_unsound": 15,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 5,
+      "blocks": 4,
+      "tail_h": 1,
+      "masks": 16,
+      "flips": 15,
+      "old_unsound": 15,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 7,
+      "blocks": 2,
+      "tail_h": 2,
+      "masks": 4,
+      "flips": 2,
+      "old_unsound": 0,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 6,
+      "blocks": 4,
+      "tail_h": 1,
+      "masks": 16,
+      "flips": 0,
+      "old_unsound": 0,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 4,
+      "blocks": 4,
+      "tail_h": 2,
+      "masks": 16,
+      "flips": 0,
+      "old_unsound": 0,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 3,
+      "blocks": 3,
+      "tail_h": 2,
+      "masks": 8,
+      "flips": 3,
+      "old_unsound": 3,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 5,
+      "blocks": 2,
+      "tail_h": 1,
+      "masks": 4,
+      "flips": 0,
+      "old_unsound": 0,
+      "new_unsound": 0
+    },
+    {
+      "qubits": 6,
+      "blocks": 4,
+      "tail_h": 1,
+      "masks": 16,
+      "flips": 0,
+      "old_unsound": 0,
+      "new_unsound": 0
+    }
+  ]
+}

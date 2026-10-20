@@ -1,0 +1,95 @@
+{
+  "exact_max_qubits": 11,
+  "rows": [
+    {
+      "circuit": "C3X ladder",
+      "qubits": 5,
+      "sites": 0,
+      "tail_h": 6,
+      "flips": 0,
+      "old_unsound": 0,
+      "new_unsound": 0,
+      "exact_checked": true
+    },
+    {
+      "circuit": "C4X ladder",
+      "qubits": 7,
+      "sites": 0,
+      "tail_h": 10,
+      "flips": 0,
+      "old_unsound": 0,
+      "new_unsound": 0,
+      "exact_checked": true
+    },
+    {
+      "circuit": "C5X ladder",
+      "qubits": 9,
+      "sites": 0,
+      "tail_h": 14,
+      "flips": 0,
+      "old_unsound": 0,
+      "new_unsound": 0,
+      "exact_checked": true
+    },
+    {
+      "circuit": "CDKM adder 3-bit",
+      "qubits": 8,
+      "sites": 6,
+      "tail_h": 0,
+      "flips": 0,
+      "old_unsound": 0,
+      "new_unsound": 0,
+      "exact_checked": true
+    },
+    {
+      "circuit": "CDKM adder 4-bit",
+      "qubits": 10,
+      "sites": 8,
+      "tail_h": 0,
+      "flips": 0,
+      "old_unsound": 0,
+      "new_unsound": 0,
+      "exact_checked": true
+    },
+    {
+      "circuit": "CDKM adder 8-bit",
+      "qubits": 18,
+      "sites": 16,
+      "tail_h": 0,
+      "flips": 0,
+      "old_unsound": null,
+      "new_unsound": null,
+      "exact_checked": false
+    },
+    {
+      "circuit": "CDKM adder 16-bit",
+      "qubits": 34,
+      "sites": 32,
+      "tail_h": 0,
+      "flips": 0,
+      "old_unsound": null,
+      "new_unsound": null,
+      "exact_checked": false
+    },
+    {
+      "circuit": "CDKM adder 32-bit",
+      "qubits": 66,
+      "sites": 64,
+      "tail_h": 0,
+      "flips": 0,
+      "old_unsound": null,
+      "new_unsound": null,
+      "exact_checked": false
+    },
+    {
+      "circuit": "Grover 3-qubit",
+      "qubits": 3,
+      "sites": 2,
+      "tail_h": 4,
+      "flips": 1,
+      "old_unsound": 1,
+      "new_unsound": 0,
+      "exact_checked": true
+    }
+  ]
+}
