@@ -133,7 +133,7 @@ def run_population(kind: str, mode: str, backend: str,
     agg = {"proposals": 0, "legal": 0, "accepted": 0, "illegal_accepted": 0,
            "tracker_accept": 0,
            "tracker_s": 0.0, "exact_s": 0.0, "exact_calls": 0,
-           "cert_bytes": 0, "best_saving": 0}
+           "cert_bytes": 0, "best_saving": 0, "tracker_only_saving": 0}
     configs = ([(2, 0.1), (3, 0.3), (4, 0.7)] if kind == "homogeneous" else
                [(4, 0.5), (6, 0.7)])
     for first, h_prob in configs:
@@ -156,7 +156,7 @@ def run_population(kind: str, mode: str, backend: str,
                "mode": mode, "proposals": len(masks),
                "tracker_s": 0.0, "exact_s": 0.0, "exact_calls": 0,
                "legal": 0, "accepted": 0, "illegal_accepted": 0,
-               "tracker_accept": 0, "cert_bytes": 0,
+               "tracker_accept": 0, "cert_bytes": 0, "tracker_only_saving": 0,
                "best_saving": 0}
         for mask in masks:
             legal = bool(truth(mask))
@@ -176,6 +176,8 @@ def run_population(kind: str, mode: str, backend: str,
             if result["route"] == "tracker":
                 row["tracker_s"] += result["seconds"]
                 row["tracker_accept"] += 1
+                row["tracker_only_saving"] = max(
+                    row["tracker_only_saving"], 3 * bin(mask).count("1"))
             elif result["route"] in ("dense", "qcec", "symbolic"):
                 row["exact_s"] += result["seconds"]
                 row["exact_calls"] += 1
@@ -187,6 +189,7 @@ def run_population(kind: str, mode: str, backend: str,
         agg["exact_s"] += row["exact_s"]
         agg["cert_bytes"] += row["cert_bytes"]
         agg["best_saving"] += row["best_saving"]
+        agg["tracker_only_saving"] += row["tracker_only_saving"]
     return {"rows": rows, "totals": agg}
 
 
@@ -196,7 +199,9 @@ def main(argv: Sequence[str] | None = None) -> int:
                         choices=["enum", "one_shot", "greedy", "all"])
     parser.add_argument("--backend", default="auto", choices=["auto", "dense", "qcec"])
     parser.add_argument("--qcec-python", default="/tmp/qcec-venv/bin/python")
-    parser.add_argument("--threshold", type=int, default=18)
+    parser.add_argument("--threshold", type=int, default=11,
+                        help="exact fallback up to this width. Default 11 is "
+                             "interactive; 12-18 is an explicit slow path.")
     parser.add_argument("--out", default=str(ROOT / "reports" / "figure_data" /
                                             "hybrid_check.json"))
     args = parser.parse_args(argv)
@@ -206,20 +211,32 @@ def main(argv: Sequence[str] | None = None) -> int:
     print(f"  HYBRID PRE-FILTER  version={HYBRID_VERSION}  backend={args.backend}  "
           f"threshold={args.threshold}")
     print("=" * 104)
-    out: Dict[str, Any] = {"version": HYBRID_VERSION, "backend": args.backend,
-                           "threshold": args.threshold, "results": {}}
+    out: Dict[str, Any] = {
+        "version": HYBRID_VERSION, "backend": args.backend,
+        "threshold": args.threshold,
+        "note": "recall denominators differ by proposal mode; compare "
+                "best_T / enum_best_T instead",
+        "results": {}}
     for kind in ("homogeneous", "wide"):
+        enum_data = run_population(kind, "enum", args.backend, args.qcec_python,
+                                   args.threshold)
+        enum_best = enum_data["totals"]["best_saving"]
         for mode in modes:
-            data = run_population(kind, mode, args.backend, args.qcec_python,
-                                  args.threshold)
+            data = (enum_data if mode == "enum" else
+                    run_population(kind, mode, args.backend, args.qcec_python,
+                                   args.threshold))
+            for row in data["rows"]:
+                row["enum_best_T"] = enum_best
+                row["best_over_enum"] = (round(row["best_saving"] / enum_best, 3)
+                                         if enum_best else None)
             out["results"][f"{kind}/{mode}"] = data
             t = data["totals"]
-            recall = t["accepted"] / t["legal"] if t["legal"] else float("nan")
-            tr_only = t["tracker_accept"] / t["legal"] if t["legal"] else float("nan")
+            ratio = (t["best_saving"] / enum_best) if enum_best else float("nan")
             print(f"  {kind:<12}{mode:<10} proposals={t['proposals']:>3} "
-                  f"legal={t['legal']:>3} accepted={t['accepted']:>3} "
-                  f"trackerOnly={tr_only:.2f} recall={recall:.2f} "
-                  f"illegal={t['illegal_accepted']} T={t['best_saving']:>3} "
+                  f"legal_in_prop={t['legal']:>3} best_T={t['best_saving']:>3} "
+                  f"enum_best={enum_best:>3} ratio={ratio:.2f} "
+                  f"trackerOnly_T={t['tracker_only_saving']:>3} "
+                  f"illegal={t['illegal_accepted']} "
                   f"tracker={t['tracker_s'] * 1e3:8.2f} ms "
                   f"exact={t['exact_s'] * 1e3:9.1f} ms "
                   f"calls={t['exact_calls']:>3} cert={t['cert_bytes']:>6} B", flush=True)

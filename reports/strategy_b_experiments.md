@@ -2434,24 +2434,29 @@ QCEC 结果只对"单线程、本机、上述配置"成立。
 
 #### (a) 提案模式：**one-shot 放进 hybrid 没有用**
 
-`hybrid_check.py v2`（`--proposal enum|one_shot|greedy`）。下表是 2 个群体 × 3 种提案：
+`hybrid_check.py v2`（`--proposal enum|one_shot|greedy`）。**质量表**（不是 recall 表）：
 
-| 群体 | 提案 | 提案数 | legal | **tracker 单独 recall** | **hybrid recall** | 精检调用 | 精检耗时 | 证书字节 | 最佳 T |
+| 群体 | 提案 | proposals | legal_in_proposals | **best_T** | **enum_best_T** | **best_T/enum** | tracker-only T | exact_calls | exact_s |
 |---|---|---:|---:|---:|---:|---:|---:|---:|---:|
-| homogeneous | enum | 48 | 36 | **0.22** | **1.00** | 40 | **1.3 ms** | 52 KB | 30 |
-| homogeneous | one_shot | 3 | 2 | 0.00 | 1.00 | 3 | 0.1 ms | 3.6 KB | 24 |
-| homogeneous | greedy | 3 | 3 | 1.00 | 1.00 | **0** | 0 | 2.4 KB | 12 |
-| wide (H 插层) | enum | 32 | 4 | 1.00 | 1.00 | 28 | **8.0 s** | 36 KB | 6 |
-| wide (H 插层) | **one_shot** | 2 | **0** | — | — | 2 | 0.53 s | 2.5 KB | **0** |
-| wide (H 插层) | greedy | 2 | 2 | 1.00 | 1.00 | **0** | 0 | 1.7 KB | 6 |
+| homogeneous | enum | 48 | 36 | **30** | 30 | **1.00** | 12 | 40 | **1.5 ms** |
+| homogeneous | one_shot | 3 | 2 | 24 | 30 | 0.80 | 0 | 3 | 0.1 ms |
+| homogeneous | greedy | 3 | 3 | 12 | 30 | 0.40 | 12 | **0** | 0 |
+| wide (H 插层) | enum | 32 | 4 | 6 | 6 | 1.00 | 6 | 28 | **8.9 s** |
+| wide (H 插层) | **one_shot** | 2 | **0** | **0** | 6 | **0.00** | 0 | 2 | 0.62 s |
+| wide (H 插层) | greedy | 2 | 2 | **6** | 6 | **1.00** | 6 | **0** | 0 |
 
-**三条可直接写进论文的结论**：
+> **口径警告**：recall 的分母是**提案里**的 legal 数，不是全群体的 legal 数；
+> 因此 one-shot / greedy 的 "recall 1.00" **不能**和 enum 的 1.00 直接比较。
+> 本表因此改用 **best_T / enum_best_T** 作为质量列。
 
-1. **tracker 保守时（homogeneous），hybrid 把 recall 0.22 → 1.00**，代价仅 **1.3 ms**；
-2. **H 插层时，one-shot 提案本身全部非法**（legal=0）⇒ **精检只是花钱确认"不行"**（0.53 s 换 0 收益）；
-3. H 插层时 **greedy + 纯 tracker 已经 recall 1.00、精检 0 次**；enum+精检花 8 s 也**没有多拿到一个 T**。
+**四条可直接写进论文的结论**：
 
-⇒ 混合系统的正确用法是 **"tracker 保守的族上补 recall"**，不是"任何族都上精检"。
+1. **tracker 保守时（homogeneous）**：tracker 单独只能拿到 **12 T**，hybrid 拿到 **30 T（2.5×）**，代价 **1.5 ms**；
+2. **one-shot 在 homogeneous** 拿到 24 T（enum 的 80%），只要 0.1 ms —— **这是它唯一有价值的场景**；
+3. **H 插层时 one-shot 提案全部非法**（legal=0）⇒ 精检花 0.62 s 换 **0 T**；
+4. **H 插层时 greedy 用 0 次精检拿到 enum 的 100%（6 T）**，而 enum+精检花 **8.9 s**。
+
+⇒ 混合系统的正确用法是 **"tracker 保守的族上补质量"**；H 插层族上 **greedy 已支配 enum**。
 
 #### (b) 成本必须分三档报（不要用一个 0.2 ms 概括）
 
@@ -2461,8 +2466,10 @@ QCEC 结果只对"单线程、本机、上述配置"成立。
 | `WideInstance` + 稠密 Operator | N=6 **23 ms**；N=8 **0.50 s**；N=10 **8.6 s** | 指数增长（4^N） |
 | 大 N + QCEC（`alternating`） | **0.03–0.08 s / 单查询** | 全判据 N=18 **0.80 s** … N=106 **14.6 s** |
 
-> **12–18 的 QCEC 分支已实现并烟测**：`N=14`、tracker 拒绝 → `route=qcec`、
-> 判定 `illegal`、耗时 **37 s**（该实例 h=0.7、电路更密，成本随实例波动，不能引用成常数）。
+> **12–18 是可选慢路径，默认关闭**。`--threshold` 默认已降到 **11**（交互级）；
+> 打开后实测 `N=14` 一次判定 **37 s**（h=0.7 的密电路），而 `N=18` 的全判据可以只要 **0.8 s**
+> ——**成本随实例波动两个数量级**。论文只能写"12–18 **可选**，**不保证**交互级延迟"，
+> 不能给一个常数。
 
 #### (c) 证书的信任链（四层，别混为一谈）
 
@@ -2482,11 +2489,30 @@ QCEC 结果只对"单线程、本机、上述配置"成立。
 - `frozen_ci.py`（`frozen-ci-v1`）：**一个版本号、一个退出码**，跑 6 条回归 + SOTA 尾层 + 200 电路 fuzz（含 ancilla 布局）+ QASMBench 普查。
   实测 **4/4 PASS、155 s**。
 
+**核心图（不是 recall–cost，而是 best T–cost）**：`plot_pareto.py` →
+`reports/figures/pareto_best_t.pdf`。
+x = 成本（log），y = **best T saved**，标注 `best_T / enum_best_T`，四个点分别是
+enum / one_shot / greedy / tracker-only。
+它直接把两个容易误读的地方钉死：
+**homogeneous 上 one_shot 的 80% 只花 0.1 ms**；**wide 上 greedy 与 enum 同为 6 T，但成本差约 10⁵ 倍**。
+
 #### (e) 标准基准预处理：**没有做 `toffoli_recover.py`，原因写清楚**
 
 QASMBench 的 `adder_n4` 全电路只有 **8 个 T（4 t + 4 tdg）**，远少于 `7 × #Toffoli`，
 说明它**不是**标准的 7-T Toffoli 分解——模式匹配恢复不了块结构，需要**重新综合**。
 ⇒ 论文写 **"constructed benchmarks"**，并注明"标准基准需要去测量 + 重新综合的预处理"。
+
+### 5.60 论文正文只写四条贡献（其余进附录）
+
+| # | 正文贡献 | 支撑证据 |
+|---:|---|---|
+| 1 | **证书 schema + verifier + 四层信任链** | `diagonal-certificate-v1`；`verify_certificate` 抓篡改；§5.59(c) |
+| 2 | **实现忠实性验收** | 52 断言 / 2278 掩码超集 / 3456 对抗 / 200 电路 fuzz（旧 844→0）/ Grover 回归 |
+| 3 | **hybrid + Pareto（含 enum/one-shot/greedy 的 best T 对照）** | §5.59(a) 质量表 + `pareto_best_t.pdf` |
+| 4 | **限制**：ccx-block 域、H-free vs H-interleaved、标准基准需重综合前端 | §5.57(c)/§5.59(e)/§10 |
+
+**移到附录 / limitations 的内容**：学习式选择（§8）、定价律（§6.11–6.13）、窗口选择（§5.49）、
+b2（§5.44，状态 OPEN）。它们**不占正文**，只作为"我们试过并排除的路线"。
 
 ---
 
@@ -3048,6 +3074,7 @@ done
 .venv/bin/python test_tracker_soundness.py
 .venv/bin/python hybrid_check.py
 .venv/bin/python qasmbench_census.py
+.venv/bin/python plot_pareto.py                  # 核心图：best T vs cost (log x)
 
 # §5.59 一键 CI（一个版本号、一个退出码）
 .venv/bin/python frozen_ci.py                    # 4 步，约 155 s
