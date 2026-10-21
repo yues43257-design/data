@@ -1,17 +1,21 @@
 #!/usr/bin/env python3
-"""Run the compiler correctness/safety benchmark.
+"""Scoring protocol for the compiler-bug benchmark.
 
-Verifiers:
-  dense   -- exact ``relative_phase_ok`` on the full operator (N <= 10)
-  qcec    -- exact Z_q-commutation via MQT QCEC (N <= 18, alternating config)
-  cert    -- support_tracker bound certificate (hash + witness)
+Each verifier answers exactly one question:
 
-Legality cases are scored against ``expected_legal``; certificate cases against
-``expected_cert``; two-pass cases only against the chain verifier.
+    dense      -> L (legality)
+    QCEC       -> L (legality, optional subset)
+    cert_v1    -> C (certificate, unbound semantics)
+    cert_v2    -> C (certificate, bound semantics)
+
+``n/a`` (None) is an **abstention**, not a false positive.  Accuracy is computed
+over decided answers only; false positives (said "pass" when truth is fail) and
+false negatives are reported separately.
 """
 
 from __future__ import annotations
 
+import argparse
 import json
 import sys
 import tempfile
@@ -24,35 +28,48 @@ from qiskit import qasm2
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
-import relative_phase_criterion as RPC    # noqa: E402
-import support_tracker as ST              # noqa: E402
-import experiments.compiler_bench.cases as C          # noqa: E402
+import support_tracker as ST                # noqa: E402
+import experiments.compiler_bench.cases as C  # noqa: E402
 import experiments.multipass_attestation.verify_chain as VC  # noqa: E402
-import qcec_validate as QV                # noqa: E402
+import qcec_validate as QV                  # noqa: E402
 
-BENCH_VERSION = "compiler-bench-v1"
+BENCH_VERSION = "compiler-bench-v2"
 QCEEC = "/tmp/qcec-venv/bin/python"
 
 
-def _dense(case: Dict[str, Any]) -> Optional[bool]:
-    circuit = case["circuit"]
-    if circuit.num_clbits or case["ideal"].num_qubits > 10:
+def cert_v1(entry: Dict[str, Any]) -> Optional[bool]:
+    """Old, unbound semantics: compare the core fields only."""
+    if entry.get("kind") == "pass2":
         return None
-    if any(ins.operation.name in ("measure", "reset", "if_else")
-           for ins in circuit.data):
-        return None
+    fresh = ST.certify(entry["schedule"], entry["mask"])
+    core = ("mask", "accepted", "final_support", "h_checks", "violations")
+    same = all(entry["certificate"].get(k) == fresh.get(k) for k in core)
+    return bool(same and entry["certificate"].get("accepted", False))
+
+
+def cert_v2(entry: Dict[str, Any]) -> Optional[bool]:
+    """Bound semantics (hash + witness)."""
+    if entry.get("kind") == "pass2":
+        return bool(VC.verify_chain(entry)["ok"])
     try:
-        return bool(RPC.relative_phase_ok(case["ideal"], circuit))
+        valid = bool(ST.verify_certificate(
+            entry["schedule"], entry["mask"], entry["certificate"],
+            circuit=entry["circuit"], block_ranges=entry["ranges"]))
     except Exception:
-        return None
+        return False
+    return bool(valid and entry["certificate"].get("accepted", False))
 
 
-def _qcec(case: Dict[str, Any]) -> Optional[bool]:
-    circuit = case["circuit"]
-    if circuit.num_clbits or case["ideal"].num_qubits > 18:
+def dense(entry: Dict[str, Any]) -> Optional[bool]:
+    return entry.get("truth_L") if "truth_L" in entry else None
+
+
+def qcec(entry: Dict[str, Any]) -> Optional[bool]:
+    circuit, ideal = entry["circuit"], entry["ideal"]
+    if circuit.num_clbits or ideal.num_qubits > 18:
         return None
     try:
-        pairs = QV._diag_pairs(0, case["ideal"], circuit)
+        pairs = QV._diag_pairs(0, ideal, circuit)
     except Exception:
         return None
     with tempfile.TemporaryDirectory() as tmp:
@@ -64,88 +81,83 @@ def _qcec(case: Dict[str, Any]) -> Optional[bool]:
     return None
 
 
-def _cert(case: Dict[str, Any]) -> bool:
-    if case["kind"] == "pass2":
-        return bool(VC.verify_chain(case["entry"])["ok"])
-    try:
-        valid = bool(ST.verify_certificate(
-            case["schedule"], case["mask"], case["certificate"],
-            circuit=case["circuit"], block_ranges=case["ranges"]))
-        return bool(valid and case["certificate"].get("accepted", False))
-    except Exception:
-        return False
+def _score(verdict: Optional[bool], truth: Optional[bool]) -> str:
+    if verdict is None or truth is None:
+        return "abstain"
+    return "correct" if verdict == truth else "wrong"
 
 
-def run() -> Dict[str, Any]:
+def run(with_qcec: bool = False, qcec_limit: int = 0) -> Dict[str, Any]:
+    cases = C.all_cases()
     rows: List[Dict[str, Any]] = []
-    for case in C.all_cases():
-        row: Dict[str, Any] = {"case": case["name"],
-                               "expected_legal": case["expected_legal"],
-                               "expected_cert": case["expected_cert"],
-                               "ground_truth": case["ground_truth"],
-                               "kind": case["kind"]}
-        started = time.perf_counter()
-        dense = _dense(case) if case["kind"] == "rp" else None
-        row["dense_legal"] = dense
-        row["dense_s"] = round(time.perf_counter() - started, 3)
-        started = time.perf_counter()
-        qcec = _qcec(case) if case["kind"] == "rp" else None
-        row["qcec_legal"] = qcec
-        row["qcec_s"] = round(time.perf_counter() - started, 3)
-        started = time.perf_counter()
-        cert = _cert(case)
-        row["cert_ok"] = cert
-        row["cert_s"] = round(time.perf_counter() - started, 6)
-        row["cert_bytes"] = len(json.dumps(case.get("certificate", {}))) \
-            if case["kind"] == "rp" else None
-        if case["expected_legal"] is not None and dense is not None:
-            row["dense_correct"] = dense == case["expected_legal"]
-        if case["expected_legal"] is not None and qcec is not None:
-            row["qcec_correct"] = qcec == case["expected_legal"]
-        row["cert_correct"] = cert == case["expected_cert"]
+    for index, case in enumerate(cases):
+        if "error" in case:
+            rows.append({"case": case["name"], "error": case["error"]})
+            continue
+        entry = case["entry"]
+        verdicts = {
+            "dense": case["truth_L"],
+            "qcec": (qcec(entry) if with_qcec and qcec_limit > 0
+                     and index < qcec_limit and entry.get("ideal") is not None
+                     else None),
+            "cert_v1": cert_v1(entry),
+            "cert_v2": cert_v2(entry),
+        }
+        row = {"case": case["name"], "attack": case["attack"],
+               "family": case["family"], "layout": case["layout"],
+               "ground_truth": case["ground_truth"],
+               "truth_L": case["truth_L"], "truth_S": case["truth_S"],
+               "truth_C": case["truth_C"], **verdicts}
+        row["score_dense"] = _score(verdicts["dense"], case["truth_L"])
+        row["score_qcec"] = _score(verdicts["qcec"], case["truth_L"])
+        row["score_cert_v1"] = _score(verdicts["cert_v1"], case["truth_C"])
+        row["score_cert_v2"] = _score(verdicts["cert_v2"], case["truth_C"])
         rows.append(row)
 
-    def rate(key: str) -> Dict[str, Any]:
-        values = [r[key] for r in rows if key in r]
-        return {"applicable": len(values),
-                "correct": sum(1 for v in values if v),
-                "rate": round(sum(1 for v in values if v) / len(values), 3)
-                if values else None}
+    def metrics(prefix: str) -> Dict[str, Any]:
+        scores = [r[f"score_{prefix}"] for r in rows if f"score_{prefix}" in r]
+        decided = [s for s in scores if s != "abstain"]
+        return {
+            "cases": len(scores),
+            "decided": len(decided),
+            "abstain": scores.count("abstain"),
+            "correct": decided.count("correct"),
+            "wrong": decided.count("wrong"),
+            "accuracy": round(decided.count("correct") / len(decided), 3)
+            if decided else None,
+        }
 
-    metrics = {
-        "dense": rate("dense_correct"),
-        "qcec": rate("qcec_correct"),
-        "certificate": rate("cert_correct"),
-        "cert_false_positive": sum(
-            1 for r in rows
-            if r["expected_cert"] is True and r["cert_ok"] is False),
-        "dense_false_positive": sum(
-            1 for r in rows
-            if r.get("expected_legal") is True and r.get("dense_legal") is False),
-        "qcec_false_positive": sum(
-            1 for r in rows
-            if r.get("expected_legal") is True and r.get("qcec_legal") is False),
-    }
     return {"version": BENCH_VERSION, "cases": len(rows),
-            "metrics": metrics, "rows": rows}
+            "metrics": {k: metrics(k) for k in
+                        ("dense", "qcec", "cert_v1", "cert_v2")},
+            "rows": rows}
 
 
-def main() -> int:
-    report = run()
+def main(argv=None) -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--with-qcec", action="store_true")
+    parser.add_argument("--qcec-limit", type=int, default=24)
+    args = parser.parse_args(argv)
+    started = time.perf_counter()
+    report = run(args.with_qcec, args.qcec_limit)
     print("=" * 118)
-    print(f"  compiler correctness/safety benchmark  {BENCH_VERSION}  "
-          f"cases={report['cases']}")
+    print(f"  compiler-bug benchmark  {BENCH_VERSION}  cases={report['cases']}")
     print("=" * 118)
-    print(f"  {'case':<24}{'expected':>14}{'dense':>7}{'qcec':>7}{'cert':>7}"
-          f"{'dense_s':>9}{'qcec_s':>8}{'cert_ms':>9}")
+    print(f"  {'case':<38}{'L':>6}{'S':>6}{'C':>6}{'dense':>7}{'qcec':>7}"
+          f"{'v1':>6}{'v2':>6}")
     for r in report["rows"]:
-        expected = (f"L={r['expected_legal']}/C={r['expected_cert']}")
-        print(f"  {r['case']:<24}{expected:>14}{str(r['dense_legal']):>7}"
-              f"{str(r['qcec_legal']):>7}{str(r['cert_ok']):>7}"
-              f"{r['dense_s']:>9.2f}{r['qcec_s']:>8.2f}"
-              f"{r['cert_s'] * 1e3:>9.2f}")
+        if "error" in r:
+            print(f"  {r['case']:<38}  {r['error']}")
+            continue
+        print(f"  {r['case']:<38}{str(r['truth_L']):>6}{str(r['truth_S']):>6}"
+              f"{str(r['truth_C']):>6}{str(r['dense']):>7}{str(r['qcec']):>7}"
+              f"{str(r['cert_v1']):>6}{str(r['cert_v2']):>6}")
     print("-" * 118)
-    print(f"  metrics: {report['metrics']}")
+    for name, m in report["metrics"].items():
+        print(f"  {name:<8} decided={m['decided']:<4} abstain={m['abstain']:<4} "
+              f"correct={m['correct']:<4} wrong={m['wrong']:<3} "
+              f"accuracy={m['accuracy']}")
+    print(f"  ({time.perf_counter() - started:.1f}s)")
     out = Path(__file__).resolve().parent / "results.json"
     out.write_text(json.dumps(report, indent=2), encoding="utf-8")
     print(f"  wrote {out}")
