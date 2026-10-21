@@ -79,7 +79,7 @@ def run() -> List[Dict[str, Any]]:
 
         tampered = json.loads(json.dumps(proof))
         if tampered["steps"]:
-            tampered["steps"][0]["mask"] ^= 1
+            tampered["steps"][0]["gates"] = [0, len(circuit.data) - 1]
         tamper = checker.check(circuit, optimized, tampered)
         rows.append({
             "N": n, "pairs": pairs,

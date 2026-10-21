@@ -34,7 +34,8 @@ def test_checker_rejects_tampered_proof():
     circuit = rewrite.build_instance(5, 2)
     optimized, proof = rewrite.rewrite(circuit)
     bad = copy.deepcopy(proof)
-    bad["steps"][0]["mask"] ^= 1
+    # corrupt the first step in a rule-agnostic way (swap in an invalid pair)
+    bad["steps"][0]["gates"] = [len(circuit.data) - 1, 0]
     result = checker.check(circuit, optimized, bad)
     assert result["ok"] is False
 

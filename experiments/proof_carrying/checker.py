@@ -1,66 +1,107 @@
-"""Independent checker for the toy proof log.
+"""Independent checker for the v2 proof log.
 
-It re-extracts the phase polynomial from C1, replays every ``cancel_T_Tdg``
-step against the actual gate list, derives the expected output polynomial, and
-compares it with the polynomial extracted from C2.  It never trusts the proof's
-``input_terms``/``output_terms`` fields -- those are only checked for
-consistency.
+Written separately from ``rewrite.py`` on purpose: it re-derives each
+precondition from the circuit and re-applies each transformation, then compares
+the resulting gate list with the claimed output circuit.
 """
 
 from __future__ import annotations
 
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Tuple
 
 from qiskit import QuantumCircuit
 
 from . import phase_poly
 
+_DIAGONAL = frozenset({"t", "tdg", "s", "sdg", "z"})
 
-def _lists(terms) -> List[List[int]]:
-    return [list(term) for term in terms]
+
+def _ops(circuit: QuantumCircuit) -> List[Tuple[str, List[int]]]:
+    return [(ins.operation.name,
+             [circuit.find_bit(q).index for q in ins.qubits])
+            for ins in circuit.data]
+
+
+def _build(num_qubits: int, ops) -> QuantumCircuit:
+    out = QuantumCircuit(num_qubits)
+    for name, qubits in ops:
+        if name == "cx":
+            out.cx(qubits[0], qubits[1])
+        else:
+            getattr(out, name)(qubits[0])
+    return out
 
 
 def check(circuit_in: QuantumCircuit, circuit_out: QuantumCircuit,
           proof: Dict[str, Any]) -> Dict[str, Any]:
     reasons: List[str] = []
-    info = phase_poly.extract(circuit_in)
-    by_gate = {term["gate"]: term for term in info["terms"]}
-    removed = set()
+    current = circuit_in.copy()
     for step in proof.get("steps", []):
-        if step.get("rule") != "cancel_T_Tdg":
-            reasons.append(f"unknown rule {step.get('rule')!r}")
-            continue
-        first, second = step["gates"]
-        a, b = by_gate.get(first), by_gate.get(second)
-        if a is None or b is None:
-            reasons.append(f"gate indices {first}/{second} are not T-like gates")
-            continue
-        if {a["coeff"], b["coeff"]} != {1, 7}:
-            reasons.append(f"pair {first}/{second} is not T/Tdg")
-            continue
-        if a["mask"] != b["mask"]:
-            reasons.append(f"pair {first}/{second} has different parity masks")
-            continue
-        if step.get("mask") != a["mask"]:
-            reasons.append(f"pair {first}/{second} mask does not match the log")
-            continue
-        removed.update((first, second))
+        rule = step.get("rule")
+        ops = _ops(current)
+        if rule == "cancel_T_Tdg":
+            i, j = step["gates"]
+            info = phase_poly.extract(current)
+            by_gate = {term["gate"]: term for term in info["terms"]}
+            a, b = by_gate.get(i), by_gate.get(j)
+            if a is None or b is None:
+                reasons.append(f"{i}/{j}: not T-like gates")
+                continue
+            if {a["coeff"], b["coeff"]} != {1, 7}:
+                reasons.append(f"{i}/{j}: not T/Tdg")
+                continue
+            if a["mask"] != b["mask"]:
+                reasons.append(f"{i}/{j}: different parity masks")
+                continue
+            current = _build(current.num_qubits,
+                             [op for k, op in enumerate(ops) if k not in (i, j)])
+        elif rule in ("merge_T_T_to_S", "merge_Tdg_Tdg_to_Sdg"):
+            i, j = step["gates"]
+            expected = 1 if rule == "merge_T_T_to_S" else 7
+            info = phase_poly.extract(current)
+            by_gate = {term["gate"]: term for term in info["terms"]}
+            a, b = by_gate.get(i), by_gate.get(j)
+            if a is None or b is None or a["coeff"] != expected or b["coeff"] != expected:
+                reasons.append(f"{i}/{j}: coefficients do not match {rule}")
+                continue
+            q = a["qubit"]
+            if b["qubit"] != q or a["mask"] != (1 << q) or b["mask"] != (1 << q):
+                reasons.append(f"{i}/{j}: not a single-qubit parity on one qubit")
+                continue
+            if any(q in qubits for _, qubits in ops[i + 1:j]):
+                reasons.append(f"{i}/{j}: a gate touches qubit {q} in between")
+                continue
+            new_ops = list(ops)
+            new_ops[j] = ("s" if expected == 1 else "sdg", [q])
+            new_ops.pop(i)
+            current = _build(current.num_qubits, new_ops)
+        elif rule == "commute_diag_cx":
+            i = step["gates"][0]
+            if i + 1 >= len(ops):
+                reasons.append(f"{i}: no following gate")
+                continue
+            (n1, q1), (n2, q2) = ops[i], ops[i + 1]
+            if n1 not in _DIAGONAL or n2 != "cx" or q2[0] != q1[0]:
+                reasons.append(f"{i}: not a diagonal-on-control commutation")
+                continue
+            new_ops = list(ops)
+            new_ops[i], new_ops[i + 1] = new_ops[i + 1], new_ops[i]
+            current = _build(current.num_qubits, new_ops)
+        else:
+            reasons.append(f"unknown rule {rule!r}")
 
-    expected = phase_poly.canonical(
-        [term for term in info["terms"] if term["gate"] not in removed])
-    actual = phase_poly.canonical(phase_poly.extract(circuit_out)["terms"])
-    if _lists(expected) != _lists(actual):
-        reasons.append("output polynomial does not match the replayed rewrite")
-    if info["affine"] != phase_poly.extract(circuit_out)["affine"]:
-        reasons.append("affine (permutation) part changed")
-    if _lists(proof.get("input_terms", [])) != _lists(
-            phase_poly.canonical(info["terms"])):
-        reasons.append("proof.input_terms disagrees with C1")
-    out_info = phase_poly.extract(circuit_out)
+    if _ops(current) != _ops(circuit_out):
+        reasons.append("replayed circuit differs from C2")
+    info_in = phase_poly.extract(circuit_in)
+    info_out = phase_poly.extract(circuit_out)
+    if phase_poly.canonical(info_in["terms"]) != phase_poly.canonical(info_out["terms"]):
+        reasons.append("phase polynomials differ")
+    if info_in["affine"] != info_out["affine"]:
+        reasons.append("affine part changed")
     return {
         "ok": not reasons,
         "reasons": reasons,
         "steps": len(proof.get("steps", [])),
-        "t_before": sum(1 for term in info["terms"] if term["coeff"] % 2 == 1),
-        "t_after": sum(1 for term in out_info["terms"] if term["coeff"] % 2 == 1),
+        "t_before": sum(1 for t in info_in["terms"] if t["coeff"] % 2 == 1),
+        "t_after": sum(1 for t in info_out["terms"] if t["coeff"] % 2 == 1),
     }
