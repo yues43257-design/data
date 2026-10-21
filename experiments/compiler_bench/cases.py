@@ -13,6 +13,7 @@
 from __future__ import annotations
 
 import sys
+from functools import lru_cache
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
@@ -23,6 +24,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
 import relative_phase_criterion as RPC    # noqa: E402
+import support_tracker as ST              # noqa: E402
 import experiments.compiler_bench.generator as G  # noqa: E402
 import experiments.multipass_attestation.attacks as PA   # noqa: E402
 import experiments.multipass_attestation.pipeline as PP  # noqa: E402
@@ -30,8 +32,10 @@ import experiments.multipass_attestation.pipeline as PP  # noqa: E402
 FAMILIES = (("two_block", 0), ("adder", 2), ("adder", 3), ("vbe", 2),
             ("vbe", 3), ("comparator", 3))
 LAYOUTS = ("plain", "with_h")
-SEEDS = (0, 1)
+SEEDS = (0, 1, 2, 3)
 DENSE_LIMIT = 8          # keep the suite runtime bounded
+SUITE_ATTACKS = ("legal", "h_on_support", "block_substitution", "tail_h",
+                 "gate_smuggle_u3", "cert_forge", "cert_replay")
 
 BINDING_ATTACKS = {"block_substitution", "nonblock_x", "tail_h",
                    "gate_smuggle_u3", "gate_smuggle_measure"}
@@ -70,7 +74,7 @@ def dense_exact(entry: Dict[str, Any]) -> Optional[bool]:
 
 
 def cert_property(attack: str, truth_l: Optional[bool]) -> str:
-    if attack == "legal":
+    if attack in ("legal", "h_on_support"):
         if truth_l is True:
             return "positive"
         if truth_l is False:
@@ -83,6 +87,7 @@ def cert_property(attack: str, truth_l: Optional[bool]) -> str:
     return "chain"
 
 
+@lru_cache(maxsize=1)
 def all_cases() -> List[Dict[str, Any]]:
     cases: List[Dict[str, Any]] = []
     for family, n in FAMILIES:
@@ -96,7 +101,7 @@ def all_cases() -> List[Dict[str, Any]]:
                     continue
                 if base["ideal"].num_qubits > 11:
                     continue
-                for attack in G.ATTACKS:
+                for attack in SUITE_ATTACKS:
                     entry = G.apply_attack(base, attack)
                     truth_l = dense_legal(entry)
                     truth_s = dense_exact(entry)
@@ -111,17 +116,30 @@ def all_cases() -> List[Dict[str, Any]]:
                         "entry": entry,
                     })
     pass2 = PP.build_pipeline(0)
-    for name, attack_name in (("pass2_substitution", "a2_pass2_substitution"),
-                              ("pass2_forgery", "a3_compromised_pass2")):
-        entry = PA.attack(attack_name, pass2)
-        entry["kind"] = "pass2"
-        cases.append({"name": f"pass2/{name}", "family": "pass2", "n": 0,
-                      "layout": "-", "seed": 0, "attack": name,
-                      "qubits": entry["c1"].num_qubits if "c1" in entry else 5,
-                      "cert_property": "chain",
-                      "ground_truth": "C2 after full_reduce is tampered",
-                      "truth_L": None, "truth_S": None,
-                      "kind": "pass2", "entry": entry})
+    n_qubits = pass2["c2"].num_qubits
+    for i in range(5):                       # detected: cert unchanged
+        c2 = pass2["c2"].copy()
+        c2.x(i % n_qubits)
+        entry = dict(pass2)
+        entry.update(c2=c2, check_circuit=c2, intended=pass2["c2"], kind="pass2")
+        cases.append({"name": f"pass2/substitution{i}", "family": "pass2", "n": 0,
+                      "layout": "-", "seed": i, "attack": "pass2_substitution",
+                      "qubits": n_qubits, "cert_property": "chain",
+                      "ground_truth": "C2 tampered, cert unchanged",
+                      "truth_L": None, "truth_S": None, "entry": entry})
+    for i in range(20):                      # the structural gap: correct hashes
+        c2 = pass2["c2"].copy()
+        c2.x(i % n_qubits)
+        entry = dict(pass2)
+        entry.update(c2=c2, check_circuit=c2, intended=pass2["c2"], kind="pass2",
+                     cert2={"pass": "pyzx_full_reduce", "claim": "exact_equivalent",
+                            "input_hash": ST.circuit_hash(pass2["c1"]),
+                            "output_hash": ST.circuit_hash(c2)})
+        cases.append({"name": f"pass2/forgery{i}", "family": "pass2", "n": 0,
+                      "layout": "-", "seed": i, "attack": "pass2_forgery",
+                      "qubits": n_qubits, "cert_property": "chain",
+                      "ground_truth": "C2 tampered + forged cert2 (correct hashes)",
+                      "truth_L": None, "truth_S": None, "entry": entry})
     return cases
 
 

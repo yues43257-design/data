@@ -102,7 +102,7 @@ def run(with_qcec: bool = False, qcec_limit: int = 24) -> Dict[str, Any]:
             rows.append({"case": case["name"], "error": case["error"]})
             continue
         entry = case["entry"]
-        use_qcec = (with_qcec and index < qcec_limit
+        use_qcec = (with_qcec and (qcec_limit <= 0 or index < qcec_limit)
                     and entry.get("ideal") is not None)
         t0 = time.perf_counter()
         q_legal = qcec_legal(entry) if use_qcec else None
@@ -115,12 +115,15 @@ def run(with_qcec: bool = False, qcec_limit: int = 24) -> Dict[str, Any]:
         cert_s = time.perf_counter() - t0
         cert_bytes = (len(json.dumps(entry["certificate"]))
                       if "certificate" in entry else None)
+        truth_l = case["truth_L"] if case["truth_L"] is not None else q_legal
+        truth_s = case["truth_S"] if case["truth_S"] is not None else q_exact
+        prop = C.cert_property(case["attack"], truth_l)
         rows.append({
             "case": case["name"], "family": case["family"], "layout": case["layout"],
             "seed": case["seed"], "attack": case["attack"],
-            "cert_property": case["cert_property"], "qubits": case["qubits"],
+            "cert_property": prop, "qubits": case["qubits"],
             "ground_truth": case["ground_truth"],
-            "truth_L": case["truth_L"], "truth_S": case["truth_S"],
+            "truth_L": truth_l, "truth_S": truth_s,
             "dense_legal": case["truth_L"], "dense_exact": case["truth_S"],
             "qcec_legal": q_legal, "qcec_exact": q_exact,
             "cert_ok": cert,
@@ -190,7 +193,8 @@ def run(with_qcec: bool = False, qcec_limit: int = 24) -> Dict[str, Any]:
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--with-qcec", action="store_true")
-    parser.add_argument("--qcec-limit", type=int, default=24)
+    parser.add_argument("--qcec-limit", type=int, default=0,
+                        help="0 = all cases")
     args = parser.parse_args(argv)
     started = time.perf_counter()
     report = run(args.with_qcec, args.qcec_limit)

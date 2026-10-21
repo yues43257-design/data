@@ -16,8 +16,8 @@ def test_generated_suite_has_l_s_and_properties():
     cases = C.all_cases()
     assert len(cases) >= 10
     attacks = {c.get("attack") for c in cases}
-    for expected in ("legal", "block_substitution", "nonblock_x", "tail_h",
-                     "gate_smuggle_u3", "gate_smuggle_measure", "cert_forge",
+    for expected in ("legal", "h_on_support", "block_substitution", "tail_h",
+                     "gate_smuggle_u3", "cert_forge",
                      "cert_replay", "pass2_substitution", "pass2_forgery"):
         assert expected in attacks, expected
     properties = {c.get("cert_property") for c in cases if "error" not in c}
@@ -47,8 +47,9 @@ def test_l_and_c_metrics():
     assert Cm["positive_accept"]["rate"] == 1.0
     assert Cm["binding_reject"]["rate"] == 1.0
     assert Cm["tamper_reject"]["rate"] == 1.0
-    # the known structural gap: one of the two chain cases is accepted
-    assert Cm["chain_reject"]["correct"] == 1
+    # the known structural gap: 5 substitution cases rejected, 20 forgeries not
+    assert Cm["chain_reject"]["correct"] == 5
+    assert Cm["chain_reject"]["cases"] == 25
 
 
 def test_semantics_verifier_uses_common_subset():

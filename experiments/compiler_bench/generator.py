@@ -28,7 +28,7 @@ import realcircuit_window as RCW      # noqa: E402
 import realworld_benchmark as RB      # noqa: E402
 import support_tracker as ST          # noqa: E402
 
-ATTACKS = ("legal", "block_substitution", "nonblock_x", "tail_h",
+ATTACKS = ("legal", "h_on_support", "block_substitution", "nonblock_x", "tail_h",
            "gate_smuggle_u3", "gate_smuggle_measure", "cert_forge",
            "cert_replay")
 
@@ -125,7 +125,18 @@ def apply_attack(base: Dict[str, Any], attack: str) -> Dict[str, Any]:
     positions = _block_positions(ideal)
     if attack == "legal":
         return entry
-    if attack == "block_substitution":
+    if attack == "h_on_support":
+        emitted = base["emitted"]
+        end = base["ranges"][0][1] if base["ranges"] else len(emitted.data)
+        target = ideal.find_bit(ideal.data[positions[0]].qubits[-1]).index
+        circuit = QuantumCircuit(emitted.num_qubits)
+        for index, instruction in enumerate(emitted.data):
+            if index == end:
+                circuit.h(target)
+            qubits = [emitted.find_bit(q).index for q in instruction.qubits]
+            circuit.append(instruction.operation, qubits)
+        entry["circuit"] = circuit
+    elif attack == "block_substitution":
         modes = [1] * len(positions)
         emitted, ranges = _emit_with_remap(ideal, positions)
         entry.update(circuit=emitted, ranges=ranges)
