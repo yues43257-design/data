@@ -17,7 +17,9 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
 from qiskit import QuantumCircuit
-from qiskit.circuit.library import CDKMRippleCarryAdder, IntegerComparator
+from qiskit.circuit.library import (
+    CDKMRippleCarryAdder, IntegerComparator, VBERippleCarryAdder,
+)
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
@@ -73,31 +75,20 @@ def build_base(family: str, n: int, layout: str,
     if family == "two_block":
         ideal = QuantumCircuit(5)
         ideal.ccx(0, 1, 2)
-        ideal.cx(0, 3)
+        ideal.cx(seed % 3, 3)
         if layout == "with_h":
             ideal.h(2)
         ideal.ccx(3, 4, 2)
-    elif family == "adder":
-        ideal = RB.to_canonical(CDKMRippleCarryAdder(n))
+    elif family in ("adder", "vbe"):
+        blueprint = (CDKMRippleCarryAdder(n) if family == "adder"
+                     else VBERippleCarryAdder(n))
+        ideal = RB.to_canonical(blueprint)
         if layout == "with_h":
-            positions = _block_positions(ideal)
-            if positions:
-                target = ideal.data[positions[0]].qubits[-1]
-                index = ideal.find_bit(target).index
-                ideal_copy = QuantumCircuit(ideal.num_qubits)
-                for position, instruction in enumerate(ideal.data):
-                    qubits = [ideal.find_bit(q).index for q in instruction.qubits]
-                    if position == positions[1] if len(positions) > 1 else False:
-                        ideal_copy.h(index)
-                    ideal_copy.append(instruction.operation, qubits)
-                ideal = ideal_copy
+            ideal = _insert_h(ideal, seed)
     elif family == "comparator":
         ideal = RB.to_canonical(IntegerComparator(n, value=2))
         if layout == "with_h":
-            positions = _block_positions(ideal)
-            if positions:
-                index = ideal.find_bit(ideal.data[positions[0]].qubits[-1]).index
-                ideal.h(index)
+            ideal = _insert_h(ideal, seed)
     else:
         raise ValueError(family)
     emitted, ranges = _emit(ideal, [1] * len(_block_positions(ideal)))
@@ -107,6 +98,22 @@ def build_base(family: str, n: int, layout: str,
     return {"family": family, "n": n, "layout": layout, "seed": seed,
             "ideal": ideal, "emitted": emitted, "ranges": ranges,
             "schedule": schedule, "mask": mask, "certificate": certificate}
+
+
+def _insert_h(circuit: QuantumCircuit, seed: int) -> QuantumCircuit:
+    """Insert H before block ``seed % len(positions)`` on its target."""
+    positions = _block_positions(circuit)
+    if not positions:
+        return circuit
+    block = positions[seed % len(positions)]
+    qubit = circuit.find_bit(circuit.data[block].qubits[-1]).index
+    out = QuantumCircuit(circuit.num_qubits)
+    for position, instruction in enumerate(circuit.data):
+        qubits = [circuit.find_bit(q).index for q in instruction.qubits]
+        if position == block:
+            out.h(qubit)
+        out.append(instruction.operation, qubits)
+    return out
 
 
 def apply_attack(base: Dict[str, Any], attack: str) -> Dict[str, Any]:

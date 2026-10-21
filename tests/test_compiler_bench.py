@@ -1,4 +1,4 @@
-"""Sanity, scoring-protocol and determinism tests for the benchmark suite."""
+"""Tests for the generated suite and the L/S/C scoring protocol."""
 
 from __future__ import annotations
 
@@ -12,7 +12,7 @@ import experiments.compiler_bench.cases as C          # noqa: E402
 import experiments.compiler_bench.run_bench as R      # noqa: E402
 
 
-def test_generated_suite_has_three_ground_truths():
+def test_generated_suite_has_l_s_and_properties():
     cases = C.all_cases()
     assert len(cases) >= 10
     attacks = {c.get("attack") for c in cases}
@@ -20,40 +20,56 @@ def test_generated_suite_has_three_ground_truths():
                      "gate_smuggle_u3", "gate_smuggle_measure", "cert_forge",
                      "cert_replay", "pass2_substitution", "pass2_forgery"):
         assert expected in attacks, expected
+    properties = {c.get("cert_property") for c in cases if "error" not in c}
+    for expected in ("positive", "binding", "tamper", "chain",
+                     "illegal_rewrite", "undecided_legal"):
+        assert expected in properties, expected
     for case in cases:
         if "error" in case:
             continue
-        for key in ("truth_L", "truth_S", "truth_C", "ground_truth"):
-            assert key in case
-        assert case["ground_truth"]
+        assert "truth_L" in case and "truth_S" in case and case["ground_truth"]
 
 
-def test_legal_control_and_relative_phase_semantics():
-    cases = {(c["name"]): c for c in C.all_cases() if "error" not in c}
-    legal = cases["two_block/plain/legal"]
+def test_legal_control_is_legal_but_not_exactly_equivalent():
+    cases = {c["name"]: c for c in C.all_cases() if "error" not in c}
+    legal = cases["two_block/plain/s0/legal"]
     assert legal["truth_L"] is True
-    assert legal["truth_S"] is False        # differs by a diagonal
-    assert legal["truth_C"] is True
+    assert legal["truth_S"] is False       # differs by a diagonal
+    assert legal["cert_property"] == "positive"
 
 
-def test_scoring_protocol_excludes_abstentions():
+def test_l_and_c_metrics():
     report = R.run(with_qcec=False)
-    metrics = report["metrics"]
-    # dense is the oracle for L
-    assert metrics["dense"]["wrong"] == 0
-    # unbound certificate misses circuit attacks; bound catches them
-    assert metrics["cert_v1"]["wrong"] > metrics["cert_v2"]["wrong"]
-    assert metrics["cert_v2"]["wrong"] == 1
-    wrong = [r for r in report["rows"] if r.get("score_cert_v2") == "wrong"]
-    assert len(wrong) == 1 and "pass2_forgery" in wrong[0]["case"]
-    # n/a cases are abstentions, not false positives
-    abstain = [r for r in report["rows"] if r.get("score_dense") == "abstain"]
-    assert abstain and all(r.get("dense") is None for r in abstain)
+    L = report["L"]["dense"]
+    assert L["soundness"] == 1.0
+    assert L["completeness"] == 1.0
+    Cm = report["C"]
+    assert Cm["positive_accept"]["rate"] == 1.0
+    assert Cm["binding_reject"]["rate"] == 1.0
+    assert Cm["tamper_reject"]["rate"] == 1.0
+    # the known structural gap: one of the two chain cases is accepted
+    assert Cm["chain_reject"]["correct"] == 1
+
+
+def test_semantics_verifier_uses_common_subset():
+    report = R.run(with_qcec=True, qcec_limit=8)
+    assert report["S"]["common_subset"] >= 1
+    assert report["S"]["accuracy"] == 1.0
+    assert report["S"]["ci"][0] is not None
+
+
+def test_abstentions_are_not_false_positives():
+    report = R.run(with_qcec=False)
+    rows = [r for r in report["rows"] if "error" not in r]
+    abstained = [r for r in rows if r["truth_L"] is None]
+    assert abstained and all(r["dense_legal"] is None for r in abstained)
+    assert report["C"]["undecided_legal_cases"] == sum(
+        1 for r in rows if r["cert_property"] == "undecided_legal")
 
 
 def test_deterministic_verdicts():
-    first = {r["case"]: (r.get("dense"), r.get("cert_v1"), r.get("cert_v2"))
+    first = {r["case"]: (r.get("dense_legal"), r.get("cert_ok"))
              for r in R.run()["rows"]}
-    second = {r["case"]: (r.get("dense"), r.get("cert_v1"), r.get("cert_v2"))
+    second = {r["case"]: (r.get("dense_legal"), r.get("cert_ok"))
               for r in R.run()["rows"]}
     assert first == second

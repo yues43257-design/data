@@ -1,83 +1,93 @@
-# Compiler correctness / safety benchmark suite
+# Compiler bug benchmark — scoring protocol v3
 
-**Generated, not hand-written.** `generator.py` enumerates
+**Generated suite, three separate questions.** `generator.py` enumerates
 
-    family × n × layout × attack      (66 cases)
+    family × layout × seed × attack   → 194 cases (+2 two-pass)
 
 | axis | values |
 |---|---|
-| family | `two_block`, CDKM `adder2`/`adder3`, `comparator3` |
-| width n | 2, 3 (adders/comparator); fixed 5-qubit two-block base |
-| layout | `plain`, `with_h` (H on a supported qubit → makes the all-relative mask illegal) |
-| attack | legal, block_substitution, nonblock_x, tail_h, gate_smuggle_u3, gate_smuggle_measure, cert_forge, cert_replay (+ 2 two-pass cases) |
-| certificate version | **verifier under test**, not a case axis: `v1` unbound vs `v2` bound |
+| family | `two_block`, CDKM `adder2`/`adder3`, `vbe2`/`vbe3`, `comparator3` |
+| layout | `plain`, `with_h` |
+| seed | 0, 1 (changes the inter-block CNOT / the H position) |
+| attack | legal, block_substitution, nonblock_x, tail_h, u3, measure, cert_forge, cert_replay |
 
-## Three ground truths per case
+## The three questions (never merged)
 
-| truth | meaning | oracle |
+### L — legality (soundness / completeness)
+
+`truth_L` = the residual is diagonal (dense `relative_phase_ok`, N ≤ 8).
+Dense is the oracle; QCEC (Z-commutation) is the independent L verifier on a
+subset.
+
+### S — semantics (exact equivalence)
+
+`truth_S` = the emitted circuit equals the intended one up to **global phase**
+(dense `Operator`, N ≤ 8). QCEC (plain equivalence) is the S verifier.
+
+> A legal relative-phase rewrite is `L = True, S = False` — that is the whole
+> relaxation, and why the two axes must be scored separately.
+
+### C — certificate (four named properties)
+
+| property | expected | meaning |
 |---|---|---|
-| **L** legality | residual is diagonal (relative-phase criterion) | dense `relative_phase_ok` (N ≤ 10) |
-| **S** semantics | exactly equal to the intended circuit (global phase) | dense `Operator` comparison (N ≤ 10) |
-| **C** certificate | a correct certificate verifier should accept | normative: `attack == legal and L == True` |
+| `positive` | accept | a genuine certificate for a legal rewrite |
+| `illegal_rewrite` | reject | the rewrite is illegal (L = False) |
+| `binding` | reject | the circuit changed (block/X/tail H/u3/measure) |
+| `tamper` | reject | forged or replayed certificate |
+| `chain` | reject | wrong C2 in a two-pass chain |
 
-Note the deliberate split: a legal relative-phase rewrite has **L = True but
-S = False** (it differs by a diagonal) — that is the whole point of the
-relaxation, and it is why "legal" and "semantically identical" must be scored
-separately.
+`undecided_legal` cases (N > dense limit) are **not scored** — they are
+reported separately.
 
 ## Scoring protocol
 
-Each verifier answers **exactly one** question:
+- each verifier answers exactly one question;
+- `n/a` is an **abstention**, never a false positive;
+- QCEC and certificate are compared on the **common decided subset**, not on
+  different denominators;
+- every rate comes with a Wilson 95% interval.
 
-| verifier | axis | notes |
-|---|---|---|
-| dense | L | oracle |
-| MQT QCEC (Z-commutation) | L | optional subset (`--with-qcec --qcec-limit`) |
-| `cert_v1` (unbound) | C | core fields only — the pre-fix semantics |
-| `cert_v2` (bound) | C | circuit/schedule/block hashes + witness |
+## Measured (194 cases; QCEC on the first 48)
 
-`n/a` (non-unitary circuit, width out of range, or wrong question) is an
-**abstention**, never a false positive. Accuracy is computed over decided
-answers only.
+| metric | value |
+|---|---|
+| **L / dense** (oracle) | decided 120, coverage **0.619**, soundness **1.000** [0.939, 1.000], completeness **1.000** [0.912, 1.000] |
+| **L / QCEC** | decided 32, coverage **0.165**, soundness **1.000** [0.810, 1.000], completeness **1.000** [0.718, 1.000] |
+| **S / QCEC vs dense** | common subset **41**, accuracy **1.000** [0.898, 1.000] |
+| **C / positive** | 16 cases, **1.000** [0.773, 1.000] |
+| **C / illegal_rewrite** | 4 cases, **1.000** [0.454, 1.000] |
+| **C / binding** | 120 cases, **1.000** [0.963, 1.000] |
+| **C / tamper** | 48 cases, **1.000** [0.912, 1.000] |
+| **C / chain** | 2 cases, **1 of 2** [0.095, 0.905] |
+| cost | QCEC ≈ 0.17 s, certificate **≈ 0.61 ms**, cert size **≈ 528 B** |
 
-## Measured (66 cases, QCEC on the first 24)
-
-| verifier | decided | abstain | correct | wrong | accuracy |
-|---|---:|---:|---:|---:|---:|
-| dense | 48 | 18 | 48 | 0 | **1.000** |
-| QCEC | 16 | 50 | 16 | 0 | **1.000** |
-| cert_v1 (unbound) | 64 | 2 | 44 | **20** | **0.688** |
-| **cert_v2 (bound)** | 66 | 0 | 65 | **1** | **0.985** |
-
-### The one remaining miss
+## The one structural gap
 
 `pass2/pass2_forgery`: a compromised pass2 emits a wrong `C2` but writes
-**correct hashes** for it, so the hash chain is self-consistent. This is the
-attestation gap measured in `experiments/multipass_attestation/`.
+**correct hashes**, so the hash chain is self-consistent (C/chain 1/2).
 
-### Reading
+## Coverage and honest caveats
 
-- `cert_v1` (schedule-only) accepts **20** circuit attacks — the measurable cost
-  of not binding the certificate to the circuit.
-- `cert_v2` (hash binding) removes all 20 and leaves exactly one structural
-  gap (compromised pass with correct hashes).
-- dense/QCEC are complete on L but answer a different question; they are blind
-  to certificate tampering (`cert_forge`, `cert_replay`), which the protocol
-  does **not** count as a false positive.
+- dense is limited to **N ≤ 8** (runtime); the 4 `vbe3` legal cases are
+  `undecided_legal` and excluded from C scoring;
+- QCEC runs on a **48-case subset** (coverage 0.165) because it costs ~0.17 s
+  per case; the common-subset rule prevents comparing unlike denominators;
+- only one pass chain and one attack parameter per type;
+- no compiler-version axis yet (Qiskit only; pyZX/TODD are used elsewhere).
 
 ## GO / NO-GO
 
-**GO at scoping level**: 66 generated cases, three explicit ground truths each,
-and a measurable verifier gap (`cert_v1` 20 misses; `cert_v2` exactly 1).
+**GO at scoping level**: 194 generated cases, three orthogonal ground truths,
+per-property certificate scoring, common-subset comparisons, and a measurable
+gap (chain 1/2).
 
-**Before this is a paper:** the suite still rests on a small number of families
-(two-block, CDKM adder, comparator), N ≤ 10, one pass chain, and one attack per
-type. It needs more families, widths, gate sets and compiler versions; the
-scoring protocol above can be reused as-is.
+**Not yet a paper**: the family/width/gate-set coverage is still small, and the
+compiler-version axis is missing. The protocol is reusable as-is.
 
 ## Reproduce
 
 ```bash
-.venv/bin/python experiments/compiler_bench/run_bench.py --with-qcec --qcec-limit 24
+.venv/bin/python experiments/compiler_bench/run_bench.py --with-qcec --qcec-limit 48
 .venv/bin/python -m pytest tests/test_compiler_bench.py -q
 ```
