@@ -1,0 +1,355 @@
+{
+  "version": "watermark-probe-v1",
+  "variants": {
+    "cdkm3": {
+      "capacity": 6,
+      "key": [
+        1,
+        0,
+        1,
+        1,
+        0,
+        1
+      ],
+      "t_count": 30,
+      "t_all_exact": 42,
+      "t_all_relative": 24,
+      "rows": [
+        {
+          "attack": "none",
+          "note": "",
+          "capacity": 6,
+          "blocks_found": 6,
+          "bits": [
+            1,
+            0,
+            1,
+            1,
+            0,
+            1
+          ],
+          "key": [
+            1,
+            0,
+            1,
+            1,
+            0,
+            1
+          ],
+          "ber": 0.0,
+          "t_count": 30,
+          "t_count_watermarked": 30,
+          "t_overhead_vs_all_exact": -12,
+          "t_overhead_vs_all_relative": 6
+        },
+        {
+          "attack": "pyzx_full_reduce",
+          "note": "",
+          "capacity": 6,
+          "blocks_found": 0,
+          "bits": [],
+          "key": [
+            1,
+            0,
+            1,
+            1,
+            0,
+            1
+          ],
+          "ber": 0.5,
+          "t_count": 24,
+          "t_count_watermarked": 30,
+          "t_overhead_vs_all_exact": -12,
+          "t_overhead_vs_all_relative": 6
+        },
+        {
+          "attack": "todd",
+          "note": "",
+          "capacity": 6,
+          "blocks_found": 0,
+          "bits": [],
+          "key": [
+            1,
+            0,
+            1,
+            1,
+            0,
+            1
+          ],
+          "ber": 0.5,
+          "t_count": 28,
+          "t_count_watermarked": 30,
+          "t_overhead_vs_all_exact": -12,
+          "t_overhead_vs_all_relative": 6
+        },
+        {
+          "attack": "flip_one",
+          "note": "one embedded bit flipped 1->0",
+          "capacity": 6,
+          "blocks_found": 6,
+          "bits": [
+            0,
+            0,
+            1,
+            1,
+            0,
+            1
+          ],
+          "key": [
+            1,
+            0,
+            1,
+            1,
+            0,
+            1
+          ],
+          "ber": 0.16666666666666666,
+          "t_count": 33,
+          "t_count_watermarked": 30,
+          "t_overhead_vs_all_exact": -12,
+          "t_overhead_vs_all_relative": 6
+        },
+        {
+          "attack": "all_exact",
+          "note": "attacker strips the watermark by re-synthesising exact blocks",
+          "capacity": 6,
+          "blocks_found": 6,
+          "bits": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "key": [
+            1,
+            0,
+            1,
+            1,
+            0,
+            1
+          ],
+          "ber": 0.6666666666666666,
+          "t_count": 42,
+          "t_count_watermarked": 30,
+          "t_overhead_vs_all_exact": -12,
+          "t_overhead_vs_all_relative": 6
+        },
+        {
+          "attack": "false_positive",
+          "note": "unwatermarked circuit vs the key",
+          "capacity": 6,
+          "blocks_found": 6,
+          "bits": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "key": [
+            1,
+            0,
+            1,
+            1,
+            0,
+            1
+          ],
+          "ber": 0.6666666666666666,
+          "t_count": 42,
+          "t_count_watermarked": 30,
+          "t_overhead_vs_all_exact": -12,
+          "t_overhead_vs_all_relative": 6
+        }
+      ]
+    },
+    "cdkm4": {
+      "capacity": 8,
+      "key": [
+        1,
+        0,
+        1,
+        1,
+        0,
+        1,
+        0,
+        0
+      ],
+      "t_count": 44,
+      "t_all_exact": 56,
+      "t_all_relative": 32,
+      "rows": [
+        {
+          "attack": "none",
+          "note": "",
+          "capacity": 8,
+          "blocks_found": 8,
+          "bits": [
+            1,
+            0,
+            1,
+            1,
+            0,
+            1,
+            0,
+            0
+          ],
+          "key": [
+            1,
+            0,
+            1,
+            1,
+            0,
+            1,
+            0,
+            0
+          ],
+          "ber": 0.0,
+          "t_count": 44,
+          "t_count_watermarked": 44,
+          "t_overhead_vs_all_exact": -12,
+          "t_overhead_vs_all_relative": 12
+        },
+        {
+          "attack": "pyzx_full_reduce",
+          "note": "",
+          "capacity": 8,
+          "blocks_found": 0,
+          "bits": [],
+          "key": [
+            1,
+            0,
+            1,
+            1,
+            0,
+            1,
+            0,
+            0
+          ],
+          "ber": 0.5,
+          "t_count": 38,
+          "t_count_watermarked": 44,
+          "t_overhead_vs_all_exact": -12,
+          "t_overhead_vs_all_relative": 12
+        },
+        {
+          "attack": "todd",
+          "note": "",
+          "capacity": 8,
+          "blocks_found": 0,
+          "bits": [],
+          "key": [
+            1,
+            0,
+            1,
+            1,
+            0,
+            1,
+            0,
+            0
+          ],
+          "ber": 0.5,
+          "t_count": 42,
+          "t_count_watermarked": 44,
+          "t_overhead_vs_all_exact": -12,
+          "t_overhead_vs_all_relative": 12
+        },
+        {
+          "attack": "flip_one",
+          "note": "one embedded bit flipped 1->0",
+          "capacity": 8,
+          "blocks_found": 8,
+          "bits": [
+            0,
+            0,
+            1,
+            1,
+            0,
+            1,
+            0,
+            0
+          ],
+          "key": [
+            1,
+            0,
+            1,
+            1,
+            0,
+            1,
+            0,
+            0
+          ],
+          "ber": 0.125,
+          "t_count": 47,
+          "t_count_watermarked": 44,
+          "t_overhead_vs_all_exact": -12,
+          "t_overhead_vs_all_relative": 12
+        },
+        {
+          "attack": "all_exact",
+          "note": "attacker strips the watermark by re-synthesising exact blocks",
+          "capacity": 8,
+          "blocks_found": 8,
+          "bits": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "key": [
+            1,
+            0,
+            1,
+            1,
+            0,
+            1,
+            0,
+            0
+          ],
+          "ber": 0.5,
+          "t_count": 56,
+          "t_count_watermarked": 44,
+          "t_overhead_vs_all_exact": -12,
+          "t_overhead_vs_all_relative": 12
+        },
+        {
+          "attack": "false_positive",
+          "note": "unwatermarked circuit vs the key",
+          "capacity": 8,
+          "blocks_found": 8,
+          "bits": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "key": [
+            1,
+            0,
+            1,
+            1,
+            0,
+            1,
+            0,
+            0
+          ],
+          "ber": 0.5,
+          "t_count": 56,
+          "t_count_watermarked": 44,
+          "t_overhead_vs_all_exact": -12,
+          "t_overhead_vs_all_relative": 12
+        }
+      ]
+    }
+  }
+}
