@@ -28,6 +28,7 @@ import support_tracker as ST              # noqa: E402
 import experiments.compiler_bench.generator as G  # noqa: E402
 import experiments.multipass_attestation.attacks as PA   # noqa: E402
 import experiments.multipass_attestation.pipeline as PP  # noqa: E402
+import experiments.compiler_bench.real_circuits as RC     # noqa: E402
 
 FAMILIES = (("two_block", 0), ("adder", 2), ("adder", 3),
             ("vbe", 2), ("vbe", 3), ("comparator", 3))
@@ -156,6 +157,7 @@ def all_cases() -> List[Dict[str, Any]]:
                 "ground_truth": "H...H restores the phase; tracker rejects early",
                 "truth_L": truth_l, "truth_S": truth_s, "entry": entry,
             })
+    cases.extend(RC.real_cases())
     return cases
 
 

@@ -72,6 +72,15 @@ def test_d1_reproduces_across_parameters():
         assert by_family[family]["rate"] == 1.0
 
 
+def test_real_qasmbench_family_and_d1_scope():
+    """D1 is mechanism-specific: the real in-domain circuits do not show it."""
+    report = R.run(with_qcec=False)
+    by_family = report["C"]["positive_by_family"]
+    assert "real_qasmbench" in by_family
+    assert by_family["real_qasmbench"]["rate"] == 1.0
+    assert by_family["hh_restore"]["rate"] == 0.0
+
+
 def test_chain_metrics_are_split():
     report = R.run(with_qcec=False)
     Cm = report["C"]

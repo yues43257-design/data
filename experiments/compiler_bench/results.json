@@ -1,12 +1,12 @@
 {
   "version": "compiler-bench-v3",
-  "cases": 400,
+  "cases": 416,
   "protocol_version": "compiler-bench-protocol-v1",
   "protocol_fingerprint": "175d7cc024c7aa80",
   "L": {
     "dense": {
       "decided": 249,
-      "coverage": 0.623,
+      "coverage": 0.599,
       "soundness": 1.0,
       "soundness_ci": [
         0.972,
@@ -21,8 +21,8 @@
       "legal": 90
     },
     "qcec": {
-      "decided": 345,
-      "coverage": 0.863,
+      "decided": 361,
+      "coverage": 0.868,
       "soundness": 1.0,
       "soundness_ci": [
         0.981,
@@ -30,16 +30,16 @@
       ],
       "completeness": 1.0,
       "completeness_ci": [
-        0.96,
+        0.962,
         1.0
       ],
-      "illegal": 234,
-      "legal": 111
+      "illegal": 244,
+      "legal": 117
     }
   },
   "S": {
-    "common_subset": 286,
-    "correct": 286,
+    "common_subset": 285,
+    "correct": 285,
     "accuracy": 1.0,
     "ci": [
       0.984,
@@ -48,12 +48,12 @@
   },
   "C": {
     "positive_accept": {
-      "cases": 43,
-      "correct": 34,
-      "rate": 0.791,
+      "cases": 45,
+      "correct": 36,
+      "rate": 0.8,
       "ci": [
-        0.646,
-        0.888
+        0.66,
+        0.893
       ]
     },
     "positive_by_family": {
@@ -81,33 +81,38 @@
         "cases": 9,
         "correct": 0,
         "rate": 0.0
+      },
+      "real_qasmbench": {
+        "cases": 2,
+        "correct": 2,
+        "rate": 1.0
       }
     },
     "illegal_rewrite_reject": {
-      "cases": 62,
-      "correct": 62,
+      "cases": 64,
+      "correct": 64,
       "rate": 1.0,
       "ci": [
-        0.93,
+        0.932,
         1.0
       ]
     },
     "undecided_legal_cases": 0,
     "binding_reject": {
-      "cases": 144,
-      "correct": 144,
+      "cases": 148,
+      "correct": 148,
       "rate": 1.0,
       "ci": [
-        0.969,
+        0.97,
         1.0
       ]
     },
     "tamper_reject": {
-      "cases": 96,
-      "correct": 96,
+      "cases": 104,
+      "correct": 104,
       "rate": 1.0,
       "ci": [
-        0.954,
+        0.957,
         1.0
       ]
     },
@@ -143,9 +148,9 @@
   },
   "cost": {
     "qcec_legal_s_mean": 0.193,
-    "qcec_exact_s_mean": 0.169,
-    "cert_ms_mean": 1.35,
-    "cert_bytes_mean": 542.9
+    "qcec_exact_s_mean": 0.171,
+    "cert_ms_mean": 1.393,
+    "cert_bytes_mean": 553.7
   },
   "rows": [
     {
@@ -164,9 +169,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": true,
-      "qcec_legal_s": 0.164,
-      "qcec_exact_s": 0.147,
-      "cert_s": 0.000334,
+      "qcec_legal_s": 0.166,
+      "qcec_exact_s": 0.149,
+      "cert_s": 0.000294,
       "cert_bytes": 363
     },
     {
@@ -185,9 +190,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.159,
-      "qcec_exact_s": 0.153,
-      "cert_s": 0.000335,
+      "qcec_legal_s": 0.157,
+      "qcec_exact_s": 0.17,
+      "cert_s": 0.000424,
       "cert_bytes": 363
     },
     {
@@ -206,9 +211,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.158,
-      "qcec_exact_s": 0.152,
-      "cert_s": 0.000412,
+      "qcec_legal_s": 0.171,
+      "qcec_exact_s": 0.203,
+      "cert_s": 0.000296,
       "cert_bytes": 363
     },
     {
@@ -227,9 +232,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.187,
-      "qcec_exact_s": 0.169,
-      "cert_s": 0.000401,
+      "qcec_legal_s": 0.209,
+      "qcec_exact_s": 0.152,
+      "cert_s": 0.000321,
       "cert_bytes": 363
     },
     {
@@ -248,9 +253,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.175,
-      "qcec_exact_s": 0.147,
-      "cert_s": 0.000589,
+      "qcec_legal_s": 0.156,
+      "qcec_exact_s": 0.165,
+      "cert_s": 0.000381,
       "cert_bytes": 363
     },
     {
@@ -269,9 +274,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.159,
-      "qcec_exact_s": 0.15,
-      "cert_s": 0.000352,
+      "qcec_legal_s": 0.209,
+      "qcec_exact_s": 0.165,
+      "cert_s": 0.000319,
       "cert_bytes": 364
     },
     {
@@ -290,9 +295,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.162,
-      "qcec_exact_s": 0.15,
-      "cert_s": 0.002077,
+      "qcec_legal_s": 0.166,
+      "qcec_exact_s": 0.165,
+      "cert_s": 0.000419,
       "cert_bytes": 363
     },
     {
@@ -311,9 +316,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": true,
-      "qcec_legal_s": 0.166,
-      "qcec_exact_s": 0.148,
-      "cert_s": 0.000394,
+      "qcec_legal_s": 0.167,
+      "qcec_exact_s": 0.201,
+      "cert_s": 0.000633,
       "cert_bytes": 363
     },
     {
@@ -332,9 +337,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.159,
-      "qcec_exact_s": 0.159,
-      "cert_s": 0.000316,
+      "qcec_legal_s": 0.183,
+      "qcec_exact_s": 0.157,
+      "cert_s": 0.000287,
       "cert_bytes": 363
     },
     {
@@ -353,9 +358,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.176,
-      "qcec_exact_s": 0.172,
-      "cert_s": 0.000574,
+      "qcec_legal_s": 0.16,
+      "qcec_exact_s": 0.153,
+      "cert_s": 0.000337,
       "cert_bytes": 363
     },
     {
@@ -374,9 +379,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.159,
-      "qcec_exact_s": 0.151,
-      "cert_s": 0.000362,
+      "qcec_legal_s": 0.21,
+      "qcec_exact_s": 0.184,
+      "cert_s": 0.000354,
       "cert_bytes": 363
     },
     {
@@ -395,9 +400,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.159,
-      "qcec_exact_s": 0.15,
-      "cert_s": 0.000334,
+      "qcec_legal_s": 0.167,
+      "qcec_exact_s": 0.169,
+      "cert_s": 0.000384,
       "cert_bytes": 363
     },
     {
@@ -416,9 +421,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.171,
-      "qcec_exact_s": 0.159,
-      "cert_s": 0.0004,
+      "qcec_legal_s": 0.169,
+      "qcec_exact_s": 0.152,
+      "cert_s": 0.000474,
       "cert_bytes": 364
     },
     {
@@ -437,9 +442,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.171,
-      "qcec_exact_s": 0.149,
-      "cert_s": 0.000458,
+      "qcec_legal_s": 0.213,
+      "qcec_exact_s": 0.158,
+      "cert_s": 0.000345,
       "cert_bytes": 363
     },
     {
@@ -458,9 +463,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": true,
-      "qcec_legal_s": 0.161,
-      "qcec_exact_s": 0.171,
-      "cert_s": 0.000467,
+      "qcec_legal_s": 0.168,
+      "qcec_exact_s": 0.185,
+      "cert_s": 0.000331,
       "cert_bytes": 363
     },
     {
@@ -479,9 +484,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.158,
-      "qcec_exact_s": 0.17,
-      "cert_s": 0.000326,
+      "qcec_legal_s": 0.185,
+      "qcec_exact_s": 0.158,
+      "cert_s": 0.000381,
       "cert_bytes": 363
     },
     {
@@ -500,9 +505,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.162,
-      "qcec_exact_s": 0.158,
-      "cert_s": 0.000443,
+      "qcec_legal_s": 0.208,
+      "qcec_exact_s": 0.176,
+      "cert_s": 0.000387,
       "cert_bytes": 363
     },
     {
@@ -521,9 +526,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.171,
-      "qcec_exact_s": 0.162,
-      "cert_s": 0.000423,
+      "qcec_legal_s": 0.177,
+      "qcec_exact_s": 0.167,
+      "cert_s": 0.000421,
       "cert_bytes": 363
     },
     {
@@ -542,9 +547,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.16,
-      "qcec_exact_s": 0.169,
-      "cert_s": 0.000487,
+      "qcec_legal_s": 0.157,
+      "qcec_exact_s": 0.175,
+      "cert_s": 0.000499,
       "cert_bytes": 363
     },
     {
@@ -563,9 +568,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.157,
-      "qcec_exact_s": 0.155,
-      "cert_s": 0.000458,
+      "qcec_legal_s": 0.212,
+      "qcec_exact_s": 0.186,
+      "cert_s": 0.000346,
       "cert_bytes": 364
     },
     {
@@ -584,9 +589,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.19,
-      "qcec_exact_s": 0.15,
-      "cert_s": 0.000318,
+      "qcec_legal_s": 0.17,
+      "qcec_exact_s": 0.177,
+      "cert_s": 0.000448,
       "cert_bytes": 363
     },
     {
@@ -605,9 +610,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": true,
-      "qcec_legal_s": 0.173,
-      "qcec_exact_s": 0.18,
-      "cert_s": 0.000386,
+      "qcec_legal_s": 0.156,
+      "qcec_exact_s": 0.16,
+      "cert_s": 0.000403,
       "cert_bytes": 363
     },
     {
@@ -626,9 +631,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.183,
-      "qcec_exact_s": 0.157,
-      "cert_s": 0.000392,
+      "qcec_legal_s": 0.162,
+      "qcec_exact_s": 0.151,
+      "cert_s": 0.000343,
       "cert_bytes": 363
     },
     {
@@ -647,9 +652,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.16,
-      "qcec_exact_s": 0.156,
-      "cert_s": 0.000328,
+      "qcec_legal_s": 0.157,
+      "qcec_exact_s": 0.205,
+      "cert_s": 0.000326,
       "cert_bytes": 363
     },
     {
@@ -668,9 +673,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.16,
-      "qcec_exact_s": 0.149,
-      "cert_s": 0.000333,
+      "qcec_legal_s": 0.181,
+      "qcec_exact_s": 0.152,
+      "cert_s": 0.000323,
       "cert_bytes": 363
     },
     {
@@ -689,9 +694,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.16,
-      "qcec_exact_s": 0.165,
-      "cert_s": 0.000449,
+      "qcec_legal_s": 0.174,
+      "qcec_exact_s": 0.159,
+      "cert_s": 0.000404,
       "cert_bytes": 363
     },
     {
@@ -710,9 +715,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.161,
-      "qcec_exact_s": 0.151,
-      "cert_s": 0.000582,
+      "qcec_legal_s": 0.157,
+      "qcec_exact_s": 0.153,
+      "cert_s": 0.000651,
       "cert_bytes": 364
     },
     {
@@ -729,11 +734,11 @@
       "dense_legal": true,
       "dense_exact": false,
       "qcec_legal": true,
-      "qcec_exact": null,
+      "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.164,
-      "qcec_exact_s": 0.159,
-      "cert_s": 0.000365,
+      "qcec_legal_s": 0.202,
+      "qcec_exact_s": 0.175,
+      "cert_s": 0.00032,
       "cert_bytes": 363
     },
     {
@@ -752,9 +757,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.157,
-      "qcec_exact_s": 0.151,
-      "cert_s": 0.000302,
+      "qcec_legal_s": 0.159,
+      "qcec_exact_s": 0.212,
+      "cert_s": 0.000397,
       "cert_bytes": 477
     },
     {
@@ -773,9 +778,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.172,
-      "qcec_exact_s": 0.174,
-      "cert_s": 0.00065,
+      "qcec_legal_s": 0.159,
+      "qcec_exact_s": 0.166,
+      "cert_s": 0.000354,
       "cert_bytes": 477
     },
     {
@@ -794,9 +799,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.161,
-      "qcec_exact_s": 0.168,
-      "cert_s": 0.000457,
+      "qcec_legal_s": 0.165,
+      "qcec_exact_s": 0.161,
+      "cert_s": 0.000346,
       "cert_bytes": 477
     },
     {
@@ -815,9 +820,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.163,
-      "qcec_exact_s": 0.156,
-      "cert_s": 0.00065,
+      "qcec_legal_s": 0.182,
+      "qcec_exact_s": 0.152,
+      "cert_s": 0.000304,
       "cert_bytes": 477
     },
     {
@@ -836,9 +841,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.169,
-      "qcec_exact_s": 0.162,
-      "cert_s": 0.00052,
+      "qcec_legal_s": 0.163,
+      "qcec_exact_s": 0.154,
+      "cert_s": 0.000428,
       "cert_bytes": 477
     },
     {
@@ -857,9 +862,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.181,
-      "qcec_exact_s": 0.151,
-      "cert_s": 0.000338,
+      "qcec_legal_s": 0.168,
+      "qcec_exact_s": 0.162,
+      "cert_s": 0.000331,
       "cert_bytes": 476
     },
     {
@@ -878,9 +883,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.178,
-      "qcec_exact_s": 0.159,
-      "cert_s": 0.000325,
+      "qcec_legal_s": 0.16,
+      "qcec_exact_s": 0.156,
+      "cert_s": 0.000339,
       "cert_bytes": 477
     },
     {
@@ -899,9 +904,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.174,
-      "qcec_exact_s": 0.155,
-      "cert_s": 0.000337,
+      "qcec_legal_s": 0.169,
+      "qcec_exact_s": 0.163,
+      "cert_s": 0.000345,
       "cert_bytes": 477
     },
     {
@@ -920,9 +925,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.16,
-      "qcec_exact_s": 0.154,
-      "cert_s": 0.000314,
+      "qcec_legal_s": 0.163,
+      "qcec_exact_s": 0.158,
+      "cert_s": 0.00033,
       "cert_bytes": 477
     },
     {
@@ -941,9 +946,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.165,
-      "qcec_exact_s": 0.151,
-      "cert_s": 0.000336,
+      "qcec_legal_s": 0.184,
+      "qcec_exact_s": 0.157,
+      "cert_s": 0.001364,
       "cert_bytes": 477
     },
     {
@@ -962,9 +967,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.181,
-      "qcec_exact_s": 0.157,
-      "cert_s": 0.000415,
+      "qcec_legal_s": 0.219,
+      "qcec_exact_s": 0.156,
+      "cert_s": 0.001334,
       "cert_bytes": 477
     },
     {
@@ -983,9 +988,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.161,
-      "qcec_exact_s": 0.149,
-      "cert_s": 0.000439,
+      "qcec_legal_s": 0.18,
+      "qcec_exact_s": 0.184,
+      "cert_s": 0.000659,
       "cert_bytes": 477
     },
     {
@@ -1004,9 +1009,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.172,
-      "qcec_exact_s": 0.161,
-      "cert_s": 0.000399,
+      "qcec_legal_s": 0.164,
+      "qcec_exact_s": 0.227,
+      "cert_s": 0.000348,
       "cert_bytes": 476
     },
     {
@@ -1025,8 +1030,8 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.161,
-      "qcec_exact_s": 0.154,
+      "qcec_legal_s": 0.163,
+      "qcec_exact_s": 0.172,
       "cert_s": 0.00033,
       "cert_bytes": 477
     },
@@ -1046,9 +1051,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.159,
-      "qcec_exact_s": 0.167,
-      "cert_s": 0.000331,
+      "qcec_legal_s": 0.168,
+      "qcec_exact_s": 0.155,
+      "cert_s": 0.001137,
       "cert_bytes": 477
     },
     {
@@ -1067,9 +1072,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.165,
-      "qcec_exact_s": 0.16,
-      "cert_s": 0.000352,
+      "qcec_legal_s": 0.182,
+      "qcec_exact_s": 0.168,
+      "cert_s": 0.000339,
       "cert_bytes": 477
     },
     {
@@ -1088,9 +1093,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.162,
-      "qcec_exact_s": 0.179,
-      "cert_s": 0.000295,
+      "qcec_legal_s": 0.197,
+      "qcec_exact_s": 0.159,
+      "cert_s": 0.000405,
       "cert_bytes": 477
     },
     {
@@ -1109,9 +1114,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.176,
-      "qcec_exact_s": 0.176,
-      "cert_s": 0.000371,
+      "qcec_legal_s": 0.166,
+      "qcec_exact_s": 0.162,
+      "cert_s": 0.000339,
       "cert_bytes": 477
     },
     {
@@ -1130,9 +1135,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.161,
-      "qcec_exact_s": 0.16,
-      "cert_s": 0.000434,
+      "qcec_legal_s": 0.197,
+      "qcec_exact_s": 0.157,
+      "cert_s": 0.000374,
       "cert_bytes": 477
     },
     {
@@ -1151,9 +1156,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.187,
-      "qcec_exact_s": 0.178,
-      "cert_s": 0.00075,
+      "qcec_legal_s": 0.165,
+      "qcec_exact_s": 0.16,
+      "cert_s": 0.000336,
       "cert_bytes": 476
     },
     {
@@ -1172,9 +1177,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.187,
-      "qcec_exact_s": 0.157,
-      "cert_s": 0.000324,
+      "qcec_legal_s": 0.171,
+      "qcec_exact_s": 0.173,
+      "cert_s": 0.000291,
       "cert_bytes": 477
     },
     {
@@ -1193,9 +1198,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.159,
-      "qcec_exact_s": 0.157,
-      "cert_s": 0.000287,
+      "qcec_legal_s": 0.166,
+      "qcec_exact_s": 0.177,
+      "cert_s": 0.000362,
       "cert_bytes": 477
     },
     {
@@ -1214,9 +1219,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.159,
-      "qcec_exact_s": 0.16,
-      "cert_s": 0.000369,
+      "qcec_legal_s": 0.175,
+      "qcec_exact_s": 0.167,
+      "cert_s": 0.000357,
       "cert_bytes": 477
     },
     {
@@ -1235,9 +1240,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.158,
+      "qcec_legal_s": 0.163,
       "qcec_exact_s": 0.166,
-      "cert_s": 0.000418,
+      "cert_s": 0.000398,
       "cert_bytes": 477
     },
     {
@@ -1256,9 +1261,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.194,
+      "qcec_legal_s": 0.167,
       "qcec_exact_s": 0.174,
-      "cert_s": 0.000376,
+      "cert_s": 0.000377,
       "cert_bytes": 477
     },
     {
@@ -1277,9 +1282,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.164,
-      "qcec_exact_s": 0.154,
-      "cert_s": 0.000447,
+      "qcec_legal_s": 0.166,
+      "qcec_exact_s": 0.159,
+      "cert_s": 0.000391,
       "cert_bytes": 477
     },
     {
@@ -1298,9 +1303,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.185,
-      "qcec_exact_s": 0.153,
-      "cert_s": 0.000397,
+      "qcec_legal_s": 0.175,
+      "qcec_exact_s": 0.154,
+      "cert_s": 0.000394,
       "cert_bytes": 476
     },
     {
@@ -1319,9 +1324,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.169,
-      "qcec_exact_s": 0.155,
-      "cert_s": 0.000559,
+      "qcec_legal_s": 0.17,
+      "qcec_exact_s": 0.161,
+      "cert_s": 0.000377,
       "cert_bytes": 477
     },
     {
@@ -1340,9 +1345,9 @@
       "qcec_legal": true,
       "qcec_exact": true,
       "cert_ok": true,
-      "qcec_legal_s": 0.171,
-      "qcec_exact_s": 0.158,
-      "cert_s": 0.000588,
+      "qcec_legal_s": 0.183,
+      "qcec_exact_s": 0.152,
+      "cert_s": 0.000687,
       "cert_bytes": 436
     },
     {
@@ -1361,9 +1366,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.171,
-      "qcec_exact_s": 0.156,
-      "cert_s": 0.00072,
+      "qcec_legal_s": 0.214,
+      "qcec_exact_s": 0.164,
+      "cert_s": 0.000572,
       "cert_bytes": 436
     },
     {
@@ -1382,9 +1387,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.176,
-      "qcec_exact_s": 0.153,
-      "cert_s": 0.000507,
+      "qcec_legal_s": 0.18,
+      "qcec_exact_s": 0.184,
+      "cert_s": 0.00079,
       "cert_bytes": 436
     },
     {
@@ -1403,9 +1408,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.181,
-      "qcec_exact_s": 0.154,
-      "cert_s": 0.000643,
+      "qcec_legal_s": 0.172,
+      "qcec_exact_s": 0.15,
+      "cert_s": 0.001756,
       "cert_bytes": 436
     },
     {
@@ -1424,9 +1429,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.2,
-      "qcec_exact_s": 0.157,
-      "cert_s": 0.001533,
+      "qcec_legal_s": 0.196,
+      "qcec_exact_s": 0.171,
+      "cert_s": 0.000602,
       "cert_bytes": 436
     },
     {
@@ -1445,9 +1450,9 @@
       "qcec_legal": true,
       "qcec_exact": true,
       "cert_ok": false,
-      "qcec_legal_s": 0.196,
-      "qcec_exact_s": 0.165,
-      "cert_s": 0.000587,
+      "qcec_legal_s": 0.173,
+      "qcec_exact_s": 0.159,
+      "cert_s": 0.000803,
       "cert_bytes": 437
     },
     {
@@ -1466,9 +1471,9 @@
       "qcec_legal": true,
       "qcec_exact": true,
       "cert_ok": false,
-      "qcec_legal_s": 0.209,
-      "qcec_exact_s": 0.157,
-      "cert_s": 0.000535,
+      "qcec_legal_s": 0.194,
+      "qcec_exact_s": 0.154,
+      "cert_s": 0.000536,
       "cert_bytes": 435
     },
     {
@@ -1487,9 +1492,9 @@
       "qcec_legal": true,
       "qcec_exact": true,
       "cert_ok": true,
-      "qcec_legal_s": 0.188,
-      "qcec_exact_s": 0.158,
-      "cert_s": 0.000615,
+      "qcec_legal_s": 0.182,
+      "qcec_exact_s": 0.186,
+      "cert_s": 0.000468,
       "cert_bytes": 436
     },
     {
@@ -1508,9 +1513,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.17,
-      "qcec_exact_s": 0.177,
-      "cert_s": 0.000526,
+      "qcec_legal_s": 0.173,
+      "qcec_exact_s": 0.169,
+      "cert_s": 0.000579,
       "cert_bytes": 436
     },
     {
@@ -1529,9 +1534,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.175,
-      "qcec_exact_s": 0.161,
-      "cert_s": 0.000581,
+      "qcec_legal_s": 0.185,
+      "qcec_exact_s": 0.167,
+      "cert_s": 0.000566,
       "cert_bytes": 436
     },
     {
@@ -1550,9 +1555,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.174,
-      "qcec_exact_s": 0.159,
-      "cert_s": 0.000675,
+      "qcec_legal_s": 0.179,
+      "qcec_exact_s": 0.179,
+      "cert_s": 0.000662,
       "cert_bytes": 436
     },
     {
@@ -1571,9 +1576,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.185,
-      "qcec_exact_s": 0.18,
-      "cert_s": 0.000638,
+      "qcec_legal_s": 0.173,
+      "qcec_exact_s": 0.155,
+      "cert_s": 0.000615,
       "cert_bytes": 436
     },
     {
@@ -1592,9 +1597,9 @@
       "qcec_legal": true,
       "qcec_exact": true,
       "cert_ok": false,
-      "qcec_legal_s": 0.214,
-      "qcec_exact_s": 0.159,
-      "cert_s": 0.000688,
+      "qcec_legal_s": 0.218,
+      "qcec_exact_s": 0.198,
+      "cert_s": 0.000757,
       "cert_bytes": 437
     },
     {
@@ -1613,9 +1618,9 @@
       "qcec_legal": true,
       "qcec_exact": true,
       "cert_ok": false,
-      "qcec_legal_s": 0.184,
-      "qcec_exact_s": 0.166,
-      "cert_s": 0.000606,
+      "qcec_legal_s": 0.168,
+      "qcec_exact_s": 0.16,
+      "cert_s": 0.00056,
       "cert_bytes": 435
     },
     {
@@ -1634,9 +1639,9 @@
       "qcec_legal": true,
       "qcec_exact": true,
       "cert_ok": true,
-      "qcec_legal_s": 0.195,
-      "qcec_exact_s": 0.152,
-      "cert_s": 0.000659,
+      "qcec_legal_s": 0.178,
+      "qcec_exact_s": 0.198,
+      "cert_s": 0.000501,
       "cert_bytes": 436
     },
     {
@@ -1655,9 +1660,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.171,
-      "qcec_exact_s": 0.155,
-      "cert_s": 0.000721,
+      "qcec_legal_s": 0.174,
+      "qcec_exact_s": 0.163,
+      "cert_s": 0.000541,
       "cert_bytes": 436
     },
     {
@@ -1676,9 +1681,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.192,
-      "qcec_exact_s": 0.168,
-      "cert_s": 0.002858,
+      "qcec_legal_s": 0.173,
+      "qcec_exact_s": 0.155,
+      "cert_s": 0.000578,
       "cert_bytes": 436
     },
     {
@@ -1697,9 +1702,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.192,
-      "qcec_exact_s": 0.158,
-      "cert_s": 0.00061,
+      "qcec_legal_s": 0.168,
+      "qcec_exact_s": 0.153,
+      "cert_s": 0.000549,
       "cert_bytes": 436
     },
     {
@@ -1718,9 +1723,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.232,
-      "qcec_exact_s": 0.169,
-      "cert_s": 0.00059,
+      "qcec_legal_s": 0.169,
+      "qcec_exact_s": 0.183,
+      "cert_s": 0.00062,
       "cert_bytes": 436
     },
     {
@@ -1739,9 +1744,9 @@
       "qcec_legal": true,
       "qcec_exact": true,
       "cert_ok": false,
-      "qcec_legal_s": 0.214,
-      "qcec_exact_s": 0.156,
-      "cert_s": 0.000599,
+      "qcec_legal_s": 0.17,
+      "qcec_exact_s": 0.154,
+      "cert_s": 0.000529,
       "cert_bytes": 437
     },
     {
@@ -1760,9 +1765,9 @@
       "qcec_legal": true,
       "qcec_exact": true,
       "cert_ok": false,
-      "qcec_legal_s": 0.181,
-      "qcec_exact_s": 0.177,
-      "cert_s": 0.000658,
+      "qcec_legal_s": 0.173,
+      "qcec_exact_s": 0.157,
+      "cert_s": 0.000537,
       "cert_bytes": 435
     },
     {
@@ -1781,9 +1786,9 @@
       "qcec_legal": true,
       "qcec_exact": true,
       "cert_ok": true,
-      "qcec_legal_s": 0.173,
-      "qcec_exact_s": 0.158,
-      "cert_s": 0.000546,
+      "qcec_legal_s": 0.213,
+      "qcec_exact_s": 0.17,
+      "cert_s": 0.000731,
       "cert_bytes": 436
     },
     {
@@ -1802,9 +1807,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.189,
+      "qcec_legal_s": 0.217,
       "qcec_exact_s": 0.171,
-      "cert_s": 0.000615,
+      "cert_s": 0.000564,
       "cert_bytes": 436
     },
     {
@@ -1823,9 +1828,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.22,
-      "qcec_exact_s": 0.168,
-      "cert_s": 0.000605,
+      "qcec_legal_s": 0.217,
+      "qcec_exact_s": 0.165,
+      "cert_s": 0.000553,
       "cert_bytes": 436
     },
     {
@@ -1844,9 +1849,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.187,
-      "qcec_exact_s": 0.19,
-      "cert_s": 0.000457,
+      "qcec_legal_s": 0.171,
+      "qcec_exact_s": 0.175,
+      "cert_s": 0.000497,
       "cert_bytes": 436
     },
     {
@@ -1865,9 +1870,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.2,
-      "qcec_exact_s": 0.183,
-      "cert_s": 0.000611,
+      "qcec_legal_s": 0.173,
+      "qcec_exact_s": 0.178,
+      "cert_s": 0.001534,
       "cert_bytes": 436
     },
     {
@@ -1886,9 +1891,9 @@
       "qcec_legal": true,
       "qcec_exact": true,
       "cert_ok": false,
-      "qcec_legal_s": 0.179,
-      "qcec_exact_s": 0.167,
-      "cert_s": 0.000613,
+      "qcec_legal_s": 0.168,
+      "qcec_exact_s": 0.154,
+      "cert_s": 0.000779,
       "cert_bytes": 437
     },
     {
@@ -1907,9 +1912,9 @@
       "qcec_legal": true,
       "qcec_exact": true,
       "cert_ok": false,
-      "qcec_legal_s": 0.173,
-      "qcec_exact_s": 0.156,
-      "cert_s": 0.000562,
+      "qcec_legal_s": 0.177,
+      "qcec_exact_s": 0.167,
+      "cert_s": 0.000925,
       "cert_bytes": 435
     },
     {
@@ -1928,9 +1933,9 @@
       "qcec_legal": true,
       "qcec_exact": true,
       "cert_ok": true,
-      "qcec_legal_s": 0.183,
-      "qcec_exact_s": 0.175,
-      "cert_s": 0.000575,
+      "qcec_legal_s": 0.21,
+      "qcec_exact_s": 0.212,
+      "cert_s": 0.000531,
       "cert_bytes": 511
     },
     {
@@ -1949,9 +1954,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.178,
-      "qcec_exact_s": 0.17,
-      "cert_s": 0.000463,
+      "qcec_legal_s": 0.191,
+      "qcec_exact_s": 0.156,
+      "cert_s": 0.000596,
       "cert_bytes": 511
     },
     {
@@ -1970,9 +1975,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.173,
-      "qcec_exact_s": 0.183,
-      "cert_s": 0.000573,
+      "qcec_legal_s": 0.175,
+      "qcec_exact_s": 0.168,
+      "cert_s": 0.001027,
       "cert_bytes": 511
     },
     {
@@ -1991,9 +1996,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.197,
-      "qcec_exact_s": 0.188,
-      "cert_s": 0.000918,
+      "qcec_legal_s": 0.168,
+      "qcec_exact_s": 0.193,
+      "cert_s": 0.000571,
       "cert_bytes": 511
     },
     {
@@ -2012,9 +2017,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.24,
-      "qcec_exact_s": 0.19,
-      "cert_s": 0.000683,
+      "qcec_legal_s": 0.17,
+      "qcec_exact_s": 0.169,
+      "cert_s": 0.000713,
       "cert_bytes": 511
     },
     {
@@ -2033,9 +2038,9 @@
       "qcec_legal": true,
       "qcec_exact": true,
       "cert_ok": false,
-      "qcec_legal_s": 0.208,
-      "qcec_exact_s": 0.155,
-      "cert_s": 0.000623,
+      "qcec_legal_s": 0.202,
+      "qcec_exact_s": 0.17,
+      "cert_s": 0.000618,
       "cert_bytes": 512
     },
     {
@@ -2054,9 +2059,9 @@
       "qcec_legal": true,
       "qcec_exact": true,
       "cert_ok": false,
-      "qcec_legal_s": 0.185,
-      "qcec_exact_s": 0.162,
-      "cert_s": 0.000597,
+      "qcec_legal_s": 0.169,
+      "qcec_exact_s": 0.16,
+      "cert_s": 0.000626,
       "cert_bytes": 510
     },
     {
@@ -2075,9 +2080,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.194,
-      "qcec_exact_s": 0.172,
-      "cert_s": 0.000481,
+      "qcec_legal_s": 0.178,
+      "qcec_exact_s": 0.199,
+      "cert_s": 0.000574,
       "cert_bytes": 553
     },
     {
@@ -2096,9 +2101,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.173,
-      "qcec_exact_s": 0.175,
-      "cert_s": 0.000572,
+      "qcec_legal_s": 0.175,
+      "qcec_exact_s": 0.163,
+      "cert_s": 0.000602,
       "cert_bytes": 553
     },
     {
@@ -2117,9 +2122,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.175,
-      "qcec_exact_s": 0.193,
-      "cert_s": 0.00058,
+      "qcec_legal_s": 0.171,
+      "qcec_exact_s": 0.151,
+      "cert_s": 0.001452,
       "cert_bytes": 553
     },
     {
@@ -2138,9 +2143,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.184,
-      "qcec_exact_s": 0.191,
-      "cert_s": 0.000583,
+      "qcec_legal_s": 0.174,
+      "qcec_exact_s": 0.171,
+      "cert_s": 0.000618,
       "cert_bytes": 553
     },
     {
@@ -2159,9 +2164,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.197,
-      "qcec_exact_s": 0.159,
-      "cert_s": 0.00059,
+      "qcec_legal_s": 0.218,
+      "qcec_exact_s": 0.152,
+      "cert_s": 0.000831,
       "cert_bytes": 553
     },
     {
@@ -2180,9 +2185,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.18,
-      "qcec_exact_s": 0.16,
-      "cert_s": 0.000548,
+      "qcec_legal_s": 0.17,
+      "qcec_exact_s": 0.154,
+      "cert_s": 0.000598,
       "cert_bytes": 552
     },
     {
@@ -2201,9 +2206,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.225,
-      "qcec_exact_s": 0.207,
-      "cert_s": 0.000583,
+      "qcec_legal_s": 0.174,
+      "qcec_exact_s": 0.173,
+      "cert_s": 0.000548,
       "cert_bytes": 552
     },
     {
@@ -2222,9 +2227,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.175,
-      "qcec_exact_s": 0.196,
-      "cert_s": 0.000602,
+      "qcec_legal_s": 0.174,
+      "qcec_exact_s": 0.158,
+      "cert_s": 0.000614,
       "cert_bytes": 556
     },
     {
@@ -2243,9 +2248,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.183,
-      "qcec_exact_s": 0.199,
-      "cert_s": 0.000557,
+      "qcec_legal_s": 0.185,
+      "qcec_exact_s": 0.19,
+      "cert_s": 0.000617,
       "cert_bytes": 556
     },
     {
@@ -2264,9 +2269,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.22,
-      "qcec_exact_s": 0.159,
-      "cert_s": 0.000584,
+      "qcec_legal_s": 0.182,
+      "qcec_exact_s": 0.169,
+      "cert_s": 0.000496,
       "cert_bytes": 556
     },
     {
@@ -2285,9 +2290,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.197,
-      "qcec_exact_s": 0.156,
-      "cert_s": 0.000585,
+      "qcec_legal_s": 0.171,
+      "qcec_exact_s": 0.154,
+      "cert_s": 0.000595,
       "cert_bytes": 556
     },
     {
@@ -2306,9 +2311,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.185,
-      "qcec_exact_s": 0.171,
-      "cert_s": 0.000621,
+      "qcec_legal_s": 0.174,
+      "qcec_exact_s": 0.162,
+      "cert_s": 0.000658,
       "cert_bytes": 556
     },
     {
@@ -2327,9 +2332,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.218,
-      "qcec_exact_s": 0.188,
-      "cert_s": 0.000487,
+      "qcec_legal_s": 0.222,
+      "qcec_exact_s": 0.156,
+      "cert_s": 0.000615,
       "cert_bytes": 555
     },
     {
@@ -2348,9 +2353,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.202,
-      "qcec_exact_s": 0.191,
-      "cert_s": 0.000617,
+      "qcec_legal_s": 0.172,
+      "qcec_exact_s": 0.155,
+      "cert_s": 0.000553,
       "cert_bytes": 555
     },
     {
@@ -2369,9 +2374,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.184,
-      "qcec_exact_s": 0.163,
-      "cert_s": 0.000557,
+      "qcec_legal_s": 0.171,
+      "qcec_exact_s": 0.158,
+      "cert_s": 0.000552,
       "cert_bytes": 556
     },
     {
@@ -2390,9 +2395,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.186,
-      "qcec_exact_s": 0.167,
-      "cert_s": 0.00086,
+      "qcec_legal_s": 0.189,
+      "qcec_exact_s": 0.161,
+      "cert_s": 0.000652,
       "cert_bytes": 556
     },
     {
@@ -2411,9 +2416,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.17,
-      "qcec_exact_s": 0.195,
-      "cert_s": 0.00073,
+      "qcec_legal_s": 0.185,
+      "qcec_exact_s": 0.178,
+      "cert_s": 0.001006,
       "cert_bytes": 556
     },
     {
@@ -2432,9 +2437,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.191,
-      "qcec_exact_s": 0.182,
-      "cert_s": 0.000582,
+      "qcec_legal_s": 0.203,
+      "qcec_exact_s": 0.157,
+      "cert_s": 0.000544,
       "cert_bytes": 556
     },
     {
@@ -2453,9 +2458,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.256,
-      "qcec_exact_s": 0.197,
-      "cert_s": 0.000602,
+      "qcec_legal_s": 0.187,
+      "qcec_exact_s": 0.154,
+      "cert_s": 0.000644,
       "cert_bytes": 556
     },
     {
@@ -2474,9 +2479,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.17,
-      "qcec_exact_s": 0.154,
-      "cert_s": 0.000565,
+      "qcec_legal_s": 0.228,
+      "qcec_exact_s": 0.178,
+      "cert_s": 0.000575,
       "cert_bytes": 555
     },
     {
@@ -2495,9 +2500,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.171,
-      "qcec_exact_s": 0.154,
-      "cert_s": 0.000598,
+      "qcec_legal_s": 0.234,
+      "qcec_exact_s": 0.183,
+      "cert_s": 0.000566,
       "cert_bytes": 555
     },
     {
@@ -2514,11 +2519,11 @@
       "dense_legal": true,
       "dense_exact": true,
       "qcec_legal": true,
-      "qcec_exact": true,
+      "qcec_exact": null,
       "cert_ok": true,
-      "qcec_legal_s": 0.196,
-      "qcec_exact_s": 0.169,
-      "cert_s": 0.000784,
+      "qcec_legal_s": 0.187,
+      "qcec_exact_s": 0.177,
+      "cert_s": 0.000757,
       "cert_bytes": 514
     },
     {
@@ -2537,9 +2542,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.194,
-      "qcec_exact_s": 0.158,
-      "cert_s": 0.000761,
+      "qcec_legal_s": 0.192,
+      "qcec_exact_s": 0.15,
+      "cert_s": 0.000771,
       "cert_bytes": 514
     },
     {
@@ -2558,9 +2563,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.196,
-      "qcec_exact_s": 0.156,
-      "cert_s": 0.002419,
+      "qcec_legal_s": 0.203,
+      "qcec_exact_s": 0.186,
+      "cert_s": 0.002898,
       "cert_bytes": 514
     },
     {
@@ -2579,9 +2584,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.205,
-      "qcec_exact_s": 0.192,
-      "cert_s": 0.000991,
+      "qcec_legal_s": 0.217,
+      "qcec_exact_s": 0.162,
+      "cert_s": 0.001022,
       "cert_bytes": 514
     },
     {
@@ -2600,9 +2605,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.228,
-      "qcec_exact_s": 0.182,
-      "cert_s": 0.001056,
+      "qcec_legal_s": 0.22,
+      "qcec_exact_s": 0.183,
+      "cert_s": 0.001091,
       "cert_bytes": 514
     },
     {
@@ -2621,9 +2626,9 @@
       "qcec_legal": true,
       "qcec_exact": true,
       "cert_ok": false,
-      "qcec_legal_s": 0.189,
-      "qcec_exact_s": 0.163,
-      "cert_s": 0.001096,
+      "qcec_legal_s": 0.209,
+      "qcec_exact_s": 0.164,
+      "cert_s": 0.001017,
       "cert_bytes": 515
     },
     {
@@ -2642,9 +2647,9 @@
       "qcec_legal": true,
       "qcec_exact": true,
       "cert_ok": false,
-      "qcec_legal_s": 0.211,
-      "qcec_exact_s": 0.157,
-      "cert_s": 0.001503,
+      "qcec_legal_s": 0.233,
+      "qcec_exact_s": 0.17,
+      "cert_s": 0.001022,
       "cert_bytes": 513
     },
     {
@@ -2663,9 +2668,9 @@
       "qcec_legal": true,
       "qcec_exact": true,
       "cert_ok": true,
-      "qcec_legal_s": 0.238,
-      "qcec_exact_s": 0.181,
-      "cert_s": 0.001058,
+      "qcec_legal_s": 0.187,
+      "qcec_exact_s": 0.173,
+      "cert_s": 0.001098,
       "cert_bytes": 514
     },
     {
@@ -2684,9 +2689,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.216,
-      "qcec_exact_s": 0.167,
-      "cert_s": 0.001018,
+      "qcec_legal_s": 0.225,
+      "qcec_exact_s": 0.151,
+      "cert_s": 0.001181,
       "cert_bytes": 514
     },
     {
@@ -2705,9 +2710,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.219,
-      "qcec_exact_s": 0.177,
-      "cert_s": 0.000999,
+      "qcec_legal_s": 0.192,
+      "qcec_exact_s": 0.155,
+      "cert_s": 0.000932,
       "cert_bytes": 514
     },
     {
@@ -2726,9 +2731,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.187,
-      "qcec_exact_s": 0.162,
-      "cert_s": 0.001002,
+      "qcec_legal_s": 0.188,
+      "qcec_exact_s": 0.188,
+      "cert_s": 0.001083,
       "cert_bytes": 514
     },
     {
@@ -2747,9 +2752,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.192,
-      "qcec_exact_s": 0.155,
-      "cert_s": 0.001288,
+      "qcec_legal_s": 0.217,
+      "qcec_exact_s": 0.191,
+      "cert_s": 0.001196,
       "cert_bytes": 514
     },
     {
@@ -2768,9 +2773,9 @@
       "qcec_legal": true,
       "qcec_exact": true,
       "cert_ok": false,
-      "qcec_legal_s": 0.188,
-      "qcec_exact_s": 0.165,
-      "cert_s": 0.001001,
+      "qcec_legal_s": 0.196,
+      "qcec_exact_s": 0.162,
+      "cert_s": 0.001147,
       "cert_bytes": 515
     },
     {
@@ -2789,9 +2794,9 @@
       "qcec_legal": true,
       "qcec_exact": true,
       "cert_ok": false,
-      "qcec_legal_s": 0.192,
-      "qcec_exact_s": 0.184,
-      "cert_s": 0.00105,
+      "qcec_legal_s": 0.249,
+      "qcec_exact_s": 0.166,
+      "cert_s": 0.002084,
       "cert_bytes": 513
     },
     {
@@ -2810,9 +2815,9 @@
       "qcec_legal": true,
       "qcec_exact": true,
       "cert_ok": true,
-      "qcec_legal_s": 0.195,
-      "qcec_exact_s": 0.162,
-      "cert_s": 0.001077,
+      "qcec_legal_s": 0.187,
+      "qcec_exact_s": 0.187,
+      "cert_s": 0.00104,
       "cert_bytes": 514
     },
     {
@@ -2831,9 +2836,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.192,
-      "qcec_exact_s": 0.154,
-      "cert_s": 0.001019,
+      "qcec_legal_s": 0.189,
+      "qcec_exact_s": 0.175,
+      "cert_s": 0.001097,
       "cert_bytes": 514
     },
     {
@@ -2852,9 +2857,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.19,
-      "qcec_exact_s": 0.159,
-      "cert_s": 0.001003,
+      "qcec_legal_s": 0.188,
+      "qcec_exact_s": 0.157,
+      "cert_s": 0.000978,
       "cert_bytes": 514
     },
     {
@@ -2873,9 +2878,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.201,
-      "qcec_exact_s": 0.185,
-      "cert_s": 0.001129,
+      "qcec_legal_s": 0.205,
+      "qcec_exact_s": 0.192,
+      "cert_s": 0.002607,
       "cert_bytes": 514
     },
     {
@@ -2894,9 +2899,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.2,
-      "qcec_exact_s": 0.192,
-      "cert_s": 0.0011,
+      "qcec_legal_s": 0.192,
+      "qcec_exact_s": 0.182,
+      "cert_s": 0.001149,
       "cert_bytes": 514
     },
     {
@@ -2915,9 +2920,9 @@
       "qcec_legal": true,
       "qcec_exact": true,
       "cert_ok": false,
-      "qcec_legal_s": 0.203,
-      "qcec_exact_s": 0.163,
-      "cert_s": 0.00101,
+      "qcec_legal_s": 0.193,
+      "qcec_exact_s": 0.166,
+      "cert_s": 0.001189,
       "cert_bytes": 515
     },
     {
@@ -2936,9 +2941,9 @@
       "qcec_legal": true,
       "qcec_exact": true,
       "cert_ok": false,
-      "qcec_legal_s": 0.204,
-      "qcec_exact_s": 0.157,
-      "cert_s": 0.001021,
+      "qcec_legal_s": 0.186,
+      "qcec_exact_s": 0.204,
+      "cert_s": 0.001087,
       "cert_bytes": 513
     },
     {
@@ -2957,9 +2962,9 @@
       "qcec_legal": true,
       "qcec_exact": true,
       "cert_ok": true,
-      "qcec_legal_s": 0.19,
-      "qcec_exact_s": 0.185,
-      "cert_s": 0.000931,
+      "qcec_legal_s": 0.202,
+      "qcec_exact_s": 0.168,
+      "cert_s": 0.000938,
       "cert_bytes": 514
     },
     {
@@ -2978,9 +2983,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.194,
-      "qcec_exact_s": 0.167,
-      "cert_s": 0.000991,
+      "qcec_legal_s": 0.191,
+      "qcec_exact_s": 0.156,
+      "cert_s": 0.001088,
       "cert_bytes": 514
     },
     {
@@ -2999,9 +3004,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.192,
-      "qcec_exact_s": 0.162,
-      "cert_s": 0.00092,
+      "qcec_legal_s": 0.191,
+      "qcec_exact_s": 0.167,
+      "cert_s": 0.00103,
       "cert_bytes": 514
     },
     {
@@ -3020,9 +3025,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.195,
-      "qcec_exact_s": 0.16,
-      "cert_s": 0.000992,
+      "qcec_legal_s": 0.208,
+      "qcec_exact_s": 0.206,
+      "cert_s": 0.001087,
       "cert_bytes": 514
     },
     {
@@ -3041,9 +3046,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.191,
+      "qcec_legal_s": 0.244,
       "qcec_exact_s": 0.164,
-      "cert_s": 0.001111,
+      "cert_s": 0.001223,
       "cert_bytes": 514
     },
     {
@@ -3062,9 +3067,9 @@
       "qcec_legal": true,
       "qcec_exact": true,
       "cert_ok": false,
-      "qcec_legal_s": 0.187,
-      "qcec_exact_s": 0.163,
-      "cert_s": 0.001106,
+      "qcec_legal_s": 0.191,
+      "qcec_exact_s": 0.198,
+      "cert_s": 0.001071,
       "cert_bytes": 515
     },
     {
@@ -3083,9 +3088,9 @@
       "qcec_legal": true,
       "qcec_exact": true,
       "cert_ok": false,
-      "qcec_legal_s": 0.239,
-      "qcec_exact_s": 0.18,
-      "cert_s": 0.000949,
+      "qcec_legal_s": 0.268,
+      "qcec_exact_s": 0.234,
+      "cert_s": 0.001204,
       "cert_bytes": 513
     },
     {
@@ -3104,9 +3109,9 @@
       "qcec_legal": true,
       "qcec_exact": true,
       "cert_ok": true,
-      "qcec_legal_s": 0.213,
-      "qcec_exact_s": 0.185,
-      "cert_s": 0.001211,
+      "qcec_legal_s": 0.192,
+      "qcec_exact_s": 0.156,
+      "cert_s": 0.001144,
       "cert_bytes": 589
     },
     {
@@ -3125,9 +3130,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.197,
-      "qcec_exact_s": 0.19,
-      "cert_s": 0.001118,
+      "qcec_legal_s": 0.213,
+      "qcec_exact_s": 0.176,
+      "cert_s": 0.001011,
       "cert_bytes": 589
     },
     {
@@ -3146,9 +3151,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.206,
-      "qcec_exact_s": 0.156,
-      "cert_s": 0.001003,
+      "qcec_legal_s": 0.189,
+      "qcec_exact_s": 0.155,
+      "cert_s": 0.000962,
       "cert_bytes": 589
     },
     {
@@ -3167,9 +3172,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.236,
-      "qcec_exact_s": 0.198,
-      "cert_s": 0.001008,
+      "qcec_legal_s": 0.188,
+      "qcec_exact_s": 0.153,
+      "cert_s": 0.001155,
       "cert_bytes": 589
     },
     {
@@ -3188,9 +3193,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.192,
-      "qcec_exact_s": 0.157,
-      "cert_s": 0.001087,
+      "qcec_legal_s": 0.19,
+      "qcec_exact_s": 0.17,
+      "cert_s": 0.001124,
       "cert_bytes": 589
     },
     {
@@ -3209,9 +3214,9 @@
       "qcec_legal": true,
       "qcec_exact": true,
       "cert_ok": false,
-      "qcec_legal_s": 0.208,
-      "qcec_exact_s": 0.157,
-      "cert_s": 0.000943,
+      "qcec_legal_s": 0.191,
+      "qcec_exact_s": 0.152,
+      "cert_s": 0.001027,
       "cert_bytes": 590
     },
     {
@@ -3230,9 +3235,9 @@
       "qcec_legal": true,
       "qcec_exact": true,
       "cert_ok": false,
-      "qcec_legal_s": 0.214,
-      "qcec_exact_s": 0.184,
-      "cert_s": 0.001076,
+      "qcec_legal_s": 0.192,
+      "qcec_exact_s": 0.16,
+      "cert_s": 0.000957,
       "cert_bytes": 588
     },
     {
@@ -3251,9 +3256,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.199,
-      "qcec_exact_s": 0.157,
-      "cert_s": 0.001037,
+      "qcec_legal_s": 0.208,
+      "qcec_exact_s": 0.158,
+      "cert_s": 0.001172,
       "cert_bytes": 631
     },
     {
@@ -3272,9 +3277,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.205,
-      "qcec_exact_s": 0.181,
-      "cert_s": 0.001281,
+      "qcec_legal_s": 0.206,
+      "qcec_exact_s": 0.162,
+      "cert_s": 0.00105,
       "cert_bytes": 631
     },
     {
@@ -3293,9 +3298,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.203,
-      "qcec_exact_s": 0.178,
-      "cert_s": 0.001022,
+      "qcec_legal_s": 0.219,
+      "qcec_exact_s": 0.161,
+      "cert_s": 0.000941,
       "cert_bytes": 631
     },
     {
@@ -3314,9 +3319,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.206,
-      "qcec_exact_s": 0.165,
-      "cert_s": 0.001469,
+      "qcec_legal_s": 0.255,
+      "qcec_exact_s": 0.185,
+      "cert_s": 0.001074,
       "cert_bytes": 631
     },
     {
@@ -3335,9 +3340,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.212,
-      "qcec_exact_s": 0.176,
-      "cert_s": 0.001111,
+      "qcec_legal_s": 0.226,
+      "qcec_exact_s": 0.175,
+      "cert_s": 0.001172,
       "cert_bytes": 631
     },
     {
@@ -3356,9 +3361,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.208,
-      "qcec_exact_s": 0.186,
-      "cert_s": 0.001041,
+      "qcec_legal_s": 0.194,
+      "qcec_exact_s": 0.156,
+      "cert_s": 0.000992,
       "cert_bytes": 630
     },
     {
@@ -3377,9 +3382,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.216,
-      "qcec_exact_s": 0.162,
-      "cert_s": 0.000987,
+      "qcec_legal_s": 0.218,
+      "qcec_exact_s": 0.202,
+      "cert_s": 0.001098,
       "cert_bytes": 630
     },
     {
@@ -3398,9 +3403,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.204,
-      "qcec_exact_s": 0.194,
-      "cert_s": 0.000986,
+      "qcec_legal_s": 0.189,
+      "qcec_exact_s": 0.191,
+      "cert_s": 0.001164,
       "cert_bytes": 637
     },
     {
@@ -3419,9 +3424,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.214,
-      "qcec_exact_s": 0.169,
-      "cert_s": 0.00105,
+      "qcec_legal_s": 0.192,
+      "qcec_exact_s": 0.158,
+      "cert_s": 0.001007,
       "cert_bytes": 637
     },
     {
@@ -3440,9 +3445,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.213,
-      "qcec_exact_s": 0.174,
-      "cert_s": 0.001009,
+      "qcec_legal_s": 0.193,
+      "qcec_exact_s": 0.169,
+      "cert_s": 0.001117,
       "cert_bytes": 637
     },
     {
@@ -3461,9 +3466,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.214,
-      "qcec_exact_s": 0.207,
-      "cert_s": 0.001033,
+      "qcec_legal_s": 0.194,
+      "qcec_exact_s": 0.184,
+      "cert_s": 0.001044,
       "cert_bytes": 637
     },
     {
@@ -3482,9 +3487,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.205,
-      "qcec_exact_s": 0.153,
-      "cert_s": 0.001111,
+      "qcec_legal_s": 0.195,
+      "qcec_exact_s": 0.163,
+      "cert_s": 0.001074,
       "cert_bytes": 637
     },
     {
@@ -3503,9 +3508,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.205,
-      "qcec_exact_s": 0.173,
-      "cert_s": 0.000936,
+      "qcec_legal_s": 0.193,
+      "qcec_exact_s": 0.157,
+      "cert_s": 0.001135,
       "cert_bytes": 636
     },
     {
@@ -3524,9 +3529,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.191,
-      "qcec_exact_s": 0.162,
-      "cert_s": 0.001084,
+      "qcec_legal_s": 0.201,
+      "qcec_exact_s": 0.157,
+      "cert_s": 0.000946,
       "cert_bytes": 636
     },
     {
@@ -3545,9 +3550,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.198,
-      "qcec_exact_s": 0.158,
-      "cert_s": 0.001057,
+      "qcec_legal_s": 0.197,
+      "qcec_exact_s": 0.16,
+      "cert_s": 0.001123,
       "cert_bytes": 640
     },
     {
@@ -3566,9 +3571,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.199,
-      "qcec_exact_s": 0.153,
-      "cert_s": 0.001026,
+      "qcec_legal_s": 0.215,
+      "qcec_exact_s": 0.189,
+      "cert_s": 0.001035,
       "cert_bytes": 640
     },
     {
@@ -3587,9 +3592,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.209,
-      "qcec_exact_s": 0.165,
-      "cert_s": 0.001034,
+      "qcec_legal_s": 0.22,
+      "qcec_exact_s": 0.181,
+      "cert_s": 0.001265,
       "cert_bytes": 640
     },
     {
@@ -3608,9 +3613,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.193,
-      "qcec_exact_s": 0.161,
-      "cert_s": 0.001024,
+      "qcec_legal_s": 0.205,
+      "qcec_exact_s": 0.206,
+      "cert_s": 0.001087,
       "cert_bytes": 640
     },
     {
@@ -3629,9 +3634,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.208,
-      "qcec_exact_s": 0.158,
-      "cert_s": 0.001037,
+      "qcec_legal_s": 0.194,
+      "qcec_exact_s": 0.228,
+      "cert_s": 0.001252,
       "cert_bytes": 640
     },
     {
@@ -3650,9 +3655,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.217,
-      "qcec_exact_s": 0.165,
-      "cert_s": 0.001136,
+      "qcec_legal_s": 0.194,
+      "qcec_exact_s": 0.159,
+      "cert_s": 0.001163,
       "cert_bytes": 639
     },
     {
@@ -3671,9 +3676,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.192,
-      "qcec_exact_s": 0.208,
-      "cert_s": 0.001048,
+      "qcec_legal_s": 0.197,
+      "qcec_exact_s": 0.162,
+      "cert_s": 0.000979,
       "cert_bytes": 639
     },
     {
@@ -3690,11 +3695,11 @@
       "dense_legal": true,
       "dense_exact": false,
       "qcec_legal": true,
-      "qcec_exact": false,
+      "qcec_exact": null,
       "cert_ok": true,
-      "qcec_legal_s": 0.216,
-      "qcec_exact_s": 0.169,
-      "cert_s": 0.000575,
+      "qcec_legal_s": 0.198,
+      "qcec_exact_s": 0.175,
+      "cert_s": 0.000706,
       "cert_bytes": 514
     },
     {
@@ -3713,9 +3718,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.184,
-      "qcec_exact_s": 0.16,
-      "cert_s": 0.000711,
+      "qcec_legal_s": 0.189,
+      "qcec_exact_s": 0.168,
+      "cert_s": 0.000654,
       "cert_bytes": 514
     },
     {
@@ -3734,9 +3739,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.181,
-      "qcec_exact_s": 0.158,
-      "cert_s": 0.000983,
+      "qcec_legal_s": 0.18,
+      "qcec_exact_s": 0.182,
+      "cert_s": 0.000974,
       "cert_bytes": 514
     },
     {
@@ -3755,9 +3760,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.19,
-      "qcec_exact_s": 0.175,
-      "cert_s": 0.000685,
+      "qcec_legal_s": 0.184,
+      "qcec_exact_s": 0.168,
+      "cert_s": 0.000675,
       "cert_bytes": 514
     },
     {
@@ -3776,9 +3781,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.186,
-      "qcec_exact_s": 0.184,
-      "cert_s": 0.000837,
+      "qcec_legal_s": 0.205,
+      "qcec_exact_s": 0.164,
+      "cert_s": 0.000725,
       "cert_bytes": 514
     },
     {
@@ -3797,9 +3802,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.181,
-      "qcec_exact_s": 0.152,
-      "cert_s": 0.00094,
+      "qcec_legal_s": 0.21,
+      "qcec_exact_s": 0.168,
+      "cert_s": 0.003312,
       "cert_bytes": 515
     },
     {
@@ -3818,9 +3823,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.196,
-      "qcec_exact_s": 0.161,
-      "cert_s": 0.000684,
+      "qcec_legal_s": 0.181,
+      "qcec_exact_s": 0.149,
+      "cert_s": 0.000694,
       "cert_bytes": 513
     },
     {
@@ -3839,9 +3844,9 @@
       "qcec_legal": true,
       "qcec_exact": null,
       "cert_ok": true,
-      "qcec_legal_s": 0.18,
-      "qcec_exact_s": 0.182,
-      "cert_s": 0.000896,
+      "qcec_legal_s": 0.186,
+      "qcec_exact_s": 0.172,
+      "cert_s": 0.000726,
       "cert_bytes": 514
     },
     {
@@ -3860,9 +3865,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.188,
-      "qcec_exact_s": 0.156,
-      "cert_s": 0.001002,
+      "qcec_legal_s": 0.181,
+      "qcec_exact_s": 0.191,
+      "cert_s": 0.000944,
       "cert_bytes": 514
     },
     {
@@ -3881,9 +3886,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.185,
-      "qcec_exact_s": 0.176,
-      "cert_s": 0.000668,
+      "qcec_legal_s": 0.181,
+      "qcec_exact_s": 0.175,
+      "cert_s": 0.000698,
       "cert_bytes": 514
     },
     {
@@ -3902,9 +3907,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.178,
-      "qcec_exact_s": 0.171,
-      "cert_s": 0.000721,
+      "qcec_legal_s": 0.231,
+      "qcec_exact_s": 0.179,
+      "cert_s": 0.00069,
       "cert_bytes": 514
     },
     {
@@ -3923,9 +3928,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.197,
-      "qcec_exact_s": 0.191,
-      "cert_s": 0.003496,
+      "qcec_legal_s": 0.18,
+      "qcec_exact_s": 0.193,
+      "cert_s": 0.001496,
       "cert_bytes": 514
     },
     {
@@ -3944,9 +3949,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.236,
-      "qcec_exact_s": 0.166,
-      "cert_s": 0.000697,
+      "qcec_legal_s": 0.217,
+      "qcec_exact_s": 0.154,
+      "cert_s": 0.001054,
       "cert_bytes": 515
     },
     {
@@ -3965,9 +3970,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.18,
-      "qcec_exact_s": 0.157,
-      "cert_s": 0.000606,
+      "qcec_legal_s": 0.178,
+      "qcec_exact_s": 0.187,
+      "cert_s": 0.000654,
       "cert_bytes": 513
     },
     {
@@ -3986,9 +3991,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": true,
-      "qcec_legal_s": 0.177,
-      "qcec_exact_s": 0.154,
-      "cert_s": 0.000892,
+      "qcec_legal_s": 0.189,
+      "qcec_exact_s": 0.172,
+      "cert_s": 0.000717,
       "cert_bytes": 514
     },
     {
@@ -4007,9 +4012,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.179,
-      "qcec_exact_s": 0.157,
-      "cert_s": 0.000756,
+      "qcec_legal_s": 0.19,
+      "qcec_exact_s": 0.154,
+      "cert_s": 0.001033,
       "cert_bytes": 514
     },
     {
@@ -4028,9 +4033,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.185,
-      "qcec_exact_s": 0.18,
-      "cert_s": 0.000766,
+      "qcec_legal_s": 0.217,
+      "qcec_exact_s": 0.211,
+      "cert_s": 0.000717,
       "cert_bytes": 514
     },
     {
@@ -4049,9 +4054,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.2,
-      "qcec_exact_s": 0.159,
-      "cert_s": 0.003097,
+      "qcec_legal_s": 0.218,
+      "qcec_exact_s": 0.179,
+      "cert_s": 0.000701,
       "cert_bytes": 514
     },
     {
@@ -4070,9 +4075,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.195,
-      "qcec_exact_s": 0.173,
-      "cert_s": 0.000714,
+      "qcec_legal_s": 0.184,
+      "qcec_exact_s": 0.16,
+      "cert_s": 0.001039,
       "cert_bytes": 514
     },
     {
@@ -4091,9 +4096,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.205,
-      "qcec_exact_s": 0.156,
-      "cert_s": 0.000729,
+      "qcec_legal_s": 0.178,
+      "qcec_exact_s": 0.16,
+      "cert_s": 0.000995,
       "cert_bytes": 515
     },
     {
@@ -4112,9 +4117,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.316,
-      "qcec_exact_s": 0.204,
-      "cert_s": 0.001036,
+      "qcec_legal_s": 0.201,
+      "qcec_exact_s": 0.179,
+      "cert_s": 0.000765,
       "cert_bytes": 513
     },
     {
@@ -4133,9 +4138,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": true,
-      "qcec_legal_s": 0.2,
-      "qcec_exact_s": 0.187,
-      "cert_s": 0.000694,
+      "qcec_legal_s": 0.186,
+      "qcec_exact_s": 0.164,
+      "cert_s": 0.000608,
       "cert_bytes": 514
     },
     {
@@ -4154,9 +4159,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.183,
-      "qcec_exact_s": 0.161,
-      "cert_s": 0.000798,
+      "qcec_legal_s": 0.177,
+      "qcec_exact_s": 0.155,
+      "cert_s": 0.001006,
       "cert_bytes": 514
     },
     {
@@ -4175,9 +4180,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.187,
-      "qcec_exact_s": 0.171,
-      "cert_s": 0.000926,
+      "qcec_legal_s": 0.202,
+      "qcec_exact_s": 0.164,
+      "cert_s": 0.000834,
       "cert_bytes": 514
     },
     {
@@ -4196,9 +4201,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.204,
-      "qcec_exact_s": 0.163,
-      "cert_s": 0.000687,
+      "qcec_legal_s": 0.18,
+      "qcec_exact_s": 0.191,
+      "cert_s": 0.000857,
       "cert_bytes": 514
     },
     {
@@ -4217,9 +4222,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.181,
-      "qcec_exact_s": 0.16,
-      "cert_s": 0.000719,
+      "qcec_legal_s": 0.184,
+      "qcec_exact_s": 0.152,
+      "cert_s": 0.001098,
       "cert_bytes": 514
     },
     {
@@ -4238,9 +4243,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.178,
-      "qcec_exact_s": 0.171,
-      "cert_s": 0.001081,
+      "qcec_legal_s": 0.179,
+      "qcec_exact_s": 0.163,
+      "cert_s": 0.000985,
       "cert_bytes": 515
     },
     {
@@ -4259,9 +4264,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.187,
-      "qcec_exact_s": 0.156,
-      "cert_s": 0.000639,
+      "qcec_legal_s": 0.214,
+      "qcec_exact_s": 0.158,
+      "cert_s": 0.000676,
       "cert_bytes": 513
     },
     {
@@ -4280,9 +4285,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": true,
-      "qcec_legal_s": 0.184,
-      "qcec_exact_s": 0.191,
-      "cert_s": 0.000648,
+      "qcec_legal_s": 0.2,
+      "qcec_exact_s": 0.182,
+      "cert_s": 0.000842,
       "cert_bytes": 589
     },
     {
@@ -4301,9 +4306,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.178,
-      "qcec_exact_s": 0.153,
-      "cert_s": 0.000982,
+      "qcec_legal_s": 0.203,
+      "qcec_exact_s": 0.202,
+      "cert_s": 0.001099,
       "cert_bytes": 589
     },
     {
@@ -4322,9 +4327,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.179,
-      "qcec_exact_s": 0.163,
-      "cert_s": 0.00067,
+      "qcec_legal_s": 0.198,
+      "qcec_exact_s": 0.158,
+      "cert_s": 0.000642,
       "cert_bytes": 589
     },
     {
@@ -4343,9 +4348,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.183,
-      "qcec_exact_s": 0.169,
-      "cert_s": 0.000707,
+      "qcec_legal_s": 0.204,
+      "qcec_exact_s": 0.164,
+      "cert_s": 0.000733,
       "cert_bytes": 589
     },
     {
@@ -4364,9 +4369,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.182,
-      "qcec_exact_s": 0.203,
-      "cert_s": 0.00106,
+      "qcec_legal_s": 0.18,
+      "qcec_exact_s": 0.158,
+      "cert_s": 0.001016,
       "cert_bytes": 589
     },
     {
@@ -4385,9 +4390,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.197,
-      "qcec_exact_s": 0.163,
-      "cert_s": 0.000666,
+      "qcec_legal_s": 0.178,
+      "qcec_exact_s": 0.167,
+      "cert_s": 0.001087,
       "cert_bytes": 590
     },
     {
@@ -4406,9 +4411,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.179,
-      "qcec_exact_s": 0.154,
-      "cert_s": 0.000717,
+      "qcec_legal_s": 0.221,
+      "qcec_exact_s": 0.158,
+      "cert_s": 0.0008,
       "cert_bytes": 588
     },
     {
@@ -4427,9 +4432,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": true,
-      "qcec_legal_s": 0.179,
-      "qcec_exact_s": 0.174,
-      "cert_s": 0.001055,
+      "qcec_legal_s": 0.182,
+      "qcec_exact_s": 0.19,
+      "cert_s": 0.000713,
       "cert_bytes": 596
     },
     {
@@ -4448,9 +4453,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.203,
-      "qcec_exact_s": 0.161,
-      "cert_s": 0.000985,
+      "qcec_legal_s": 0.228,
+      "qcec_exact_s": 0.191,
+      "cert_s": 0.001005,
       "cert_bytes": 596
     },
     {
@@ -4469,9 +4474,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.186,
-      "qcec_exact_s": 0.16,
-      "cert_s": 0.000621,
+      "qcec_legal_s": 0.181,
+      "qcec_exact_s": 0.156,
+      "cert_s": 0.000841,
       "cert_bytes": 596
     },
     {
@@ -4490,9 +4495,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.195,
-      "qcec_exact_s": 0.156,
-      "cert_s": 0.00092,
+      "qcec_legal_s": 0.181,
+      "qcec_exact_s": 0.185,
+      "cert_s": 0.000794,
       "cert_bytes": 596
     },
     {
@@ -4511,9 +4516,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.203,
-      "qcec_exact_s": 0.159,
-      "cert_s": 0.000783,
+      "qcec_legal_s": 0.212,
+      "qcec_exact_s": 0.207,
+      "cert_s": 0.001063,
       "cert_bytes": 596
     },
     {
@@ -4532,9 +4537,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.19,
-      "qcec_exact_s": 0.173,
-      "cert_s": 0.000639,
+      "qcec_legal_s": 0.179,
+      "qcec_exact_s": 0.165,
+      "cert_s": 0.001025,
       "cert_bytes": 597
     },
     {
@@ -4553,9 +4558,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.206,
-      "qcec_exact_s": 0.161,
-      "cert_s": 0.000917,
+      "qcec_legal_s": 0.205,
+      "qcec_exact_s": 0.168,
+      "cert_s": 0.00071,
       "cert_bytes": 595
     },
     {
@@ -4574,9 +4579,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.218,
-      "qcec_exact_s": 0.17,
-      "cert_s": 0.000702,
+      "qcec_legal_s": 0.181,
+      "qcec_exact_s": 0.177,
+      "cert_s": 0.000897,
       "cert_bytes": 637
     },
     {
@@ -4595,9 +4600,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.215,
-      "qcec_exact_s": 0.18,
-      "cert_s": 0.001037,
+      "qcec_legal_s": 0.191,
+      "qcec_exact_s": 0.19,
+      "cert_s": 0.001201,
       "cert_bytes": 637
     },
     {
@@ -4616,9 +4621,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.213,
-      "qcec_exact_s": 0.174,
-      "cert_s": 0.001065,
+      "qcec_legal_s": 0.196,
+      "qcec_exact_s": 0.221,
+      "cert_s": 0.000699,
       "cert_bytes": 637
     },
     {
@@ -4637,9 +4642,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.186,
+      "qcec_legal_s": 0.184,
       "qcec_exact_s": 0.176,
-      "cert_s": 0.000583,
+      "cert_s": 0.000871,
       "cert_bytes": 637
     },
     {
@@ -4658,9 +4663,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.216,
-      "qcec_exact_s": 0.159,
-      "cert_s": 0.0008,
+      "qcec_legal_s": 0.194,
+      "qcec_exact_s": 0.167,
+      "cert_s": 0.00105,
       "cert_bytes": 637
     },
     {
@@ -4679,9 +4684,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.177,
-      "qcec_exact_s": 0.17,
-      "cert_s": 0.000995,
+      "qcec_legal_s": 0.178,
+      "qcec_exact_s": 0.159,
+      "cert_s": 0.00102,
       "cert_bytes": 636
     },
     {
@@ -4700,9 +4705,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.187,
-      "qcec_exact_s": 0.164,
-      "cert_s": 0.000684,
+      "qcec_legal_s": 0.179,
+      "qcec_exact_s": 0.165,
+      "cert_s": 0.000723,
       "cert_bytes": 595
     },
     {
@@ -4721,9 +4726,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.179,
-      "qcec_exact_s": 0.163,
-      "cert_s": 0.002648,
+      "qcec_legal_s": 0.197,
+      "qcec_exact_s": 0.187,
+      "cert_s": 0.000812,
       "cert_bytes": 640
     },
     {
@@ -4742,9 +4747,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.195,
-      "qcec_exact_s": 0.186,
-      "cert_s": 0.001002,
+      "qcec_legal_s": 0.181,
+      "qcec_exact_s": 0.155,
+      "cert_s": 0.000925,
       "cert_bytes": 640
     },
     {
@@ -4763,9 +4768,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.187,
-      "qcec_exact_s": 0.169,
-      "cert_s": 0.000708,
+      "qcec_legal_s": 0.178,
+      "qcec_exact_s": 0.168,
+      "cert_s": 0.000693,
       "cert_bytes": 640
     },
     {
@@ -4784,9 +4789,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.183,
-      "qcec_exact_s": 0.159,
-      "cert_s": 0.000841,
+      "qcec_legal_s": 0.177,
+      "qcec_exact_s": 0.158,
+      "cert_s": 0.000721,
       "cert_bytes": 640
     },
     {
@@ -4805,9 +4810,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.235,
-      "qcec_exact_s": 0.161,
-      "cert_s": 0.001071,
+      "qcec_legal_s": 0.18,
+      "qcec_exact_s": 0.166,
+      "cert_s": 0.001068,
       "cert_bytes": 640
     },
     {
@@ -4826,9 +4831,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.186,
-      "qcec_exact_s": 0.173,
-      "cert_s": 0.000602,
+      "qcec_legal_s": 0.177,
+      "qcec_exact_s": 0.157,
+      "cert_s": 0.00101,
       "cert_bytes": 639
     },
     {
@@ -4847,9 +4852,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.233,
-      "qcec_exact_s": 0.165,
-      "cert_s": 0.000714,
+      "qcec_legal_s": 0.179,
+      "qcec_exact_s": 0.159,
+      "cert_s": 0.002711,
       "cert_bytes": 627
     },
     {
@@ -4868,9 +4873,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": true,
-      "qcec_legal_s": 0.223,
-      "qcec_exact_s": 0.163,
-      "cert_s": 0.001264,
+      "qcec_legal_s": 0.237,
+      "qcec_exact_s": 0.171,
+      "cert_s": 0.001309,
       "cert_bytes": 670
     },
     {
@@ -4889,9 +4894,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.217,
-      "qcec_exact_s": 0.181,
-      "cert_s": 0.001025,
+      "qcec_legal_s": 0.24,
+      "qcec_exact_s": 0.166,
+      "cert_s": 0.001007,
       "cert_bytes": 670
     },
     {
@@ -4910,9 +4915,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.239,
-      "qcec_exact_s": 0.169,
-      "cert_s": 0.001083,
+      "qcec_legal_s": 0.213,
+      "qcec_exact_s": 0.173,
+      "cert_s": 0.001149,
       "cert_bytes": 670
     },
     {
@@ -4931,9 +4936,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.212,
-      "qcec_exact_s": 0.174,
-      "cert_s": 0.000959,
+      "qcec_legal_s": 0.271,
+      "qcec_exact_s": 0.179,
+      "cert_s": 0.001105,
       "cert_bytes": 670
     },
     {
@@ -4952,9 +4957,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.221,
-      "qcec_exact_s": 0.169,
-      "cert_s": 0.001268,
+      "qcec_legal_s": 0.235,
+      "qcec_exact_s": 0.185,
+      "cert_s": 0.001083,
       "cert_bytes": 670
     },
     {
@@ -4967,15 +4972,15 @@
       "qubits": 10,
       "ground_truth": "certificate.accepted flipped",
       "truth_L": true,
-      "truth_S": false,
+      "truth_S": null,
       "dense_legal": null,
       "dense_exact": null,
       "qcec_legal": true,
-      "qcec_exact": false,
+      "qcec_exact": null,
       "cert_ok": false,
-      "qcec_legal_s": 0.234,
-      "qcec_exact_s": 0.185,
-      "cert_s": 0.00144,
+      "qcec_legal_s": 0.225,
+      "qcec_exact_s": 0.212,
+      "cert_s": 0.001068,
       "cert_bytes": 671
     },
     {
@@ -4994,9 +4999,9 @@
       "qcec_legal": true,
       "qcec_exact": null,
       "cert_ok": false,
-      "qcec_legal_s": 0.21,
-      "qcec_exact_s": 0.193,
-      "cert_s": 0.001487,
+      "qcec_legal_s": 0.224,
+      "qcec_exact_s": 0.186,
+      "cert_s": 0.001346,
       "cert_bytes": 667
     },
     {
@@ -5015,9 +5020,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": true,
-      "qcec_legal_s": 0.214,
-      "qcec_exact_s": 0.17,
-      "cert_s": 0.001495,
+      "qcec_legal_s": 0.247,
+      "qcec_exact_s": 0.201,
+      "cert_s": 0.001457,
       "cert_bytes": 670
     },
     {
@@ -5036,9 +5041,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.221,
-      "qcec_exact_s": 0.22,
-      "cert_s": 0.002035,
+      "qcec_legal_s": 0.255,
+      "qcec_exact_s": 0.2,
+      "cert_s": 0.002156,
       "cert_bytes": 670
     },
     {
@@ -5057,9 +5062,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.269,
-      "qcec_exact_s": 0.173,
-      "cert_s": 0.001649,
+      "qcec_legal_s": 0.247,
+      "qcec_exact_s": 0.203,
+      "cert_s": 0.001458,
       "cert_bytes": 670
     },
     {
@@ -5078,9 +5083,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.21,
-      "qcec_exact_s": 0.165,
-      "cert_s": 0.001372,
+      "qcec_legal_s": 0.228,
+      "qcec_exact_s": 0.169,
+      "cert_s": 0.001407,
       "cert_bytes": 670
     },
     {
@@ -5099,9 +5104,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.219,
-      "qcec_exact_s": 0.171,
-      "cert_s": 0.001315,
+      "qcec_legal_s": 0.258,
+      "qcec_exact_s": 0.186,
+      "cert_s": 0.001709,
       "cert_bytes": 670
     },
     {
@@ -5114,15 +5119,15 @@
       "qubits": 10,
       "ground_truth": "certificate.accepted flipped",
       "truth_L": true,
-      "truth_S": false,
+      "truth_S": null,
       "dense_legal": null,
       "dense_exact": null,
       "qcec_legal": true,
-      "qcec_exact": false,
+      "qcec_exact": null,
       "cert_ok": false,
-      "qcec_legal_s": 0.238,
-      "qcec_exact_s": 0.18,
-      "cert_s": 0.001663,
+      "qcec_legal_s": 0.216,
+      "qcec_exact_s": 0.164,
+      "cert_s": 0.001369,
       "cert_bytes": 671
     },
     {
@@ -5135,15 +5140,15 @@
       "qubits": 10,
       "ground_truth": "certificate replayed from a different mask",
       "truth_L": true,
-      "truth_S": false,
+      "truth_S": null,
       "dense_legal": null,
       "dense_exact": null,
       "qcec_legal": true,
-      "qcec_exact": false,
+      "qcec_exact": null,
       "cert_ok": false,
-      "qcec_legal_s": 0.214,
+      "qcec_legal_s": 0.234,
       "qcec_exact_s": 0.183,
-      "cert_s": 0.001606,
+      "cert_s": 0.001318,
       "cert_bytes": 667
     },
     {
@@ -5163,8 +5168,8 @@
       "qcec_exact": null,
       "cert_ok": true,
       "qcec_legal_s": 0.227,
-      "qcec_exact_s": 0.176,
-      "cert_s": 0.001347,
+      "qcec_exact_s": 0.191,
+      "cert_s": 0.001417,
       "cert_bytes": 670
     },
     {
@@ -5183,9 +5188,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.264,
-      "qcec_exact_s": 0.195,
-      "cert_s": 0.001671,
+      "qcec_legal_s": 0.222,
+      "qcec_exact_s": 0.177,
+      "cert_s": 0.001624,
       "cert_bytes": 670
     },
     {
@@ -5204,9 +5209,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.256,
-      "qcec_exact_s": 0.208,
-      "cert_s": 0.001471,
+      "qcec_legal_s": 0.257,
+      "qcec_exact_s": 0.177,
+      "cert_s": 0.001408,
       "cert_bytes": 670
     },
     {
@@ -5225,9 +5230,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.212,
-      "qcec_exact_s": 0.19,
-      "cert_s": 0.001619,
+      "qcec_legal_s": 0.221,
+      "qcec_exact_s": 0.217,
+      "cert_s": 0.001491,
       "cert_bytes": 670
     },
     {
@@ -5246,9 +5251,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.238,
-      "qcec_exact_s": 0.182,
-      "cert_s": 0.001469,
+      "qcec_legal_s": 0.222,
+      "qcec_exact_s": 0.184,
+      "cert_s": 0.001294,
       "cert_bytes": 670
     },
     {
@@ -5261,15 +5266,15 @@
       "qubits": 10,
       "ground_truth": "certificate.accepted flipped",
       "truth_L": true,
-      "truth_S": false,
+      "truth_S": null,
       "dense_legal": null,
       "dense_exact": null,
       "qcec_legal": true,
-      "qcec_exact": false,
+      "qcec_exact": null,
       "cert_ok": false,
-      "qcec_legal_s": 0.218,
-      "qcec_exact_s": 0.183,
-      "cert_s": 0.001592,
+      "qcec_legal_s": 0.26,
+      "qcec_exact_s": 0.189,
+      "cert_s": 0.001384,
       "cert_bytes": 671
     },
     {
@@ -5288,9 +5293,9 @@
       "qcec_legal": true,
       "qcec_exact": null,
       "cert_ok": false,
-      "qcec_legal_s": 0.215,
-      "qcec_exact_s": 0.189,
-      "cert_s": 0.001237,
+      "qcec_legal_s": 0.207,
+      "qcec_exact_s": 0.167,
+      "cert_s": 0.001452,
       "cert_bytes": 667
     },
     {
@@ -5303,15 +5308,15 @@
       "qubits": 10,
       "ground_truth": "none",
       "truth_L": true,
-      "truth_S": false,
+      "truth_S": null,
       "dense_legal": null,
       "dense_exact": null,
       "qcec_legal": true,
-      "qcec_exact": false,
+      "qcec_exact": null,
       "cert_ok": true,
-      "qcec_legal_s": 0.232,
-      "qcec_exact_s": 0.191,
-      "cert_s": 0.001676,
+      "qcec_legal_s": 0.249,
+      "qcec_exact_s": 0.185,
+      "cert_s": 0.001354,
       "cert_bytes": 670
     },
     {
@@ -5330,9 +5335,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.217,
-      "qcec_exact_s": 0.199,
-      "cert_s": 0.001459,
+      "qcec_legal_s": 0.211,
+      "qcec_exact_s": 0.164,
+      "cert_s": 0.001482,
       "cert_bytes": 670
     },
     {
@@ -5351,9 +5356,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.228,
-      "qcec_exact_s": 0.199,
-      "cert_s": 0.001245,
+      "qcec_legal_s": 0.225,
+      "qcec_exact_s": 0.188,
+      "cert_s": 0.001918,
       "cert_bytes": 670
     },
     {
@@ -5372,9 +5377,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.217,
-      "qcec_exact_s": 0.167,
-      "cert_s": 0.001344,
+      "qcec_legal_s": 0.232,
+      "qcec_exact_s": 0.2,
+      "cert_s": 0.001331,
       "cert_bytes": 670
     },
     {
@@ -5393,9 +5398,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.248,
-      "qcec_exact_s": 0.221,
-      "cert_s": 0.001575,
+      "qcec_legal_s": 0.22,
+      "qcec_exact_s": 0.215,
+      "cert_s": 0.001497,
       "cert_bytes": 670
     },
     {
@@ -5408,15 +5413,15 @@
       "qubits": 10,
       "ground_truth": "certificate.accepted flipped",
       "truth_L": true,
-      "truth_S": false,
+      "truth_S": null,
       "dense_legal": null,
       "dense_exact": null,
       "qcec_legal": true,
-      "qcec_exact": false,
+      "qcec_exact": null,
       "cert_ok": false,
-      "qcec_legal_s": 0.219,
-      "qcec_exact_s": 0.181,
-      "cert_s": 0.001283,
+      "qcec_legal_s": 0.22,
+      "qcec_exact_s": 0.162,
+      "cert_s": 0.001269,
       "cert_bytes": 671
     },
     {
@@ -5429,15 +5434,15 @@
       "qubits": 10,
       "ground_truth": "certificate replayed from a different mask",
       "truth_L": true,
-      "truth_S": false,
+      "truth_S": null,
       "dense_legal": null,
       "dense_exact": null,
       "qcec_legal": true,
-      "qcec_exact": false,
+      "qcec_exact": null,
       "cert_ok": false,
-      "qcec_legal_s": 0.224,
-      "qcec_exact_s": 0.195,
-      "cert_s": 0.001332,
+      "qcec_legal_s": 0.222,
+      "qcec_exact_s": 0.189,
+      "cert_s": 0.001433,
       "cert_bytes": 667
     },
     {
@@ -5457,8 +5462,8 @@
       "qcec_exact": false,
       "cert_ok": true,
       "qcec_legal_s": 0.211,
-      "qcec_exact_s": 0.177,
-      "cert_s": 0.001315,
+      "qcec_exact_s": 0.171,
+      "cert_s": 0.001408,
       "cert_bytes": 745
     },
     {
@@ -5477,9 +5482,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.219,
-      "qcec_exact_s": 0.18,
-      "cert_s": 0.001215,
+      "qcec_legal_s": 0.217,
+      "qcec_exact_s": 0.187,
+      "cert_s": 0.001448,
       "cert_bytes": 745
     },
     {
@@ -5498,9 +5503,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.27,
-      "qcec_exact_s": 0.194,
-      "cert_s": 0.001324,
+      "qcec_legal_s": 0.242,
+      "qcec_exact_s": 0.157,
+      "cert_s": 0.001482,
       "cert_bytes": 745
     },
     {
@@ -5519,9 +5524,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.237,
-      "qcec_exact_s": 0.192,
-      "cert_s": 0.001609,
+      "qcec_legal_s": 0.22,
+      "qcec_exact_s": 0.174,
+      "cert_s": 0.001389,
       "cert_bytes": 745
     },
     {
@@ -5540,9 +5545,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.222,
-      "qcec_exact_s": 0.179,
-      "cert_s": 0.001427,
+      "qcec_legal_s": 0.227,
+      "qcec_exact_s": 0.185,
+      "cert_s": 0.001573,
       "cert_bytes": 745
     },
     {
@@ -5561,9 +5566,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.21,
-      "qcec_exact_s": 0.163,
-      "cert_s": 0.00129,
+      "qcec_legal_s": 0.234,
+      "qcec_exact_s": 0.204,
+      "cert_s": 0.002617,
       "cert_bytes": 746
     },
     {
@@ -5582,9 +5587,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.227,
-      "qcec_exact_s": 0.168,
-      "cert_s": 0.001361,
+      "qcec_legal_s": 0.281,
+      "qcec_exact_s": 0.189,
+      "cert_s": 0.001468,
       "cert_bytes": 742
     },
     {
@@ -5603,9 +5608,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": true,
-      "qcec_legal_s": 0.221,
-      "qcec_exact_s": 0.164,
-      "cert_s": 0.001353,
+      "qcec_legal_s": 0.237,
+      "qcec_exact_s": 0.162,
+      "cert_s": 0.001386,
       "cert_bytes": 752
     },
     {
@@ -5624,9 +5629,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.211,
-      "qcec_exact_s": 0.186,
-      "cert_s": 0.001404,
+      "qcec_legal_s": 0.266,
+      "qcec_exact_s": 0.162,
+      "cert_s": 0.001549,
       "cert_bytes": 752
     },
     {
@@ -5645,9 +5650,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.232,
-      "qcec_exact_s": 0.179,
-      "cert_s": 0.001561,
+      "qcec_legal_s": 0.214,
+      "qcec_exact_s": 0.162,
+      "cert_s": 0.001294,
       "cert_bytes": 752
     },
     {
@@ -5666,9 +5671,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.216,
-      "qcec_exact_s": 0.192,
-      "cert_s": 0.001426,
+      "qcec_legal_s": 0.225,
+      "qcec_exact_s": 0.19,
+      "cert_s": 0.001527,
       "cert_bytes": 752
     },
     {
@@ -5687,9 +5692,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.223,
-      "qcec_exact_s": 0.169,
-      "cert_s": 0.002785,
+      "qcec_legal_s": 0.225,
+      "qcec_exact_s": 0.195,
+      "cert_s": 0.001616,
       "cert_bytes": 752
     },
     {
@@ -5708,9 +5713,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.263,
-      "qcec_exact_s": 0.189,
-      "cert_s": 0.001344,
+      "qcec_legal_s": 0.297,
+      "qcec_exact_s": 0.186,
+      "cert_s": 0.001302,
       "cert_bytes": 753
     },
     {
@@ -5729,9 +5734,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.21,
-      "qcec_exact_s": 0.16,
-      "cert_s": 0.001585,
+      "qcec_legal_s": 0.213,
+      "qcec_exact_s": 0.211,
+      "cert_s": 0.00138,
       "cert_bytes": 749
     },
     {
@@ -5750,9 +5755,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.217,
-      "qcec_exact_s": 0.165,
-      "cert_s": 0.001337,
+      "qcec_legal_s": 0.212,
+      "qcec_exact_s": 0.171,
+      "cert_s": 0.001579,
       "cert_bytes": 793
     },
     {
@@ -5771,9 +5776,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.239,
-      "qcec_exact_s": 0.172,
-      "cert_s": 0.001367,
+      "qcec_legal_s": 0.233,
+      "qcec_exact_s": 0.178,
+      "cert_s": 0.001288,
       "cert_bytes": 793
     },
     {
@@ -5792,9 +5797,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.244,
-      "qcec_exact_s": 0.182,
-      "cert_s": 0.001556,
+      "qcec_legal_s": 0.241,
+      "qcec_exact_s": 0.197,
+      "cert_s": 0.001377,
       "cert_bytes": 793
     },
     {
@@ -5813,9 +5818,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.235,
-      "qcec_exact_s": 0.181,
-      "cert_s": 0.001396,
+      "qcec_legal_s": 0.257,
+      "qcec_exact_s": 0.165,
+      "cert_s": 0.001448,
       "cert_bytes": 793
     },
     {
@@ -5834,9 +5839,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.253,
-      "qcec_exact_s": 0.211,
-      "cert_s": 0.001722,
+      "qcec_legal_s": 0.219,
+      "qcec_exact_s": 0.177,
+      "cert_s": 0.001496,
       "cert_bytes": 793
     },
     {
@@ -5855,9 +5860,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.214,
-      "qcec_exact_s": 0.176,
-      "cert_s": 0.001545,
+      "qcec_legal_s": 0.222,
+      "qcec_exact_s": 0.181,
+      "cert_s": 0.001466,
       "cert_bytes": 792
     },
     {
@@ -5876,9 +5881,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.209,
-      "qcec_exact_s": 0.181,
-      "cert_s": 0.001391,
+      "qcec_legal_s": 0.207,
+      "qcec_exact_s": 0.17,
+      "cert_s": 0.001606,
       "cert_bytes": 749
     },
     {
@@ -5897,9 +5902,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": true,
-      "qcec_legal_s": 0.225,
-      "qcec_exact_s": 0.167,
-      "cert_s": 0.001489,
+      "qcec_legal_s": 0.207,
+      "qcec_exact_s": 0.16,
+      "cert_s": 0.001366,
       "cert_bytes": 764
     },
     {
@@ -5918,9 +5923,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.211,
-      "qcec_exact_s": 0.189,
-      "cert_s": 0.002151,
+      "qcec_legal_s": 0.24,
+      "qcec_exact_s": 0.201,
+      "cert_s": 0.004617,
       "cert_bytes": 764
     },
     {
@@ -5939,9 +5944,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.243,
-      "qcec_exact_s": 0.205,
-      "cert_s": 0.001361,
+      "qcec_legal_s": 0.235,
+      "qcec_exact_s": 0.185,
+      "cert_s": 0.002973,
       "cert_bytes": 764
     },
     {
@@ -5960,9 +5965,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.221,
-      "qcec_exact_s": 0.175,
-      "cert_s": 0.001385,
+      "qcec_legal_s": 0.215,
+      "qcec_exact_s": 0.166,
+      "cert_s": 0.001712,
       "cert_bytes": 764
     },
     {
@@ -5981,9 +5986,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.234,
-      "qcec_exact_s": 0.176,
-      "cert_s": 0.001491,
+      "qcec_legal_s": 0.221,
+      "qcec_exact_s": 0.182,
+      "cert_s": 0.002824,
       "cert_bytes": 764
     },
     {
@@ -6002,9 +6007,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.216,
-      "qcec_exact_s": 0.162,
-      "cert_s": 0.001497,
+      "qcec_legal_s": 0.214,
+      "qcec_exact_s": 0.169,
+      "cert_s": 0.002524,
       "cert_bytes": 765
     },
     {
@@ -6023,9 +6028,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.213,
-      "qcec_exact_s": 0.17,
-      "cert_s": 0.001338,
+      "qcec_legal_s": 0.258,
+      "qcec_exact_s": 0.178,
+      "cert_s": 0.001386,
       "cert_bytes": 749
     },
     {
@@ -6044,9 +6049,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": true,
-      "qcec_legal_s": 0.169,
-      "qcec_exact_s": 0.161,
-      "cert_s": 0.000452,
+      "qcec_legal_s": 0.182,
+      "qcec_exact_s": 0.162,
+      "cert_s": 0.000463,
       "cert_bytes": 399
     },
     {
@@ -6065,9 +6070,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.182,
-      "qcec_exact_s": 0.163,
-      "cert_s": 0.000446,
+      "qcec_legal_s": 0.165,
+      "qcec_exact_s": 0.176,
+      "cert_s": 0.001551,
       "cert_bytes": 399
     },
     {
@@ -6086,9 +6091,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.192,
-      "qcec_exact_s": 0.155,
-      "cert_s": 0.000494,
+      "qcec_legal_s": 0.175,
+      "qcec_exact_s": 0.157,
+      "cert_s": 0.000438,
       "cert_bytes": 399
     },
     {
@@ -6107,9 +6112,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.202,
-      "qcec_exact_s": 0.171,
-      "cert_s": 0.000492,
+      "qcec_legal_s": 0.171,
+      "qcec_exact_s": 0.155,
+      "cert_s": 0.000469,
       "cert_bytes": 399
     },
     {
@@ -6128,9 +6133,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.186,
-      "qcec_exact_s": 0.165,
-      "cert_s": 0.000542,
+      "qcec_legal_s": 0.171,
+      "qcec_exact_s": 0.152,
+      "cert_s": 0.000661,
       "cert_bytes": 399
     },
     {
@@ -6149,9 +6154,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.168,
-      "qcec_exact_s": 0.189,
-      "cert_s": 0.00069,
+      "qcec_legal_s": 0.225,
+      "qcec_exact_s": 0.156,
+      "cert_s": 0.000522,
       "cert_bytes": 400
     },
     {
@@ -6170,9 +6175,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.19,
-      "qcec_exact_s": 0.164,
-      "cert_s": 0.000544,
+      "qcec_legal_s": 0.179,
+      "qcec_exact_s": 0.161,
+      "cert_s": 0.000536,
       "cert_bytes": 393
     },
     {
@@ -6191,9 +6196,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": true,
-      "qcec_legal_s": 0.171,
-      "qcec_exact_s": 0.155,
-      "cert_s": 0.00051,
+      "qcec_legal_s": 0.163,
+      "qcec_exact_s": 0.15,
+      "cert_s": 0.000551,
       "cert_bytes": 399
     },
     {
@@ -6212,9 +6217,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.208,
-      "qcec_exact_s": 0.169,
-      "cert_s": 0.000481,
+      "qcec_legal_s": 0.165,
+      "qcec_exact_s": 0.175,
+      "cert_s": 0.000674,
       "cert_bytes": 399
     },
     {
@@ -6233,8 +6238,8 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.168,
-      "qcec_exact_s": 0.158,
+      "qcec_legal_s": 0.192,
+      "qcec_exact_s": 0.166,
       "cert_s": 0.000462,
       "cert_bytes": 399
     },
@@ -6254,9 +6259,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.186,
-      "qcec_exact_s": 0.184,
-      "cert_s": 0.000658,
+      "qcec_legal_s": 0.163,
+      "qcec_exact_s": 0.151,
+      "cert_s": 0.00077,
       "cert_bytes": 399
     },
     {
@@ -6275,9 +6280,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.172,
-      "qcec_exact_s": 0.178,
-      "cert_s": 0.000583,
+      "qcec_legal_s": 0.174,
+      "qcec_exact_s": 0.155,
+      "cert_s": 0.000682,
       "cert_bytes": 399
     },
     {
@@ -6296,9 +6301,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.17,
-      "qcec_exact_s": 0.158,
-      "cert_s": 0.000477,
+      "qcec_legal_s": 0.208,
+      "qcec_exact_s": 0.157,
+      "cert_s": 0.000561,
       "cert_bytes": 400
     },
     {
@@ -6317,9 +6322,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.168,
-      "qcec_exact_s": 0.174,
-      "cert_s": 0.000436,
+      "qcec_legal_s": 0.185,
+      "qcec_exact_s": 0.149,
+      "cert_s": 0.000473,
       "cert_bytes": 393
     },
     {
@@ -6336,11 +6341,11 @@
       "dense_legal": true,
       "dense_exact": false,
       "qcec_legal": true,
-      "qcec_exact": false,
+      "qcec_exact": null,
       "cert_ok": true,
-      "qcec_legal_s": 0.166,
-      "qcec_exact_s": 0.174,
-      "cert_s": 0.00046,
+      "qcec_legal_s": 0.232,
+      "qcec_exact_s": 0.191,
+      "cert_s": 0.000619,
       "cert_bytes": 399
     },
     {
@@ -6359,9 +6364,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.169,
-      "qcec_exact_s": 0.149,
-      "cert_s": 0.000569,
+      "qcec_legal_s": 0.166,
+      "qcec_exact_s": 0.147,
+      "cert_s": 0.000545,
       "cert_bytes": 399
     },
     {
@@ -6380,9 +6385,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.181,
-      "qcec_exact_s": 0.17,
-      "cert_s": 0.001021,
+      "qcec_legal_s": 0.164,
+      "qcec_exact_s": 0.157,
+      "cert_s": 0.00056,
       "cert_bytes": 399
     },
     {
@@ -6401,9 +6406,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.172,
-      "qcec_exact_s": 0.156,
-      "cert_s": 0.000497,
+      "qcec_legal_s": 0.208,
+      "qcec_exact_s": 0.161,
+      "cert_s": 0.00054,
       "cert_bytes": 399
     },
     {
@@ -6422,9 +6427,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.181,
-      "qcec_exact_s": 0.177,
-      "cert_s": 0.000924,
+      "qcec_legal_s": 0.167,
+      "qcec_exact_s": 0.167,
+      "cert_s": 0.000514,
       "cert_bytes": 399
     },
     {
@@ -6443,9 +6448,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.184,
-      "qcec_exact_s": 0.167,
-      "cert_s": 0.00045,
+      "qcec_legal_s": 0.225,
+      "qcec_exact_s": 0.16,
+      "cert_s": 0.000846,
       "cert_bytes": 400
     },
     {
@@ -6464,9 +6469,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.178,
-      "qcec_exact_s": 0.164,
-      "cert_s": 0.00049,
+      "qcec_legal_s": 0.173,
+      "qcec_exact_s": 0.156,
+      "cert_s": 0.000613,
       "cert_bytes": 393
     },
     {
@@ -6485,9 +6490,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": true,
-      "qcec_legal_s": 0.179,
-      "qcec_exact_s": 0.171,
-      "cert_s": 0.000443,
+      "qcec_legal_s": 0.164,
+      "qcec_exact_s": 0.149,
+      "cert_s": 0.000477,
       "cert_bytes": 399
     },
     {
@@ -6506,9 +6511,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.181,
-      "qcec_exact_s": 0.174,
-      "cert_s": 0.002183,
+      "qcec_legal_s": 0.165,
+      "qcec_exact_s": 0.2,
+      "cert_s": 0.000475,
       "cert_bytes": 399
     },
     {
@@ -6527,9 +6532,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.175,
-      "qcec_exact_s": 0.151,
-      "cert_s": 0.000391,
+      "qcec_legal_s": 0.169,
+      "qcec_exact_s": 0.15,
+      "cert_s": 0.000518,
       "cert_bytes": 399
     },
     {
@@ -6548,9 +6553,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.169,
-      "qcec_exact_s": 0.21,
-      "cert_s": 0.000734,
+      "qcec_legal_s": 0.199,
+      "qcec_exact_s": 0.165,
+      "cert_s": 0.00049,
       "cert_bytes": 399
     },
     {
@@ -6569,9 +6574,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.221,
-      "qcec_exact_s": 0.176,
-      "cert_s": 0.000541,
+      "qcec_legal_s": 0.179,
+      "qcec_exact_s": 0.169,
+      "cert_s": 0.000511,
       "cert_bytes": 399
     },
     {
@@ -6590,8 +6595,8 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.171,
-      "qcec_exact_s": 0.149,
+      "qcec_legal_s": 0.229,
+      "qcec_exact_s": 0.161,
       "cert_s": 0.000477,
       "cert_bytes": 400
     },
@@ -6611,9 +6616,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.166,
-      "qcec_exact_s": 0.154,
-      "cert_s": 0.000458,
+      "qcec_legal_s": 0.169,
+      "qcec_exact_s": 0.201,
+      "cert_s": 0.000635,
       "cert_bytes": 393
     },
     {
@@ -6632,9 +6637,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": true,
-      "qcec_legal_s": 0.167,
-      "qcec_exact_s": 0.157,
-      "cert_s": 0.000473,
+      "qcec_legal_s": 0.164,
+      "qcec_exact_s": 0.147,
+      "cert_s": 0.000832,
       "cert_bytes": 474
     },
     {
@@ -6653,9 +6658,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.167,
-      "qcec_exact_s": 0.159,
-      "cert_s": 0.000543,
+      "qcec_legal_s": 0.191,
+      "qcec_exact_s": 0.156,
+      "cert_s": 0.000581,
       "cert_bytes": 474
     },
     {
@@ -6674,9 +6679,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.169,
-      "qcec_exact_s": 0.163,
-      "cert_s": 0.000469,
+      "qcec_legal_s": 0.166,
+      "qcec_exact_s": 0.227,
+      "cert_s": 0.000555,
       "cert_bytes": 474
     },
     {
@@ -6695,9 +6700,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.187,
-      "qcec_exact_s": 0.188,
-      "cert_s": 0.000629,
+      "qcec_legal_s": 0.19,
+      "qcec_exact_s": 0.151,
+      "cert_s": 0.000483,
       "cert_bytes": 474
     },
     {
@@ -6716,9 +6721,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.172,
-      "qcec_exact_s": 0.153,
-      "cert_s": 0.000705,
+      "qcec_legal_s": 0.166,
+      "qcec_exact_s": 0.157,
+      "cert_s": 0.000629,
       "cert_bytes": 474
     },
     {
@@ -6737,9 +6742,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.166,
-      "qcec_exact_s": 0.155,
-      "cert_s": 0.000473,
+      "qcec_legal_s": 0.217,
+      "qcec_exact_s": 0.156,
+      "cert_s": 0.000514,
       "cert_bytes": 475
     },
     {
@@ -6758,9 +6763,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.183,
-      "qcec_exact_s": 0.163,
-      "cert_s": 0.000535,
+      "qcec_legal_s": 0.168,
+      "qcec_exact_s": 0.152,
+      "cert_s": 0.000552,
       "cert_bytes": 468
     },
     {
@@ -6779,9 +6784,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": true,
-      "qcec_legal_s": 0.166,
+      "qcec_legal_s": 0.162,
       "qcec_exact_s": 0.15,
-      "cert_s": 0.000824,
+      "cert_s": 0.000398,
       "cert_bytes": 481
     },
     {
@@ -6800,9 +6805,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.164,
-      "qcec_exact_s": 0.154,
-      "cert_s": 0.000458,
+      "qcec_legal_s": 0.185,
+      "qcec_exact_s": 0.15,
+      "cert_s": 0.000457,
       "cert_bytes": 481
     },
     {
@@ -6821,9 +6826,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.164,
-      "qcec_exact_s": 0.173,
-      "cert_s": 0.00051,
+      "qcec_legal_s": 0.162,
+      "qcec_exact_s": 0.149,
+      "cert_s": 0.00054,
       "cert_bytes": 481
     },
     {
@@ -6842,9 +6847,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.21,
-      "qcec_exact_s": 0.157,
-      "cert_s": 0.000505,
+      "qcec_legal_s": 0.207,
+      "qcec_exact_s": 0.176,
+      "cert_s": 0.000456,
       "cert_bytes": 481
     },
     {
@@ -6863,9 +6868,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.189,
-      "qcec_exact_s": 0.154,
-      "cert_s": 0.000571,
+      "qcec_legal_s": 0.17,
+      "qcec_exact_s": 0.163,
+      "cert_s": 0.000856,
       "cert_bytes": 481
     },
     {
@@ -6884,9 +6889,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.165,
-      "qcec_exact_s": 0.171,
-      "cert_s": 0.000521,
+      "qcec_legal_s": 0.226,
+      "qcec_exact_s": 0.167,
+      "cert_s": 0.000632,
       "cert_bytes": 482
     },
     {
@@ -6905,9 +6910,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.178,
-      "qcec_exact_s": 0.158,
-      "cert_s": 0.000472,
+      "qcec_legal_s": 0.196,
+      "qcec_exact_s": 0.185,
+      "cert_s": 0.000457,
       "cert_bytes": 475
     },
     {
@@ -6926,9 +6931,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.166,
-      "qcec_exact_s": 0.171,
-      "cert_s": 0.001674,
+      "qcec_legal_s": 0.165,
+      "qcec_exact_s": 0.152,
+      "cert_s": 0.000492,
       "cert_bytes": 519
     },
     {
@@ -6947,9 +6952,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.165,
-      "qcec_exact_s": 0.153,
-      "cert_s": 0.000696,
+      "qcec_legal_s": 0.191,
+      "qcec_exact_s": 0.155,
+      "cert_s": 0.000458,
       "cert_bytes": 519
     },
     {
@@ -6968,9 +6973,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.181,
-      "qcec_exact_s": 0.156,
-      "cert_s": 0.000445,
+      "qcec_legal_s": 0.194,
+      "qcec_exact_s": 0.184,
+      "cert_s": 0.000573,
       "cert_bytes": 519
     },
     {
@@ -6989,9 +6994,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.167,
-      "qcec_exact_s": 0.172,
-      "cert_s": 0.000422,
+      "qcec_legal_s": 0.164,
+      "qcec_exact_s": 0.18,
+      "cert_s": 0.000566,
       "cert_bytes": 519
     },
     {
@@ -7010,9 +7015,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.182,
-      "qcec_exact_s": 0.168,
-      "cert_s": 0.000893,
+      "qcec_legal_s": 0.17,
+      "qcec_exact_s": 0.182,
+      "cert_s": 0.000494,
       "cert_bytes": 519
     },
     {
@@ -7031,9 +7036,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.17,
-      "qcec_exact_s": 0.16,
-      "cert_s": 0.00049,
+      "qcec_legal_s": 0.22,
+      "qcec_exact_s": 0.152,
+      "cert_s": 0.000581,
       "cert_bytes": 518
     },
     {
@@ -7052,9 +7057,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.172,
-      "qcec_exact_s": 0.159,
-      "cert_s": 0.000939,
+      "qcec_legal_s": 0.177,
+      "qcec_exact_s": 0.163,
+      "cert_s": 0.000758,
       "cert_bytes": 507
     },
     {
@@ -7073,9 +7078,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": true,
-      "qcec_legal_s": 0.183,
-      "qcec_exact_s": 0.182,
-      "cert_s": 0.00059,
+      "qcec_legal_s": 0.166,
+      "qcec_exact_s": 0.156,
+      "cert_s": 0.000627,
       "cert_bytes": 474
     },
     {
@@ -7095,8 +7100,8 @@
       "qcec_exact": false,
       "cert_ok": false,
       "qcec_legal_s": 0.169,
-      "qcec_exact_s": 0.16,
-      "cert_s": 0.000471,
+      "qcec_exact_s": 0.146,
+      "cert_s": 0.000468,
       "cert_bytes": 474
     },
     {
@@ -7115,9 +7120,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.168,
-      "qcec_exact_s": 0.155,
-      "cert_s": 0.000501,
+      "qcec_legal_s": 0.173,
+      "qcec_exact_s": 0.166,
+      "cert_s": 0.000473,
       "cert_bytes": 474
     },
     {
@@ -7136,9 +7141,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.166,
-      "qcec_exact_s": 0.167,
-      "cert_s": 0.000482,
+      "qcec_legal_s": 0.167,
+      "qcec_exact_s": 0.172,
+      "cert_s": 0.000504,
       "cert_bytes": 474
     },
     {
@@ -7157,9 +7162,9 @@
       "qcec_legal": false,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.169,
-      "qcec_exact_s": 0.161,
-      "cert_s": 0.000522,
+      "qcec_legal_s": 0.167,
+      "qcec_exact_s": 0.168,
+      "cert_s": 0.000602,
       "cert_bytes": 474
     },
     {
@@ -7178,9 +7183,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.166,
-      "qcec_exact_s": 0.177,
-      "cert_s": 0.000742,
+      "qcec_legal_s": 0.215,
+      "qcec_exact_s": 0.152,
+      "cert_s": 0.000599,
       "cert_bytes": 475
     },
     {
@@ -7200,8 +7205,8 @@
       "qcec_exact": false,
       "cert_ok": false,
       "qcec_legal_s": 0.17,
-      "qcec_exact_s": 0.162,
-      "cert_s": 0.00047,
+      "qcec_exact_s": 0.178,
+      "cert_s": 0.000536,
       "cert_bytes": 468
     },
     {
@@ -7222,7 +7227,7 @@
       "cert_ok": false,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.005088,
+      "cert_s": 0.004473,
       "cert_bytes": null
     },
     {
@@ -7243,7 +7248,7 @@
       "cert_ok": false,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004932,
+      "cert_s": 0.004787,
       "cert_bytes": null
     },
     {
@@ -7264,7 +7269,7 @@
       "cert_ok": false,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004562,
+      "cert_s": 0.004979,
       "cert_bytes": null
     },
     {
@@ -7285,7 +7290,7 @@
       "cert_ok": false,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004326,
+      "cert_s": 0.004909,
       "cert_bytes": null
     },
     {
@@ -7306,7 +7311,7 @@
       "cert_ok": false,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004329,
+      "cert_s": 0.00437,
       "cert_bytes": null
     },
     {
@@ -7327,7 +7332,7 @@
       "cert_ok": false,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004277,
+      "cert_s": 0.004412,
       "cert_bytes": null
     },
     {
@@ -7348,7 +7353,7 @@
       "cert_ok": false,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.00448,
+      "cert_s": 0.004215,
       "cert_bytes": null
     },
     {
@@ -7369,7 +7374,7 @@
       "cert_ok": false,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004515,
+      "cert_s": 0.004051,
       "cert_bytes": null
     },
     {
@@ -7390,7 +7395,7 @@
       "cert_ok": false,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.00493,
+      "cert_s": 0.00426,
       "cert_bytes": null
     },
     {
@@ -7411,7 +7416,7 @@
       "cert_ok": false,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004393,
+      "cert_s": 0.004039,
       "cert_bytes": null
     },
     {
@@ -7432,7 +7437,7 @@
       "cert_ok": true,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004388,
+      "cert_s": 0.004383,
       "cert_bytes": null
     },
     {
@@ -7453,7 +7458,7 @@
       "cert_ok": true,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004334,
+      "cert_s": 0.004258,
       "cert_bytes": null
     },
     {
@@ -7474,7 +7479,7 @@
       "cert_ok": true,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.00439,
+      "cert_s": 0.004192,
       "cert_bytes": null
     },
     {
@@ -7495,7 +7500,7 @@
       "cert_ok": true,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004235,
+      "cert_s": 0.004528,
       "cert_bytes": null
     },
     {
@@ -7516,7 +7521,7 @@
       "cert_ok": true,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004347,
+      "cert_s": 0.004391,
       "cert_bytes": null
     },
     {
@@ -7537,7 +7542,7 @@
       "cert_ok": true,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004418,
+      "cert_s": 0.004284,
       "cert_bytes": null
     },
     {
@@ -7558,7 +7563,7 @@
       "cert_ok": true,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004482,
+      "cert_s": 0.004856,
       "cert_bytes": null
     },
     {
@@ -7579,7 +7584,7 @@
       "cert_ok": true,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004479,
+      "cert_s": 0.00447,
       "cert_bytes": null
     },
     {
@@ -7600,7 +7605,7 @@
       "cert_ok": true,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.00465,
+      "cert_s": 0.00435,
       "cert_bytes": null
     },
     {
@@ -7621,7 +7626,7 @@
       "cert_ok": true,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004287,
+      "cert_s": 0.014294,
       "cert_bytes": null
     },
     {
@@ -7642,7 +7647,7 @@
       "cert_ok": true,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004497,
+      "cert_s": 0.01457,
       "cert_bytes": null
     },
     {
@@ -7663,7 +7668,7 @@
       "cert_ok": true,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004538,
+      "cert_s": 0.008135,
       "cert_bytes": null
     },
     {
@@ -7684,7 +7689,7 @@
       "cert_ok": true,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004428,
+      "cert_s": 0.004733,
       "cert_bytes": null
     },
     {
@@ -7705,7 +7710,7 @@
       "cert_ok": true,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004573,
+      "cert_s": 0.004176,
       "cert_bytes": null
     },
     {
@@ -7726,7 +7731,7 @@
       "cert_ok": true,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004419,
+      "cert_s": 0.00421,
       "cert_bytes": null
     },
     {
@@ -7747,7 +7752,7 @@
       "cert_ok": true,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004473,
+      "cert_s": 0.00447,
       "cert_bytes": null
     },
     {
@@ -7768,7 +7773,7 @@
       "cert_ok": true,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004729,
+      "cert_s": 0.004655,
       "cert_bytes": null
     },
     {
@@ -7789,7 +7794,7 @@
       "cert_ok": true,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004486,
+      "cert_s": 0.004353,
       "cert_bytes": null
     },
     {
@@ -7810,7 +7815,7 @@
       "cert_ok": true,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004368,
+      "cert_s": 0.00453,
       "cert_bytes": null
     },
     {
@@ -7831,7 +7836,7 @@
       "cert_ok": true,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004537,
+      "cert_s": 0.00456,
       "cert_bytes": null
     },
     {
@@ -7852,7 +7857,7 @@
       "cert_ok": true,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004332,
+      "cert_s": 0.004296,
       "cert_bytes": null
     },
     {
@@ -7873,7 +7878,7 @@
       "cert_ok": true,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004634,
+      "cert_s": 0.004494,
       "cert_bytes": null
     },
     {
@@ -7894,7 +7899,7 @@
       "cert_ok": true,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004709,
+      "cert_s": 0.004312,
       "cert_bytes": null
     },
     {
@@ -7915,7 +7920,7 @@
       "cert_ok": true,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004409,
+      "cert_s": 0.004156,
       "cert_bytes": null
     },
     {
@@ -7936,7 +7941,7 @@
       "cert_ok": true,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004385,
+      "cert_s": 0.004033,
       "cert_bytes": null
     },
     {
@@ -7957,7 +7962,7 @@
       "cert_ok": true,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004487,
+      "cert_s": 0.004347,
       "cert_bytes": null
     },
     {
@@ -7978,7 +7983,7 @@
       "cert_ok": true,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004348,
+      "cert_s": 0.004452,
       "cert_bytes": null
     },
     {
@@ -7999,7 +8004,7 @@
       "cert_ok": true,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004491,
+      "cert_s": 0.00444,
       "cert_bytes": null
     },
     {
@@ -8020,7 +8025,7 @@
       "cert_ok": true,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004526,
+      "cert_s": 0.004368,
       "cert_bytes": null
     },
     {
@@ -8041,7 +8046,7 @@
       "cert_ok": true,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004395,
+      "cert_s": 0.004849,
       "cert_bytes": null
     },
     {
@@ -8062,7 +8067,7 @@
       "cert_ok": true,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004389,
+      "cert_s": 0.00441,
       "cert_bytes": null
     },
     {
@@ -8083,7 +8088,7 @@
       "cert_ok": true,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004337,
+      "cert_s": 0.004441,
       "cert_bytes": null
     },
     {
@@ -8104,7 +8109,7 @@
       "cert_ok": true,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004386,
+      "cert_s": 0.004212,
       "cert_bytes": null
     },
     {
@@ -8125,7 +8130,7 @@
       "cert_ok": true,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004378,
+      "cert_s": 0.004342,
       "cert_bytes": null
     },
     {
@@ -8146,7 +8151,7 @@
       "cert_ok": true,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004513,
+      "cert_s": 0.004481,
       "cert_bytes": null
     },
     {
@@ -8167,7 +8172,7 @@
       "cert_ok": true,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.00458,
+      "cert_s": 0.004374,
       "cert_bytes": null
     },
     {
@@ -8188,7 +8193,7 @@
       "cert_ok": true,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004343,
+      "cert_s": 0.004478,
       "cert_bytes": null
     },
     {
@@ -8209,7 +8214,7 @@
       "cert_ok": true,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004523,
+      "cert_s": 0.00414,
       "cert_bytes": null
     },
     {
@@ -8230,7 +8235,7 @@
       "cert_ok": true,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004396,
+      "cert_s": 0.00437,
       "cert_bytes": null
     },
     {
@@ -8251,7 +8256,7 @@
       "cert_ok": true,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004371,
+      "cert_s": 0.004429,
       "cert_bytes": null
     },
     {
@@ -8272,7 +8277,7 @@
       "cert_ok": true,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004476,
+      "cert_s": 0.00434,
       "cert_bytes": null
     },
     {
@@ -8293,7 +8298,7 @@
       "cert_ok": true,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.00433,
+      "cert_s": 0.004427,
       "cert_bytes": null
     },
     {
@@ -8314,7 +8319,7 @@
       "cert_ok": true,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.00484,
+      "cert_s": 0.004513,
       "cert_bytes": null
     },
     {
@@ -8335,7 +8340,7 @@
       "cert_ok": true,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004567,
+      "cert_s": 0.004361,
       "cert_bytes": null
     },
     {
@@ -8356,7 +8361,7 @@
       "cert_ok": true,
       "qcec_legal_s": 0.0,
       "qcec_exact_s": 0.0,
-      "cert_s": 0.004427,
+      "cert_s": 0.004135,
       "cert_bytes": null
     },
     {
@@ -8375,9 +8380,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.177,
-      "qcec_exact_s": 0.156,
-      "cert_s": 0.000256,
+      "qcec_legal_s": 0.203,
+      "qcec_exact_s": 0.154,
+      "cert_s": 0.000267,
       "cert_bytes": 552
     },
     {
@@ -8396,9 +8401,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.184,
-      "qcec_exact_s": 0.159,
-      "cert_s": 0.0003,
+      "qcec_legal_s": 0.148,
+      "qcec_exact_s": 0.15,
+      "cert_s": 0.000301,
       "cert_bytes": 786
     },
     {
@@ -8417,9 +8422,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.165,
-      "qcec_exact_s": 0.168,
-      "cert_s": 0.000397,
+      "qcec_legal_s": 0.15,
+      "qcec_exact_s": 0.151,
+      "cert_s": 0.000335,
       "cert_bytes": 1254
     },
     {
@@ -8438,9 +8443,9 @@
       "qcec_legal": true,
       "qcec_exact": true,
       "cert_ok": false,
-      "qcec_legal_s": 0.155,
-      "qcec_exact_s": 0.154,
-      "cert_s": 0.000338,
+      "qcec_legal_s": 0.157,
+      "qcec_exact_s": 0.158,
+      "cert_s": 0.000366,
       "cert_bytes": 588
     },
     {
@@ -8459,9 +8464,9 @@
       "qcec_legal": true,
       "qcec_exact": true,
       "cert_ok": false,
-      "qcec_legal_s": 0.171,
-      "qcec_exact_s": 0.152,
-      "cert_s": 0.000368,
+      "qcec_legal_s": 0.179,
+      "qcec_exact_s": 0.151,
+      "cert_s": 0.000364,
       "cert_bytes": 822
     },
     {
@@ -8480,9 +8485,9 @@
       "qcec_legal": true,
       "qcec_exact": true,
       "cert_ok": false,
-      "qcec_legal_s": 0.15,
-      "qcec_exact_s": 0.158,
-      "cert_s": 0.000396,
+      "qcec_legal_s": 0.146,
+      "qcec_exact_s": 0.151,
+      "cert_s": 0.000391,
       "cert_bytes": 1290
     },
     {
@@ -8501,9 +8506,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.158,
-      "qcec_exact_s": 0.189,
-      "cert_s": 0.000579,
+      "qcec_legal_s": 0.15,
+      "qcec_exact_s": 0.147,
+      "cert_s": 0.000416,
       "cert_bytes": 624
     },
     {
@@ -8522,9 +8527,9 @@
       "qcec_legal": true,
       "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.149,
-      "qcec_exact_s": 0.175,
-      "cert_s": 0.000455,
+      "qcec_legal_s": 0.146,
+      "qcec_exact_s": 0.148,
+      "cert_s": 0.000412,
       "cert_bytes": 858
     },
     {
@@ -8541,12 +8546,348 @@
       "dense_legal": true,
       "dense_exact": false,
       "qcec_legal": true,
-      "qcec_exact": null,
+      "qcec_exact": false,
       "cert_ok": false,
-      "qcec_legal_s": 0.15,
-      "qcec_exact_s": 0.173,
-      "cert_s": 0.000496,
+      "qcec_legal_s": 0.148,
+      "qcec_exact_s": 0.15,
+      "cert_s": 0.00046,
       "cert_bytes": 1326
+    },
+    {
+      "case": "real/fredkin_n3/legal",
+      "family": "real_qasmbench",
+      "layout": "recovered",
+      "seed": 0,
+      "attack": "legal",
+      "cert_property": "positive",
+      "qubits": 3,
+      "ground_truth": "none",
+      "truth_L": true,
+      "truth_S": false,
+      "dense_legal": null,
+      "dense_exact": null,
+      "qcec_legal": true,
+      "qcec_exact": false,
+      "cert_ok": true,
+      "qcec_legal_s": 0.156,
+      "qcec_exact_s": 0.162,
+      "cert_s": 0.000254,
+      "cert_bytes": 321
+    },
+    {
+      "case": "real/fredkin_n3/tail_h",
+      "family": "real_qasmbench",
+      "layout": "recovered",
+      "seed": 0,
+      "attack": "tail_h",
+      "cert_property": "binding",
+      "qubits": 3,
+      "ground_truth": "tail H after the last block",
+      "truth_L": false,
+      "truth_S": false,
+      "dense_legal": null,
+      "dense_exact": null,
+      "qcec_legal": false,
+      "qcec_exact": false,
+      "cert_ok": false,
+      "qcec_legal_s": 0.148,
+      "qcec_exact_s": 0.159,
+      "cert_s": 0.000323,
+      "cert_bytes": 321
+    },
+    {
+      "case": "real/fredkin_n3/cert_forge",
+      "family": "real_qasmbench",
+      "layout": "recovered",
+      "seed": 0,
+      "attack": "cert_forge",
+      "cert_property": "tamper",
+      "qubits": 3,
+      "ground_truth": "accepted flipped",
+      "truth_L": true,
+      "truth_S": false,
+      "dense_legal": null,
+      "dense_exact": null,
+      "qcec_legal": true,
+      "qcec_exact": false,
+      "cert_ok": false,
+      "qcec_legal_s": 0.152,
+      "qcec_exact_s": 0.156,
+      "cert_s": 0.000252,
+      "cert_bytes": 322
+    },
+    {
+      "case": "real/fredkin_n3/cert_replay",
+      "family": "real_qasmbench",
+      "layout": "recovered",
+      "seed": 0,
+      "attack": "cert_replay",
+      "cert_property": "tamper",
+      "qubits": 3,
+      "ground_truth": "cert replayed from mask 1",
+      "truth_L": true,
+      "truth_S": false,
+      "dense_legal": null,
+      "dense_exact": null,
+      "qcec_legal": true,
+      "qcec_exact": false,
+      "cert_ok": false,
+      "qcec_legal_s": 0.163,
+      "qcec_exact_s": 0.166,
+      "cert_s": 0.000274,
+      "cert_bytes": 314
+    },
+    {
+      "case": "real/sat_n7/legal",
+      "family": "real_qasmbench",
+      "layout": "recovered",
+      "seed": 0,
+      "attack": "legal",
+      "cert_property": "illegal_rewrite",
+      "qubits": 7,
+      "ground_truth": "none",
+      "truth_L": false,
+      "truth_S": false,
+      "dense_legal": null,
+      "dense_exact": null,
+      "qcec_legal": false,
+      "qcec_exact": false,
+      "cert_ok": false,
+      "qcec_legal_s": 0.27,
+      "qcec_exact_s": 0.204,
+      "cert_s": 0.001224,
+      "cert_bytes": 1723
+    },
+    {
+      "case": "real/sat_n7/tail_h",
+      "family": "real_qasmbench",
+      "layout": "recovered",
+      "seed": 0,
+      "attack": "tail_h",
+      "cert_property": "binding",
+      "qubits": 7,
+      "ground_truth": "tail H after the last block",
+      "truth_L": false,
+      "truth_S": false,
+      "dense_legal": null,
+      "dense_exact": null,
+      "qcec_legal": false,
+      "qcec_exact": false,
+      "cert_ok": false,
+      "qcec_legal_s": 0.219,
+      "qcec_exact_s": 0.18,
+      "cert_s": 0.001341,
+      "cert_bytes": 1723
+    },
+    {
+      "case": "real/sat_n7/cert_forge",
+      "family": "real_qasmbench",
+      "layout": "recovered",
+      "seed": 0,
+      "attack": "cert_forge",
+      "cert_property": "tamper",
+      "qubits": 7,
+      "ground_truth": "accepted flipped",
+      "truth_L": false,
+      "truth_S": false,
+      "dense_legal": null,
+      "dense_exact": null,
+      "qcec_legal": false,
+      "qcec_exact": false,
+      "cert_ok": false,
+      "qcec_legal_s": 0.224,
+      "qcec_exact_s": 0.208,
+      "cert_s": 0.001649,
+      "cert_bytes": 1722
+    },
+    {
+      "case": "real/sat_n7/cert_replay",
+      "family": "real_qasmbench",
+      "layout": "recovered",
+      "seed": 0,
+      "attack": "cert_replay",
+      "cert_property": "tamper",
+      "qubits": 7,
+      "ground_truth": "cert replayed from mask 1",
+      "truth_L": false,
+      "truth_S": false,
+      "dense_legal": null,
+      "dense_exact": null,
+      "qcec_legal": false,
+      "qcec_exact": false,
+      "cert_ok": false,
+      "qcec_legal_s": 0.271,
+      "qcec_exact_s": 0.188,
+      "cert_s": 0.001589,
+      "cert_bytes": 1334
+    },
+    {
+      "case": "real/simon_n6/legal",
+      "family": "real_qasmbench",
+      "layout": "recovered",
+      "seed": 0,
+      "attack": "legal",
+      "cert_property": "illegal_rewrite",
+      "qubits": 6,
+      "ground_truth": "none",
+      "truth_L": false,
+      "truth_S": false,
+      "dense_legal": null,
+      "dense_exact": null,
+      "qcec_legal": false,
+      "qcec_exact": false,
+      "cert_ok": false,
+      "qcec_legal_s": 0.176,
+      "qcec_exact_s": 0.165,
+      "cert_s": 0.000508,
+      "cert_bytes": 903
+    },
+    {
+      "case": "real/simon_n6/tail_h",
+      "family": "real_qasmbench",
+      "layout": "recovered",
+      "seed": 0,
+      "attack": "tail_h",
+      "cert_property": "binding",
+      "qubits": 6,
+      "ground_truth": "tail H after the last block",
+      "truth_L": false,
+      "truth_S": false,
+      "dense_legal": null,
+      "dense_exact": null,
+      "qcec_legal": false,
+      "qcec_exact": false,
+      "cert_ok": false,
+      "qcec_legal_s": 0.175,
+      "qcec_exact_s": 0.166,
+      "cert_s": 0.000628,
+      "cert_bytes": 903
+    },
+    {
+      "case": "real/simon_n6/cert_forge",
+      "family": "real_qasmbench",
+      "layout": "recovered",
+      "seed": 0,
+      "attack": "cert_forge",
+      "cert_property": "tamper",
+      "qubits": 6,
+      "ground_truth": "accepted flipped",
+      "truth_L": false,
+      "truth_S": false,
+      "dense_legal": null,
+      "dense_exact": null,
+      "qcec_legal": false,
+      "qcec_exact": false,
+      "cert_ok": false,
+      "qcec_legal_s": 0.175,
+      "qcec_exact_s": 0.158,
+      "cert_s": 0.000418,
+      "cert_bytes": 902
+    },
+    {
+      "case": "real/simon_n6/cert_replay",
+      "family": "real_qasmbench",
+      "layout": "recovered",
+      "seed": 0,
+      "attack": "cert_replay",
+      "cert_property": "tamper",
+      "qubits": 6,
+      "ground_truth": "cert replayed from mask 1",
+      "truth_L": false,
+      "truth_S": false,
+      "dense_legal": null,
+      "dense_exact": null,
+      "qcec_legal": false,
+      "qcec_exact": false,
+      "cert_ok": false,
+      "qcec_legal_s": 0.176,
+      "qcec_exact_s": 0.162,
+      "cert_s": 0.00048,
+      "cert_bytes": 810
+    },
+    {
+      "case": "real/toffoli_n3/legal",
+      "family": "real_qasmbench",
+      "layout": "recovered",
+      "seed": 0,
+      "attack": "legal",
+      "cert_property": "positive",
+      "qubits": 3,
+      "ground_truth": "none",
+      "truth_L": true,
+      "truth_S": false,
+      "dense_legal": null,
+      "dense_exact": null,
+      "qcec_legal": true,
+      "qcec_exact": false,
+      "cert_ok": true,
+      "qcec_legal_s": 0.153,
+      "qcec_exact_s": 0.177,
+      "cert_s": 0.000341,
+      "cert_bytes": 321
+    },
+    {
+      "case": "real/toffoli_n3/tail_h",
+      "family": "real_qasmbench",
+      "layout": "recovered",
+      "seed": 0,
+      "attack": "tail_h",
+      "cert_property": "binding",
+      "qubits": 3,
+      "ground_truth": "tail H after the last block",
+      "truth_L": false,
+      "truth_S": false,
+      "dense_legal": null,
+      "dense_exact": null,
+      "qcec_legal": false,
+      "qcec_exact": false,
+      "cert_ok": false,
+      "qcec_legal_s": 0.161,
+      "qcec_exact_s": 0.184,
+      "cert_s": 0.000589,
+      "cert_bytes": 321
+    },
+    {
+      "case": "real/toffoli_n3/cert_forge",
+      "family": "real_qasmbench",
+      "layout": "recovered",
+      "seed": 0,
+      "attack": "cert_forge",
+      "cert_property": "tamper",
+      "qubits": 3,
+      "ground_truth": "accepted flipped",
+      "truth_L": true,
+      "truth_S": false,
+      "dense_legal": null,
+      "dense_exact": null,
+      "qcec_legal": true,
+      "qcec_exact": false,
+      "cert_ok": false,
+      "qcec_legal_s": 0.144,
+      "qcec_exact_s": 0.152,
+      "cert_s": 0.000284,
+      "cert_bytes": 322
+    },
+    {
+      "case": "real/toffoli_n3/cert_replay",
+      "family": "real_qasmbench",
+      "layout": "recovered",
+      "seed": 0,
+      "attack": "cert_replay",
+      "cert_property": "tamper",
+      "qubits": 3,
+      "ground_truth": "cert replayed from mask 1",
+      "truth_L": true,
+      "truth_S": false,
+      "dense_legal": null,
+      "dense_exact": null,
+      "qcec_legal": true,
+      "qcec_exact": false,
+      "cert_ok": false,
+      "qcec_legal_s": 0.145,
+      "qcec_exact_s": 0.206,
+      "cert_s": 0.000238,
+      "cert_bytes": 314
     }
   ]
 }

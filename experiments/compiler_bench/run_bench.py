@@ -116,8 +116,12 @@ def run(with_qcec: bool = False, qcec_limit: int = 24) -> Dict[str, Any]:
         cert_s = time.perf_counter() - t0
         cert_bytes = (len(json.dumps(entry["certificate"]))
                       if "certificate" in entry else None)
-        truth_l = case["truth_L"] if case["truth_L"] is not None else q_legal
-        truth_s = case["truth_S"] if case["truth_S"] is not None else q_exact
+        truth_l, truth_s = case["truth_L"], case["truth_S"]
+        if truth_l is None and entry.get("ideal") is not None:
+            truth_l = C.dense_legal(entry)
+            truth_s = C.dense_exact(entry)
+        truth_l = truth_l if truth_l is not None else q_legal
+        truth_s = truth_s if truth_s is not None else q_exact
         prop = C.cert_property(case["attack"], truth_l)
         rows.append({
             "case": case["name"], "family": case["family"], "layout": case["layout"],
