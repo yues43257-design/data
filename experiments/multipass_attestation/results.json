@@ -1,0 +1,119 @@
+{
+  "version": "multipass-chain-v1",
+  "pass_times": {
+    "pass1": 0.00018,
+    "pass1_cert": 0.00042,
+    "pass2": 0.01257,
+    "total": 0.01373
+  },
+  "results": [
+    {
+      "attack": "normal",
+      "note": "untampered two-pass pipeline",
+      "ok": true,
+      "chain_ok": true,
+      "reasons": [],
+      "attack_legal": true,
+      "detected": false,
+      "attack_success": 0,
+      "cert1_bytes": 464,
+      "cert2_bytes": 158,
+      "verify_seconds": 0.004939,
+      "pass_times": {
+        "pass1": 0.00018,
+        "pass1_cert": 0.00042,
+        "pass2": 0.01257,
+        "total": 0.01373
+      }
+    },
+    {
+      "attack": "a1_pass1_block_substitution",
+      "note": "pass1 re-mapped block 0; cert1 unchanged",
+      "ok": false,
+      "chain_ok": false,
+      "reasons": [
+        "cert1 does not verify against C1",
+        "cert1.output_hash != hash(C1)",
+        "cert2.input_hash != hash(C1)"
+      ],
+      "attack_legal": false,
+      "detected": true,
+      "attack_success": 0,
+      "cert1_bytes": 464,
+      "cert2_bytes": 158,
+      "verify_seconds": 0.004567,
+      "pass_times": {
+        "pass1": 0.00018,
+        "pass1_cert": 0.00042,
+        "pass2": 0.01257,
+        "total": 0.01373
+      }
+    },
+    {
+      "attack": "a2_pass2_substitution",
+      "note": "pass2 emitted C2 with X(0)",
+      "ok": false,
+      "chain_ok": false,
+      "reasons": [
+        "cert2.output_hash != hash(C2)"
+      ],
+      "attack_legal": false,
+      "detected": true,
+      "attack_success": 0,
+      "cert1_bytes": 464,
+      "cert2_bytes": 158,
+      "verify_seconds": 0.004471,
+      "pass_times": {
+        "pass1": 0.00018,
+        "pass1_cert": 0.00042,
+        "pass2": 0.01257,
+        "total": 0.01373
+      }
+    },
+    {
+      "attack": "a3_compromised_pass2",
+      "note": "pass2 compromised: forged cert2 with CORRECT hashes",
+      "ok": true,
+      "chain_ok": true,
+      "reasons": [],
+      "attack_legal": false,
+      "detected": false,
+      "attack_success": 1,
+      "cert1_bytes": 464,
+      "cert2_bytes": 158,
+      "verify_seconds": 0.004463,
+      "pass_times": {
+        "pass1": 0.00018,
+        "pass1_cert": 0.00042,
+        "pass2": 0.01257,
+        "total": 0.01373
+      }
+    },
+    {
+      "attack": "a4_replay",
+      "note": "certificates replayed from pipeline variant 1",
+      "ok": false,
+      "chain_ok": false,
+      "reasons": [
+        "cert1 does not verify against C1",
+        "cert1.input_hash != hash(C0)",
+        "cert1.output_hash != hash(C1)",
+        "cert2.input_hash != hash(C1)",
+        "cert2.output_hash != hash(C2)"
+      ],
+      "attack_legal": true,
+      "detected": true,
+      "attack_success": 0,
+      "cert1_bytes": 464,
+      "cert2_bytes": 158,
+      "verify_seconds": 0.004625,
+      "pass_times": {
+        "pass1": 0.00018,
+        "pass1_cert": 0.00042,
+        "pass2": 0.01257,
+        "total": 0.01373
+      }
+    }
+  ],
+  "verdict": "GO: hash chain detects inconsistency, NOT compromise (A3 forges it)"
+}
