@@ -31,20 +31,23 @@ def extract(circuit: QuantumCircuit) -> Dict[str, Any]:
             const[t] ^= const[c]
         elif name in _COEFF:
             terms.append({"gate": index, "qubit": qubits[0],
-                          "coeff": _COEFF[name] % 8, "mask": mask[qubits[0]]})
+                          "coeff": _COEFF[name] % 8, "mask": mask[qubits[0]],
+                          "const": const[qubits[0]]})
         else:
             raise ValueError(f"gate {name!r} outside the phase-polynomial set")
     return {"affine": [[mask[q], const[q]] for q in range(n)], "terms": terms}
 
 
-def canonical(terms: List[Dict[str, Any]]) -> List[Tuple[int, int]]:
-    """Merge equal masks (mod 8), drop zeros, return a sorted tuple list."""
-    merged: Dict[int, int] = {}
+def canonical(terms: List[Dict[str, Any]]) -> List[Tuple[int, int, int]]:
+    """Merge equal (mask, const) terms (mod 8); return (mask, const, coeff)."""
+    merged: Dict[Tuple[int, int], int] = {}
     for term in terms:
-        merged[term["mask"]] = (merged.get(term["mask"], 0) + term["coeff"]) % 8
-    return sorted((mask, coeff) for mask, coeff in merged.items() if coeff)
+        key = (term["mask"], int(term.get("const", 0)))
+        merged[key] = (merged.get(key, 0) + term["coeff"]) % 8
+    return sorted((mask, const, coeff)
+                  for (mask, const), coeff in merged.items() if coeff)
 
 
-def t_count(canonical_terms: List[Tuple[int, int]]) -> int:
+def t_count(canonical_terms: List[Tuple[int, int, int]]) -> int:
     """Number of odd (T-like) terms: even coefficients are Clifford phases."""
-    return sum(1 for _, coeff in canonical_terms if coeff % 2 == 1)
+    return sum(1 for _, _, coeff in canonical_terms if coeff % 2 == 1)

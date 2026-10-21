@@ -50,8 +50,8 @@ def check(circuit_in: QuantumCircuit, circuit_out: QuantumCircuit,
             if {a["coeff"], b["coeff"]} != {1, 7}:
                 reasons.append(f"{i}/{j}: not T/Tdg")
                 continue
-            if a["mask"] != b["mask"]:
-                reasons.append(f"{i}/{j}: different parity masks")
+            if a["mask"] != b["mask"] or a.get("const", 0) != b.get("const", 0):
+                reasons.append(f"{i}/{j}: different parity functions")
                 continue
             current = _build(current.num_qubits,
                              [op for k, op in enumerate(ops) if k not in (i, j)])
@@ -67,6 +67,9 @@ def check(circuit_in: QuantumCircuit, circuit_out: QuantumCircuit,
             q = a["qubit"]
             if b["qubit"] != q or a["mask"] != (1 << q) or b["mask"] != (1 << q):
                 reasons.append(f"{i}/{j}: not a single-qubit parity on one qubit")
+                continue
+            if a.get("const", 0) or b.get("const", 0):
+                reasons.append(f"{i}/{j}: parity is negated (const=1)")
                 continue
             if any(q in qubits for _, qubits in ops[i + 1:j]):
                 reasons.append(f"{i}/{j}: a gate touches qubit {q} in between")

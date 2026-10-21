@@ -79,16 +79,17 @@ def _hash(payload: Any) -> str:
 
 def _cancel_step(circuit: QuantumCircuit) -> Optional[Dict[str, Any]]:
     info = phase_poly.extract(circuit)
-    plus: Dict[int, List[int]] = {}
-    minus: Dict[int, List[int]] = {}
+    plus: Dict[Tuple[int, int], List[int]] = {}
+    minus: Dict[Tuple[int, int], List[int]] = {}
     for term in info["terms"]:
+        key = (term["mask"], int(term.get("const", 0)))
         if term["coeff"] == 1:
-            plus.setdefault(term["mask"], []).append(term["gate"])
+            plus.setdefault(key, []).append(term["gate"])
         elif term["coeff"] == 7:
-            minus.setdefault(term["mask"], []).append(term["gate"])
-    for mask, first in plus.items():
-        if minus.get(mask):
-            return {"rule": "cancel_T_Tdg", "gates": [first[0], minus[mask][0]]}
+            minus.setdefault(key, []).append(term["gate"])
+    for key, first in plus.items():
+        if minus.get(key):
+            return {"rule": "cancel_T_Tdg", "gates": [first[0], minus[key][0]]}
     return None
 
 
@@ -103,6 +104,8 @@ def _merge_step(circuit: QuantumCircuit) -> Optional[Dict[str, Any]]:
                     continue
                 q = a["qubit"]
                 if a["mask"] != (1 << q) or b["mask"] != (1 << q):
+                    continue
+                if a.get("const", 0) or b.get("const", 0):
                     continue
                 lo, hi = sorted((a["gate"], b["gate"]))
                 between = _ops(circuit)[lo + 1:hi]

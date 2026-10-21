@@ -23,7 +23,7 @@ from qiskit.quantum_info import Operator
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
-from experiments.proof_carrying import checker, phase_poly, rewrite  # noqa: E402
+from experiments.proof_carrying import checker, dense_extract, phase_poly, rewrite  # noqa: E402
 
 PROBE_VERSION = "proof-carrying-v1"
 QCEEC = "/tmp/qcec-venv/bin/python"
@@ -76,6 +76,8 @@ def run() -> List[Dict[str, Any]]:
             dense_ok = _dense_equal(circuit, optimized)
             dense_ms = (time.perf_counter() - started) * 1e3
         qcec_verdict, qcec_s = _qcec(circuit, optimized)
+        poly_check = (dense_extract.cross_validate(circuit)
+                      if n <= dense_extract.DENSE_LIMIT else None)
 
         tampered = json.loads(json.dumps(proof))
         if tampered["steps"]:
@@ -92,6 +94,7 @@ def run() -> List[Dict[str, Any]]:
             "dense_ok": dense_ok, "dense_ms": (round(dense_ms, 2)
                                                if dense_ms is not None else None),
             "qcec_verdict": qcec_verdict, "qcec_s": qcec_s,
+            "dense_poly_ok": poly_check["ok"] if poly_check else None,
             "tampered_detected": not tamper["ok"],
         })
     return rows
