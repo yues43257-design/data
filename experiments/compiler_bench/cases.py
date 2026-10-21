@@ -29,8 +29,8 @@ import experiments.compiler_bench.generator as G  # noqa: E402
 import experiments.multipass_attestation.attacks as PA   # noqa: E402
 import experiments.multipass_attestation.pipeline as PP  # noqa: E402
 
-FAMILIES = (("two_block", 0), ("adder", 2), ("adder", 3), ("vbe", 2),
-            ("vbe", 3), ("comparator", 3))
+FAMILIES = (("two_block", 0), ("hh_restore", 0), ("adder", 2), ("adder", 3),
+            ("vbe", 2), ("vbe", 3), ("comparator", 3))
 LAYOUTS = ("plain", "with_h")
 SEEDS = (0, 1, 2, 3)
 DENSE_LIMIT = 8          # keep the suite runtime bounded
@@ -117,7 +117,7 @@ def all_cases() -> List[Dict[str, Any]]:
                     })
     pass2 = PP.build_pipeline(0)
     n_qubits = pass2["c2"].num_qubits
-    for i in range(5):                       # detected: cert unchanged
+    for i in range(10):                      # detected: cert unchanged
         c2 = pass2["c2"].copy()
         c2.x(i % n_qubits)
         entry = dict(pass2)
@@ -127,7 +127,7 @@ def all_cases() -> List[Dict[str, Any]]:
                       "qubits": n_qubits, "cert_property": "chain",
                       "ground_truth": "C2 tampered, cert unchanged",
                       "truth_L": None, "truth_S": None, "entry": entry})
-    for i in range(20):                      # the structural gap: correct hashes
+    for i in range(45):                      # the structural gap: correct hashes
         c2 = pass2["c2"].copy()
         c2.x(i % n_qubits)
         entry = dict(pass2)

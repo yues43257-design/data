@@ -44,12 +44,29 @@ def test_l_and_c_metrics():
     assert L["soundness"] == 1.0
     assert L["completeness"] == 1.0
     Cm = report["C"]
-    assert Cm["positive_accept"]["rate"] == 1.0
+    assert Cm["positive_accept"]["rate"] < 1.0      # certificate false negatives
+    assert Cm["illegal_rewrite_reject"]["rate"] == 1.0
     assert Cm["binding_reject"]["rate"] == 1.0
     assert Cm["tamper_reject"]["rate"] == 1.0
-    # the known structural gap: 5 substitution cases rejected, 20 forgeries not
-    assert Cm["chain_reject"]["correct"] == 5
-    assert Cm["chain_reject"]["cases"] == 25
+    # the known structural gap: 10 substitution cases rejected, 45 forgeries not
+    assert Cm["chain_reject"]["correct"] == 10
+    assert Cm["chain_reject"]["cases"] == 55
+
+
+def test_second_divergence_certificate_false_negatives():
+    """Legal rewrites the tracker rejects (H...H restores the phase)."""
+    report = R.run(with_qcec=False)
+    assert report["C"]["positive_accept"]["rate"] < 1.0
+    fn = [r for r in report["rows"]
+          if r.get("cert_property") == "positive" and r.get("truth_L") is True
+          and r.get("cert_ok") is False]
+    assert fn and all("hh_restore" in r["case"] for r in fn)
+
+
+def test_protocol_is_frozen():
+    report = R.run(with_qcec=False)
+    assert report["protocol_version"] == "compiler-bench-protocol-v1"
+    assert len(report["protocol_fingerprint"]) == 16
 
 
 def test_semantics_verifier_uses_common_subset():

@@ -25,6 +25,7 @@ sys.path.insert(0, str(ROOT))
 
 import support_tracker as ST                # noqa: E402
 import experiments.compiler_bench.cases as C  # noqa: E402
+import experiments.compiler_bench.protocol as P  # noqa: E402
 import experiments.multipass_attestation.verify_chain as VC  # noqa: E402
 import qcec_validate as QV                  # noqa: E402
 
@@ -161,6 +162,8 @@ def run(with_qcec: bool = False, qcec_limit: int = 24) -> Dict[str, Any]:
 
     return {
         "version": BENCH_VERSION, "cases": len(rows),
+        "protocol_version": P.PROTOCOL_VERSION,
+        "protocol_fingerprint": P.fingerprint(),
         "L": {"dense": l_metrics("dense_legal"), "qcec": l_metrics("qcec_legal")},
         "S": {"common_subset": len(s_pairs), "correct": s_correct,
               "accuracy": round(s_correct / len(s_pairs), 3) if s_pairs else None,

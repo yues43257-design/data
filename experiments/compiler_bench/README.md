@@ -1,68 +1,75 @@
-# Compiler bug benchmark — L/S/C protocol (v3)
+# Compiler bug benchmark — frozen protocol v1
 
-**Generated suite.** `generator.py` enumerates
+`protocol.py` freezes the definitions; every result carries
+`protocol_version = compiler-bench-protocol-v1` and a 16-hex fingerprint.
+**Do not change the classification without bumping the version.**
 
-    family × layout × seed × attack    (336)  +  5 chain-substitution + 20 chain-forgery  = 361
+## Suite (447 cases, generated)
 
 | axis | values |
 |---|---|
-| family | `two_block`, CDKM `adder2`/`adder3`, `vbe2`/`vbe3`, `comparator3` |
+| family | `two_block`, **`hh_restore`**, CDKM `adder2`/`adder3`, `vbe2`/`vbe3`, `comparator3` |
 | layout | `plain`, `with_h` |
-| seed | 0, 1, 2, 3 |
+| seed | 0–3 |
 | attack | legal, h_on_support, block_substitution, tail_h, u3, cert_forge, cert_replay |
-| chain | 5 substitution (detected) + 20 forged-hash (the structural gap) |
+| chain | 10 substitution + 45 forged-hash = **55** |
 
-## Three questions, never merged
+## Three questions (frozen)
 
 | question | metric | verifiers |
 |---|---|---|
-| **L** legality | **soundness** (no illegal accepted) and **completeness** (legal accepted) | dense oracle (N≤8), **QCEC Z-commutation (all cases)** |
-| **S** semantics | exact equivalence up to global phase | dense `Operator`, **QCEC plain equivalence** |
-| **C** certificate | named properties: `positive` / `illegal_rewrite` / `binding` / `tamper` / `chain` | bound certificate |
+| **L** | soundness / completeness | dense oracle (N≤8), **QCEC Z-commutation (all)** |
+| **S** | exact equivalence | dense `Operator`, **QCEC plain equivalence** |
+| **C** | properties: positive / illegal_rewrite / binding / tamper / chain | bound certificate |
 
-A legal relative-phase rewrite has `L = True, S = False` — the relaxation
-changes the semantics by a diagonal, so the axes must stay separate.
+`n/a` is an abstention, never a false positive; comparisons use the common
+decided subset; every rate carries a Wilson 95% interval.
 
-## Scoring protocol
-
-- each verifier answers exactly one question;
-- `n/a` is an **abstention**, never a false positive;
-- cross-verifier comparisons use the **common decided subset**;
-- every rate has a Wilson 95% interval;
-- `undecided_legal` marks cases whose L is not decidable densely; **QCEC
-  resolves them** in this run (0 remain).
-
-## Measured (361 cases, full QCEC)
+## Measured (447 cases, full QCEC)
 
 | metric | value |
 |---|---|
-| **L / dense** | decided 240, coverage 0.665, soundness **1.000** [0.972, 1.000], completeness **1.000** [0.946, 1.000] |
-| **L / QCEC (all)** | decided **336**, coverage **0.931**, soundness **1.000** [0.981, 1.000], completeness **1.000** [0.956, 1.000] |
-| **S / QCEC vs dense** | common subset **279**, accuracy **1.000** [0.984, 1.000] |
-| **C / positive** | 34 cases, **1.000** [0.879, 1.000] |
-| **C / illegal_rewrite** | 62 cases, **1.000** [0.930, 1.000] |
-| **C / binding** | 144 cases, **1.000** [0.969, 1.000] |
-| **C / tamper** | 96 cases, **1.000** [0.954, 1.000] |
-| **C / chain** | **25 cases, 5 correct** → **0.200** [0.084, 0.396] |
-| cost | QCEC ≈ **0.20 s**/case (L), ≈ **0.18 s** (S); certificate ≈ **1.2 ms**; cert **≈ 533 B** |
+| **L / dense** | decided 288, coverage 0.644, soundness **1.000** [0.975, 1.000], completeness **1.000** [0.958, 1.000] |
+| **L / QCEC (all)** | decided **392**, coverage **0.877**, soundness **1.000** [0.983, 1.000], completeness **1.000** [0.964, 1.000] |
+| **S / QCEC vs dense** | common **334**, accuracy **1.000** [0.986, 1.000] |
+| **C / positive** | 42 cases, **34 correct → 0.810** [0.664, 0.903] |
+| C / illegal_rewrite | 70, **1.000** [0.938, 1.000] |
+| C / binding | 168, **1.000** [0.973, 1.000] |
+| C / tamper | 112, **1.000** [0.960, 1.000] |
+| **C / chain** | **55 cases, 10 correct → 0.182** [0.100, 0.305] |
+| cost | QCEC ≈ 0.20 s (L) / 0.17 s (S); certificate ≈ 1.25 ms; **536 B** |
 
-The 25 chain cases are 5 substitutions (rejected by the hash chain) and 20
-forgeries that write **correct hashes** for a wrong `C2` — the structural
-attestation gap, now sampled 20 times instead of once.
+## Two tool divergences (the main finding)
 
-## What is still missing (honest)
+### D1 — certificate false negatives (8/42 positives)
 
-- **no compiler-version axis** (Qiskit only; pyZX/TODD are used in other probes);
-- **no QASMBench/RevLib circuits** in this suite (the QASMBench domain census is
-  in `reports/strategy_b_experiments.md` §A.1 — 4/42 enter the domain);
-- only one two-pass chain shape; parameter sweeps over H density / block count /
-  width are not yet systematic;
-- the L/S verifiers agree on every decided case, so apart from the chain gap
-  there is **no tool disagreement** found yet.
+Family `hh_restore`: the circuit contains `H … H` after a downgraded block. The
+two Hadamards conjugate the correction back to diagonal, so **dense and QCEC say
+legal**, but the tracker rejects at the **first** H and never sees the second.
+This is the same conservativeness measured in the main report (§5.62): the
+certificate is sound but **incomplete**, and the missing recall is a *tool
+divergence*, not noise.
+
+### D2 — chain forgeries (45/55 chain cases wrong)
+
+A compromised pass2 emits a wrong `C2` but writes **correct hashes**; the hash
+chain is self-consistent and accepts it (10 substitution cases are correctly
+rejected). This is the attestation gap from the multipass probe.
+
+These are the two divergences the benchmark is built to expose; every other
+category is at 1.000.
+
+## Honest gaps (not done)
+
+- **compiler-version axis** (Qiskit/pyZX/TODD variants) absent;
+- **QASMBench/RevLib** not in this suite (QASMBench domain census: 4/42 in
+  `reports/strategy_b_experiments.md` §A.1);
+- parameter sweeps limited to 4 seeds; H density / block count / width sweeps
+  are not systematic yet.
 
 ## Reproduce
 
 ```bash
-.venv/bin/python experiments/compiler_bench/run_bench.py --with-qcec   # ~150 s
-.venv/bin/python -m pytest tests/test_compiler_bench.py -q
+.venv/bin/python experiments/compiler_bench/run_bench.py --with-qcec   # ~165 s
+.venv/bin/python -m pytest tests/test_compiler_bench.py -q              # 8 tests
 ```

@@ -79,6 +79,13 @@ def build_base(family: str, n: int, layout: str,
         if layout == "with_h":
             ideal.h(2)
         ideal.ccx(3, 4, 2)
+    elif family == "hh_restore":
+        # H ... H after the block: the correction is conjugated twice and comes
+        # back to diagonal, but the tracker rejects at the first H.
+        ideal = QuantumCircuit(3)
+        ideal.ccx(0, 1, 2)
+        ideal.h(2)
+        ideal.h(2)
     elif family in ("adder", "vbe"):
         blueprint = (CDKMRippleCarryAdder(n) if family == "adder"
                      else VBERippleCarryAdder(n))
