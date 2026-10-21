@@ -38,11 +38,12 @@ def main() -> int:
     print("=" * 108)
     print(f"  certificate-binding security probe  {PROBE_VERSION}")
     print("=" * 108)
-    print(f"  {'attack':<22}{'legal':>8}{'certAcc':>9}{'detected':>10}"
+    print(f"  {'attack':<22}{'legal':>8}{'unbound':>8}{'bound':>7}{'detected':>10}"
           f"{'success':>9}{'certB':>7}{'verify_s':>10}  error")
     for r in results:
         print(f"  {r['attack']:<22}{str(r['attack_legal']):>8}"
-              f"{str(r['certificate_accepts']):>9}{str(r['detected']):>10}"
+              f"{str(r['unbound_accepts']):>8}{str(r['certificate_accepts']):>7}"
+              f"{str(r['detected']):>10}"
               f"{r['attack_success']:>9}{r['certificate_bytes']:>7}"
               f"{r['verify_seconds']:>10.6f}  {r['error'] or ''}")
     print("-" * 108)

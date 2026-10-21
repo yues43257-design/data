@@ -1,11 +1,14 @@
-"""Attack constructions for the certificate-binding probe.
+"""Attack constructions for the certificate-binding probe (bound API).
 
-The threat model: the adversary **controls the compiler pass**.  It can emit a
-circuit that differs from the one the certificate was computed for, while
-keeping the schedule/certificate unchanged (or replaying another one).
+Threat model: the adversary controls the compiler pass.  It emits a circuit that
+differs from the certified one, while keeping the certificate.  The fix under
+test binds the certificate to the emitted circuit via
 
-Nothing here modifies ``support_tracker.py`` / ``relative_phase_criterion.py``;
-the probe only *uses* them.
+    circuit_hash, schedule_hash, block_hashes
+
+Nothing here modifies ``relative_phase_criterion.py``; the only change outside
+``experiments/security_probe/`` is the additive, backward-compatible binding in
+``support_tracker.certify`` / ``verify_certificate``.
 """
 
 from __future__ import annotations
@@ -14,7 +17,7 @@ import json
 import sys
 import time
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional, Tuple
 
 import numpy as np
 from qiskit import QuantumCircuit
@@ -25,11 +28,12 @@ sys.path.insert(0, str(ROOT))
 
 import realcircuit_window as RCW      # noqa: E402
 import realworld_benchmark as RB      # noqa: E402
-import relative_phase_criterion as RPC  # noqa: E402
 import support_tracker as ST          # noqa: E402
 
 ATTACKS = ("normal", "block_substitution", "nonblock_x", "tail_h",
            "gate_smuggle_u3", "gate_smuggle_measure", "cert_forge", "cert_replay")
+
+_BLOCKS = ((0, 1, 2), (3, 4, 2))       # controls and target of each block
 
 
 def _rccx(circuit: QuantumCircuit, c0: int, c1: int, target: int) -> None:
@@ -40,75 +44,79 @@ def _rccx(circuit: QuantumCircuit, c0: int, c1: int, target: int) -> None:
             getattr(circuit, gate[0])(gate[1])
 
 
-def build_base() -> Dict[str, Any]:
-    """Two downgraded blocks, one CNOT between them, N = 5 (no H in layers)."""
+def _emit(blocks=_BLOCKS, between: Optional[Any] = None,
+          tail: Optional[Any] = None) -> Tuple[QuantumCircuit, List[Tuple[int, int]]]:
+    """Build the emitted (relative-phase) circuit and per-block gate ranges."""
     circuit = QuantumCircuit(5)
-    _rccx(circuit, 0, 1, 2)          # block 0: controls (0,1), target 2
-    circuit.cx(0, 3)
-    _rccx(circuit, 3, 4, 2)          # block 1: controls (3,4), target 2
-    schedule = {
-        "total": 5,
-        "blocks": [
-            {"controls": [0, 1], "ancillas": [], "target": 2},
-            {"controls": [3, 4], "ancillas": [], "target": 2},
-        ],
-        "layers": [[], [("cx", [0, 3])], []],
-    }
+    ranges: List[Tuple[int, int]] = []
+    for index, (c0, c1, target) in enumerate(blocks):
+        start = len(circuit.data)
+        _rccx(circuit, c0, c1, target)
+        ranges.append((start, len(circuit.data)))
+        if index == 0 and between is not None:
+            between(circuit)
+    if tail is not None:
+        tail(circuit)
+    return circuit, ranges
+
+
+def build_base() -> Dict[str, Any]:
+    ideal = QuantumCircuit(5)
+    ideal.ccx(0, 1, 2)
+    ideal.cx(0, 3)
+    ideal.ccx(3, 4, 2)
+    emitted, ranges = _emit(between=lambda qc: qc.cx(0, 3))
+    schedule = RB._tracker_schedule(ideal)
     mask = (1 << len(schedule["blocks"])) - 1
-    certificate = ST.certify(schedule, mask)
-    return {"circuit": circuit, "schedule": schedule, "mask": mask,
-            "certificate": certificate}
+    certificate = ST.certify(schedule, mask, circuit=emitted, block_ranges=ranges)
+    return {"ideal": ideal, "circuit": emitted, "ranges": ranges,
+            "schedule": schedule, "mask": mask, "certificate": certificate}
 
 
 def attack(name: str, base: Dict[str, Any]) -> Dict[str, Any]:
-    """Return an entry: the emitted circuit plus the (unchanged) certificate."""
     entry = {"attack": name, "circuit": base["circuit"].copy(),
-             "schedule": base["schedule"], "mask": base["mask"],
-             "certificate": base["certificate"], "note": ""}
+             "ranges": base["ranges"], "schedule": base["schedule"],
+             "mask": base["mask"], "certificate": base["certificate"],
+             "note": ""}
     if name == "normal":
         entry["note"] = "untampered baseline"
     elif name == "block_substitution":
-        circuit = QuantumCircuit(5)
-        _rccx(circuit, 0, 2, 1)      # swap control-1 and target of block 0
-        circuit.cx(0, 3)
-        _rccx(circuit, 3, 4, 2)
-        entry["circuit"] = circuit
-        entry["note"] = "block 0 re-mapped [0,1,2] -> [0,2,1]; schedule untouched"
+        circuit, ranges = _emit(blocks=((0, 2, 1), (3, 4, 2)),
+                                between=lambda qc: qc.cx(0, 3))
+        entry.update(circuit=circuit, ranges=ranges,
+                     note="block 0 re-mapped [0,1,2] -> [0,2,1]")
     elif name == "nonblock_x":
-        circuit = QuantumCircuit(5)
-        _rccx(circuit, 0, 1, 2)
-        circuit.x(3)                 # non-block gate, not in the schedule
-        circuit.cx(0, 3)
-        _rccx(circuit, 3, 4, 2)
-        entry["circuit"] = circuit
-        entry["note"] = "X on a data qubit, schedule untouched"
+        circuit, ranges = _emit(
+            between=lambda qc: (qc.x(3), qc.cx(0, 3)))
+        entry.update(circuit=circuit, ranges=ranges,
+                     note="X on a data qubit between the blocks")
     elif name == "tail_h":
-        circuit = base["circuit"].copy()
-        circuit.h(2)                 # after the last block, not in the schedule
-        entry["circuit"] = circuit
-        entry["note"] = "H after the last block, schedule untouched"
+        circuit, ranges = _emit(between=lambda qc: qc.cx(0, 3),
+                                tail=lambda qc: qc.h(2))
+        entry.update(circuit=circuit, ranges=ranges,
+                     note="H after the last block")
     elif name == "gate_smuggle_u3":
-        circuit = base["circuit"].copy()
-        circuit.u(0.1, 0.2, 0.3, 3)
-        entry["circuit"] = circuit
-        entry["note"] = "u3 smuggled into the emitted circuit"
+        circuit, ranges = _emit(between=lambda qc: (qc.u(0.1, 0.2, 0.3, 3),
+                                                    qc.cx(0, 3)))
+        entry.update(circuit=circuit, ranges=ranges,
+                     note="u3 smuggled into the emitted circuit")
     elif name == "gate_smuggle_measure":
         circuit = QuantumCircuit(5, 1)
         circuit.compose(base["circuit"], inplace=True)
         circuit.measure(3, 0)
-        entry["circuit"] = circuit
-        entry["note"] = "measure smuggled into the emitted circuit"
+        entry.update(circuit=circuit,
+                     note="measure smuggled into the emitted circuit")
     elif name == "cert_forge":
         forged = dict(base["certificate"])
-        # NOTE: on this H-free base the genuine h_checks is already empty, so
-        # clearing it would be a no-op.  Forge the verdict and the support.
         forged["accepted"] = not base["certificate"]["accepted"]
         forged["final_support"] = sorted(set(
             base["certificate"]["final_support"] + [999]))
         entry["certificate"] = forged
         entry["note"] = "accepted flipped and final_support padded"
     elif name == "cert_replay":
-        entry["certificate"] = ST.certify(base["schedule"], 1)
+        entry["certificate"] = ST.certify(
+            base["schedule"], 1, circuit=base["circuit"],
+            block_ranges=base["ranges"])
         entry["note"] = "certificate from mask=1 replayed for mask=3"
     else:
         raise ValueError(name)
@@ -123,8 +131,6 @@ def _global_phase_equal(a: QuantumCircuit, b: QuantumCircuit,
         ins.operation.name for ins in b.data}
     if names & {"measure", "reset", "if_else"}:
         return None
-    if a.num_qubits > 11 or b.num_qubits > 11:
-        return None
     ua = np.asarray(Operator(a).data, dtype=complex)
     ub = np.asarray(Operator(b).data, dtype=complex)
     m = ua @ ub.conj().T
@@ -135,29 +141,38 @@ def _global_phase_equal(a: QuantumCircuit, b: QuantumCircuit,
 
 def evaluate(base: Dict[str, Any], entry: Dict[str, Any]) -> Dict[str, Any]:
     attack_legal = _global_phase_equal(entry["circuit"], base["circuit"])
-    started = time.perf_counter()
     error = None
+    started = time.perf_counter()
     if entry["attack"].startswith("gate_smuggle"):
-        # the honest checker rebuilds the schedule from the emitted circuit
         try:
             schedule = RB._tracker_schedule(entry["circuit"])
-            certificate_accepts = bool(ST.certify(schedule, entry["mask"])["accepted"])
+            unbound = bool(ST.certify(schedule, entry["mask"])["accepted"])
+            bound = bool(ST.certify(schedule, entry["mask"],
+                                    circuit=entry["circuit"])["accepted"])
         except ST.UnsupportedGateError as exc:
-            certificate_accepts = False
+            unbound = bound = False
             error = type(exc).__name__
     else:
-        certificate_accepts = bool(ST.verify_certificate(
-            entry["schedule"], entry["mask"], entry["certificate"]))
+        # Old (schedule-only) behaviour: compare the core fields against a fresh
+        # unbound certificate.  Hashes/schema are deliberately ignored here, so
+        # this reproduces what the pre-fix verifier would have accepted.
+        fresh_unbound = ST.certify(entry["schedule"], entry["mask"])
+        core = ("mask", "accepted", "final_support", "h_checks", "violations")
+        unbound = all(entry["certificate"].get(k) == fresh_unbound.get(k)
+                      for k in core)
+        bound = bool(ST.verify_certificate(
+            entry["schedule"], entry["mask"], entry["certificate"],
+            circuit=entry["circuit"], block_ranges=entry["ranges"]))
     verify_seconds = time.perf_counter() - started
-    detected = not certificate_accepts
-    attack_success = int(certificate_accepts and attack_legal is False)
+    detected = not bound
     return {
         "attack": entry["attack"],
         "note": entry["note"],
         "attack_legal": attack_legal,
-        "certificate_accepts": certificate_accepts,
+        "unbound_accepts": unbound,
+        "certificate_accepts": bound,
         "detected": detected,
-        "attack_success": attack_success,
+        "attack_success": int(bound and attack_legal is False),
         "certificate_bytes": len(json.dumps(entry["certificate"])),
         "verify_seconds": round(verify_seconds, 6),
         "error": error,

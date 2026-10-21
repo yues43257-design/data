@@ -21,29 +21,34 @@ def test_normal_circuit_is_accepted_and_legal():
     assert metrics["attack_success"] == 0
 
 
-def test_block_substitution_is_NOT_detected():
-    """Documents the gap: the certificate is not bound to the block internals."""
+def test_block_substitution_is_detected_after_binding():
     base = A.build_base()
     metrics = A.evaluate(base, A.attack("block_substitution", base))
     assert metrics["attack_legal"] is False
-    assert metrics["certificate_accepts"] is True
-    assert metrics["attack_success"] == 1
+    assert metrics["unbound_accepts"] is True       # the old API still accepts
+    assert metrics["certificate_accepts"] is False  # bound API rejects
+    assert metrics["detected"] is True
+    assert metrics["attack_success"] == 0
 
 
-def test_nonblock_x_is_NOT_detected():
+def test_nonblock_x_is_detected_after_binding():
     base = A.build_base()
     metrics = A.evaluate(base, A.attack("nonblock_x", base))
     assert metrics["attack_legal"] is False
-    assert metrics["certificate_accepts"] is True
-    assert metrics["attack_success"] == 1
+    assert metrics["unbound_accepts"] is True
+    assert metrics["certificate_accepts"] is False
+    assert metrics["detected"] is True
+    assert metrics["attack_success"] == 0
 
 
-def test_tail_h_is_NOT_detected():
+def test_tail_h_is_detected_after_binding():
     base = A.build_base()
     metrics = A.evaluate(base, A.attack("tail_h", base))
     assert metrics["attack_legal"] is False
-    assert metrics["certificate_accepts"] is True
-    assert metrics["attack_success"] == 1
+    assert metrics["unbound_accepts"] is True
+    assert metrics["certificate_accepts"] is False
+    assert metrics["detected"] is True
+    assert metrics["attack_success"] == 0
 
 
 def test_gate_smuggle_is_detected():
@@ -76,4 +81,5 @@ def test_probe_writes_all_attacks():
                      "cert_forge", "cert_replay"):
         assert expected in names
     successes = {r["attack"] for r in results if r["attack_success"]}
-    assert successes == {"block_substitution", "nonblock_x", "tail_h"}
+    assert successes == set(), successes
+    assert all(r["detected"] for r in results if r["attack"] != "normal")

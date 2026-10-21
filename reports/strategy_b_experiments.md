@@ -3241,3 +3241,27 @@ done
 
 **定位**：这是**前端工具**，不是证书/Pareto 的贡献；正文只引用它的结论
 "标准基准需去测量 + 重新综合"。
+
+### A.2 证书绑定（security considerations）
+
+**问题**：原 `verify_certificate(schedule, mask, cert)` 只重放 **schedule**，
+不看实际电路。攻击者控制 pass 时，可以保持 schedule、换一个电路。
+
+**8 个攻击的前/后（`experiments/security_probe/`）**：
+
+| 攻击 | 电路合法 | 未绑定证书 | **绑定后** |
+|---|---|---|---|
+| normal | 是 | 接受 | 接受 |
+| block_substitution | 否 | **接受** | **拒绝** |
+| nonblock_x | 否 | **接受** | **拒绝** |
+| tail_h | 否 | **接受** | **拒绝** |
+| gate_smuggle `u3`/`measure` | 否 | 拒绝 | 拒绝 |
+| cert_forge / cert_replay | 是 | 拒绝 | 拒绝 |
+
+**修复**：`certify(..., circuit=..., block_ranges=...)` 增加
+`circuit_hash`（规范化门表）、`schedule_hash`、`block_hashes`（逐块分解）；
+`verify_certificate(..., circuit=..., block_ranges=...)` 重算并比对。
+未绑定调用路径保持兼容（旧调用者不受影响）。
+
+**结果**：**7/7 攻击被检测、0 成功**；证书 147 B → **363 B**，verify 仍 **< 0.4 ms**；
+主回归 6/6 + 安全测试 8/8 通过。

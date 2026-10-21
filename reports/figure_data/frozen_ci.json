@@ -5,7 +5,7 @@
     {
       "step": "regressions",
       "ok": true,
-      "seconds": 6.2,
+      "seconds": 6.7,
       "tail": [
         "  [ok  ] tail layer applied: CCX;H rejected (true offdiag=1.000)",
         "  [ok  ] certificate: S exposed, S\u2229H recorded, tampering detected",
@@ -15,7 +15,7 @@
     {
       "step": "sota_tail",
       "ok": true,
-      "seconds": 22.8,
+      "seconds": 24.7,
       "tail": [
         "  Grover 3-qubit         3     2      4      1       1       0  yes",
         "========================================================================================================",
@@ -25,7 +25,7 @@
     {
       "step": "tail_fuzz",
       "ok": true,
-      "seconds": 117.0,
+      "seconds": 123.0,
       "tail": [
         "================================================================================================",
         "  VERDICT: PASS (fuzz exercises the bug and the fix closes it)",
@@ -35,7 +35,7 @@
     {
       "step": "qasmbench",
       "ok": true,
-      "seconds": 5.4,
+      "seconds": 6.3,
       "tail": [
         "  qft_n4          4     17    0    4      0     False        -       -",
         "========================================================================================================",

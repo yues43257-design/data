@@ -19,26 +19,34 @@ mask = 3. The genuine certificate is accepted.
 | cert_forge (`accepted` flipped, support padded) | yes | no | yes | 0 |
 | cert_replay (mask 1 cert used for mask 3) | yes | no | yes | 0 |
 
+## Before/after the binding fix
+
+| attack | legal | **unbound** (old API) | **bound** (fixed) | detected |
+|---|---|---|---|---|
+| normal | yes | accepts | accepts | – |
+| block_substitution | no | **accepts** | **rejects** | yes |
+| nonblock_x | no | **accepts** | **rejects** | yes |
+| tail_h | no | **accepts** | **rejects** | yes |
+| gate_smuggle u3 / measure | no | rejects | rejects | yes |
+| cert_forge | yes | rejects | rejects | yes |
+| cert_replay | yes | rejects | rejects | yes |
+
+**Fix**: `certify(schedule, mask, circuit=..., block_ranges=...)` now adds
+`circuit_hash` (canonical gate list), `schedule_hash`, and `block_hashes`
+(per-block decomposition); `verify_certificate(..., circuit=..., block_ranges=...)`
+recomputes them and compares. The unbound call path is unchanged (backward
+compatible) and is shown in the "unbound" column as the pre-fix behaviour.
+
+**Result**: 7/7 non-baseline attacks detected, **0 attack successes**; the
+certificate grows from 147 B to 363 B and verification stays sub-millisecond.
+
 ## Conclusion
 
-**The certificate is not bound to the actual circuit.** `verify_certificate`
-re-executes `certify(schedule, mask)` and compares against the *schedule*; if the
-adversary keeps the schedule unchanged and emits a different circuit, all three
-circuit-level attacks are undetected (`attack_success = 1`).
-
-Detected: unmodelled gates (the tracker's own `UnsupportedGateError`) and
-certificate tampering/replay (the mask/support/verdict fields).
-
-## What a fix would need (not implemented here)
-
-* bind the certificate to a **hash of the emitted circuit** (or of the canonical
-  gate list) and re-hash at verification time;
-* bind each block to a hash of its concrete decomposition;
-* verify that the schedule is derived from that same circuit (a translator that
-  cannot be skipped).
-
-Without those, the certificate is a statement about a *claimed schedule*, not
-about the circuit that will run.
+The certificate is **schedule-level** by construction. In a pipeline where the
+pass chooses both the circuit and the schedule, it must be **bound to the
+circuit hash** (and to each block's decomposition); otherwise a malicious pass
+can substitute a block, insert a non-block gate, or append a tail Hadamard while
+the unbound certificate still verifies.
 
 ## Reproduce
 

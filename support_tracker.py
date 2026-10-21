@@ -39,8 +39,10 @@ matrix of size ``2**n`` anywhere.
 
 from __future__ import annotations
 
+import hashlib
 import importlib.machinery
 import importlib.util
+import json
 import sys
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence, Set, Tuple
@@ -232,10 +234,51 @@ def track_safe(schedule: Dict[str, Any], mask: int,
 
 
 CERTIFICATE_SCHEMA = "diagonal-certificate-v1"
+BOUND_CERTIFICATE_SCHEMA = "diagonal-certificate-bound-v1"
+
+
+def canonical_gates(circuit) -> List[List[Any]]:
+    """Canonical gate list used for hashing (qubit/clbit indices + params)."""
+    rows = []
+    for instruction in circuit.data:
+        rows.append([
+            instruction.operation.name,
+            [circuit.find_bit(q).index for q in instruction.qubits],
+            [circuit.find_bit(c).index for c in instruction.clbits],
+            [round(float(p), 12) if isinstance(p, (int, float)) else str(p)
+             for p in instruction.operation.params],
+        ])
+    return rows
+
+
+def _digest(payload: Any) -> str:
+    text = json.dumps(payload, sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(text.encode()).hexdigest()[:32]
+
+
+def circuit_hash(circuit) -> str:
+    return _digest(canonical_gates(circuit))
+
+
+def schedule_hash(schedule: Dict[str, Any]) -> str:
+    payload = {
+        "total": schedule["total"],
+        "blocks": schedule["blocks"],
+        "layers": [[[name, [int(q) for q in qubits]] for name, qubits in layer]
+                   for layer in schedule["layers"]],
+    }
+    return _digest(payload)
+
+
+def block_hashes(circuit, block_ranges: Sequence[Tuple[int, int]]) -> List[str]:
+    gates = canonical_gates(circuit)
+    return [_digest(gates[start:end]) for start, end in block_ranges]
 
 
 def certify(schedule: Dict[str, Any], mask: int,
-            cancel_hh: bool = False) -> Dict[str, Any]:
+            cancel_hh: bool = False, *, circuit=None,
+            block_ranges: Optional[Sequence[Tuple[int, int]]] = None
+            ) -> Dict[str, Any]:
     """Replay a mask and return a **machine-checkable witness**.
 
     The theorem is one line: conjugating a diagonal operator by a basis
@@ -284,7 +327,7 @@ def certify(schedule: Dict[str, Any], mask: int,
 
     violations = [{"stage": c["stage"], "qubit": c["qubit"]}
                   for c in checks if c["in_support"]]
-    return {
+    certificate = {
         "schema": CERTIFICATE_SCHEMA,
         "mask": int(mask),
         "blocks": n_blocks,
@@ -293,13 +336,23 @@ def certify(schedule: Dict[str, Any], mask: int,
         "h_checks": checks,
         "violations": violations,
     }
+    if circuit is not None:
+        certificate["schema"] = BOUND_CERTIFICATE_SCHEMA
+        certificate["circuit_hash"] = circuit_hash(circuit)
+        certificate["schedule_hash"] = schedule_hash(schedule)
+        if block_ranges is not None:
+            certificate["block_hashes"] = block_hashes(circuit, block_ranges)
+        certificate["bound"] = True
+    return certificate
 
 
 def verify_certificate(schedule: Dict[str, Any], mask: int,
-                       certificate: Dict[str, Any]) -> bool:
+                       certificate: Dict[str, Any], *, circuit=None,
+                       block_ranges: Optional[Sequence[Tuple[int, int]]] = None
+                       ) -> bool:
     """Independently re-derive the witness and compare every claim."""
-    fresh = certify(schedule, mask)
-    if certificate.get("schema") != CERTIFICATE_SCHEMA:
+    fresh = certify(schedule, mask, circuit=circuit, block_ranges=block_ranges)
+    if certificate.get("schema") != fresh.get("schema"):
         return False
     if certificate.get("mask") != fresh["mask"]:
         return False
@@ -310,7 +363,13 @@ def verify_certificate(schedule: Dict[str, Any], mask: int,
     recorded = [(c["stage"], c["qubit"], c["in_support"])
                 for c in certificate.get("h_checks", [])]
     expected = [(c["stage"], c["qubit"], c["in_support"]) for c in fresh["h_checks"]]
-    return recorded == expected
+    if recorded != expected:
+        return False
+    if circuit is not None:
+        for key in ("circuit_hash", "schedule_hash", "block_hashes"):
+            if certificate.get(key) != fresh.get(key):
+                return False
+    return True
 
 
 def tracker_greedy(schedule: Dict[str, Any], probs: Sequence[float],

@@ -165,6 +165,40 @@ decision, and remains useful where exact checking is not interactive.
 
 ---
 
+## 6. Security considerations (trust boundary)
+
+The certificate is a statement about a **schedule**, not about the circuit that
+will run. In the original API, `verify_certificate(schedule, mask, cert)`
+re-executes the schedule and never looks at the emitted circuit. If the
+adversary controls the compiler pass, it can keep the schedule and emit a
+different circuit:
+
+| attack | circuit legal | unbound cert | bound cert |
+|---|---|---|---|
+| block substitution (re-map a block) | no | **accepts** | rejects |
+| non-block X inserted | no | **accepts** | rejects |
+| tail Hadamard appended | no | **accepts** | rejects |
+| smuggled `u3` / `measure` | no | rejects (`UnsupportedGateError`) | rejects |
+| forged certificate | yes | rejects | rejects |
+| replayed certificate (other mask) | yes | rejects | rejects |
+
+**Defense.** The certificate now carries
+
+* `circuit_hash` — canonical gate list of the emitted circuit,
+* `schedule_hash` — canonical block/layer description,
+* `block_hashes` — per-block decomposition hashes,
+
+and `verify_certificate(..., circuit=..., block_ranges=...)` recomputes all three
+and re-derives the witness. With the binding, **7/7 attacks are detected and 0
+succeed**; the certificate grows from 147 B to 363 B and verification stays
+sub-millisecond.
+
+**Take-away.** A schedule-level certificate is only meaningful when the verifier
+can bind it to the artifact it will execute. We therefore ship the binding as
+part of the tool and recommend it whenever the compiler pass is untrusted.
+
+---
+
 ## Appendix (pointers, not contributions)
 
 - Learned selection: no gain at full budget (0.00 T); only +5–13 T with an exact
