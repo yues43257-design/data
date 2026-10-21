@@ -63,6 +63,24 @@ def test_second_divergence_certificate_false_negatives():
     assert fn and all("hh_restore" in r["case"] for r in fn)
 
 
+def test_d1_reproduces_across_parameters():
+    report = R.run(with_qcec=False)
+    by_family = report["C"]["positive_by_family"]
+    assert by_family["hh_restore"]["cases"] >= 9
+    assert by_family["hh_restore"]["rate"] == 0.0
+    for family in ("two_block", "adder", "vbe", "comparator"):
+        assert by_family[family]["rate"] == 1.0
+
+
+def test_chain_metrics_are_split():
+    report = R.run(with_qcec=False)
+    Cm = report["C"]
+    assert Cm["chain_substitution"]["rate"] == 1.0
+    assert Cm["chain_substitution"]["cases"] == 10
+    assert Cm["chain_forgery"]["rate"] == 0.0
+    assert Cm["chain_forgery"]["cases"] == 45
+
+
 def test_protocol_is_frozen():
     report = R.run(with_qcec=False)
     assert report["protocol_version"] == "compiler-bench-protocol-v1"

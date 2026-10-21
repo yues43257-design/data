@@ -29,7 +29,7 @@ import experiments.compiler_bench.generator as G  # noqa: E402
 import experiments.multipass_attestation.attacks as PA   # noqa: E402
 import experiments.multipass_attestation.pipeline as PP  # noqa: E402
 
-FAMILIES = (("two_block", 0), ("hh_restore", 0), ("adder", 2), ("adder", 3),
+FAMILIES = (("two_block", 0), ("adder", 2), ("adder", 3),
             ("vbe", 2), ("vbe", 3), ("comparator", 3))
 LAYOUTS = ("plain", "with_h")
 SEEDS = (0, 1, 2, 3)
@@ -140,6 +140,22 @@ def all_cases() -> List[Dict[str, Any]]:
                       "qubits": n_qubits, "cert_property": "chain",
                       "ground_truth": "C2 tampered + forged cert2 (correct hashes)",
                       "truth_L": None, "truth_S": None, "entry": entry})
+    # D1 parameter sweep: blocks x H-pair count
+    for blocks in (1, 2, 3):
+        for pairs in (1, 2, 4):
+            base = G.build_base("hh_restore", blocks, "plain", pairs)
+            entry = G.apply_attack(base, "legal")
+            truth_l = dense_legal(entry)
+            truth_s = dense_exact(entry)
+            cases.append({
+                "name": f"hh_restore/b{blocks}/p{pairs}/legal",
+                "family": "hh_restore", "n": blocks, "layout": "plain",
+                "seed": pairs, "attack": "legal",
+                "qubits": base["ideal"].num_qubits,
+                "cert_property": cert_property("legal", truth_l),
+                "ground_truth": "H...H restores the phase; tracker rejects early",
+                "truth_L": truth_l, "truth_S": truth_s, "entry": entry,
+            })
     return cases
 
 

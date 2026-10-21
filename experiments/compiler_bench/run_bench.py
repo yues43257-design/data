@@ -160,6 +160,23 @@ def run(with_qcec: bool = False, qcec_limit: int = 24) -> Dict[str, Any]:
                 "rate": round(good / len(cells), 3) if cells else None,
                 "ci": wilson(good, len(cells))}
 
+    def chain_metrics(attack: str) -> Dict[str, Any]:
+        cells = [r for r in rows if r.get("attack") == attack]
+        correct = sum(1 for r in cells if r["cert_ok"] is False)
+        return {"cases": len(cells), "detected": correct, "correct": correct,
+                "rate": round(correct / len(cells), 3) if cells else None,
+                "ci": wilson(correct, len(cells))}
+
+    positives_by_family: Dict[str, Dict[str, Any]] = {}
+    for r in rows:
+        if r.get("cert_property") != "positive":
+            continue
+        cell = positives_by_family.setdefault(r["family"], {"cases": 0, "correct": 0})
+        cell["cases"] += 1
+        cell["correct"] += int(r["cert_ok"] is True)
+    for cell in positives_by_family.values():
+        cell["rate"] = round(cell["correct"] / cell["cases"], 3) if cell["cases"] else None
+
     return {
         "version": BENCH_VERSION, "cases": len(rows),
         "protocol_version": P.PROTOCOL_VERSION,
@@ -170,12 +187,15 @@ def run(with_qcec: bool = False, qcec_limit: int = 24) -> Dict[str, Any]:
               "ci": wilson(s_correct, len(s_pairs))},
         "C": {
             "positive_accept": cert_metrics("positive", True),
+            "positive_by_family": positives_by_family,
             "illegal_rewrite_reject": cert_metrics("illegal_rewrite", False),
             "undecided_legal_cases": sum(
                 1 for r in rows if r.get("cert_property") == "undecided_legal"),
             "binding_reject": cert_metrics("binding", False),
             "tamper_reject": cert_metrics("tamper", False),
             "chain_reject": cert_metrics("chain", False),
+            "chain_substitution": chain_metrics("pass2_substitution"),
+            "chain_forgery": chain_metrics("pass2_forgery"),
         },
         "cost": {
             "qcec_legal_s_mean": round(sum(r.get("qcec_legal_s", 0) for r in rows)
@@ -212,11 +232,12 @@ def main(argv=None) -> int:
     print(f"  S        common={s['common_subset']} correct={s['correct']} "
           f"accuracy={s['accuracy']} {s['ci']}")
     for name, m in report["C"].items():
-        if not isinstance(m, dict):
+        if not isinstance(m, dict) or "cases" not in m:
             continue
         print(f"  C/{name:<16} cases={m['cases']:<4} correct={m['correct']:<4} "
               f"rate={m['rate']} {m['ci']}")
     print(f"  C/undecided_legal_cases = {report['C']['undecided_legal_cases']}")
+    print(f"  C/positive_by_family = {report['C']['positive_by_family']}")
     print(f"  cost: {report['cost']}")
     print(f"  ({time.perf_counter() - started:.1f}s)")
     out = Path(__file__).resolve().parent / "results.json"
