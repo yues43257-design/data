@@ -3265,3 +3265,44 @@ done
 
 **结果**：**7/7 攻击被检测、0 成功**；证书 147 B → **363 B**，verify 仍 **< 0.4 ms**；
 主回归 6/6 + 安全测试 8/8 通过。
+
+### A.3 编译器版本轴（已解除阻塞并完成）
+
+此前阻塞原因是 PyPI 不可达，不是协议或代码缺失。现在两个隔离环境均可运行：
+
+| 环境 | Qiskit | pyZX | 状态 |
+|---|---:|---:|---|
+| current | **2.5.2** | **0.10.6** | 36/36 cells |
+| old | **1.3.0** | **0.7.0** | 36/36 cells |
+
+在 9 个统一展开为 `ccx + Clifford + t/tdg` 的无测量电路上，同时测
+Qiskit L0/L3、pyZX `full_reduce` 与 TODD。结果是 **72/72 个单元成功、0 个
+解析/优化失败**；每个环境都记录规范化门序列哈希，**9/9 输入哈希一致**，
+因此跨版本 T-count 对比不是拿不同电路比较。
+
+关键发现：
+
+1. **Qiskit L3 有版本效应**：5/9 个电路变化，Qiskit 2.5.2 比 1.3.0 少
+   **2–14 T**。例如 `adder_n3: 42 → 36`、`vbe_n3: 70 → 56`、
+   `QASMBench sat_n7: 70 → 62`。Qiskit L0 在 9 个电路上完全相同。
+2. **本套电路上没有观察到 pyZX T-count 版本效应**：`full_reduce` 与 TODD
+   在 pyZX 0.7.0 和 0.10.6 上逐电路 T-count 完全相同。这是 9 电路实测范围，
+   不是“pyZX 跨版本永不变化”的一般结论。
+3. **所有相对 Qiskit L3 的百分比必须绑定版本**。当前正文的 −33…−37%
+   对应 pinned **Qiskit 2.5.2**；若用 1.3.0 当基线，相对收益会更大，
+   混写会夸大可复现性。
+
+复现与结果文件：
+
+```bash
+python3 -m venv /tmp/oldver
+/tmp/oldver/bin/pip install "qiskit==1.3.0" "pyzx==0.7.0"
+.venv/bin/python experiments/compiler_bench/version_axis.py
+.venv/bin/python -m pytest tests/test_compiler_version_axis.py -q
+```
+
+```text
+experiments/compiler_bench/version_axis.py
+experiments/compiler_bench/version_axis.json
+tests/test_compiler_version_axis.py
+```
