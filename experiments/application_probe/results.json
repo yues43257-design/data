@@ -1,0 +1,152 @@
+{
+  "version": "application-probe-v1",
+  "distance": 15,
+  "rows": [
+    {
+      "family": "cdkm_adder_3",
+      "qubits": 8,
+      "data_qubits": 6,
+      "ancilla_estimate": 2,
+      "blocks": 6,
+      "ccx": 6,
+      "gates": 19,
+      "h_count": 12,
+      "h_density": 0.1165,
+      "in_domain": true,
+      "canonical_gates": [
+        "ccx",
+        "cx"
+      ],
+      "t_count": 42,
+      "t_depth": 24,
+      "cnot": 49,
+      "depth": 74,
+      "qiskit_l3_t": 36,
+      "todd_t": 36,
+      "full_reduce_t": 24,
+      "legality": "legal",
+      "relative_t": 24,
+      "relative_t_depth": 24,
+      "full_reduce_t_depth": 9,
+      "physical_qubits_proxy": 3600,
+      "spacetime_proxy": 151200,
+      "proxy_note": "crude: 2*d^2*logical with d=15; not a security estimate",
+      "seconds": 0.42
+    },
+    {
+      "family": "vbe_adder_3",
+      "qubits": 10,
+      "data_qubits": 6,
+      "ancilla_estimate": 4,
+      "blocks": 10,
+      "ccx": 10,
+      "gates": 20,
+      "h_count": 10,
+      "h_density": 0.0725,
+      "in_domain": true,
+      "canonical_gates": [
+        "ccx",
+        "cx"
+      ],
+      "t_count": 70,
+      "t_depth": 30,
+      "cnot": 58,
+      "depth": 77,
+      "qiskit_l3_t": 56,
+      "todd_t": 32,
+      "full_reduce_t": 24,
+      "legality": "legal",
+      "relative_t": 40,
+      "relative_t_depth": 26,
+      "full_reduce_t_depth": 9,
+      "physical_qubits_proxy": 4500,
+      "spacetime_proxy": 315000,
+      "proxy_note": "crude: 2*d^2*logical with d=15; not a security estimate",
+      "seconds": 3.44
+    },
+    {
+      "family": "draper_adder_3",
+      "error": "TranspilerError: 'Unable to translate the operations in the circuit: {(\"h\", 1), (\"cp\", 2)} to the backend\\'s (or manually specified) target basis: {\"reset\", \"switch_case\", \"ccx\", \"while_loop\", \"for_loop\", \"cx\", \"sdg\", \"s\", \"measure\", \"box\", \"h\", \"z\", \"x\", \"t\", \"tdg\", \"if_else\", \"delay\", \"barrier\", \"snapshot\", \"store\"}. This likely means the target basis is not universal or there are additional equivalence rules needed in the EquivalenceLibrary being used. For more details on this error see: https://quantum.cloud.ibm.com/docs/api/qiskit/qiskit.transpiler.passes.BasisTranslator#translation-errors'",
+      "in_domain": false
+    },
+    {
+      "family": "comparator_3",
+      "qubits": 6,
+      "data_qubits": 6,
+      "ancilla_estimate": 0,
+      "blocks": 3,
+      "ccx": 3,
+      "gates": 12,
+      "h_count": 6,
+      "h_density": 0.1111,
+      "in_domain": true,
+      "canonical_gates": [
+        "ccx",
+        "x"
+      ],
+      "t_count": 21,
+      "t_depth": 12,
+      "cnot": 18,
+      "depth": 34,
+      "qiskit_l3_t": 19,
+      "todd_t": 17,
+      "full_reduce_t": 15,
+      "legality": "legal",
+      "relative_t": 12,
+      "relative_t_depth": 10,
+      "full_reduce_t_depth": 6,
+      "physical_qubits_proxy": 2700,
+      "spacetime_proxy": 56700,
+      "proxy_note": "crude: 2*d^2*logical with d=15; not a security estimate",
+      "seconds": 0.14
+    },
+    {
+      "family": "qft_4",
+      "error": "TranspilerError: 'Unable to translate the operations in the circuit: {(\"h\", 1), (\"cp\", 2), (\"swap\", 2)} to the backend\\'s (or manually specified) target basis: {\"reset\", \"switch_case\", \"ccx\", \"while_loop\", \"for_loop\", \"cx\", \"sdg\", \"s\", \"measure\", \"box\", \"h\", \"z\", \"x\", \"t\", \"tdg\", \"if_else\", \"delay\", \"barrier\", \"snapshot\", \"store\"}. This likely means the target basis is not universal or there are additional equivalence rules needed in the EquivalenceLibrary being used. For more details on this error see: https://quantum.cloud.ibm.com/docs/api/qiskit/qiskit.transpiler.passes.BasisTranslator#translation-errors'",
+      "in_domain": false
+    },
+    {
+      "family": "multiplier_2",
+      "error": "TranspilerError: 'Unable to translate the operations in the circuit: {(\"ccx\", 3), (\"s\", 1), (\"h\", 1), (\"t\", 1), (\"cx\", 2), (\"tdg\", 1), (\"sdg\", 1), (\"cp\", 2)} to the backend\\'s (or manually specified) target basis: {\"reset\", \"switch_case\", \"ccx\", \"while_loop\", \"for_loop\", \"cx\", \"sdg\", \"s\", \"measure\", \"box\", \"h\", \"z\", \"x\", \"t\", \"tdg\", \"if_else\", \"delay\", \"barrier\", \"snapshot\", \"store\"}. This likely means the target basis is not universal or there are additional equivalence rules needed in the EquivalenceLibrary being used. For more details on this error see: https://quantum.cloud.ibm.com/docs/api/qiskit/qiskit.transpiler.passes.BasisTranslator#translation-errors'",
+      "in_domain": false
+    },
+    {
+      "family": "modular_adder_3",
+      "qubits": 6,
+      "data_qubits": 6,
+      "ancilla_estimate": 0,
+      "blocks": 0,
+      "ccx": 0,
+      "gates": 59,
+      "h_count": 8,
+      "h_density": 0.1356,
+      "in_domain": false,
+      "canonical_gates": [
+        "cx",
+        "h",
+        "t",
+        "tdg"
+      ],
+      "t_count": 16,
+      "t_depth": 16,
+      "cnot": 35,
+      "depth": 58,
+      "qiskit_l3_t": 16,
+      "todd_t": null,
+      "full_reduce_t": 16,
+      "legality": "n/a (no blocks)",
+      "relative_t": null,
+      "relative_t_depth": null,
+      "full_reduce_t_depth": 7,
+      "physical_qubits_proxy": 2700,
+      "spacetime_proxy": 43200,
+      "proxy_note": "crude: 2*d^2*logical with d=15; not a security estimate",
+      "seconds": 0.12
+    },
+    {
+      "family": "modpow_shor_like",
+      "in_domain": false,
+      "error": "not constructed: no library primitive; composing a controlled modular multiplier is algorithm work (out of the 1-2 day scope)"
+    }
+  ]
+}
