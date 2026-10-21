@@ -20,6 +20,7 @@ import realcircuit_window as RCW      # noqa: E402
 import realworld_benchmark as RB      # noqa: E402
 import support_tracker as ST          # noqa: E402
 import toffoli_recover as TR          # noqa: E402
+import experiments.compiler_bench.revlib as RL   # noqa: E402
 
 DIR = ROOT / "benchmarks" / "qasmbench_all"
 REAL = ("fredkin_n3", "sat_n7", "simon_n6", "toffoli_n3")
@@ -102,5 +103,56 @@ def real_cases() -> List[Dict[str, Any]]:
                                  "cert_replay": "cert replayed from mask 1"}[attack],
                 "truth_L": None, "truth_S": None, "entry": entry,
                 "real_circuit": name,
+            })
+    return cases
+
+
+def revlib_cases() -> List[Dict[str, Any]]:
+    """Two small RevLib realizations that canonicalise to ccx blocks."""
+    cases: List[Dict[str, Any]] = []
+    paths = sorted((ROOT / "benchmarks" / "revlib").glob("*.real"))
+    for path in paths:
+        try:
+            source = RL.parse(path)
+            ideal = RB.to_canonical(source)
+        except Exception as exc:
+            cases.append({"name": f"revlib/{path.stem}",
+                          "error": f"{type(exc).__name__}: {str(exc)[:120]}"})
+            continue
+        if not any(ins.operation.name == "ccx" for ins in ideal.data):
+            cases.append({"name": f"revlib/{path.stem}",
+                          "error": "no ccx blocks after canonicalisation"})
+            continue
+        emitted, ranges = _all_relative(ideal)
+        schedule = RB._tracker_schedule(ideal)
+        mask = (1 << len(schedule["blocks"])) - 1
+        certificate = ST.certify(schedule, mask, circuit=emitted,
+                                 block_ranges=ranges)
+        base = {"ideal": ideal, "emitted": emitted, "ranges": ranges,
+                "schedule": schedule, "mask": mask, "certificate": certificate}
+        for attack in ATTACKS:
+            entry = dict(base, attack=attack, circuit=emitted,
+                         certificate=certificate)
+            if attack == "tail_h":
+                circuit = emitted.copy()
+                circuit.h(ideal.num_qubits - 1)
+                entry["circuit"] = circuit
+            elif attack == "cert_forge":
+                forged = dict(certificate)
+                forged["accepted"] = not forged.get("accepted", True)
+                entry["certificate"] = forged
+            elif attack == "cert_replay":
+                entry["certificate"] = ST.certify(
+                    schedule, 0, circuit=emitted, block_ranges=ranges)
+            cases.append({
+                "name": f"revlib/{path.stem}/{attack}", "family": "real_revlib",
+                "n": ideal.num_qubits, "layout": "revlib", "seed": 0,
+                "attack": attack, "qubits": ideal.num_qubits,
+                "cert_property": None,
+                "ground_truth": {"legal": "none", "tail_h": "tail H",
+                                 "cert_forge": "accepted flipped",
+                                 "cert_replay": "cert replayed from mask 0"}[attack],
+                "truth_L": None, "truth_S": None, "entry": entry,
+                "real_circuit": path.stem,
             })
     return cases

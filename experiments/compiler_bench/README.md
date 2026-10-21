@@ -4,7 +4,7 @@
 16-hex `protocol_fingerprint()` over the L/S/C definitions and `DENSE_LIMIT`.
 Every `results.json` carries both. Change the classification ⇒ bump the version.
 
-## Suite (416 cases)
+## Suite (424 cases)
 
 | axis | values |
 |---|---|
@@ -14,6 +14,7 @@ Every `results.json` carries both. Change the classification ⇒ bump the versio
 | attack | legal, h_on_support, block_substitution, tail_h, u3, cert_forge, cert_replay |
 | D1 sweep | `hh_restore`: blocks {1,2,3} × H-pairs {1,2,4} = 9 |
 | **real circuits** | **QASMBench in-domain 4** (`fredkin_n3`, `sat_n7`, `simon_n6`, `toffoli_n3`) × 4 attacks = 16 |
+| **RevLib** | `4_49_17` (5 blocks) and `4gt11_84` (1 block) × 4 attacks = 8 |
 | chain | 10 substitution + 45 forged-hash = 55 |
 
 ## Three questions (frozen)
@@ -31,12 +32,12 @@ Every `results.json` carries both. Change the classification ⇒ bump the versio
 | metric | value |
 |---|---|
 | **L / dense** | decided 249, coverage 0.599, soundness **1.000** [0.972, 1.000], completeness **1.000** [0.951, 1.000] |
-| **L / QCEC** | decided **361**, coverage **0.868**, soundness **1.000** [0.981, 1.000], completeness **1.000** [0.962, 1.000] |
+| **L / QCEC** | decided **369**, coverage **0.868**, soundness **1.000** [0.981, 1.000], completeness **1.000** [0.964, 1.000] |
 | **S / QCEC vs dense** | common **285**, accuracy **1.000** [0.984, 1.000] |
-| **C / positive** | 45 cases, 36 correct → **0.800** [0.660, 0.893] |
+| **C / positive** | 47 cases, 38 correct → **0.809** [0.672, 0.898] |
 | C / illegal_rewrite | 64, **1.000** [0.932, 1.000] |
-| C / binding | 148, **1.000** [0.970, 1.000] |
-| C / tamper | 104, **1.000** [0.957, 1.000] |
+| C / binding | 150, **1.000** [0.970, 1.000] |
+| C / tamper | 108, **1.000** [0.959, 1.000] |
 | **C / chain split** | substitution **10/10 = 1.000**; forgery **0/45 = 0.000** [0.000, 0.094] |
 | cost | QCEC ≈ 0.19 s (L) / 0.17 s (S); cert ≈ 1.39 ms; **554 B** |
 
@@ -50,10 +51,11 @@ Every `results.json` carries both. Change the classification ⇒ bump the versio
 | comparator | 7 | 7 | 1.000 |
 | **hh_restore** | **9** | **0** | **0.000** |
 | **real_qasmbench** | **2** | **2** | **1.000** |
+| **real_revlib** | **2** | **2** | **1.000** |
 
 **Reading.** D1 reproduces across all 9 `hh_restore` parameter combos
-(blocks × H-pairs) but **does not reproduce on the 4 real in-domain QASMBench
-circuits** (2/2 accepted). So the certificate false negative is
+(blocks × H-pairs) but **does not reproduce on the real circuits**: QASMBench
+2/2 accepted and RevLib 2/2 accepted. So the certificate false negative is
 **mechanism-specific** (an H hit that is later conjugated back), not a general
 property of the tracker — an important scoping result, not a stronger claim.
 
@@ -86,8 +88,8 @@ a general claim.
 
 ## Not done
 
-- compiler-version axis (Qiskit/pyZX/TODD variants);
-- RevLib (QASMBench in-domain 4 are now included);
+- compiler-version axis: **blocked** (PyPI unreachable in this environment);
+- RevLib `mod5adder_127`: needs `rccx`/`p` synthesis, outside the canonical basis;
 - width sweep beyond N=8 (dense limit; QCEC covers larger N in the main suite).
 
 ## Reproduce

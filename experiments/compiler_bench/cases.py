@@ -158,6 +158,7 @@ def all_cases() -> List[Dict[str, Any]]:
                 "truth_L": truth_l, "truth_S": truth_s, "entry": entry,
             })
     cases.extend(RC.real_cases())
+    cases.extend(RC.revlib_cases())
     return cases
 
 
