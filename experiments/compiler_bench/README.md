@@ -63,11 +63,32 @@ property of the tracker — an important scoping result, not a stronger claim.
 detected); the 10 substitution cases are all rejected. D2 is structural and
 independent of the circuit family.
 
+**Framing correction (frozen).** D2 is a *known trust-root limitation* of hash
+chains, not a new vulnerability. The contribution of this work is the
+**protocol + suite + measurement**, not the discovery of D2. D2 is used as a
+calibration point that the protocol can see.
+
+## H-density / width sweep (`h_density_sweep.py`)
+
+Every mask of every `WideInstance` cell, dense oracle, bound certificate:
+
+| h | masks | legal | cert-accepted | **FN** | **UNSOUND** | FN/legal |
+|---:|---:|---:|---:|---:|---:|---:|
+| 0.0 | 112 | 112 | 112 | **0** | 0 | 0.000 |
+| **0.1** | 112 | 50 | 46 | **4** | 0 | **0.080** |
+| 0.3 | 112 | 32 | 32 | 0 | 0 | 0.000 |
+| 0.5 | 112 | 28 | 28 | 0 | 0 | 0.000 |
+
+Reading: certificate false negatives are **H-density specific** — they appear
+only at low H density (8% of legal masks at h=0.1), and the tracker is **sound
+everywhere** (0 illegal accepts). This bounds D1 to a narrow regime rather than
+a general claim.
+
 ## Not done
 
 - compiler-version axis (Qiskit/pyZX/TODD variants);
 - RevLib (QASMBench in-domain 4 are now included);
-- systematic H-density/width sweeps beyond seeds and the D1 parameter grid.
+- width sweep beyond N=8 (dense limit; QCEC covers larger N in the main suite).
 
 ## Reproduce
 
