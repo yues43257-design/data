@@ -66,3 +66,27 @@ seconds / timeout flags).
 .venv/bin/python toffoli_recover.py                       # census + JSON
 .venv/bin/python -m pytest tests/test_toffoli_recover.py    # 6 tests
 ```
+
+## Compiler-version reproducibility
+
+The Qiskit 1.3.0 / pyZX 0.7.0 sensitivity environment is installed outside
+`/tmp`:
+
+```bash
+experiments/compiler_bench/setup_old_env.sh
+export MCX_OLD_PYTHON="${HOME}/venvs/oldver/bin/python"
+
+.venv/bin/python experiments/compiler_bench/version_axis.py
+.venv/bin/python qiskit_baseline_versions.py
+```
+
+This produces:
+
+- `experiments/compiler_bench/version_axis.json` — 13 circuits × 2 environments
+  × 4 compiler paths;
+- `reports/figure_data/qiskit_baseline_sensitivity.json` — every Qiskit L3
+  claim under the primary 2.5.2 baseline and the 1.3.0 sensitivity baseline.
+
+The paper's primary percentage is **−33.3…−36.8% vs Qiskit 2.5.2 L3**.
+Qiskit 1.3.0 gives **−42.9%** on the same legal arithmetic rows; the two must
+not be mixed.

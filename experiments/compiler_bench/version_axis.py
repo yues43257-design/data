@@ -42,8 +42,15 @@ DEFAULT_CIRCUITS = (
     "qasmbench/sat_n7",
     "qasmbench/simon_n6",
     "qasmbench/toffoli_n3",
+    "qasmbench/adder_n4",
+    "qasmbench/adder_n10",
+    "qasmbench/qec_en_n5",
+    "qasmbench/teleportation_n3",
 )
-QASMBENCH = ("fredkin_n3", "sat_n7", "simon_n6", "toffoli_n3")
+QASMBENCH = (
+    "fredkin_n3", "sat_n7", "simon_n6", "toffoli_n3",
+    "adder_n4", "adder_n10", "qec_en_n5", "teleportation_n3",
+)
 ROOT = Path(__file__).resolve().parents[2]
 
 
@@ -315,8 +322,11 @@ def _older_python(explicit: Optional[str]) -> Path:
         candidates.append(Path(explicit))
     if os.environ.get("MCX_OLD_PYTHON"):
         candidates.append(Path(os.environ["MCX_OLD_PYTHON"]))
-    candidates.extend((Path("/tmp/oldver/bin/python"),
-                       ROOT / ".venv-qiskit13" / "bin" / "python"))
+    candidates.extend((
+        Path.home() / "venvs" / "oldver" / "bin" / "python",
+        Path("/tmp/oldver/bin/python"),
+        ROOT / ".venv-qiskit13" / "bin" / "python",
+    ))
     for candidate in candidates:
         if candidate.is_file():
             return candidate

@@ -21,7 +21,8 @@ against the true residual support, 3456 adversarial masks, a 200-circuit tail
 fuzz and an ancilla-layout fuzz. We then show how to *use* the certificate:
 as a pre-filter with an exact fallback (best T saved vs cost), with a decision
 table for four proposal budgets. The pass reduces T-count by **33–37%** versus
-Qiskit L3 on H-free/low-H block-structured arithmetic, but only **14–26 T
+**Qiskit 2.5.2 L3** on H-free/low-H block-structured arithmetic
+(**42.9%** against the Qiskit 1.3.0 sensitivity baseline), but only **14–26 T
 (0.7–1.3%)** once Hadamards are interleaved.
 
 ---
@@ -155,7 +156,8 @@ decision, and remains useful where exact checking is not interactive.
 
 1. **ccx-block domain.** The rewrite unit is a Toffoli/MCX block. Circuits that
    already expose only `h/t/tdg/cx` (or `cu1`) have no block sites.
-2. **H-free vs H-interleaved.** H-free: −33…−37% vs Qiskit L3. H-interleaved:
+2. **H-free vs H-interleaved.** H-free: −33.3…−36.8% vs **Qiskit 2.5.2 L3**
+   (−42.9% vs the Qiskit 1.3.0 sensitivity baseline). H-interleaved:
    **14–26 T (0.7–1.3%)** only.
 3. **Standard benchmarks.** 5 real QASMBench circuits: **0/5 in domain** —
    pre-decomposed and containing `measure`. A re-synthesis front-end is required;

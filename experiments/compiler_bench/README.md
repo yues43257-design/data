@@ -89,7 +89,8 @@ a general claim.
 ## Compiler-version axis (`version_axis.py`)
 
 The axis is **unblocked and measured**. Two isolated environments are compared
-on the same nine measurement-free circuits:
+on the same thirteen measurement-free circuits (five constructed families and
+eight QASMBench circuits):
 
 | environment | Python | Qiskit | pyZX |
 |---|---|---|---|
@@ -99,9 +100,9 @@ on the same nine measurement-free circuits:
 Each circuit is first expanded to the common `ccx + Clifford + t/tdg` basis,
 then measured with Qiskit L0/L3, pyZX `full_reduce + extract_circuit`, and TODD
 (`phase_block_optimize`). The run records per-tool runtime and errors; the
-current artifact has **72/72 successful cells and zero parse/optimizer
+current artifact has **104/104 successful cells and zero parse/optimizer
 failures**. A canonical gate-sequence hash is recorded in each environment;
-all **9/9 input hashes match**, so the cross-version T-count comparison is on
+all **13/13 input hashes match**, so the cross-version T-count comparison is on
 identical lowered circuits.
 
 | circuit | Qiskit L3: 1.3 → 2.5 | pyZX FR | TODD |
@@ -115,11 +116,15 @@ identical lowered circuits.
 | QASMBench sat_n7 | 70 → **62** | 46 | 54 |
 | QASMBench simon_n6 | 14 → 14 | 0 | 0 |
 | QASMBench toffoli_n3 | 7 → 7 | 7 | 7 |
+| QASMBench adder_n4 | 8 → 8 | 8 | 8 |
+| QASMBench adder_n10 | 56 → **48** | 32 | 48 |
+| QASMBench qec_en_n5 | 1 → 1 | 1 | 1 |
+| QASMBench teleportation_n3 | 1 → 1 | 1 | 1 |
 
-Qiskit L3 changes on **5/9** circuits and improves by **2–14 T** in Qiskit
+Qiskit L3 changes on **6/13** circuits and improves by **2–14 T** in Qiskit
 2.5.2; Qiskit L0 is unchanged. pyZX `full_reduce` and TODD produce the **same
 T-count on every circuit in this suite** despite the pyZX 0.7.0 → 0.10.6
-change. This is a measured statement about this nine-circuit axis, not a claim
+change. This is a measured statement about this thirteen-circuit axis, not a claim
 that pyZX versions never change results.
 
 Consequence for the paper: every “relative to Qiskit L3” percentage must name
@@ -130,14 +135,16 @@ without a version would overstate reproducibility.
 Reproduce:
 
 ```bash
-python3 -m venv /tmp/oldver
-/tmp/oldver/bin/pip install "qiskit==1.3.0" "pyzx==0.7.0"
+experiments/compiler_bench/setup_old_env.sh
+export MCX_OLD_PYTHON="${HOME}/venvs/oldver/bin/python"
 .venv/bin/python experiments/compiler_bench/version_axis.py
 .venv/bin/python -m pytest tests/test_compiler_version_axis.py -q
 ```
 
-The artifact is `version_axis.json`; the script accepts
-`MCX_OLD_PYTHON=/path/to/python` when the old environment lives elsewhere.
+The installer writes to `${HOME}/venvs/oldver` by default;
+`MCX_OLD_VENV=/path/to/venv` overrides it. The artifact is
+`version_axis.json`; the script also falls back to `/tmp/oldver` only for
+backward compatibility.
 
 ## Not done
 

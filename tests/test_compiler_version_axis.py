@@ -55,10 +55,30 @@ def test_version_axis_artifact_covers_two_environments():
     assert len(versions) == 2
     assert report["summary"]["successful_cells"] == report["summary"]["total_cells"]
     assert report["summary"]["cross_environment_input_mismatches"] == []
-    assert report["summary"]["circuits"] >= 8
+    assert report["summary"]["circuits"] >= 13
+    real = {c["name"] for c in report["circuits"]
+            if c["name"].startswith("qasmbench/")}
+    assert len(real) >= 8
+    assert "/tmp/" not in next(
+        env["python"] for env in report["environments"]
+        if env["name"] == "qiskit-1.3"
+    )
     for circuit in report["circuits"]:
         assert set(circuit["environments"]) == {"current", "qiskit-1.3"}
         for cell in circuit["environments"].values():
             assert len(cell["input"]["canonical_hash"]) == 64
             for key in ("qiskit_l0", "qiskit_l3", "pyzx_full_reduce", "todd"):
                 assert key in cell["outputs"], (circuit["name"], key)
+
+
+def test_old_environment_is_reproducible_outside_tmp():
+    requirements = AXIS_DIR / "requirements-old.txt"
+    setup = AXIS_DIR / "setup_old_env.sh"
+    assert requirements.is_file()
+    text = requirements.read_text(encoding="utf-8")
+    assert "qiskit==1.3.0" in text
+    assert "pyzx==0.7.0" in text
+    assert setup.is_file()
+    script = setup.read_text(encoding="utf-8")
+    assert "requirements-old.txt" in script
+    assert "/tmp/oldver" not in script
